@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper	namespace="SmartMdmDAO">
 
-
 	<select id="selectCommonCodeList" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO" resultType="java.util.HashMap">
 		
 		SELECT   
@@ -95,4 +94,32 @@
 		SELECT CODE,GROUP_CODE,NAME FROM CAR_COMCODE WHERE GROUP_CODE='AUTO_002' AND COL1 = #{middle}
 	</select>
 
+	<select id="selectBizList" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO" resultType="java.util.HashMap">
+		
+		SELECT * FROM CAR_CUSTCORP
+		WHERE 1=1
+		<if test="searchCondition == 'CUST_ID'">
+			AND CUST_ID LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'CUST_NM'">
+			AND CUST_NM LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+	<insert id="insertaddBiz" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO">
+		INSERT INTO CAR_CUSTCORP (IDX,CUST_ID,CUST_NM,ADDRESS,TEL,CUST_NAME,ITEM,REMARK,CUST_TYPE,USE_YN) 
+		VALUES (SEQ_CAR_CUSTCORP.NEXTVAL,#{Custid},#{Custnm},#{Address},#{Tel},#{Custname},#{Item},#{Remark},#{Custtype},#{Useyn})
+	</insert>
+	 
+	 <select id="checkCustid" resultType="int">
+     
+          SELECT COUNT(1) usedCnt
+             					FROM(
+             							SELECT
+                								 CUST_ID             CustId
+             									 FROM    CAR_CUSTCORP
+             									 ) A
+               WHERE CustId =  #{checkId}
+     
+    </select>
+    
 </mapper>

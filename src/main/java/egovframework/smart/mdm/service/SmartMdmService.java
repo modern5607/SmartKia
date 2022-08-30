@@ -7,8 +7,19 @@ import egovframework.com.cmm.ComDefaultVO;
 
 public interface SmartMdmService {
 	
-	public Map<String, Object> selectCommonCodeList(ComDefaultVO vo)
-			throws Exception;
+public Map<String, Object> selectCommonCodeList(SmartCommonCodeVO vo) throws Exception;
+	
+	public Map<String,Object> SelectCommonGroupCode(SmartCommonCodeVO vo) throws Exception;
+	
+	public int InsertCommonGroupCode(SmartCommonCodeVO vo) throws Exception;
+
+	public int InsertCommonCode(SmartCommonCodeVO vo) throws Exception;
+
+	public int UpdateCommonGroupCode(SmartCommonCodeVO comCodeVO) throws Exception;
+
+    public Map<String, Object> SelectCommonCode(SmartCommonCodeVO comCodeVO) throws Exception;
+
+	public Map<String,Object> selectLeadTime(SmartLeadTimeVO leadtimeVO)throws Exception;
 
 	public Map<String, Object> selectBizList(SmartMdmBizVO vo)
 			throws Exception;
