@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  <mapper namespace="SmartMonitoringDAO">
+
+ 	<select id="selectMonitoringDAO" parameterType="comDefaultVO" resultType="egovMap">
+		SELECT
+			SEQ			AS "seq",
+			AUTONUMBER			AS "autonumber",
+			REPAIRMETHOD			AS "repairmethod",
+			REPAIRNOTE  	AS "repairnote",
+			POSITION			AS "position",
+			RECEIPTDATE		AS "receipdate",
+			ESTIME		AS "estime",
+			NOTE		AS "note"
+			FROM CAR_TAKEREPAIR
+		WHERE 1=1
+	</select>
+
+
+</mapper>  -->
+	<mapper	namespace="SmartMonitoringDAO">
+
+
+	<select id="selectMonitoringList" parameterType="comDefaultVO" resultType="java.util.HashMap">
+		
+		SELECT * FROM CAR_TAKEREPAIR
+	</select>
+</mapper>
