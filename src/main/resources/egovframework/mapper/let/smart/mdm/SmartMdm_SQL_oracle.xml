@@ -2,97 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper	namespace="SmartMdmDAO">
 
-
-	<select id="selectCommonCodeList" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO" resultType="java.util.HashMap">
+	<select id="selectCommonCodeList" parameterType="comDefaultVO" resultType="java.util.HashMap">
 		
-		SELECT   
-		A.GROUP_CODE,
-		A.GROUP_NAME, 
-		A.USE_YN,
-		(SELECT MBER_NM FROM LETTNGNRLMBER WHERE ESNTL_ID = A.INSERT_ID) AS INSERT_ID,
-		TO_CHAR(A.UPDATE_DATE,'YYYY-MM-DD') AS UPDATE_DATE
-		FROM CAT_COMGROUPCODE A  
+		SELECT * FROM CAT_COMGROUPCODE
+	</select>
+
+	<select id="selectBizList" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO" resultType="java.util.HashMap">
+		
+		SELECT * FROM CAR_CUSTCORP
 		WHERE 1=1
-		<if test="searchKeyword != ''">
-			AND A.GROUP_CODE LIKE '%' || #{searchKeyword} || '%'
+		<if test="searchCondition == 'CUST_ID'">
+			AND CUST_ID LIKE '%'||#{searchKeyword}||'%'
 		</if>
-		ORDER BY INSERT_DATE DESC
-	</select>
-
-	<select id="selectCommonGroupCode" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO" resultType="java.util.HashMap">
-		
-		SELECT *
-		FROM CAT_COMGROUPCODE 
-		WHERE 
-		GROUP_CODE =#{groupcode}
-	</select >
-	
-	<insert id="insertCommonGroupCode" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO">
-		INSERT INTO CAT_COMGROUPCODE
-		(GROUP_CODE,GROUP_NAME,REMARK,USE_YN,GROUP_ORD,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
-		VALUES
-		(#{groupcode},#{groupname},#{groupremark},#{groupuseyn},#{groupord},#{currentid},SYSDATE,'','')
-
-	</insert>
-	
-	<update id="updateCommonGroupCode" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO">
-		UPDATE CAT_COMGROUPCODE
-		SET
-			GROUP_CODE =#{groupcode},
-			GROUP_NAME=#{groupname},
-			REMARK=#{groupremark},
-			USE_YN=#{groupuseyn},
-			GROUP_ORD=#{groupord},
-			UPDATE_ID=#{currentid},
-			UPDATE_DATE = SYSDATE
-		WHERE GROUP_CODE = #{groupcode}
-	</update>
-	
-	<select id="selectCommonCode" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO" resultType="java.util.HashMap">
-		
-		SELECT *
-		FROM CAR_COMCODE 
-		WHERE 1=1 
-		AND GROUP_CODE = #{groupcode} 
-		<if test="#{code !='' or code!=null}">
-			AND CODE = #{code}
+		<if test="searchCondition == 'CUST_NM'">
+			AND CUST_NM LIKE '%'||#{searchKeyword}||'%'
 		</if>
-	</select >
-	
-	
-	
-	<select id="selectCommonCodeDetail" parameterType="comDefaultVO" resultType="java.util.HashMap">
-		
-		SELECT 
-		A.CODE,
-		A.NAME,
-		A.USE_YN,
-		(SELECT MBER_NM FROM LETTNGNRLMBER WHERE ESNTL_ID = A.INSERT_ID) AS INSERT_ID,
-		TO_CHAR(A.UPDATE_DATE,'YYYY-MM-DD') AS UPDATE_DATE
-		FROM CAR_COMCODE A
-		 WHERE A.GROUP_CODE =#{groupcode}
 	</select>
-	
-	<insert id="insertCommonCode" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO">
-		INSERT INTO CAR_COMCODE
-		(GROUP_CODE,CODE,NAME,COL1,REMARK,USE_YN,ORD,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
-		VALUES
-		(#{groupcode},#{code},#{name},#{col1},#{remark},#{useyn},#{ord},#{currentid},SYSDATE,'','')
-
+	<insert id="insertaddBiz" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO">
+		INSERT INTO CAR_CUSTCORP (IDX,CUST_ID,CUST_NM,ADDRESS,TEL,CUST_NAME,ITEM,REMARK,CUST_TYPE,USE_YN) 
+		VALUES (SEQ_CAR_CUSTCORP.NEXTVAL,#{Custid},#{Custnm},#{Address},#{Tel},#{Custname},#{Item},#{Remark},#{Custtype},#{Useyn})
 	</insert>
-
-
-	<select id="selectLeadTime" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT * FROM CAR_LEADTIME
-	</select>
-	<select id="selectLeadMain" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT CODE,GROUP_CODE,NAME FROM CAR_COMCODE WHERE GROUP_CODE ='AUTO_000'
-	</select>
-	<select id="selectLeadMiddle" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT CODE,GROUP_CODE,NAME FROM CAR_COMCODE WHERE GROUP_CODE='AUTO_001' AND COL1 = #{main}
-	</select>
-	<select id="selectLeadSub" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT CODE,GROUP_CODE,NAME FROM CAR_COMCODE WHERE GROUP_CODE='AUTO_002' AND COL1 = #{middle}
-	</select>
-
+	 
+	 <select id="checkCustid" resultType="int">
+     
+          SELECT COUNT(1) usedCnt
+             					FROM(
+             							SELECT
+                								 CUST_ID             CustId
+             									 FROM    CAR_CUSTCORP
+             									 ) A
+               WHERE CustId =  #{checkId}
+     
+    </select>
+    
 </mapper>
