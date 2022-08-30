@@ -72,7 +72,7 @@ body {min-width: 1400px;}
 .content {min-height: 700px; padding-bottom: 100px;}
 
 .sub_layout {border-top: 1px solid #cccccc;}
-.sub_in {width: 1400px; margin: 0 auto; padding: 0 50px;}
+.sub_in {width: 1900px; margin: 0 auto; padding: 0 50px;}
 
 .layout {display: table; width: 100%; table-layout: fixed;}
 
@@ -91,7 +91,7 @@ body {min-width: 1400px;}
 .layout .nav .inner > ul > li > ul > li {position: relative; padding-left: 14px;}
 .layout .nav .inner > ul > li > ul > li::before {content: ""; display: block; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 4px; background: #474747;}
 
-.layout .content_wrap {display: table-cell; width: auto; padding-left: 70px;}
+.layout .content_wrap {display: table-cell; width: auto; /*padding-left: 70px;*/}
 
 
 /* popup */
