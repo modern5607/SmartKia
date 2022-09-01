@@ -106,10 +106,9 @@ public class SmartCusMberManageController {
 		userSearchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		userSearchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-//==
 		model.addAttribute("resultList", mberManageService.selectMberList(userSearchVO));
+
 		int totCnt = mberManageService.selectMberListTotCnt(userSearchVO);
-//==
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
@@ -120,16 +119,15 @@ public class SmartCusMberManageController {
 
 		return "customer/SmartCusMberManage";
 	}
-
-	@RequestMapping(value="customer/SmartCusMberInsertView.do")
-	public String SmartCusMberInsertView()
-	{
-		System.out.println("asdfasdfasdf");
-		
-		return"customer/SmartCusMberInsertView";
-	}
-
-/*
+	
+	/**
+	 * 일반회원등록화면으로 이동한다.
+	 * @param userSearchVO 검색조건정보
+	 * @param mberManageVO 일반회원초기화정보
+	 * @param model 화면모델
+	 * @return cmm/uss/umt/EgovMberInsert
+	 * @throws Exception
+	 */
 	@RequestMapping("/customer/SmartCusMberInsertView.do")
 	public String insertMberView(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, @ModelAttribute("mberManageVO") MberManageVO mberManageVO, Model model)
 			throws Exception {
@@ -161,7 +159,6 @@ public class SmartCusMberManageController {
 
 		return "customer/SmartCusMberInsert";
 	}
-	*/
 	  
 	 /**
 		 * 일반회원등록처리후 목록화면으로 이동한다.

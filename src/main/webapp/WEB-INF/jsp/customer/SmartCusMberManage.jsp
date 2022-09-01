@@ -97,8 +97,8 @@ function fnSelectUser(id) {
     document.listForm.submit();
 }
 function fnAddUserView() {
-    //document.listForm.action = "<c:url value='/uss/umt/mber/EgovMberInsertView.do'/>";
-    //document.listForm.submit();
+    document.listForm.action = "<c:url value='/uss/umt/mber/EgovMberInsertView.do'/>";
+    document.listForm.submit();
 }
 function fnLinkPage(pageNo){
     document.listForm.pageIndex.value = pageNo;
@@ -129,7 +129,7 @@ function fnSearch(){
 				<div class="sub_in">
 					<div class="layout">
 						<!-- Left menu -->
-						<!--  c:import url="/sym/mms/EgovMenuLeft.do" /> -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
 						<!--// Left menu -->
 
 						<div class="content_wrap">
@@ -152,9 +152,9 @@ function fnSearch(){
 										name="pageIndex" type="hidden"
 										value="<c:out value='${userSearchVO.pageIndex}'/>" />
 
-									<!--<h1 class="tit_1">포털시스템관리</h1>-->
+									<h1 class="tit_1">포털시스템관리</h1>
 
-									<!--<p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>-->
+									<p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
 
 									<h2 class="tit_2">사용자관리</h2>
 
@@ -206,7 +206,10 @@ function fnSearch(){
 												onclick="fnDeleteUser(); return false;"><spring:message
 													code="button.delete" /></a>
 											<!-- 삭제 -->
-											<a href="<c:url value='/customer/SmartCusMberInsertView.do'/>" class="btn btn_blue_46 w_100"><spring:message
+											<a
+												href="<c:url value='/customer/SmartCusMberInsertView.do'/>"
+												class="btn btn_blue_46 w_100"
+												onclick="fnAddUserView(); return false;"><spring:message
 													code="button.create" /></a>
 											<!-- 등록 -->
 											<!-- 
