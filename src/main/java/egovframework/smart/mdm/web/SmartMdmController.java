@@ -481,8 +481,8 @@ public class SmartMdmController {
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
 			request.getSession().setAttribute("menuNo", menuNo);
-		}	
-
+		}
+		
 		Map<String, Object> map = tmplatService.selectTemplateInfs(tmplatInfVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 

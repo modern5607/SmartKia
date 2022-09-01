@@ -31,7 +31,7 @@
 	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 	<script src="<c:url value='/'/>js/ui.js"></script>
 
-<title>샘플 포털 > 포털시스템관리 > 사용자관리 > 회원관리</title>
+<title>기준정보 > 사용자관리</title>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="passwordChgVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript" defer="defer">
@@ -77,9 +77,8 @@ function fnUpdate(){
                                 <div class="location">
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
-                                        <li><a href="">포털시스템관리</a></li>
-                                        <li><a href="">사용자관리</a></li>
-                                        <li>회원관리</li>
+                                        <li><a href="">기준정보</a></li>
+                                        <li>사용자관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
@@ -95,13 +94,9 @@ function fnUpdate(){
 						        <!-- 우편번호검색 -->
 						        <input type="hidden" name="url" value="<c:url value='/sym/ccm/zip/EgovCcmZipSearchPopup.do'/>" />
 
-                                <h1 class="tit_1">포털시스템관리</h1>
+                                <h1 class="tit_1">사용자관리</h1>
 
-                                <p class="txt_1">포털시스템에서 제공되는 서비스들에 대한 컨텐츠를 관리합니다.</p>
-
-                                <h2 class="tit_2">사용자관리</h2>
-
-                                <h3 class="tit_3">회원관리</h3>
+                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
 
                                 <div class="board_view2">
                                     <table summary="SUMMARY">
@@ -156,7 +151,6 @@ function fnUpdate(){
                                     <div class="left_col btn3">
                                         <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.passwordChgVO.reset();"><spring:message code="button.reset" /></a><!-- 취소 -->
                                     </div>
-
                                     <div class="right_col btn1">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnUpdate(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
                                         <a href="<c:url value='/mdm/SmartMberManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->

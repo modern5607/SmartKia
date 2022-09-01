@@ -131,9 +131,8 @@ function fnSbscrb(){
                                 <div class="location">
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
-                                        <li><a href="">포털시스템관리</a></li>
-                                        <li><a href="">사용자관리</a></li>
-                                        <li>회원관리</li>
+                                        <li><a href="">기준정보</a></li>
+                                        <li>사용자관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
@@ -150,13 +149,9 @@ function fnSbscrb(){
 								<!-- 우편번호검색 -->
 								<input type="hidden" name="zip_url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
 
-                                <h1 class="tit_1">포털시스템관리</h1>
+                                <h1 class="tit_1">사용자관리</h1>
 
-                                <p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
-
-                                <h2 class="tit_2">사용자관리</h2>
-
-                                <h3 class="tit_3">회원관리</h3>
+                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
 
                                 <div class="board_view2">
                                     <table summary="일반회원 가입정보">
@@ -273,8 +268,14 @@ function fnSbscrb(){
                                                 <label for="moblphonNo">핸드폰번호</label>
                                             </td>
                                             <td>
-                                                <form:input id="moblphonNo" class="f_txt w_350" path="moblphonNo" maxlength="15" />
-                                                <form:errors path="moblphonNo" />
+                                                <form:input path="moblphonNo" id="mberFxnum" class="f_txt w_80" maxlength="4" />
+                                                <span class="f_txt_inner mr5 ml5" title="핸드폰번호 첫번째">-</span>
+                                                <form:input path="middleMoblphonNo" id="middleMoblphonNo" class="f_txt w_80" title="핸드폰번호 두번째" maxlength="4" />
+                                                <span class="f_txt_inner mr5 ml5">-</span>      
+                                                <form:input path="endMoblphonNo" id="endMoblphonNo" class="f_txt w_80" title="핸드폰번호 세번째" maxlength="4" />
+                                                <form:errors path="moblphonNo" cssClass="error" />
+                                                <form:errors path="middleMoblphonNo" cssClass="error" />
+                                                <form:errors path="endMoblphonNo" cssClass="error" />
                                             </td>
                                         </tr>
                                         <tr>

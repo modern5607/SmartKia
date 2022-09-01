@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import egovframework.let.sym.ccm.zip.service.EgovCcmZipManageService;
+import egovframework.let.sym.ccm.zip.service.SmartZip;
 import egovframework.let.sym.ccm.zip.service.Zip;
 import egovframework.let.sym.ccm.zip.service.ZipVO;
 
@@ -47,8 +48,8 @@ public class EgovCcmZipManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 우편번호를 삭제한다.
 	 */
 	@Override
-	public void deleteZip(Zip zip) throws Exception {
-		zipManageDAO.deleteZip(zip);
+	public void deleteZip(SmartZip smartZip) throws Exception {
+		zipManageDAO.deleteZip(smartZip);
 	}
 
 	/**
@@ -63,8 +64,8 @@ public class EgovCcmZipManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 우편번호를 등록한다.
 	 */
 	@Override
-	public void insertZip(Zip zip) throws Exception {
-    	zipManageDAO.insertZip(zip);
+	public void insertZip(SmartZip smartZip) throws Exception {
+    	zipManageDAO.insertZip(smartZip);
 	}
 
 	/**
@@ -84,8 +85,8 @@ public class EgovCcmZipManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 우편번호 상세항목을 조회한다.
 	 */
 	@Override
-	public Zip selectZipDetail(Zip zip) throws Exception {
-    	Zip ret = zipManageDAO.selectZipDetail(zip);
+	public SmartZip selectZipDetail(SmartZip smartZip) throws Exception {
+    	SmartZip ret = zipManageDAO.selectZipDetail(smartZip);
     	return ret;
 	}
 
@@ -109,8 +110,8 @@ public class EgovCcmZipManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 우편번호를 수정한다.
 	 */
 	@Override
-	public void updateZip(Zip zip) throws Exception {
-		zipManageDAO.updateZip(zip);
+	public void updateZip(SmartZip smartZip) throws Exception {
+		zipManageDAO.updateZip(smartZip);
 	}
 
 }

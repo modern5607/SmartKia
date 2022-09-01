@@ -34,7 +34,7 @@
 	<script src="<c:url value='/'/>js/jqueryui.js"></script>
 	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
 	
-<title>샘플 포털 > 포털시스템관리 > 사용자관리 > 회원관리</title>
+<title>기준정보 > 사용자관리</title>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="smartMberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript" defer="defer">
@@ -108,7 +108,7 @@ function fn_egov_modal_remove() {
                 <div class="sub_in">
                     <div class="layout">
                         <!-- Left menu -->
-	                    <c:import url="/sym/mms/EgovMenuLeft.do" />
+	                    <%-- <c:import url="/sym/mms/EgovMenuLeft.do" /> --%>
 	                    <!--// Left menu -->
         
                         <div class="content_wrap">
@@ -117,9 +117,8 @@ function fn_egov_modal_remove() {
                                 <div class="location">
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
-                                        <li><a href="">포털시스템관리</a></li>
-                                        <li><a href="">사용자관리</a></li>
-                                        <li>회원관리</li>
+                                        <li><a href="">기준정보</a></li>
+                                        <li>사용자관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
@@ -138,13 +137,13 @@ function fn_egov_modal_remove() {
 					            <!-- 사용자유형정보 : password 수정화면으로 이동시 타겟 유형정보 확인용, 만약검색조건으로 유형이 포함될경우 혼란을 피하기위해 userTy명칭을 쓰지 않음-->
 					            <input type="hidden" name="userTyForPassword" value="<c:out value='${smartMberManageVO.userTy}'/>" />
 
-                                <h1 class="tit_1">포털시스템관리</h1>
+                                <!-- <h1 class="tit_1">사용자관리</h1>
 
-                                <p class="txt_1">시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
+                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
 
-                                <h2 class="tit_2">사용자관리</h2>
+								<h2 class="tit_2">사용자관리</h2>
 
-                                <h3 class="tit_3">회원관리</h3>
+                                <h3 class="tit_3">회원관리</h3> -->
 
                                 <div class="board_view2">
                                     <table summary="일반회원정보 상세조회">
@@ -231,7 +230,6 @@ function fn_egov_modal_remove() {
                                                 <label for="mberFxnum">팩스번호</label>
                                             </td>
                                             <td>
-                                                <input class="f_txt w_350" type="text" id="">
                                                 <form:input path="mberFxnum" id="mberFxnum" class="f_txt w_350" maxlength="15" />
                                                 <form:errors path="mberFxnum" cssClass="error" />
                                             </td>
@@ -241,8 +239,14 @@ function fn_egov_modal_remove() {
                                                 <label for="moblphonNo">핸드폰번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="moblphonNo" id="mberFxnum" class="f_txt w_350" maxlength="15" />
+                                                <form:input path="moblphonNo" id="moblphonNo" class="f_txt w_80" title="핸드폰번호" maxlength="4" />
+                                                <span class="f_txt_inner mr5 ml5" title="핸드폰번호 첫번째">-</span>
+                                                <form:input path="middleMoblphonNo" id="middleMoblphonNo" class="f_txt w_80" title="핸드폰번호 두번째" maxlength="4" />
+                                                <span class="f_txt_inner mr5 ml5">-</span>      
+                                                <form:input path="endMoblphonNo" id="endMoblphonNo" class="f_txt w_80" title="핸드폰번호 세번째" maxlength="4" />
                                                 <form:errors path="moblphonNo" cssClass="error" />
+                                                <form:errors path="middleMoblphonNo" cssClass="error" />
+                                                <form:errors path="endMoblphonNo" cssClass="error" />
                                             </td>
                                         </tr>
                                         <tr>

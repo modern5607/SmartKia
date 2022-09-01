@@ -1,5 +1,7 @@
 package egovframework.smart.mdm.mber.service;
 
+import java.io.Serializable;
+
 /**
  * 일반회원VO클래스로서 일반회원관리 비지니스로직 처리용 항목을 구성한다.
  * @author 공통서비스 개발팀 조재영
@@ -17,7 +19,7 @@ package egovframework.smart.mdm.mber.service;
  *
  * </pre>
  */
-public class SmartMberManageVO extends UserDefaultVO{
+public class SmartMberManageVO  extends UserDefaultVO{
 
 	/**
 	 * serialVersionUID
@@ -87,6 +89,10 @@ public class SmartMberManageVO extends UserDefaultVO{
 	 * 핸드폰번호
 	 */
 	private String moblphonNo;
+	
+	private String middleMoblphonNo;
+	
+	private String endMoblphonNo;
 	/**
 	 * 비밀번호
 	 */
@@ -334,6 +340,18 @@ public class SmartMberManageVO extends UserDefaultVO{
 	 */
 	public void setMoblphonNo(String moblphonNo) {
 		this.moblphonNo = moblphonNo;
+	}
+	public String getMiddleMoblphonNo() {
+		return middleMoblphonNo;
+	}
+	public void setMiddleMoblphonNo(String middleMoblphonNo) {
+		this.middleMoblphonNo = middleMoblphonNo;
+	}
+	public String getEndMoblphonNo() {
+		return endMoblphonNo;
+	}
+	public void setEndMoblphonNo(String endMoblphonNo) {
+		this.endMoblphonNo = endMoblphonNo;
 	}
 	/**
 	 * password attribute 값을  리턴한다.

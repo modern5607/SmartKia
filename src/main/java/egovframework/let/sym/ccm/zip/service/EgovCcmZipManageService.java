@@ -28,7 +28,7 @@ public interface EgovCcmZipManageService {
 	 * @param zip
 	 * @throws Exception
 	 */
-	void deleteZip(Zip zip) throws Exception;
+	void deleteZip(SmartZip smartZip) throws Exception;
 
 	/**
 	 * 우편번호 전체를 삭제한다.
@@ -41,7 +41,7 @@ public interface EgovCcmZipManageService {
 	 * @param zip
 	 * @throws Exception
 	 */
-	void insertZip(Zip zip) throws Exception;
+	void insertZip(SmartZip smartZip) throws Exception;
 
 	/**
 	 * 우편번호 엑셀파일을 등록한다.
@@ -56,7 +56,7 @@ public interface EgovCcmZipManageService {
 	 * @return Zip(우편번호)
 	 * @throws Exception
 	 */
-	Zip selectZipDetail(Zip zip) throws Exception;
+	SmartZip selectZipDetail(SmartZip smartZip) throws Exception;
 
 	/**
 	 * 우편번호 목록을 조회한다.
@@ -78,6 +78,6 @@ public interface EgovCcmZipManageService {
 	 * @param zip
 	 * @throws Exception
 	 */
-	void updateZip(Zip zip) throws Exception;
+	void updateZip(SmartZip smartZip) throws Exception;
 
 }

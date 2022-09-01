@@ -2,6 +2,7 @@ package egovframework.let.sym.ccm.zip.service.impl;
 
 import java.util.List;
 
+import egovframework.let.sym.ccm.zip.service.SmartZip;
 import egovframework.let.sym.ccm.zip.service.Zip;
 import egovframework.let.sym.ccm.zip.service.ZipVO;
 
@@ -35,8 +36,8 @@ public class ZipManageDAO extends EgovAbstractMapper {
 	 * @param zip
 	 * @throws Exception
 	 */
-	public void deleteZip(Zip zip) throws Exception {
-		delete("ZipManageDAO.deleteZip", zip);
+	public void deleteZip(SmartZip smartZip) throws Exception {
+		delete("ZipManageDAO.deleteZip", smartZip);
 	}
 
 	/**
@@ -52,8 +53,8 @@ public class ZipManageDAO extends EgovAbstractMapper {
 	 * @param zip
 	 * @throws Exception
 	 */
-	public void insertZip(Zip zip) throws Exception {
-        insert("ZipManageDAO.insertZip", zip);
+	public void insertZip(SmartZip smartZip) throws Exception {
+        insert("ZipManageDAO.insertZip", smartZip);
 	}
 
 	/**
@@ -71,8 +72,8 @@ public class ZipManageDAO extends EgovAbstractMapper {
 	 * @param zip
 	 * @return Zip(우편번호)
 	 */
-	public Zip selectZipDetail(Zip zip) throws Exception {
-		return (Zip) selectOne("ZipManageDAO.selectZipDetail", zip);
+	public SmartZip selectZipDetail(SmartZip smartZip) throws Exception {
+		return (SmartZip) selectOne("ZipManageDAO.selectZipDetail", smartZip);
 	}
 
 
@@ -100,8 +101,8 @@ public class ZipManageDAO extends EgovAbstractMapper {
 	 * @param zip
 	 * @throws Exception
 	 */
-	public void updateZip(Zip zip) throws Exception {
-		update("ZipManageDAO.updateZip", zip);
+	public void updateZip(SmartZip smartZip) throws Exception {
+		update("ZipManageDAO.updateZip", smartZip);
 	}
 
 }

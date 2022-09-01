@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.sym.ccm.zip.service.EgovCcmZipManageService;
-import egovframework.let.sym.ccm.zip.service.Zip;
+import egovframework.let.sym.ccm.zip.service.SmartZip;
 import egovframework.let.sym.ccm.zip.service.ZipVO;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -113,10 +113,10 @@ public class EgovCcmZipManageController {
 	 */
     @RequestMapping(value="/sym/ccm/zip/EgovCcmZipRemove.do")
 	public String deleteZip (@ModelAttribute("loginVO") LoginVO loginVO
-			, Zip zip
+			, SmartZip smartZip
 			, ModelMap model
 			) throws Exception {
-    	zipManageService.deleteZip(zip);
+    	zipManageService.deleteZip(smartZip);
         return "forward:/sym/ccm/zip/EgovCcmZipList.do";
 	}
 
@@ -131,23 +131,23 @@ public class EgovCcmZipManageController {
 	 */
     @RequestMapping(value="/sym/ccm/zip/EgovCcmZipRegist.do")
 	public String insertZip (@ModelAttribute("loginVO") LoginVO loginVO
-			, @ModelAttribute("zip") Zip zip
+			, @ModelAttribute("zip") SmartZip smartZip
 			, BindingResult bindingResult
 			, ModelMap model
 			) throws Exception {
-    	if   (zip.getZip() == null
-    		||zip.getZip().equals("")) {
+    	if   (smartZip.getPostCd() == null
+    		||smartZip.getPostCd().equals("")) {
 
             return "/cmm/sym/zip/EgovCcmZipRegist";
     	}
     	
-        beanValidator.validate(zip, bindingResult);
+        beanValidator.validate(smartZip, bindingResult);
 		if (bindingResult.hasErrors()){
             return "/cmm/sym/zip/EgovCcmZipRegist";
 		}
 
-    	zip.setFrstRegisterId(loginVO.getUniqId());
-    	zipManageService.insertZip(zip);
+		smartZip.setFrstRegisterId(loginVO.getUniqId());
+    	zipManageService.insertZip(smartZip);
         return "forward:/sym/ccm/zip/EgovCcmZipList.do";
     }
 
@@ -204,10 +204,10 @@ public class EgovCcmZipManageController {
 	 */
 	@RequestMapping(value="/sym/ccm/zip/EgovCcmZipDetail.do")
  	public String selectZipDetail (@ModelAttribute("loginVO") LoginVO loginVO
- 			, Zip zip
+ 			, SmartZip smartZip
  			, ModelMap model
  			) throws Exception {
-    	Zip vo = zipManageService.selectZipDetail(zip);
+		SmartZip vo = zipManageService.selectZipDetail(smartZip);
 		model.addAttribute("result", vo);
 		
 		return "/cmm/sym/zip/EgovCcmZipDetail";
@@ -261,25 +261,25 @@ public class EgovCcmZipManageController {
 	 */
     @RequestMapping(value="/sym/ccm/zip/EgovCcmZipModify.do")
 	public String updateZip (@ModelAttribute("loginVO") LoginVO loginVO
-			, @ModelAttribute("zip") Zip zip
+			, @ModelAttribute("zip") SmartZip smartZip
 			, BindingResult bindingResult
 			, @RequestParam Map <String, Object> commandMap
 			, ModelMap model
 			) throws Exception {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
     	if (sCmd.equals("")) {
-    		Zip vo = zipManageService.selectZipDetail(zip);
-    		model.addAttribute("zip", vo);
+    		SmartZip vo = zipManageService.selectZipDetail(smartZip);
+    		model.addAttribute("smartZip", vo);
 
     		return "/cmm/sym/zip/EgovCcmZipModify";
     	} else if (sCmd.equals("Modify")) {
-	        beanValidator.validate(zip, bindingResult);
+	        beanValidator.validate(smartZip, bindingResult);
 			if (bindingResult.hasErrors()){
 	    		return "/cmm/sym/zip/EgovCcmZipModify";
 			}
 
-			zip.setLastUpdusrId(loginVO.getUniqId());
-	    	zipManageService.updateZip(zip);
+			smartZip.setLastUpdusrId(loginVO.getUniqId());
+	    	zipManageService.updateZip(smartZip);
 
 	    	return "forward:/sym/ccm/zip/EgovCcmZipList.do";
     	} else {

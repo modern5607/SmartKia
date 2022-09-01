@@ -29,7 +29,7 @@
 	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 	<script src="<c:url value='/'/>js/ui.js"></script>
 
-<title>기준정보 > 회원관리</title>
+<title>기준정보 > 사용자관리</title>
 <script type="text/javaScript" language="javascript" defer="defer">
 <!--
 function fnCheckAll() {
@@ -100,18 +100,22 @@ function fnAddUserView() {
     document.listForm.action = "<c:url value='/mdm/SmartMberInsertView.do'/>";
     document.listForm.submit();
 }
-function fnLinkPage(pageNo){
-    document.listForm.pageIndex.value = pageNo;
-    document.listForm.action = "<c:url value='/mdm/SmartMberManage.do'/>";
-    document.listForm.submit();
-}
 function fnSearch(){
 	document.listForm.pageIndex.value = 1;
 	document.listForm.action = "<c:url value='/mdm/SmartMberManage.do'/>";
     document.listForm.submit();
 }
-<c:if test="${!empty resultMsg}">alert("<spring:message code="${resultMsg}" />");</c:if>
+/*********************************************************
+ * 페이징 처리 함수
+ ******************************************************** */
+function fnLinkPage(pageNo){
+    document.listForm.pageIndex.value = pageNo;
+    document.listForm.action = "<c:url value='/mdm/SmartMberManage.do'/>";
+    document.listForm.submit();
+}
+
 //-->
+
 </script>
 </head>
 <body>
@@ -129,7 +133,7 @@ function fnSearch(){
                 <div class="sub_in">
                     <div class="layout">
                         <!-- Left menu -->
-	                    <c:import url="/sym/mms/EgovMenuLeft.do" />
+	                    <%-- <c:import url="/sym/mms/EgovMenuLeft.do" /> --%>
 	                    <!--// Left menu -->
         
                         <div class="content_wrap">
@@ -139,8 +143,7 @@ function fnSearch(){
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
                                         <li><a href="">기준정보</a></li>
-                                        <li><a href="">사용자관리</a></li>
-                                        <li>회원관리</li>
+                                        <li>사용자관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
@@ -185,15 +188,15 @@ function fnSearch(){
 
                                 <!-- 게시판 -->
                                 <div class="board_list_top">
-                                    <div class="left_col">
+                                     <div class="left_col">
                                         <div class="list_count">
                                             <span>사용자수</span>
                                             <strong><c:out value="${paginationInfo.totalRecordCount}"/></strong>
                                         </div>
-                                    </div>
+                                    </div> 
 
                                     <div class="right_col">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                        <%-- <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 --> --%>
                                         <a href="<c:url value='/mdm/SmartMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
                                         <!-- 
                                         <a href="<c:url value='/uss/umt/mber/EgovMberManage.do'/>" class="btn btn_blue_46 w_100"><spring:message code="button.list" /></a>목록
@@ -206,7 +209,7 @@ function fnSearch(){
                                     	<caption>회원목록</caption>
                                         <colgroup>
                                             <col style="width: 60px;">
-                                            <col style="width: 60px;">
+                                            <%-- <col style="width: 60px;"> --%>
                                             <col style="width: 100px;">
                                             <col style="width: 105px;">
                                             <col style="width: auto;">
@@ -217,11 +220,11 @@ function fnSearch(){
                                         <thead>
                                             <tr>
                                                 <th scope="col">No.</th>
-                                                <th scope="col">
+                                                <!-- <th scope="col">
                                                     <span class="f_chk_only chkAll">
                                                         <input name="checkAll" type="checkbox" title="Check All" onclick="javascript:fnCheckAll();"/>
                                                     </span>
-                                                </th>
+                                                </th> -->
                                                 <th scope="col">아이디</th>
                                                 <th scope="col">사용자이름</th>
                                                 <th scope="col">사용자이메일</th>
@@ -229,24 +232,25 @@ function fnSearch(){
                                                 <th scope="col">등록일</th>
                                                 <th scope="col">가입상태</th>
                                             </tr>
+                                            
                                         </thead>
                                         <tbody>
-                                        	
                                         	<c:if test="${fn:length(resultList) == 0}">
 							                <tr>
 							                	<td colspan="8"><spring:message code="common.nodata.msg" /></td>
 							                </tr>
 							                </c:if>
                                         	
-                                        	<c:forEach var="result" items="${resultList}" varStatus="status">
+                                        	<c:forEach items="${resultList}" var="result"  varStatus="status">
                                             <tr>
-                                                <td><c:out value="${status.count}"/></td>
-                                                <td>
+                                            <%-- <td><c:out value="${(userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count}"/></td> --%>
+                                            <td><c:out value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}"/></td>
+                                                <%-- <td>
                                                     <span class="f_chk_only">
                                                         <input name="checkField" title="checkField <c:out value="${status.count}"/>" type="checkbox"/>
                                                         <input name="checkId" type="hidden" value="<c:out value='${result.userTy}'/>:<c:out value='${result.uniqId}'/>"/>
                                                     </span>
-                                                </td>
+                                                </td> --%>
                                                 <td>
                                                 	<a href="<c:url value='/mdm/mber/SmartMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>" class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
                                                 		<c:out value="${result.userId}"/>
@@ -265,7 +269,6 @@ function fnSearch(){
                                                 </td>
                                             </tr>
                                             </c:forEach>
-                                            
                                         </tbody>
                                     </table>
                                 </div>

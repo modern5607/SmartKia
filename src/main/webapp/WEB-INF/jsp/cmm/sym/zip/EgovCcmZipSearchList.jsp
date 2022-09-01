@@ -53,7 +53,7 @@ function fn_egov_search_Zip(){
 function fn_egov_return_Zip(zip,addr){
 	var retVal   = new Object();
 	var sZip     = zip;
-	var vZip     = zip.substring(0,3)+"-"+zip.substring(3,6);
+	var vZip     = zip.substring(0,5);
 	var sAddr    = addr.replace("/^\s+|\s+$/g","");
 	retVal.sZip  = sZip;
 	retVal.vZip  = vZip;
@@ -68,7 +68,9 @@ function fn_egov_return_Zip(zip,addr){
 function fn_egov_cancel_popup() {
 	parent.parent.fn_egov_modal_remove();
 }
+
 //-->
+
 </script>
 </head>
 
@@ -91,7 +93,7 @@ function fn_egov_cancel_popup() {
             <div class="pop_container">
                 <!-- 검색조건 -->
                 <div class="condition2">
-                    <label for="" class="lb mr10">동 명 : </label>
+                    <label for="" class="lb mr10">도로명 : </label>
                     <span class="item f_search">
                         <input class="f_input w_500" name="searchKeyword" type="text" value="${searchVO.searchKeyword}" maxlength="20" title="동명"/>
                         <button class="btn" type="submit" onclick="javascript:fn_egov_search_Zip();"><spring:message code='button.inquire' /></button><!-- 조회 -->
@@ -110,17 +112,17 @@ function fn_egov_cancel_popup() {
                         <thead>
                             <tr>
                                 <th scope="col">우편번호</th>
-                                <th scope="col">주소</th>
+                                <th scope="col">도로명주소</th>
                                 <th scope="col">선택</th>
                             </tr>
                         </thead>
                         <tbody>
                         	<c:forEach items="${resultList}" var="resultInfo" varStatus="status">
                             <tr>
-                                <td><c:out value='${fn:substring(resultInfo.zip, 0,3)}'/>-<c:out value='${fn:substring(resultInfo.zip, 3,6)}'/></td>
-                                <td class="al_l">${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm} ${resultInfo.lnbrDongHo}</td>
+                                <td><c:out value='${fn:substring(resultInfo.postCd, 0,5)}'/></td>
+                                <td class="al_l">${resultInfo.kenmulm} ${resultInfo.sido} ${resultInfo.sigungu} ${resultInfo.doro} ${resultInfo.kenmuls}</td>
                                 <td>
-                                	<a href="#LINK" class="btn btn_blue_30 w_80" onclick="javascript:fn_egov_return_Zip( '${resultInfo.zip}', '${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm}');">
+                                	<a href="#LINK" class="btn btn_blue_30 w_80" onclick="javascript:fn_egov_return_Zip( '${resultInfo.postCd}', '${resultInfo.sido} ${resultInfo.sigungu} ${resultInfo.doro} ${resultInfo.kenmulm} ${resultInfo.kenmuls}');">
                                 		선택
                                 	</a>
                                 </td>

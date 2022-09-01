@@ -1,5 +1,6 @@
 package egovframework.smart.mdm.mber.web;
 
+/*import java.io.PrintWriter;*/
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
@@ -8,6 +9,7 @@ import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.smart.mdm.mber.service.SmartMberManageService;
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
 import egovframework.smart.mdm.mber.service.UserDefaultVO;
+import egovframework.smart.mdm.service.SmartMdmBizVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -16,6 +18,7 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,6 +69,8 @@ public class SmartMberManageController {
 	@Autowired
 	private DefaultBeanValidator beanValidator;
 
+	
+	
 	/**
 	 * 일반회원목록을 조회한다. (pageing)
 	 * @param userSearchVO 검색조건정보
@@ -79,7 +84,7 @@ public class SmartMberManageController {
 	public String selectMberManage(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, ModelMap model, HttpServletRequest request,
 			@RequestParam(value = "menuNo", required = false) String menuNo
 			) throws Exception {
-		
+
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
 			request.getSession().setAttribute("menuNo", menuNo);
@@ -106,7 +111,6 @@ public class SmartMberManageController {
 		userSearchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		userSearchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		//model.addAttribute("resultList", mberManageService.selectMberList(userSearchVO));
 		model.addAttribute("resultList", smartMberManageService.selectMberList(userSearchVO));
 
 		int totCnt = smartMberManageService.selectMberListTotCnt(userSearchVO);
@@ -152,9 +156,34 @@ public class SmartMberManageController {
 
 		return "mdm/mber/SmartMberInsert";
 	}
+	/**
+	 * 거래처 관리 등록
+	 */
 	
-	@RequestMapping("/mdm/SmartMberInsert.do")
-	public String insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, BindingResult bindingResult, Model model) throws Exception {
+//	@RequestMapping(value = "/mdm/SmartMberInsert.do")
+//	public void insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, 
+//			BindingResult bindingResult, Model model, HttpServletResponse response) throws Exception {
+//		response.setContentType("text/html; charset=euc-kr");
+//		PrintWriter out = response.getWriter();
+//	
+//		int result = smartMberManageService.insertMber(smartMberManageVO);
+//		if (result == 0) // insert실패
+//		{
+//			out.println("<script>");
+//			out.println("alert('업체코드가 중복입니다.')");
+//			out.println("history.back()");
+//			out.println("</script>");
+//		} else {
+//			out.println("<script>");
+//			out.println("alert('성공적으로 등록되었습니다.')");
+//			out.println("location.href='/mdm/SmartMberManage.do'");
+//			out.println("</script>");
+//		}
+//	}
+	
+	@RequestMapping("/mdm/SmartMberManageInsert.do")
+	public String insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, 
+			BindingResult bindingResult, Model model) throws Exception {
 		
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();

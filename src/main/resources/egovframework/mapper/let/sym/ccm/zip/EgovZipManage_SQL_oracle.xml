@@ -3,40 +3,79 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ZipManageDAO">
 
-
-	<select id="selectZipList" parameterType="egovframework.let.sym.ccm.zip.service.ZipVO" resultType="egovMap">
+<!-- 	<select id="selectZipList" parameterType="egovframework.let.sym.ccm.zip.service.ZipVO" resultType="egovMap">
 		
 			SELECT  * 
 			  FROM  (
 			SELECT ROWNUM RNUM, ALL_LIST.* 
 			  FROM  (
 			/* 구현 Sql */
-			SELECT  ZIP
-			     ,  SN
-			     ,  CTPRVN_NM
-			     ,  SIGNGU_NM
-			     ,  EMD_NM
-			     ,  LI_BULD_NM
-			     ,  LNBR_DONG_HO
-			  FROM  LETTCZIP
+			SELECT  POST_CD
+			     ,  SIDO
+			     ,  SIGUNGU
+			     ,  DORO
+			     ,  KENMULBHO_M
+			     ,  KENMULBHO_S
+			  FROM  CAR_POST
 			 WHERE	1 = 1
 		
 			<if test="searchCondition == 1">AND
-				ZIP = #{searchKeyword}
+				POST_CD = #{searchKeyword}
 			</if>
 			<if test="searchCondition == 2">AND
-				CTPRVN_NM LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+				SIDO LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
 			</if>
 			<if test="searchCondition == 3">AND
-				SIGNGU_NM LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+				SIGUNGU LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
 			</if>
 			<if test="searchCondition == 4">AND
-				EMD_NM LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+				DORO LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
 			</if>
 			<if test="searchCondition == 5">AND
-				LI_BULD_NM LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+				KENMULBHO_H LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
 			</if>
 		
+			/* 구현 Sql */
+				    ) ALL_LIST
+				    )
+			 WHERE  RNUM  &gt; #{firstIndex}
+			   AND  RNUM &lt;= #{firstIndex} + #{recordCountPerPage}
+		
+	</select> -->
+ 	<select id="selectZipList" parameterType="egovframework.let.sym.ccm.zip.service.ZipVO" resultType="egovMap">
+		
+			SELECT  * 
+			  FROM  (
+			SELECT ROWNUM RNUM, ALL_LIST.* 
+			  FROM  (
+			/* 구현 Sql */
+			SELECT  POST_CD
+			     ,  SIDO
+			     ,  SIGUNGU
+			     ,  DORO
+			     ,  KENMULBHO_M
+			     ,  KENMULBHO_S
+			  FROM  CAR_KRPOST
+			 WHERE	1 = 1
+		
+			<if test="searchCondition == 1">AND
+				POST_CD = #{searchKeyword}
+			</if>
+			<if test="searchCondition == 2">AND
+				SIDO LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+			</if>
+			<if test="searchCondition == 3">AND
+				SIGUNGU LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+			</if>
+			<if test="searchCondition == 4">AND
+				DORO LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+			</if>
+			<if test="searchCondition == 5">AND
+				KENMULBHO_M LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+			</if>
+			<if test="searchCondition == 6">AND
+				KENMULBHO_S LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+			</if>
 			/* 구현 Sql */
 				    ) ALL_LIST
 				    )
@@ -48,27 +87,30 @@
 	<select id="selectZipListTotCnt" parameterType="egovframework.let.sym.ccm.zip.service.ZipVO" resultType="int">
 		
 			SELECT  COUNT(*) totcnt 
-			  FROM  LETTCZIP
+			  FROM  CAR_KRPOST
 			 WHERE	1 = 1
 		
 			<if test="searchCondition == 1">AND
-				ZIP = #{searchKeyword}
+				POST_CD = #{searchKeyword}
 			</if>
 			<if test="searchCondition == 2">AND
-				CTPRVN_NM LIKE '%'||#{searchKeyword}||'%'
+				SIDO LIKE '%'||#{searchKeyword}||'%'
 			</if>
 			<if test="searchCondition == 3">AND
-				SIGNGU_NM LIKE '%'||#{searchKeyword}||'%'
+				SIGUNGU LIKE '%'||#{searchKeyword}||'%'
 			</if>
 			<if test="searchCondition == 4">AND
-				EMD_NM LIKE '%'||#{searchKeyword}||'%'
+				DORO LIKE '%'||#{searchKeyword}||'%'
 			</if>
 			<if test="searchCondition == 5">AND
-				LI_BULD_NM LIKE '%'||#{searchKeyword}||'%'
+				KENMULBHO_M LIKE '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="searchCondition == 6">AND
+				KENMULBHO_S LIKE '%'||#{searchKeyword}||'%'
 			</if>
 	</select>
 
-	<select id="selectZipDetail" parameterType="egovframework.let.sym.ccm.zip.service.Zip" resultType="egovframework.let.sym.ccm.zip.service.Zip">
+<!-- 	<select id="selectZipDetail" parameterType="egovframework.let.sym.ccm.zip.service.Zip" resultType="egovframework.let.sym.ccm.zip.service.Zip">
 		
 			SELECT  ZIP           zip       
 			     ,  SN            sn        
@@ -180,6 +222,6 @@
             DELETE  
               FROM  LETTCZIP     
 		
-	</delete>
+	</delete> -->
 
 </mapper>

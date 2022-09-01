@@ -34,7 +34,7 @@
 	<script src="<c:url value='/'/>js/jqueryui.js"></script>
 	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
 	
-<title>샘플 포털 > 포털시스템관리 > 사용자관리 > 회원관리</title>
+<title>기준정보 > 사용자관리</title>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="smartMberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript">
@@ -129,7 +129,7 @@ function fnInsert(){
                 <div class="sub_in">
                     <div class="layout">
                         <!-- Left menu -->
-	                    <c:import url="/sym/mms/EgovMenuLeft.do" />
+	                    <%-- <c:import url="/sym/mms/EgovMenuLeft.do" /> --%>
 	                    <!--// Left menu -->
         
                         <div class="content_wrap">
@@ -139,21 +139,20 @@ function fnInsert(){
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
                                         <li><a href="">기준정보</a></li>
-                                        <li><a href="">사용자관리</a></li>
-                                        <li>회원관리</li>
+                                        <li>사용자관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
 
 								<form:form modelAttribute="smartMberManageVO" name="smartMberManageVO" action="${pageContext.request.contextPath}/mdm/SmartMberInsert.do" method="post" >
 
-                                <h1 class="tit_1">기준정보</h1>
+                                <!-- <h1 class="tit_1">사용자관리</h1>
 
                                 <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
+ -->
+<!--                                 <h2 class="tit_2">사용자관리</h2>
 
-                                <h2 class="tit_2">사용자관리</h2>
-
-                                <h3 class="tit_3">회원관리</h3>
+                                <h3 class="tit_3">회원관리</h3> -->
 
                                 <div class="board_view2">
                                     <table summary="일반회원 등록정보">
@@ -163,7 +162,7 @@ function fnInsert(){
                                         </colgroup>
                                         <tr>
                                             <td class="lb">
-                                                <label for="mberId">일반회원아이디</label>
+                                                <label for="mberId">사용자아이디</label>
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
@@ -177,7 +176,7 @@ function fnInsert(){
                                         </tr>
                                         <tr>
                                             <td class="lb">
-                                                <label for="mberNm">일반회원이름</label>
+                                                <label for="mberNm">사용자이름</label>
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
@@ -270,8 +269,14 @@ function fnInsert(){
                                                 <label for="mberFxnum">핸드폰번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="moblphonNo" id="moblphonNo" class="f_txt w_350" title="핸드폰번호" maxlength="15" />
+                                                <form:input path="moblphonNo" id="moblphonNo" class="f_txt w_80" title="핸드폰번호" maxlength="4" />
+                                                <span class="f_txt_inner mr5 ml5" title="핸드폰번호 첫번째">-</span>
+                                                <form:input path="middleMoblphonNo" id="middleMoblphonNo" class="f_txt w_80" title="핸드폰번호 두번째" maxlength="4" />
+                                                <span class="f_txt_inner mr5 ml5">-</span>      
+                                                <form:input path="endMoblphonNo" id="endMoblphonNo" class="f_txt w_80" title="핸드폰번호 세번째" maxlength="4" />
                                                 <form:errors path="moblphonNo" cssClass="error" />
+                                                <form:errors path="middleMoblphonNo" cssClass="error" />
+                                                <form:errors path="endMoblphonNo" cssClass="error" />
                                             </td>
                                         </tr>
                                         <tr>
