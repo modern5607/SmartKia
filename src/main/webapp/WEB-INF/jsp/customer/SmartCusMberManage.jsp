@@ -97,7 +97,7 @@ function fnSelectUser(id) {
     document.listForm.submit();
 }
 function fnAddUserView() {
-    document.listForm.action = "<c:url value='/uss/umt/mber/EgovMberInsertView.do'/>";
+    document.listForm.action = "<c:url value='/customer/SmartCusMberInsertView.do'/>";
     document.listForm.submit();
 }
 function fnLinkPage(pageNo){
@@ -107,7 +107,7 @@ function fnLinkPage(pageNo){
 }
 function fnSearch(){
 	document.listForm.pageIndex.value = 1;
-	document.listForm.action = "<c:url value='/uss/umt/mber/EgovMberManage.do'/>";
+	document.listForm.action = "<c:url value='/customer/SmartCusMberManage.do'/>";
     document.listForm.submit();
 }
 <c:if test="${!empty resultMsg}">alert("<spring:message code="${resultMsg}" />");</c:if>
@@ -129,7 +129,7 @@ function fnSearch(){
 				<div class="sub_in">
 					<div class="layout">
 						<!-- Left menu -->
-						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--c:import url="/sym/mms/EgovMenuLeft.do" /-->
 						<!--// Left menu -->
 
 						<div class="content_wrap">
@@ -206,12 +206,7 @@ function fnSearch(){
 												onclick="fnDeleteUser(); return false;"><spring:message
 													code="button.delete" /></a>
 											<!-- 삭제 -->
-											<a
-												href="<c:url value='/customer/SmartCusMberInsertView.do'/>"
-												class="btn btn_blue_46 w_100"
-												onclick="fnAddUserView(); return false;"><spring:message
-													code="button.create" /></a>
-											<!-- 등록 -->
+											<a href="<c:url value='/customer/SmartCusMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
 											<!-- 
                                         <a href="<c:url value='/customer/SmartCusMberManage.do'/>" class="btn btn_blue_46 w_100"><spring:message code="button.list" /></a>목록
                                          -->
@@ -224,12 +219,12 @@ function fnSearch(){
 											<colgroup>
 												<col style="width: 60px;">
 												<col style="width: 60px;">
-												<col style="width: 100px;">
-												<col style="width: 105px;">
 												<col style="width: auto;">
-												<col style="width: 140px;">
-												<col style="width: 180px;">
-												<col style="width: 150px;">
+												<col style="width: auto;">
+												<col style="width: auto;">
+												<col style="width: auto;">
+												<col style="width: auto;">
+												<col style="width: auto;">
 											</colgroup>
 											<thead>
 												<tr>
@@ -271,12 +266,12 @@ function fnSearch(){
 															onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
 																<c:out value="${result.userId}" />
 														</a></td>
-														<td><c:out value="${result.userNm}" /></td>
-														<td><c:out value="${result.emailAdres}" /></td>
-														<td><c:out value="${result.areaNo}" />)<c:out
-																value="${result.middleTelno}" />-<c:out
-																value="${result.endTelno}" /></td>
-														<td><c:out value="${result.sbscrbDe}" /></td>
+														<td><c:out value="${result.CUSTOMER_ID}" /></td>
+														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
+														<td><c:out value="${result.CUSTOMER_AUTONO}" />)														
+														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
+														<td><c:out value="${result.NOTE}" /></td>
 														<td><c:forEach var="entrprsMberSttus_result"
 																items="${entrprsMberSttus_result}" varStatus="status">
 																<c:if

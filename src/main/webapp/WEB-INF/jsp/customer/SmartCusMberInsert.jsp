@@ -43,7 +43,7 @@ function fnIdCheck(){
     var url = "<c:url value='/uss/umt/EgovIdDplctCnfirmView.do'/>?";
     
     var varParam = new Object();
-    var checkId = document.mberManageVO.mberId.value;
+    var checkId = document.cusMberManageVO.mberId.value;
     var varParam = "checkId="+checkId;
     
     var $dialog = $('<div id="modalPan"></div>')
@@ -90,23 +90,23 @@ function fn_egov_modal_remove() {
 
 function showModalDialogCallback(retVal) {
 	if(retVal) {
-        document.mberManageVO.mberId.value = retVal;
-        document.mberManageVO.id_view.value = retVal;
+        document.cusMberManageVO.mberId.value = retVal;
+        document.cusMberManageVO.id_view.value = retVal;
     }
 	fn_egov_modal_remove();
 }
 
 function fnListPage(){
-    document.mberManageVO.action = "<c:url value='/customer/SmartCusMberManage.do'/>";
-    document.mberManageVO.submit();
+    document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberManage.do'/>";
+    document.cusMberManageVO.submit();
 }
 function fnInsert(){
-	if(validateMberManageVO(document.mberManageVO)){
-		if(document.mberManageVO.password.value != document.mberManageVO.password2.value){
+	if(validateMberManageVO(document.cusMberManageVO)){
+		if(document.cusMberManageVO.password.value != document.cusMberManageVO.password2.value){
             alert("<spring:message code="fail.user.passwordUpdate2" />");
             return;
         }
-        document.mberManageVO.submit();
+        document.cusMberManageVO.submit();
     }
 }
 
@@ -128,7 +128,7 @@ function fnInsert(){
                 <div class="sub_in">
                     <div class="layout">
                         <!-- Left menu -->
-	                    <c:import url="/sym/mms/EgovMenuLeft.do" />
+	                    <!--c:import url="/sym/mms/EgovMenuLeft.do" /-->
 	                    <!--// Left menu -->
         
                         <div class="content_wrap">
