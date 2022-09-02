@@ -110,11 +110,12 @@ public class SmartCusMberManageController {
 
 
 		model.addAttribute("resultList", cusMberManageService.selectMberList(userSearchVO));
-		System.out.println(userSearchVO);
+		
 		int totCnt = cusMberManageService.selectMberListTotCnt(userSearchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-
+		//System.out.println(model.getAttribute("resultList"));
+		System.out.println(userSearchVO);
 		//일반회원 상태코드를 코드정보로부터 조회
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
 		vo.setCodeId("COM013");

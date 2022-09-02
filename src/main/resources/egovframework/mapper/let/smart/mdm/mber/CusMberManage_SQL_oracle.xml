@@ -23,10 +23,10 @@
     FROM    CAR_CUSTOMER
     WHERE 1=1
         <if test="searchCondition == 0">
-            AND CUSTOMER_TEL LIKE #{searchKeyword}
+            AND CUSTOMER_AUTONO LIKE #{searchKeyword}
         </if>
         <if test="searchCondition == 1">
-            AND CUSTOMER_AUTONO LIKE '%' ||#{searchKeyword}|| '%'
+            AND CUSTOMER_TEL LIKE '%' ||#{searchKeyword}|| '%'
         </if>
         ORDER BY 1,2 DESC) <!-- 오더바이옆에있는 숫자를 기준으로 정렬  -->
         TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
@@ -37,14 +37,14 @@
             FROM   CAR_CUSTOMER
             WHERE 1=1
 			<if test="searchCondition == 0">
-            AND CUSTOMER_TEL LIKE #{searchKeyword}
+            AND CUSTOMER_AUTONO LIKE #{searchKeyword}
         	</if>
         	<if test="searchCondition == 1">
-            AND CUSTOMER_AUTONO LIKE '%' ||#{searchKeyword}|| '%'
+            AND CUSTOMER_TEL LIKE '%' ||#{searchKeyword}|| '%'
         	</if>
     </select>
     
-    <insert id="insertMber_S">
+  <!--   <insert id="insertMber_S">
         
             INSERT INTO LETTNGNRLMBER 
                 (   
@@ -200,40 +200,5 @@
              ) A
          WHERE userId = #{checkId}
      
-    </select>
+    </select> -->
 </mapper>
-    
-<!--  <select id="selectMberList" parameterType="egovframework.smart.customer.service.CusMberManageVO" resultType="egovMap">
-SELECT * FROM ( SELECT rownum rn, TB.* FROM (
-    SELECT 
-        CUSTOMER_ID           as "cusId",
-        CUSTOMER_NAME         as "cusNm",
-        CUSTOMER_AUTONO       as "autoNo",
-        CUSTOMER_TEL          as "custel",
-        USE_YN                as "useYN",
-        NOTE                  as "note",
-    FROM    CAR_CUSTOMER
-    WHERE 1=1
-        <if test="searchCondition == 0">
-            AND CUSTOMER_TEL LIKE #{searchKeyword}
-        </if>
-        <if test="searchCondition == 1">
-            AND CUSTOMER_AUTONO LIKE '%' ||#{searchKeyword}|| '%'
-        </if>
-        ORDER BY 12 DESC) 
-        TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
-    </select>
-    
-    
-        <select id="selectMberListTotCnt" parameterType="egovframework.smart.customer.service.CusMberDefaultVO" resultType="int">
-            SELECT COUNT(1) totcnt
-            FROM   CAR_CUSTOMER
-            WHERE 1=1
-            <if test="searchCondition == 0">
-                AND CUSTOMER_TEL LIKE #{searchKeyword}
-            </if>
-            <if test="searchCondition == 1">
-                AND CUSTOMER_AUTONO LIKE '%' ||#{searchKeyword}|| '%'
-            </if>
-    </select> 
-</mapper>-->

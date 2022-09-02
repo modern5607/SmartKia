@@ -140,8 +140,7 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	@Override
 	public List<CusMberManageVO> selectMberList(CusMberDefaultVO userSearchVO) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return cusMberManageDAO.selectMberList(userSearchVO);
 	}
 
 
