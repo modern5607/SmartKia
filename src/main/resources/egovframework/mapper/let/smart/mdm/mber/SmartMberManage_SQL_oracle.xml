@@ -78,7 +78,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
         
             INSERT INTO LETTNGNRLMBER 
                 (   
-                    ESNTL_ID          ,
+                    ESNTL_ID         ,
                     MBER_ID          ,
                     MBER_NM          ,
                     PASSWORD         ,

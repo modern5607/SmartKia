@@ -23,7 +23,7 @@
     FROM    CAR_CUSTOMER
     WHERE 1=1
         <if test="searchCondition == 0">
-            AND CUSTOMER_AUTONO LIKE #{searchKeyword}
+            AND CUSTOMER_AUTONO LIKE '%' ||#{searchKeyword}|| '%'
         </if>
         <if test="searchCondition == 1">
             AND CUSTOMER_TEL LIKE '%' ||#{searchKeyword}|| '%'
@@ -44,55 +44,28 @@
         	</if>
     </select>
     
-  <!--   <insert id="insertMber_S">
+    <insert id="insertMber_S">
         
-            INSERT INTO LETTNGNRLMBER 
+            INSERT INTO CAR_CUSTOMER 
                 (   
-                    ESNTL_ID          ,
-                    MBER_ID          ,
-                    MBER_NM          ,
-                    PASSWORD         ,
-                    PASSWORD_HINT    ,
-                    PASSWORD_CNSR    ,
-                    IHIDNUM          ,
-                    SEXDSTN_CODE     ,
-                    ZIP              ,
-                    ADRES            ,
-                    AREA_NO          ,
-                    MBER_STTUS       ,
-                    DETAIL_ADRES     ,
-                    END_TELNO        ,
-                    MBTLNUM      ,
-                    GROUP_ID         ,
-                    MBER_FXNUM       ,
-                    MBER_EMAIL_ADRES ,
-                    MIDDLE_TELNO     ,
-                    SBSCRB_DE        )
+                    CUSTOMER_ID         ,
+                    CUSTOMER_NAME       ,
+                    CUSTOMER_AUTONO     ,
+                    CUSTOMER_AUTOKIND   ,
+                    CUSTOMER_TEL    	,
+                    NOTE    			
+                    )
               VALUES(
-                    #{uniqId},
-                    #{mberId},
-                    #{mberNm},
-                    #{password},
-                    #{passwordHint},
-                    #{passwordCnsr},
-                    #{ihidnum},
-                    #{sexdstnCode},
-                    #{zip},
-                    #{adres},
-                    #{areaNo},
-                    #{mberSttus},
-                    #{detailAdres},
-                    #{endTelno},
-                    #{moblphonNo},
-                    #{groupId},
-                    #{mberFxnum},
-                    #{mberEmailAdres},
-                    #{middleTelno},
-                    sysdate  )              
-        
+                    #{cusId},
+                    #{cusNm},
+                    #{autoNo},
+                    #{autoKind},
+                    #{cusTel},
+                    #{note} 
+                    )              
     </insert>
     
-    <delete id="deleteMber_S">
+<!--     <delete id="deleteMber_S">
         
             DELETE FROM LETTNGNRLMBER 
             WHERE ESNTL_ID=#{delId}
