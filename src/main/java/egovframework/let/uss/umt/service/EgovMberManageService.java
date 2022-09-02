@@ -2,6 +2,8 @@ package egovframework.let.uss.umt.service;
 
 import java.util.List;
 
+import egovframework.smart.customer.service.CusMberDefaultVO;
+
 /**
  * 일반회원관리에 관한 인터페이스클래스를 정의한다.
  * @author 공통서비스 개발팀 조재영
