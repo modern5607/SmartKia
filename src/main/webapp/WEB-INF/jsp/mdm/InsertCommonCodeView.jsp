@@ -29,67 +29,6 @@
 	xhtml="true" cdata="false" />
 <script type="text/javaScript" language="javascript">
 
-// function fnIdCheck(){
-//     var url = "<c:url value='/uss/umt/EgovIdDplctCnfirmView.do'/>?";
-    
-//     var varParam = new Object();
-//     var checkId = document.mberManageVO.mberId.value;
-//     var varParam = "checkId="+checkId;
-    
-//     var $dialog = $('<div id="modalPan"></div>')
-// 	.html('<iframe style="border: 0px;" src="' + "<c:url value='/uss/umt/EgovIdDplctCnfirmView.do'/>?" + varParam +'" width="100%" height="100%"></iframe>')
-// 	.dialog({
-//     	autoOpen: false,
-//         modal: true,
-//         width: 600,
-//         height: 450
-// 	});
-//     $(".ui-dialog-titlebar").hide();
-// 	$dialog.dialog('open');
-// }
-
-// function fn_egov_ZipSearch(){
-    
-//     var $dialog = $('<div id="modalPan"></div>')
-// 	.html('<iframe style="border: 0px; " src="' + "<c:url value='/sym/cmm/EgovCcmZipSearchList.do'/>" +'" width="100%" height="100%"></iframe>')
-// 	.dialog({
-//     	autoOpen: false,
-//         modal: true,
-//         width: 1100,
-//         height: 600
-// 	});
-//     $(".ui-dialog-titlebar").hide();
-// 	$dialog.dialog('open');
-// }
-
-// function fn_egov_returnValue(retVal){
-// 	if (retVal) {
-// 		document.getElementById("zip_view").value  = retVal.vZip;
-// 		document.getElementById("adres").value  = retVal.sAddr;
-// 	}
-	
-// 	fn_egov_modal_remove();
-// }
-
-// /**********************************************************
-//  * 모달 종료 버튼
-//  ******************************************************** */
-// function fn_egov_modal_remove() {
-// 	$('#modalPan').remove();
-// }
-
-// function showModalDialogCallback(retVal) {
-// 	if(retVal) {
-//         document.mberManageVO.mberId.value = retVal;
-//         document.mberManageVO.id_view.value = retVal;
-//     }
-// 	fn_egov_modal_remove();
-// }
-
-// function fnListPage(){
-//     document.mberManageVO.action = "<c:url value='/uss/umt/mber/EgovMberManage.do'/>";
-//     document.mberManageVO.submit();
-// }
 function fnInsert(){
 	
     document.comCodeVO.submit();
@@ -113,9 +52,6 @@ function fnInsert(){
 			<div class="sub_layout">
 				<div class="sub_in">
 					<div class="layout">
-						<!-- Left menu -->
-						<c:import url="/sym/mms/EgovMenuLeft.do" />
-						<!--// Left menu -->
 
 						<div class="content_wrap">
 							<div id="contents" class="content">

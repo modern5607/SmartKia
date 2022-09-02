@@ -113,9 +113,6 @@ function fnInsert(){
 			<div class="sub_layout">
 				<div class="sub_in">
 					<div class="layout">
-						<!-- Left menu -->
-						<c:import url="/sym/mms/EgovMenuLeft.do" />
-						<!--// Left menu -->
 
 						<div class="content_wrap">
 							<div id="contents" class="content">
@@ -130,7 +127,7 @@ function fnInsert(){
 								</div>
 								<!--// Location -->
 
-								<form:form modelAttribute="comCodeVO" name="comCodeVO"	action="${pageContext.request.contextPath}/mdm/UpdateCommonGroupCode.do" method="post">
+								<form name="comCodeVO"action="${pageContext.request.contextPath}/mdm/UpdateCommonGroupCode.do" method="post">
 								<c:forEach items="${info}" var="info">
                                     <input type="hidden" id="previousgroupcode" name="previousgroupcode" value="<c:out value='${info.GROUP_CODE}'/>" />
 									<h2 class="tit_2">공통코드 수정</h2>
@@ -143,8 +140,8 @@ function fnInsert(){
 											</colgroup>
 											
 											<tr>
-												<td class="lb"><label for="groupcode">그룹코드</label> <span class="req">필수</span></td>
-												<td><input name="groupcode" id="groupcode" class="f_txt w_350"  type="text" value="<c:out value='${info.GROUP_CODE}'/>" /></td>
+												<td class="lb"><label for="groupcode">그룹코드</label></td>
+												<td><input name="groupcode" id="groupcode" class="f_txt w_350" readonly type="text" value="<c:out value='${info.GROUP_CODE}'/>" /></td>
 											</tr>
 											<tr>
 												<td class="lb"><label for="groupname">그룹코드명</label> <span
@@ -189,14 +186,14 @@ function fnInsert(){
 												onclick="fnInsert(); return false;"><spring:message
 													code="button.save" /></a>
 											<!-- 저장 -->
-											<a href="<c:url value='/uss/umt/mber/EgovMberManage.do'/>"
+											<a href="<c:url value='/mdm/SmartCode.do'/>"
 												class="btn btn_blue_46 w_100"
 												onclick="fnListPage(); return false;"><spring:message
 													code="button.list" /></a>
 											<!-- 목록 -->
 										</div>
 									</div>
-								</form:form>
+								</form>
 							</div>
 						</div>
 					</div>

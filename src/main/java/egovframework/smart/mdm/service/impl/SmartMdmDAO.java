@@ -1,6 +1,7 @@
 package egovframework.smart.mdm.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,9 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 	public int insertCommonGroupCode(SmartCommonCodeVO vo) {
 		return insert("SmartMdmDAO.insertCommonGroupCode", vo);
 	}
+	public int updateCommonGroupCode(SmartCommonCodeVO vo) {
+		return update("SmartMdmDAO.updateCommonGroupCode", vo);
+	}
 	@SuppressWarnings("unchecked")
 	public List<SmartCommonCodeVO> selectCommonCode(SmartCommonCodeVO vo) {
 		return (List<SmartCommonCodeVO>)list("SmartMdmDAO.selectCommonCode", vo);
@@ -38,10 +42,10 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 	public int insertCommonCode(SmartCommonCodeVO vo) {
 		return insert("SmartMdmDAO.insertCommonCode", vo);
 	}
-	public int updateCommonGroupCode(SmartCommonCodeVO vo) {
-		return update("SmartMdmDAO.updateCommonGroupCode", vo);
-
-	}
+	public int updateCommonCode(SmartCommonCodeVO vo) {
+        return update("SmartMdmDAO.updateCommonCode", vo);
+    }
+	
 	@SuppressWarnings("unchecked")
 	public List<SmartLeadTimeVO> selectLeadTime(SmartLeadTimeVO vo) {
 		return selectList("SmartMdmDAO.selectLeadTime");
@@ -57,6 +61,13 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 	@SuppressWarnings("unchecked")
     public List<SmartLeadTimeVO> selectLeadSub(SmartLeadTimeVO vo) {
 		return selectList("SmartMdmDAO.selectLeadSub",vo);
+    }
+
+	public int InsertLeadTime(SmartLeadTimeVO vo) {
+		return update("SmartMdmDAO.insertleadtime",vo);
+	}
+    public int UpdateLeadTime(SmartLeadTimeVO vo) {
+        return update("SmartMdmDAO.updateleadtime",vo);
     }
 
     @SuppressWarnings("unchecked")
@@ -75,4 +86,8 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 	public int checkCustid(String checkId) throws Exception {
 		return (Integer)selectOne("SmartMdmDAO.checkCustid", checkId);
 	}
+
+	
+	
+   
 }

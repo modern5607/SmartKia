@@ -19,26 +19,21 @@ public class SmartCommonCodeVO extends ComDefaultVO implements Serializable {
 	private String remark="";
 	private String useyn="";
 	private String ord="";
+	private String previouscode="";
+	
 	private String previousgroupcode="";
 	private String currentid="";
-	/** 현재페이지 */
-    private int pageIndex = 1;
-
-	/** 페이지갯수 */
-    private int pageUnit = 10;
-
-    /** 페이지사이즈 */
-    private int pageSize = 10;
-
-    /** firstIndex */
-    private int firstIndex = 1;
-
-    /** lastIndex */
-    private int lastIndex = 1;
-
-    /** recordCountPerPage */
-    private int recordCountPerPage = 10;
+	private String searchCode="";
 	
+	private String searchCodename="";
+
+    
+	private int pageIndex = 1;
+    private int pageUnit = 10;
+    private int pageSize = 10;
+    private int firstIndex = 1;
+    private int lastIndex = 1;
+    private int recordCountPerPage = 10;	
 	
 	public String getCurrentid() {
 		return currentid;
@@ -117,6 +112,25 @@ public class SmartCommonCodeVO extends ComDefaultVO implements Serializable {
 	}
 	public void setOrd(String ord) {
 		this.ord = ord;
+	}
+	public String getPreviouscode() {
+		return previouscode;
+	}
+	public void setPreviouscode(String previouscode) {
+		this.previouscode = previouscode;
+	}
+
+	public String getSearchCode() {
+		return searchCode;
+	}
+	public void setSearchCode(String searchCode) {
+		this.searchCode = searchCode;
+	}
+	public String getSearchCodename() {
+		return searchCodename;
+	}
+	public void setSearchCodename(String searchCodename) {
+		this.searchCodename = searchCodename;
 	}
 
     public int getPageIndex() {

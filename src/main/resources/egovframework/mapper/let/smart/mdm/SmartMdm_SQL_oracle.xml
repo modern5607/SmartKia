@@ -12,8 +12,11 @@
 		TO_CHAR(A.UPDATE_DATE,'YYYY-MM-DD') AS UPDATE_DATE
 		FROM CAT_COMGROUPCODE A  
 		WHERE 1=1
-		<if test="searchKeyword != ''">
-			AND A.GROUP_CODE LIKE '%' || #{searchKeyword} || '%'
+		<if test="searchCode != ''">
+			AND A.GROUP_CODE LIKE '%' || #{searchCode} || '%'
+		</if>
+		<if test="searchCodename != ''">
+			AND A.GROUP_NAME LIKE '%' || #{searchCodename} || '%'
 		</if>
 		ORDER BY INSERT_DATE DESC
 	</select>
@@ -57,6 +60,21 @@
 			AND CODE = #{code}
 		</if>
 	</select >
+
+	<update id="updateCommonCode" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO">
+		UPDATE CAR_COMCODE
+		SET
+			CODE = #{code},
+			NAME = #{name},
+			REMARK = #{remark},
+			USE_YN = #{useyn},
+			ORD = #{ord},
+			UPDATE_ID= #{currentid},
+			UPDATE_DATE = SYSDATE
+		WHERE
+			GROUP_CODE = #{groupcode}
+			AND CODE = #{previouscode}
+	</update>
 	
 	
 	
@@ -82,17 +100,34 @@
 
 
 	<select id="selectLeadTime" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT * FROM CAR_LEADTIME
+		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = 'LEADTIME'
 	</select>
 	<select id="selectLeadMain" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT CODE,GROUP_CODE,NAME FROM CAR_COMCODE WHERE GROUP_CODE ='AUTO_000'
+		SELECT * FROM CAR_LEADTIME WHERE H_CODE = 'MAIN'
 	</select>
 	<select id="selectLeadMiddle" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT CODE,GROUP_CODE,NAME FROM CAR_COMCODE WHERE GROUP_CODE='AUTO_001' AND COL1 = #{main}
+		SELECT * FROM CAR_LEADTIME WHERE H_CODE = #{main}
 	</select>
 	<select id="selectLeadSub" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT CODE,GROUP_CODE,NAME FROM CAR_COMCODE WHERE GROUP_CODE='AUTO_002' AND COL1 = #{middle}
+		SELECT * FROM CAR_LEADTIME WHERE H_CODE = #{middle}
 	</select>
+
+	<insert id="insertleadtime" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO">
+		INSERT INTO CAR_LEADTIME
+		(IDX,H_CODE,CODE,NAME,LEAD_TIME,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
+		VALUES
+		(TO_CHAR(SYSDATE, 'YYYYMMDD')||'_'||TO_CHAR(SEQ_CAR_LEADTIME.NEXTVAL, 'FM0000'),
+		#{middle},#{middle}||'_'||TO_CHAR(SEQ_CAR_LEADTIME.NEXTVAL, 'FM000'),#{insertname},#{insertleadtime},#{id},SYSDATE,'','')
+	</insert>
+
+	<update id="updateleadtime" parameterType="java.util.HashMap">
+		UPDATE CAR_LEADTIME
+		SET LEAD_TIME = #{updateleadtime},
+		UPDATE_ID = #{id},
+		UPDATE_DATE = SYSDATE
+		WHERE H_CODE = #{updatehcode}
+		AND CODE = #{updatecode}
+	</update>
 
 	<select id="selectBizList" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO" resultType="java.util.HashMap">
 		

@@ -118,10 +118,11 @@ function fn_egov_modal_remove() {
                     <div>
                         <h2>기준정보</h2>
                         <ul>
-                            <li><a href="/uss/olp/qim/EgovQustnrItemManageList.do?menuNo=1000000">공통코드관리</a></li>
+                            <li><a href="/mdm/SmartCode.do?menuNo=1010000">공통코드관리</a></li>
                             <li><a href="/mdm/SmartMberManage.do?menuNo=1000000">사용자관리</a></li>
                             <li><a href="/sec/gmt/EgovGroupList.do?menuNo=1000000">소요시간관리</a></li>
                             <li><a href="/EgovPageLink.do?link=main/sample_menu/EgovLocation?menuNo=1000000">찾아오시는 길</a></li>
+                            <li><a href="/mdm/SmartLeadTime.do?menuNo=1070000">표준작업관리</a></li>
                         </ul>
                     </div>
 

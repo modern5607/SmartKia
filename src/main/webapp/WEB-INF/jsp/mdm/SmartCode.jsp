@@ -41,6 +41,12 @@
         document.searchform.action = "<c:url value='/mdm/UpdateCommonCodeView.do'/>";
         document.searchform.submit();
     }
+    function DeleteCommonCode(groupcode,code)
+    {
+    	confirm("정말 삭제하시겠습니까?");
+    	
+    }
+    
     </script>
 
 </head>
@@ -59,7 +65,7 @@
                 <div class="sub_in">
                     <div class="layout">
                         <!-- Left menu -->
-                        <c:import url="/sym/mms/EgovMenuLeft.do" />
+                        <!-- <c:import url="/sym/mms/EgovMenuLeft.do" /> -->
                         <!--// Left menu -->
                         <div class="content_wrap">
                             <div id="contents" class="content">
@@ -74,12 +80,10 @@
                                 <!--// Location -->
 
                                 <form name="searchform" id="searchform" action="<c:url value='/mdm/SmartCode.do'/>" method="post">
-                                    <h1 class="tit_1">공통코드관리</h1>
-                                    <p class="txt_1">공통코드를 등록 및 관리합니다.</p>
 
                                     <!-- 검색조건 -->
-                                    <div class="condition">
-                                        <label class="item f_select" for="sel1">
+                                    <div class="condition" style="text-align: left;">
+                                        <!-- <label class="item f_select" for="sel1">
                                             <select id="sel1" name="searchCondition" title="검색조건 선택">
                                                 <option value=''>선택하세요</option>
                                                 <option value='ETC_ANSWER_CN' <c:if
@@ -92,13 +96,20 @@
                                                     test="${searchCondition == 'RESPOND_NM'}">selected</c:if>
                                                     >응답자명</option>
                                             </select>
-                                        </label>
-
+                                        </label> -->
+										
                                         <span class="item f_search">
                                             <input type="hidden" id="groupcode" name="groupcode" value="">
                                             <input type="hidden" id="code" name="code" value="">
-                                            <input class="f_input w_500" name="searchKeyword" type="text"
-                                                value="<c:out value='${comCodeVO.searchKeyword}'/>" title="검색어 입력" maxlength="35" />
+                                            <p class="left">
+                                                <label for="searchCode">코드</label>
+                                                <input class="f_input w_200" name="searchCode" id="searchCode" type="text" value="<c:out value='${comCodeVO.searchCode}'/>" />
+                                            </p>
+                                            <p class="left">
+                                                <label for="searchCodename">코드명</label>
+                                                <input class="f_input w_200" name="searchCodename" id="searchCodename" type="text" value="<c:out value='${comCodeVO.searchCodename}'/>" />
+                                            </p>
+                                            
                                             <button class="btn" type="submit">
                                                 <spring:message code="button.inquire" />
                                             </button>조회
@@ -108,15 +119,26 @@
                                         <!-- <a href="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoRegist.do'/>" class="item btn btn_blue_46 w_100">등록</a>등록 -->
                                     </div>
                                     <!--// 검색조건 -->
+                                    <div style="margin-top:10px;">
+                                        <div class="w50 left">
+ 											<a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()" style="float: right;"><spring:message code="button.create"/></a>
+                                        </div>
+
+                                        <div class="w50 left">
+                                            <c:if test="${comCodeVO.groupcode!=''}">
+ 												<a href="<c:url value='/mdm/InsertCommonCodeView.do?groupcode=${comCodeVO.groupcode}'/>" class="btn btn_blue_46 w_100 btnmargin" onclick=""style="float: right;"><spring:message code="button.create" /></a>
+                                            	
+                                        	</c:if>
+                                        	<c:if test="${comCodeVO.groupcode == ''}">
+                                                <div style="height:46px;"></div>
+                                            </c:if>
+                                        </div>
+                                    </div>
                                 
                                     <!-- 왼쪽 게시판 -->
                                     <div>
                                         <div class="w50 left" >
-                                            <div class="right_col right" style="margin-top: 20px;">
-                                                <a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()"><spring:message code="button.create"/></a>
-                                                <a href="#LINK" class="btn btn_blue_46 w_100 right btnmargin" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a>
-                                            </div>
-                                            <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px; float:left;">
+                                            <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
                                                 <table>
                                                     <colgroup>
                                                         <col style="width: 50px;">
@@ -125,6 +147,7 @@
                                                         <col style="width: 50px;">
                                                         <col style="width: 115px;">
                                                         <col style="width: 115px;">
+                                                        <col style="width: 70px;">
                                                     </colgroup>
                                                     <thead>
                                                         <tr>
@@ -151,7 +174,7 @@
                                                             <td><c:out value="${result.USE_YN}"/></td>
                                                             <td><c:out value="${result.INSERT_ID}"/></td>
                                                             <td><c:out value="${result.UPDATE_DATE}"/></td>
-                                                            <td><a href="#LINK" class="btn btn_blue_30 right btnmargin" onclick="UpdateCommonGroupCode('<c:out value='${result.GROUP_CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.update" /></a></td>
+                                                            <td><a href="#LINK" class="btn btn_blue_30 btnmargin" onclick="UpdateCommonGroupCode('<c:out value='${result.GROUP_CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.update" /></a></td>
                                                         </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -160,17 +183,8 @@
                                         </div>
                                         
                                         <!-- 오른쪽 게시판 -->
-                                        <div class="w50 right">
-                                            <div class="right_col right" style="margin-top: 20px;">
-                                            <c:if test="${comCodeVO.groupcode!=''}">
-                                                <a href="<c:url value='/mdm/InsertCommonCodeView.do?groupcode=${comCodeVO.groupcode}'/>" class="btn btn_blue_46 w_100 btnmargin" onclick=""><spring:message code="button.create" /></a>
-                                                <a href="#LINK" class="btn btn_blue_46 w_100 right btnmargin" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a>
-                                            </c:if>
-                                            <c:if test="${comCodeVO.groupcode == ''}">
-                                                <div style="height:46px;"></div>
-                                            </c:if>
-                                            </div>
-                                            <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;float:right;">
+                                        <div class="w50 left">
+                                            <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;margin-left: 15px;">
                                                 <table>
                                                     <colgroup>
                                                         <col style="width: 50px;">
@@ -179,6 +193,7 @@
                                                         <col style="width: 50px;">
                                                         <col style="width: 115px;">
                                                         <col style="width: 115px;">
+                                                        <col style="width: 130px;">
                                                     </colgroup>
                                                     <thead>
                                                         <tr>
@@ -194,7 +209,7 @@
                                                     <tbody>
                                                         <c:if test="${fn:length(resultDetail) == 0}">
                                                         <tr>
-                                                            <td colspan="6"><spring:message code="common.nodata.msg" /></td>
+                                                            <td colspan="7"><spring:message code="common.nodata.msg" /></td>
                                                         </tr>
                                                         </c:if>
                                                         <c:forEach var="result" items="${resultDetail}" varStatus="status">
@@ -205,7 +220,8 @@
                                                             <td><c:out value="${result.USE_YN}"/></td>
                                                             <td><c:out value="${result.INSERT_ID}"/></td>
                                                             <td><c:out value="${result.UPDATE_DATE}"/></td>
-                                                            <td><a href="#LINK" class="btn btn_blue_30 right btnmargin" onclick="UpdateCommonCode('<c:out value='${result.GROUP_CODE}'/>','<c:out value='${result.CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.update" /></a></td>
+                                                            <td><a href="#LINK" class="btn btn_blue_30 btnmargin" onclick="UpdateCommonCode('<c:out value='${comCodeVO.groupcode}'/>','<c:out value='${result.CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.update" /></a>
+                                                                <a href="#LINK" class="btn btn_blue_30 btnmargin" onclick="DeleteCommonCode('<c:out value='${result.GROUP_CODE}'/>','<c:out value='${result.CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.delete" /></a></td>
                                                         </tr>
                                                         </c:forEach>
                                                     </tbody>
