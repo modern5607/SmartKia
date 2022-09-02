@@ -159,5 +159,30 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 		return smartDAO.checkCustid(checkId);
 	}
 
+	@Override
+	public Map<String, Object> SelectCommonCustid(SmartMdmBizVO vo) throws Exception {
+		List<SmartMdmBizVO> info = smartDAO.selectCommonCustid(vo);
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("info",info);
+		return map;
+	}
+
+	@Override
+	public int UpdateBiz(SmartMdmBizVO vo) throws Exception {
+		int result=0;
+		System.out.println(vo);
+		//System.out.println(vo.getGroupcode() +" | "+ vo.getPreviousgroupcode());
+		if(vo.getCustid().equals(vo.getCustid()))
+		{
+			result = smartDAO.UpdateBiz(vo);
+		}
+		else
+		{
+			result=0;
+		}
+		System.out.println("result : "+ result);
+		return result;
+	}
 
 }

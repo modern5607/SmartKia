@@ -32,8 +32,8 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 		return insert("SmartMdmDAO.insertCommonGroupCode", vo);
 	}
 	@SuppressWarnings("unchecked")
-	public List<SmartCommonCodeVO> selectCommonCode(SmartCommonCodeVO vo) {
-		return (List<SmartCommonCodeVO>)list("SmartMdmDAO.selectCommonCode", vo);
+	public List<SmartCommonCodeVO> selectCommonCode(SmartCommonCodeVO vo) {	
+		return (List<SmartCommonCodeVO>)list("SmartMdmDAO.selectCommonCode",vo);
 	}
 	public int insertCommonCode(SmartCommonCodeVO vo) {
 		return insert("SmartMdmDAO.insertCommonCode", vo);
@@ -75,4 +75,15 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 	public int checkCustid(String checkId) throws Exception {
 		return (Integer)selectOne("SmartMdmDAO.checkCustid", checkId);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SmartMdmBizVO> selectCommonCustid(SmartMdmBizVO vo) {
+		return (List<SmartMdmBizVO>)list("SmartMdmDAO.selectCommonCustid", vo);
+	}
+	public int UpdateBiz(SmartMdmBizVO vo) {
+		System.out.println("asd: "+vo);
+		return update("SmartMdmDAO.UpdateBiz", vo);
+
+	}
+
 }

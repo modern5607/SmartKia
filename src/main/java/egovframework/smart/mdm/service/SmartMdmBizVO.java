@@ -17,6 +17,28 @@ public class SmartMdmBizVO extends ComDefaultVO {
     private String Remark = "";
     private String Useyn = "";
     private String Custtype = "";
+	private String Business ="";
+    private String Ceo ="";
+    private String Custtel = "";
+    
+    public String getBusiness() {
+		return Business;
+	}
+	public void setBusiness(String business) {
+		Business = business;
+	}
+	public String getCeo() {
+		return Ceo;
+	}
+	public void setCeo(String ceo) {
+		Ceo = ceo;
+	}
+	public String getCusttel() {
+		return Custtel;
+	}
+	public void setCusttel(String custtel) {
+		Custtel = custtel;
+	}
     
     public String getCusttype() {
 		return Custtype;

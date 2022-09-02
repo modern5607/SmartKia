@@ -17,7 +17,7 @@ public Map<String, Object> selectCommonCodeList(SmartCommonCodeVO vo) throws Exc
 
 	public int UpdateCommonGroupCode(SmartCommonCodeVO comCodeVO) throws Exception;
 
-    public Map<String, Object> SelectCommonCode(SmartCommonCodeVO comCodeVO) throws Exception;
+    public Map<String, Object> SelectCommonCode(SmartCommonCodeVO vo) throws Exception;
 
 	public Map<String,Object> selectLeadTime(SmartLeadTimeVO leadtimeVO)throws Exception;
 
@@ -27,5 +27,10 @@ public Map<String, Object> selectCommonCodeList(SmartCommonCodeVO vo) throws Exc
 	public int insertaddBiz(SmartMdmBizVO vo) throws Exception;
 
 	public int checkCustid(String checkId) throws Exception;
+	
+	public Map<String, Object> SelectCommonCustid(SmartMdmBizVO SmartMdmBizVO) throws Exception;
+	
+	public int UpdateBiz(SmartMdmBizVO SmartMdmBizVO) throws Exception;
+	
 
 }

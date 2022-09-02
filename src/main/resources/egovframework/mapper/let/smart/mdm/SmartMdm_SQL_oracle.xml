@@ -53,9 +53,7 @@
 		FROM CAR_COMCODE 
 		WHERE 1=1 
 		AND GROUP_CODE = #{groupcode} 
-		<if test="#{code !='' or code!=null}">
-			AND CODE = #{code}
-		</if>
+		
 	</select >
 	
 	
@@ -96,7 +94,8 @@
 
 	<select id="selectBizList" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO" resultType="java.util.HashMap">
 		
-		SELECT * FROM CAR_CUSTCORP
+		SELECT * 
+		FROM CAR_CUSTCORP
 		WHERE 1=1
 		<if test="searchCondition == 'CUST_ID'">
 			AND CUST_ID LIKE '%'||#{searchKeyword}||'%'
@@ -104,10 +103,15 @@
 		<if test="searchCondition == 'CUST_NM'">
 			AND CUST_NM LIKE '%'||#{searchKeyword}||'%'
 		</if>
+		<if test="searchCondition == 'ITEM'">
+			AND ITEM LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY CUST_ID
 	</select>
+
 	<insert id="insertaddBiz" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO">
-		INSERT INTO CAR_CUSTCORP (IDX,CUST_ID,CUST_NM,ADDRESS,TEL,CUST_NAME,ITEM,REMARK,CUST_TYPE,USE_YN) 
-		VALUES (SEQ_CAR_CUSTCORP.NEXTVAL,#{Custid},#{Custnm},#{Address},#{Tel},#{Custname},#{Item},#{Remark},#{Custtype},#{Useyn})
+		INSERT INTO CAR_CUSTCORP (IDX,CUST_ID,CUST_NM,ADDRESS,TEL,CUST_NAME,ITEM,REMARK,CUST_TYPE,USE_YN,BUSINESS,CEO,CUST_TEL) 
+		VALUES (SEQ_CAR_CUSTCORP.NEXTVAL,#{Custid},#{Custnm},#{Address},#{Tel},#{Custname},#{Item},#{Remark},#{Custtype},#{Useyn},#{Business},#{Ceo},#{Custtel})
 	</insert>
 	 
 	 <select id="checkCustid" resultType="int">
@@ -121,5 +125,32 @@
                WHERE CustId =  #{checkId}
      
     </select>
+   
+    <select id="selectCommonCustid" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO" resultType="java.util.HashMap">
+		
+		SELECT *
+		FROM CAR_CUSTCORP 
+		WHERE 
+		CUST_ID =#{Custid}
+	</select >
     
+    <update id="UpdateBiz" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO">
+		UPDATE CAR_CUSTCORP
+		SET
+			CUST_ID=#{Custid}
+			,CUST_NM=#{Custnm}
+			,ADDRESS=#{Address}
+			,TEL=#{Tel}
+			,CUST_NAME=#{Custname}
+			,ITEM=#{Item}
+			,REMARK=#{Remark}
+			,USE_YN=#{Useyn}
+			,CUST_TYPE=#{Custtype}
+			,BUSINESS=#{Business}
+			,CEO=#{Ceo}
+			,CUST_TEL=#{Custtel}
+			,UPDATE_DATE = SYSDATE
+		WHERE CUST_ID =#{Custid}
+	</update>
+	
 </mapper>
