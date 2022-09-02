@@ -110,7 +110,7 @@ public class SmartCusMberManageController {
 
 
 		model.addAttribute("resultList", cusMberManageService.selectMberList(userSearchVO));
-
+		System.out.println(userSearchVO);
 		int totCnt = cusMberManageService.selectMberListTotCnt(userSearchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);

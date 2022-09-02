@@ -23,6 +23,60 @@ public class CusMberManageVO extends CusMberDefaultVO{
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private String cusId;
+	private String cusNm;
+	private String autoNo;
+	private String autoKind;
+	private String cusTel;
+	private String useYN;
+	private String note;
+	
+	public String getCusId() {
+		return cusId;
+	}
+	public void setCusId(String cusId) {
+		this.cusId = cusId;
+	}
+	public String getCusNm() {
+		return cusNm;
+	}
+	public void setCusNm(String cusNm) {
+		this.cusNm = cusNm;
+	}
+	public String getAutoNo() {
+		return autoNo;
+	}
+	public void setAutoNo(String autoNo) {
+		this.autoNo = autoNo;
+	}
+	public String getAutoKind() {
+		return autoKind;
+	}
+	public void setAutoKind(String autoKind) {
+		this.autoKind = autoKind;
+	}
+	public String getCusTel() {
+		return cusTel;
+	}
+	public void setCusTel(String cusTel) {
+		this.cusTel = cusTel;
+	}
+	public String getUseYN() {
+		return useYN;
+	}
+	public void setUseYN(String useYN) {
+		this.useYN = useYN;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	/** 이전비밀번호 - 비밀번호 변경시 사용*/
     private String oldPassword = "";

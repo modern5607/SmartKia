@@ -162,8 +162,8 @@ function fnSearch(){
 
 									<!-- 검색조건 -->
 									<div class="condition">
-										<label class="item f_select" for="sbscrbSttus"> <select
-											name="sbscrbSttus" id="sbscrbSttus" title="조회조건1">
+										<%-- <label class="item f_select" for="sbscrbSttus">
+										 <select name="sbscrbSttus" id="sbscrbSttus" title="조회조건1">
 												<option value="0"
 													<c:if test="${empty userSearchVO.sbscrbSttus || userSearchVO.sbscrbSttus == '0'}">selected="selected"</c:if>>상태(전체)</option>
 												<option value="A"
@@ -172,18 +172,18 @@ function fnSearch(){
 													<c:if test="${userSearchVO.sbscrbSttus == 'D'}">selected="selected"</c:if>>삭제</option>
 												<option value="P"
 													<c:if test="${userSearchVO.sbscrbSttus == 'P'}">selected="selected"</c:if>>승인</option>
-										</select>
-										</label> <label class="item f_select" for="searchCondition"> <select
-											name="searchCondition" id="searchCondition" title="조회조건2">
+										</select> --%>
+										</label> <label class="item f_select" for="searchCondition"> 
+										<select name="searchCondition" id="searchCondition" title="조회조건1">
 												<option value="0"
-													<c:if test="${userSearchVO.searchCondition == '0'}">selected="selected"</c:if>>차량번호</option>
+													<c:if test="${empty userSearchVO.searchCondition || userSearchVO.searchCondition == '0'}">selected="selected"</c:if>>전체</option>
 												<option value="1"
-													<c:if test="${empty userSearchVO.searchCondition || userSearchVO.searchCondition == '1'}">selected="selected"</c:if>>연락처</option>
+													<c:if test="${userSearchVO.searchCondition == '1'}">selected="selected"</c:if>>차량번호</option>
+												<option value="2"
+													<c:if test="${userSearchVO.searchCondition == '2'}">selected="selected"</c:if>>연락처</option>
+													
 										</select>
-										</label> <span class="item f_search"> <input
-											name="searchKeyword" id="searchKeyword" class="f_input w_500"
-											title="검색" type="text"
-											value="<c:out value="${userSearchVO.searchKeyword}"/>" />
+										</label> <span class="item f_search"> <input name="searchKeyword" id="searchKeyword" class="f_input w_500" title="검색" type="text" value="<c:out value="${userSearchVO.searchKeyword}"/>" />
 											<button class="btn" type="submit"
 												onclick="fnSearch(); return false;">
 												<spring:message code="button.search" />
@@ -219,12 +219,12 @@ function fnSearch(){
 											<colgroup>
 												<col style="width: 60px;">
 												<col style="width: 60px;">
-												<col style="width: auto;">
-												<col style="width: auto;">
-												<col style="width: auto;">
-												<col style="width: auto;">
-												<col style="width: auto;">
-												<col style="width: auto;">
+												<col style="width: 300px;">
+												<col style="width: 300px;">
+												<col style="width: 300px;">
+												<col style="width: 300px;">
+												<col style="width: 300px;">
+												<col style="width: 300px;">
 											</colgroup>
 											<thead>
 												<tr>
@@ -260,25 +260,25 @@ function fnSearch(){
 																type="checkbox" /> <input name="checkId" type="hidden"
 																value="<c:out value='${result.userTy}'/>:<c:out value='${result.uniqId}'/>" />
 														</span></td>
-														<td><a
+														<%-- <td><a
 															href="<c:url value='/uss/umt/mber/EgovMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>"
 															class="lnk"
 															onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
 																<c:out value="${result.userId}" />
-														</a></td>
-														<td><c:out value="${result.CUSTOMER_ID}" /></td>
-														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
-														<td><c:out value="${result.CUSTOMER_AUTONO}" />)														
-														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
-														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
-														<td><c:out value="${result.NOTE}" /></td>
-														<td><c:forEach var="entrprsMberSttus_result"
+														</a></td>--%>
+														<td><c:out value="${result.cusId}" /></td>
+														<td><c:out value="${result.autoNo}" /></td>
+														<td><c:out value="${result.autoKind}" /></td>												
+														<td><c:out value="${result.cusTel}" /></td>
+														<td><c:out value="${result.cusNm}" /></td>
+														<td><c:out value="${result.note}" /></td>
+														<%-- <td><c:forEach var="entrprsMberSttus_result"
 																items="${entrprsMberSttus_result}" varStatus="status">
 																<c:if
 																	test="${result.sttus == entrprsMberSttus_result.code}">
 																	<c:out value="${entrprsMberSttus_result.codeNm}" />
 																</c:if>
-															</c:forEach></td>
+															</c:forEach></td> --%>
 													</tr>
 												</c:forEach>
 
