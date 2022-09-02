@@ -16,49 +16,52 @@
     <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
     <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
     <script src="<c:url value='/'/>js/ui.js"></script>
-    <title>샘플 포털 > 사이트 소개 > 사이트 소개</title>
+    <title>표준작업관리</title>
     <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
     <script type="text/javascript">
     
     function ClickMainCode(code)
     {
-        document.searchform.main.value = code;
-        console.log(document.searchform.main.value)
-        // document.searchform.action = "<c:url value='/mdm/SmartCode.do'/>";
-        document.searchform.submit();
+        document.SmartLeadTimeVO.main.value = code;
+        document.SmartLeadTimeVO.middle.value = "";
+        document.SmartLeadTimeVO.sub.value = "";
+        console.log(document.SmartLeadTimeVO.main.value);
+        // document.SmartLeadTimeVO.action = "<c:url value='/mdm/SmartCode.do'/>";
+        document.SmartLeadTimeVO.submit();
     }
     function ClickMiddleCode(code)
     {
-        document.searchform.middle.value = code;
-        console.log(document.searchform.middle.value)
-        // document.searchform.action = "<c:url value='/mdm/SmartCode.do'/>";
-        document.searchform.submit();
+        document.SmartLeadTimeVO.middle.value = code;
+        console.log(document.SmartLeadTimeVO.middle.value);
+        // document.SmartLeadTimeVO.action = "<c:url value='/mdm/SmartCode.do'/>";
+        document.SmartLeadTimeVO.submit();
     }
 
-    function UpdateLeadTime(code)
+    function UpdateLeadTime(hcode,code,selectidx)
     {
-        document.searchform.auto002code.value= code
-        console.log(document.searchform.auto002code.value)
-        document.searchform.action = "<c:url value='/mdm/UpdateLeadTime.do'/>";
-        document.searchform.submit();
-    }
-    /*
-    function UpdateCommonGroupCode(groupcode)
-    {
-        document.searchform.groupcode.value = groupcode;
-        document.searchform.action = "<c:url value='/mdm/UpdateCommonGroupCodeView.do'/>";
-        document.searchform.submit();
+        document.SmartLeadTimeVO.updatehcode.value= hcode;
+        document.SmartLeadTimeVO.updatecode.value= code;
+        document.SmartLeadTimeVO.updateleadtime.value = $("#leadtime"+selectidx+" option:selected").val();
+        console.log(document.SmartLeadTimeVO.updatehcode.value);
+        console.log(document.SmartLeadTimeVO.updatecode.value);
+        console.log(document.SmartLeadTimeVO.updateleadtime.value);
+        
+        document.SmartLeadTimeVO.action = "<c:url value='/mdm/UpdateLeadTime.do'/>";
+        document.SmartLeadTimeVO.submit();
     }
 
-    function UpdateCommonCode(groupcode,code)
+    function InsertLeadTime()
     {
-        document.searchform.groupcode.value = groupcode;
-        document.searchform.code.value = code;
-        document.searchform.action = "<c:url value='/mdm/UpdateCommonCodeView.do'/>";
-        document.searchform.submit();
+        if(document.SmartLeadTimeVO.insertname.value == "")
+            {
+                alert("부품명을 입력해 주세요");
+                document.SmartLeadTimeVO.insertname.focus();
+                return false;
+            }
+        document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertLeadTime.do'/>";
+        document.SmartLeadTimeVO.submit();
     }
-    */
     </script>
 
 </head>
@@ -76,28 +79,26 @@
             <div class="sub_layout">
                 <div class="sub_in">
                     <div class="layout">
-                        <!-- Left menu -->
-                        <c:import url="/sym/mms/EgovMenuLeft.do" />
-                        <!--// Left menu -->
                         <div class="content_wrap">
                             <div id="contents" class="content">
                                 <!-- Location -->
                                 <div class="location">
                                     <ul>
-                                        <li><a class="home" href="">Home</a></li>
-                                        <li><a href="">기준정보</a></li>
-                                        <li>공통코드관리</li>
+                                        <li><a class="home" href="../cmm/main/mainPage.do">Home</a></li>
+                                        <li><a href="/mdm/SmartCode.do">기준정보</a></li>
+                                        <li>표준작업관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
-
-                                
-                                    <h1 class="tit_1">표준작업관리</h1>
-                                    <p class="txt_1">표준작업관리를 통해 소요시간을 관리합니다.</p>
-
                                     <!-- 검색조건 -->
-                                    <form name="searchform" id="searchform" action="<c:url value='/mdm/SmartLeadTime.do'/>" method="post">
-                                    <div class="condition">
+                                    <form name="SmartLeadTimeVO" id="SmartLeadTimeVO" action="<c:url value='/mdm/SmartLeadTime.do'/>" method="post">
+                                    <input type="hidden" id="main" name="main" value="<c:out value='${comCodeVO.main}'/>">
+                                    <input type="hidden" id="middle" name="middle" value="<c:out value='${comCodeVO.middle}'/>">
+                                    <input type="hidden" id="sub" name="sub" value="<c:out value='${comCodeVO.sub}'/>">
+                                    <input type="hidden" id="updatehcode" name="updatehcode" value="">
+                                    <input type="hidden" id="updatecode" name="updatecode" value="">
+                                    <input type="hidden" id="updateleadtime" name="updateleadtime" value="">
+                                    <!-- <div class="condition">
                                         <label class="item f_select" for="sel1">
                                             <select id="sel1" name="searchCondition" title="검색조건 선택">
                                                 <option value=''>선택하세요</option>
@@ -112,22 +113,19 @@
                                                     >응답자명</option>
                                             </select>
                                         </label>
-
+                                        
                                         <span class="item f_search">
-                                            <input type="hidden" id="main" name="main" value="<c:out value='${comCodeVO.main}'/>">
-                                            <input type="hidden" id="middle" name="middle" value="<c:out value='${comCodeVO.middle}'/>">
-                                            <input type="hidden" id="sub" name="sub" value="<c:out value='${comCodeVO.sub}'/>">
-                                            <input type="hidden" id="auto002code" name="auto002code" value="">
+                                            
                                             <input class="f_input w_500" name="searchKeyword" type="text"
                                                 value="<c:out value='${comCodeVO.searchKeyword}'/>" title="검색어 입력" maxlength="35" />
                                             <button class="btn" type="submit">
                                                 <spring:message code="button.inquire" />
                                             </button>조회
                                         </span>
-                                        <!-- <a href="" class="btn btn_search_w">등록</a> -->
+                                        < <a href="" class="btn btn_search_w">등록</a> >
 
-                                        <!-- <a href="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoRegist.do'/>" class="item btn btn_blue_46 w_100">등록</a>등록 -->
-                                    </div>
+                                        < <a href="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoRegist.do'/>" class="item btn btn_blue_46 w_100">등록</a>등록 >
+                                    </div> -->
                                     <!--// 검색조건 -->
                                 
                                     
@@ -176,6 +174,11 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <c:if test="${fn:length(middlelist) == 0}">
+                                                        <tr>
+                                                            <td colspan="1">데이터가 없습니다. 대분류를 선택해 주세요.</td>
+                                                        </tr>
+                                                        </c:if>
                                                         <c:forEach var="result" items="${middlelist}" varStatus="status">
                                                             <tr>
                                                                 <td><a href="#" class="lnk" onclick="ClickMiddleCode('${result.CODE}')"><c:out value="${result.NAME}"/></a></td>
@@ -200,27 +203,52 @@
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">No</th>
-                                                            <th scope="col">부품</th>
+                                                            <th scope="col">부품명</th>
                                                             <th scope="col">소요시간</th>
                                                             <th scope="col"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                    	<tr>
+                                                            <td></td>
+                                                            <td>
+                                                                <label class="f_input" style="height: 30px;">
+                                                                	<input name="insertname" class="w_200" type="text">
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <label for="" class="f_select" style="width:80%; padding-left:10px; height: 30px;">
+                                                                    <select name="insertleadtime" id="insertleadtime">
+                                                                        <option value="">선택</option>
+                                                                        <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
+                                                                        <option value="<c:out value='${leadtime.CODE}'/>"><c:out value="${leadtime.NAME}"/></option>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </label>
+                                                            </td>
+                                                            <td><a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="InsertLeadTime()"><spring:message code="button.create" /></a></td>
+                                                        </tr>
+                                                        <c:if test="${fn:length(sublist) == 0}">
+                                                        <tr>
+                                                            <td colspan="4">데이터가 없습니다. 항목을 추가해 주시거나 다른 중분류를 선택해 주세요.</td>
+                                                        </tr>
+                                                        </c:if>
+                                                        
                                                         <c:forEach var="result" items="${sublist}" varStatus="status">
                                                             <tr>
-                                                            	<td><c:out value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}"/></td>
+                                                            	<td><c:out value="${status.count}"/></td>
                                                                 <td><c:out value="${result.NAME}"/></td>
                                                                 <td>
-                                                                    <label for="" class="f_select" style="width:80%; padding-left:10px;">
-                                                                        <select name="leadtime" id="leadtime">
-                                                                            <option value="">선택</option>
-                                                                            <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
-                                                                            <option value="<c:out value='${leadtime.IDX}'/>"><c:out value="${leadtime.LEAD_NAME}"/></option>
-                                                                            </c:forEach>
-                                                                        </select>
-                                                                    </label>
+                                                                <label for="" class="f_select" style="width:80%; padding-left:10px; height:30px;">
+                                                                    <select name="leadtime<c:out value='${result.IDX}'/>" id="leadtime<c:out value='${result.IDX}'/>">
+                                                                        <option value="">선택</option>
+                                                                        <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
+                                                                        <option value="<c:out value='${leadtime.CODE}'/>" <c:if test="${result.LEAD_TIME eq leadtime.CODE}">selected</c:if>><c:out value="${leadtime.NAME}"/></option>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </label>
                                                                 </td>
-                                                                <td><a href="#LINK" class="btn btn_blue_30 right btnmargin" style="width:50px;" onclick="UpdateLeadTime('<c:out value='${result.CODE}'/>'); return false;"><spring:message code="button.update" /></a></td>
+                                                                <td><a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="UpdateLeadTime('<c:out value='${result.H_CODE}'/>','<c:out value='${result.CODE}'/>','<c:out value='${result.IDX}'/>'); return false;"><spring:message code="button.update" /></a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>

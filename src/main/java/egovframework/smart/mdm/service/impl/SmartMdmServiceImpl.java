@@ -1,5 +1,6 @@
 package egovframework.smart.mdm.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,10 +108,16 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 	@Override
 	public Map<String, Object> SelectCommonCode(SmartCommonCodeVO vo) throws Exception {
 		List<SmartCommonCodeVO> info = smartDAO.selectCommonCode(vo);
-		System.out.println("info : "+info);
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("info",info);
 		return map;
+	}
+
+	@Override
+	public int UpdateCommonCode(SmartCommonCodeVO vo) throws Exception {
+		int result = smartDAO.updateCommonCode(vo);
+		System.out.println("result : "+result);
+		return result;
 	}
 
 	@Override
@@ -131,6 +138,18 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 		map.put("middle",middle);
 		map.put("sub",sub);
 		return map;
+	}
+
+	@Override
+	public int InsertLeadTime(SmartLeadTimeVO vo) throws Exception{
+		int result = smartDAO.InsertLeadTime(vo);
+		return result;
+	}
+	
+	@Override
+	public int UpdateLeadTime(SmartLeadTimeVO vo) throws Exception {
+		int result = smartDAO.UpdateLeadTime(vo);
+		return result;
 	}
 	
 
@@ -158,6 +177,9 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 	public int checkCustid(String checkId) throws Exception {
 		return smartDAO.checkCustid(checkId);
 	}
+
+	
+
 
 
 }

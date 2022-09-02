@@ -12,6 +12,43 @@ public class SmartLeadTimeVO extends ComDefaultVO implements Serializable {
 	private String main = "";
 	private String middle = "";
 	private String sub = "";
+	private String leadtime = "";
+	private String updatehcode = "";
+	private String updatecode = "";
+	private String updateleadtime = "";
+	private String insertname = "";
+	private String insertleadtime = "";
+	private String id = "";
+
+	public String getUpdatehcode() {
+		return updatehcode;
+	}
+
+	public void setUpdatehcode(String updatehcode) {
+		this.updatehcode = updatehcode;
+	}
+	public String getUpdatecode() {
+		return updatecode;
+	}
+
+	public void setUpdatecode(String updatecode) {
+		this.updatecode = updatecode;
+	}
+	
+	public String getUpdateleadtime() {
+		return updateleadtime;
+	}
+
+	public void setUpdateleadtime(String updateleadtime) {
+		this.updateleadtime = updateleadtime;
+	}
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getMain() {
 		return main;
@@ -36,4 +73,26 @@ public class SmartLeadTimeVO extends ComDefaultVO implements Serializable {
 	public void setSub(String sub) {
 		this.sub = sub;
 	}
+	public String getLeadtime() {
+		return leadtime;
+	}
+
+	public void setLeadtime(String leadtime) {
+		this.leadtime = leadtime;
+	}
+	public String getInsertleadtime() {
+		return insertleadtime;
+	}
+
+	public void setInsertleadtime(String insertleadtime) {
+		this.insertleadtime = insertleadtime;
+	}
+	public String getInsertname() {
+		return insertname;
+	}
+
+	public void setInsertname(String insertname) {
+		this.insertname = insertname;
+	}
+
 }

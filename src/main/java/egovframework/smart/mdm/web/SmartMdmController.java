@@ -46,41 +46,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 @Controller
 public class SmartMdmController {
-	
+
 	@Resource(name = "EgovTemplateManageService")
 	private EgovTemplateManageService tmplatService;
 
-	
 	/** EgovMessageSource */
 	@Resource(name = "egovMessageSource")
 	EgovMessageSource egovMessageSource;
-	
+
 	@Resource(name = "EgovCmmUseService")
 	private EgovCmmUseService cmmUseService;
 
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
 
-	@Resource(name="SmartMdmService")
+	@Resource(name = "SmartMdmService")
 	private SmartMdmService smartmdmservice;
-	
+
 	@Autowired
 	private DefaultBeanValidator beanValidator;
-	
+
 	@Resource(name = "EgovBBSAttributeManageService")
 	private EgovBBSAttributeManageService bbsAttrbService;
-	
-	
+
 	@RequestMapping(value = "/mdm/SmartCode.do")
 	public String selectCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo,
 			HttpServletRequest request) throws Exception {
 
-		System.out.println("comCodeVO : "+comCodeVO);
+		System.out.println("comCodeVO : " + comCodeVO);
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
 			request.getSession().setAttribute("menuNo", menuNo);
@@ -114,7 +113,7 @@ public class SmartMdmController {
 
 		// model
 		Map<String, Object> map = smartmdmservice.selectCommonCodeList(comCodeVO);
-		//System.out.println("Map :" + map);
+		// System.out.println("Map :" + map);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 		// System.out.println("Map Size :" +totCnt);
 
@@ -129,7 +128,7 @@ public class SmartMdmController {
 		return "/mdm/SmartCode";
 	}
 
-	//-------------------공통코드 상위 --------------------------------
+	// -------------------공통코드 상위 --------------------------------
 	// 그룹공통코드 등록 뷰
 	@RequestMapping(value = "/mdm/InsertCommonGroupCodeView.do")
 	public String InsertCommonGroupCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO,
@@ -150,8 +149,8 @@ public class SmartMdmController {
 			HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
-		
-		LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
 		comCodeVO.setCurrentid(id);
 
@@ -175,29 +174,31 @@ public class SmartMdmController {
 
 	// 공통그룹코드 수정 뷰
 	@RequestMapping(value = "mdm/UpdateCommonGroupCodeView.do")
-	public String UpdateCommonGroupCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model) throws Exception {
-		
-		Map<String,Object> info = smartmdmservice.SelectCommonGroupCode(comCodeVO);
-		System.out.println("info : "+info.get("info"));
+	public String UpdateCommonGroupCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO,
+			ModelMap model) throws Exception {
+
+		Map<String, Object> info = smartmdmservice.SelectCommonGroupCode(comCodeVO);
+		System.out.println("info : " + info.get("info"));
 		model.addAttribute("info", info.get("info"));
-		model.addAttribute("previousgroupcode",comCodeVO.getGroupcode());
+		model.addAttribute("previousgroupcode", comCodeVO.getGroupcode());
 		return "mdm/UpdateCommonGroupCodeView";
 	}
+
 	// 공통그룹코드 수정
 	@RequestMapping(value = "mdm/UpdateCommonGroupCode.do")
-	public void UpdateCommonGroupCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,HttpServletResponse response) throws Exception {
+	public void UpdateCommonGroupCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,
+			HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
-		
-		LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
 		comCodeVO.setCurrentid(id);
 		System.out.println(comCodeVO);
-		
-		
+
 		int result = smartmdmservice.UpdateCommonGroupCode(comCodeVO);
-		
-		if (result == 0) //실패
+
+		if (result == 0) // 실패
 		{
 			out.println("<script>");
 			out.println("alert('이미 존재하는 코드입니다.')");
@@ -211,11 +212,11 @@ public class SmartMdmController {
 		}
 	}
 
-
-	//-------------------공통코드 하위 --------------------------------
+	// -------------------공통코드 하위 --------------------------------
 	// 공통코드 등록 뷰
 	@RequestMapping(value = "/mdm/InsertCommonCodeView.do")
-	public String InsertCommonCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model) throws Exception {
+	public String InsertCommonCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model)
+			throws Exception {
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -223,9 +224,9 @@ public class SmartMdmController {
 			return "uat/uia/EgovLoginUsr";
 		}
 		System.out.println(comCodeVO);
-		//그룹코드 리스트가져오기
+		// 그룹코드 리스트가져오기
 
-		//모델 attribute 등록
+		// 모델 attribute 등록
 		model.addAttribute("comCodeVO", comCodeVO);
 
 		return "mdm/InsertCommonCodeView";
@@ -233,12 +234,12 @@ public class SmartMdmController {
 
 	// 공통코드 등록
 	@RequestMapping(value = "/mdm/InsertCommonCode.do")
-	public void InsertCommonCode(@ModelAttribute("comCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model, HttpServletResponse response) throws Exception 
-	{
+	public void InsertCommonCode(@ModelAttribute("comCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,
+			HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
 
-		LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
 		comCodeVO.setCurrentid(id);
 
@@ -263,25 +264,55 @@ public class SmartMdmController {
 
 	// 공통코드 수정 뷰
 	@RequestMapping(value = "mdm/UpdateCommonCodeView.do")
-	public String UpdateCommonCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model) throws Exception {
+	public String UpdateCommonCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model)
+			throws Exception {
 		System.out.println(comCodeVO);
-		Map<String,Object> info = smartmdmservice.SelectCommonGroupCode(comCodeVO);
-		// System.out.println("info : "+info.get("info"));
-		// model.addAttribute("info", info.get("info"));
+		Map<String, Object> info = smartmdmservice.SelectCommonCode(comCodeVO);
+		System.out.println("info : "+info.get("info"));
+		model.addAttribute("info", info.get("info"));
 		// model.addAttribute("previousgroupcode",comCodeVO.getGroupcode());
 		return "mdm/UpdateCommonCodeView";
 	}
-	
-	
-	//-----표준작업관리-----------
+
+	// 공통코드 수정
+	@RequestMapping(value = "mdm/UpdateCommonCode.do")
+	public void UpdateCommonCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,
+	HttpServletResponse response) throws Exception{
+		response.setContentType("text/html; charset=euc-kr");
+		PrintWriter out = response.getWriter();
+
+		System.out.println(comCodeVO);
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		comCodeVO.setCurrentid(id);
+
+		int result = smartmdmservice.UpdateCommonCode(comCodeVO);
+
+		if (result == 0) // 실패
+		{
+			out.println("<script>");
+			out.println("alert('이미 존재하는 코드입니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+		} else {
+			out.println("<script>");
+			out.println("alert('성공적으로 수정되었습니다.')");
+			out.println("location.href='/mdm/SmartCode.do'");
+			out.println("</script>");
+		}
+	}
+
+
+
+	// ---------------표준작업관리-----------
 	@RequestMapping(value = "/mdm/SmartLeadTime.do")
-	public String SmartLeadTime(@ModelAttribute("SmartCommonCodeVO") SmartLeadTimeVO leadtimeVO, ModelMap model,
+	public String SmartLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo,
 			HttpServletRequest request) throws Exception {
 
-		System.out.println("comCodeVO : "+leadtimeVO);
-		
-		
+		System.out.println("SmartLeadTime.do -> leadtimeVO : " + leadtimeVO);
+
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
 			request.getSession().setAttribute("menuNo", menuNo);
@@ -299,8 +330,6 @@ public class SmartMdmController {
 		// if (loginVO == null) {
 		// loginVO = new LoginVO();
 		// }
-		
-		
 
 		leadtimeVO.setPageUnit(propertyService.getInt("pageUnit"));
 		leadtimeVO.setPageSize(propertyService.getInt("pageSize"));
@@ -316,7 +345,7 @@ public class SmartMdmController {
 		leadtimeVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
 		Map<String, Object> map = smartmdmservice.selectLeadTime(leadtimeVO);
-		System.out.println("Map :" + map);
+//		System.out.println("Map :" + map);
 
 		model.addAttribute("comCodeVO", leadtimeVO);
 		model.addAttribute("leadtimelist", map.get("leadtime"));
@@ -327,23 +356,64 @@ public class SmartMdmController {
 
 		return "/mdm/SmartLeadTimeView";
 	}
-	
-	
-	@RequestMapping(value="/mdm/UpdateLeadTime.do")
-	public void UpdateLeadTime(@RequestParam("auto002code") String code,@RequestParam("leadtime") String leadtimeidx)
-	{
-		System.out.println("code : "+ code);
-		System.out.println("idx : "+ leadtimeidx);
+
+	@RequestMapping(value = "/mdm/InsertLeadTime.do")
+	public ModelAndView InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model,	HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		leadtimeVO.setId(id);
+
+		System.out.println("InsertLeadTime.do -> leadtimeVO : "+leadtimeVO);
+
+
+		smartmdmservice.InsertLeadTime(leadtimeVO);
+		
+		mav.setViewName("redirect:/mdm/SmartLeadTime.do");
+		mav.addObject("SmartLeadTimeVO",leadtimeVO);
+		
+		return mav;
+//		return "redirect:/mdm/SmartLeadTime.do"; //이거 고칠것 새로고침하면 계속 insert호출됨.
 	}
+
+	@RequestMapping(value = "/mdm/UpdateLeadTime.do")
+	public String UpdateLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html; charset=euc-kr");
+		PrintWriter out = response.getWriter();
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		leadtimeVO.setId(id);
+		
+		System.out.println("leadtimeVO : "+leadtimeVO);
+		
+
+		int result = smartmdmservice.UpdateLeadTime(leadtimeVO);
+		System.out.println(result);
+		if (result == 0) // update실패
+		{
+			out.println("<script>");
+			out.println("alert('이미 존재하는 코드입니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+		} else {
+			out.println("<script>");
+			out.println("alert('성공적으로 등록되었습니다.')");
+			// out.println("location.href='/mdm/SmartLeadTime.do'");
+			out.println("</script>");
+		}
+		return "forward:/mdm/SmartLeadTime.do";
+	}
+
 	/**
 	 * 거래처 관리 화면
 	 */
 	@RequestMapping(value = "/mdm/SmartBiz.do")
-	public String selectBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO searchVO,ModelMap model,
+	public String selectBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO searchVO, ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo,
-			HttpServletRequest request
-			) throws Exception 
-		{
+			HttpServletRequest request) throws Exception {
 		System.out.println(searchVO);
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
@@ -356,11 +426,11 @@ public class SmartMdmController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
-		
-		// paging 
+
+		// paging
 		searchVO.setPageUnit(propertyService.getInt("pageUnit"));
 		searchVO.setPageSize(propertyService.getInt("pageSize"));
-		
+
 		PaginationInfo paginationInfo = new PaginationInfo();
 
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
@@ -370,11 +440,11 @@ public class SmartMdmController {
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
-		// service 
+
+		// service
 		Map<String, Object> map = smartmdmservice.selectBizList(searchVO);
-		System.out.println("Map: "+map);
-		int totCnt = Integer.parseInt((String)map.get("resultCnt"));
+		System.out.println("Map: " + map);
+		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
 		paginationInfo.setTotalRecordCount(totCnt);
 
@@ -384,26 +454,27 @@ public class SmartMdmController {
 
 		return "/mdm/SmartBiz";
 	}
-	
+
 	/**
 	 * 거래처 관리 등록화면
 	 */
 	@RequestMapping(value = "/mdm/SmartaddBiz.do")
-	public String SmartaddBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO smartmdmbizVO, Model model) throws Exception {
-		
+	public String SmartaddBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO smartmdmbizVO, Model model)
+			throws Exception {
+
 		return "/mdm/SmartaddBiz";
 	}
 
 	/**
 	 * 거래처 관리 등록
 	 */
-	
+
 	@RequestMapping(value = "/mdm/InsertSmartaddBiz.do")
-	public void InsertSmartaddBiz( @ModelAttribute("SmartMdmBizVO") SmartMdmBizVO smartmdmbizVO,
+	public void InsertSmartaddBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO smartmdmbizVO,
 			ModelMap model, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
-	
+
 		int result = smartmdmservice.insertaddBiz(smartmdmbizVO);
 		if (result == 0) // insert실패
 		{
@@ -418,13 +489,13 @@ public class SmartMdmController {
 			out.println("</script>");
 		}
 	}
-	
+
 	/**
 	 * 중복 코드 검사 View
 	 */
 	@RequestMapping(value = "/mdm/SmartChkcodeview.do")
 	public String checkbizcode(ModelMap model) throws Exception {
-		
+
 		System.out.println(model);
 		model.addAttribute("checkId", "");
 		model.addAttribute("usedCnt", "-1");
@@ -432,7 +503,7 @@ public class SmartMdmController {
 	}
 
 	/**
-	 * 중복여부 체크 
+	 * 중복여부 체크
 	 */
 	@RequestMapping(value = "/mdm/SmartChkcode.do")
 	public String checkbizcode(@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
@@ -449,48 +520,4 @@ public class SmartMdmController {
 		return "/mdm/SmartChkcode";
 	}
 
-	/*
-
-	@RequestMapping("/kiosk/selectKioskin.do")
-	public String selectKioskin(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, ModelMap model,
-		@RequestParam(value = "menuNo", required = false) String menuNo,
-		HttpServletRequest request
-		) throws Exception {
-		
-		// 선택된 메뉴정보를 세션으로 등록한다.
-		if (menuNo != null && !menuNo.equals("")) {
-			request.getSession().setAttribute("menuNo", menuNo);
-		}	
-
-		Map<String, Object> map = tmplatService.selectTemplateInfs(tmplatInfVO);
-		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
-
-		model.addAttribute("resultList", map.get("resultList"));
-		model.addAttribute("resultCnt", map.get("resultCnt"));
-		model.addAttribute("result", null);
-		
-		return "/kiosk/SmartStandardIn";
-	}
-	
-	@RequestMapping("/kiosk/selectKioskinsurance.do")
-	public String selectKioskinsurance(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, ModelMap model,
-		@RequestParam(value = "menuNo", required = false) String menuNo,
-		HttpServletRequest request
-		) throws Exception {
-		
-		// 선택된 메뉴정보를 세션으로 등록한다.
-		if (menuNo != null && !menuNo.equals("")) {
-			request.getSession().setAttribute("menuNo", menuNo);
-		}
-		
-		Map<String, Object> map = tmplatService.selectTemplateInfs(tmplatInfVO);
-		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
-
-		model.addAttribute("resultList", map.get("resultList"));
-		model.addAttribute("resultCnt", map.get("resultCnt"));
-		model.addAttribute("result", null);
-		
-		return "/kiosk/SmartStandardInsurance";
-	}
-	*/
 }
