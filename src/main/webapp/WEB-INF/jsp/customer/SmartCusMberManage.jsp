@@ -267,10 +267,10 @@ function fnSearch(){
 																<c:out value="${result.userId}" />
 														</a></td>--%>
 														<td><c:out value="${result.cusId}" /></td>
-														<td><c:out value="${result.autoNo}" /></td>
-														<td><c:out value="${result.autoKind}" /></td>												
-														<td><c:out value="${result.cusTel}" /></td>
 														<td><c:out value="${result.cusNm}" /></td>
+														<td><c:out value="${result.autoNo}" /></td>												
+														<td><c:out value="${result.autoKind}" /></td>
+														<td><c:out value="${result.cusTel}" /></td>
 														<td><c:out value="${result.note}" /></td>
 														<%-- <td><c:forEach var="entrprsMberSttus_result"
 																items="${entrprsMberSttus_result}" varStatus="status">

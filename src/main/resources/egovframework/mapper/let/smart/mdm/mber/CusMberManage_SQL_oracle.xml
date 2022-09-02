@@ -14,12 +14,12 @@
   	SELECT * FROM ( SELECT rownum rn, TB.* FROM (
   	SELECT  
         CUSTOMER_ID           as "cusId",
+        CUSTOMER_NAME         as "cusNm",
         CUSTOMER_AUTONO       as "autoNo",
         CUSTOMER_AUTOKIND     as "autoKind",
         CUSTOMER_TEL          as "cusTel",
-        CUSTOMER_NAME         as "cusNm",
-        NOTE                  as "note",      
-        USE_YN                as "useYN"
+        USE_YN                as "useYN",
+        NOTE                  as "note"
     FROM    CAR_CUSTOMER
     WHERE 1=1
         <if test="searchCondition == 0">

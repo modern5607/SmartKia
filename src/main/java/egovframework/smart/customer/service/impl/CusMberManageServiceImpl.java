@@ -4,6 +4,8 @@ import java.util.List;
 
 import egovframework.smart.customer.service.CusMberDefaultVO;
 import egovframework.smart.customer.service.CusMberManageService;
+import java.util.HashMap;
+import java.util.Map;
 import egovframework.smart.customer.service.CusMberManageVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 
@@ -31,6 +33,7 @@ import org.springframework.stereotype.Service;
  *
  * </pre>
  */
+
 @Service("cusMberManageService")
 public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements CusMberManageService {
 
@@ -56,7 +59,6 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 		return result;
 	}
 
-
 	@Override
 	public CusMberManageVO selectMber(String uniqId) {
 		CusMberManageVO cusMberManageVO = cusMberManageDAO.selectMber(uniqId);
@@ -64,11 +66,21 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 	}
 
 
-	@Override
-	public List<CusMberManageVO> selectMberList(CusMberDefaultVO userSearchVO) {
-		return cusMberManageDAO.selectMberList(userSearchVO);
-	}
-
+	/*
+	  @Override public List<CusMberManageVO> selectMberList(CusMberDefaultVO  userSearchVO) { 
+		  return cusMberManageDAO.selectMberList(userSearchVO);
+	  }
+	  
+	  public Map<String,Object> selectMberList(CusMberManageVO cusmbermanageVO) {
+	  List<CusMberManageVO> result =
+	  cusMberManageDAO.selectMberList(cusmbermanageVO);
+	  
+	  Map<String,Object> map = new HashMap<String,Object>(); int count =
+	  result.size();
+	  
+	  map.put("result", result); map.put("totCnt", count); return map; 
+	  }
+	 */
  
     @Override
 	public int selectMberListTotCnt(CusMberDefaultVO userSearchVO) {
@@ -125,5 +137,12 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 	public int checkIdDplct(String checkId) {
 		return cusMberManageDAO.checkIdDplct(checkId);
 	}
+
+	@Override
+	public List<CusMberManageVO> selectMberList(CusMberDefaultVO userSearchVO) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
