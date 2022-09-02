@@ -60,18 +60,18 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
     
     
         <select id="selectMberListTotCnt" parameterType="egovframework.smart.mdm.mber.service.UserDefaultVO" resultType="int">
-            SELECT COUNT(1) totcnt
+            SELECT COUNT(*) totcnt
             FROM   LETTNGNRLMBER
             WHERE 1=1
-            <if test='sbscrbSttus != "0"'>
-                AND MBER_STTUS LIKE  #{sbscrbSttus}
-            </if>
-            <if test="searchCondition == 0">
-                AND MBER_ID LIKE #{searchKeyword}
-            </if>
-            <if test="searchCondition == 1">
-                AND MBER_NM LIKE '%' ||#{searchKeyword}|| '%'
-            </if>
+             <if test='sbscrbSttus != "0"'>
+            AND MBER_STTUS LIKE  #{sbscrbSttus}
+	        </if>
+	        <if test="searchCondition == 0">
+	            AND MBER_ID LIKE '%' ||#{searchKeyword}|| '%'
+	        </if>
+	        <if test="searchCondition == 1">
+	            AND MBER_NM LIKE '%' ||#{searchKeyword}|| '%'
+	        </if> 
     </select>
     
     <insert id="insertMber_S">
