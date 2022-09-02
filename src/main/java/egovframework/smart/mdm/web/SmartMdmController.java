@@ -174,11 +174,12 @@ public class SmartMdmController {
 
 	// 공통그룹코드 수정 뷰
 	@RequestMapping(value = "mdm/UpdateCommonGroupCodeView.do")
-	public String UpdateCommonGroupCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO,
-			ModelMap model) throws Exception {
+
+	public String UpdateCommonGroupCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model) throws Exception {
 
 		Map<String, Object> info = smartmdmservice.SelectCommonGroupCode(comCodeVO);
 		System.out.println("info : " + info.get("info"));
+
 		model.addAttribute("info", info.get("info"));
 		model.addAttribute("previousgroupcode", comCodeVO.getGroupcode());
 		return "mdm/UpdateCommonGroupCodeView";
@@ -459,8 +460,18 @@ public class SmartMdmController {
 	 * 거래처 관리 등록화면
 	 */
 	@RequestMapping(value = "/mdm/SmartaddBiz.do")
-	public String SmartaddBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO smartmdmbizVO, Model model)
-			throws Exception {
+	public String SmartaddBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO smartmdmbizVO, Model model) throws Exception {
+		
+		SmartCommonCodeVO vo = new SmartCommonCodeVO(); 
+		vo.setGroupcode("AUTO_000");
+		System.out.println(vo);
+
+		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
+		model.addAttribute("AUTO_000",map.get("info"));
+		//System.out.println(map.get("info"));
+		//패스워드힌트목록을 코드정보로부터 조회
+		//vo.setGroupcode("AUTO_000");
+		//model.addAttribute("passwordHint_result", smartmdmservice.selectCmmCodeDetail(vo));
 
 		return "/mdm/SmartaddBiz";
 	}
@@ -520,4 +531,45 @@ public class SmartMdmController {
 		return "/mdm/SmartChkcode";
 	}
 
+	// 거래처관리 수정 뷰
+	@RequestMapping(value = "/mdm/SmartUpdateBizView.do")
+	public String UpdateBizView(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO SmartMdmBizVO, ModelMap model) throws Exception {
+		
+		System.out.println("model:"+ model);
+		Map<String,Object> info = smartmdmservice.SelectCommonCustid(SmartMdmBizVO);
+		System.out.println("info : "+info.get("info"));
+		model.addAttribute("info", info.get("info"));
+		model.addAttribute("UdateBiz",SmartMdmBizVO.getCustid());
+		
+		return "/mdm/SmartUpdateBiz";
+	}
+
+	// 거래처관리 수정
+	@RequestMapping(value = "mdm/SmartUpdateBiz.do")
+	public void UpdateBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO SmartMdmBizVO, ModelMap model,HttpServletResponse response) throws Exception {
+		response.setContentType("text/html; charset=euc-kr");
+		PrintWriter out = response.getWriter();
+		
+		/*LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		SmartMdmBizVO.setCurrentid(id);
+		System.out.println(SmartMdmBizVO); 
+		*/
+		System.out.println(SmartMdmBizVO);
+		
+		int result = smartmdmservice.UpdateBiz(SmartMdmBizVO);
+		
+		if (result == 0) //실패
+		{
+			out.println("<script>");
+			out.println("alert('이미 존재하는 코드입니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+		} else {
+			out.println("<script>");
+			out.println("alert('성공적으로 수정되었습니다.')");
+			out.println("location.href='/mdm/SmartBiz.do'");
+			out.println("</script>");
+		}
+	}
 }

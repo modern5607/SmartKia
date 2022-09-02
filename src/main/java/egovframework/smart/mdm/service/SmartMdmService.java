@@ -31,6 +31,11 @@ public Map<String, Object> selectCommonCodeList(SmartCommonCodeVO vo) throws Exc
 	public int insertaddBiz(SmartMdmBizVO vo) throws Exception;
 
 	public int checkCustid(String checkId) throws Exception;
+	
+	public Map<String, Object> SelectCommonCustid(SmartMdmBizVO SmartMdmBizVO) throws Exception;
+	
+	public int UpdateBiz(SmartMdmBizVO SmartMdmBizVO) throws Exception;
+	
 
 	public int InsertLeadTime(SmartLeadTimeVO leadtimeVO) throws Exception;
 

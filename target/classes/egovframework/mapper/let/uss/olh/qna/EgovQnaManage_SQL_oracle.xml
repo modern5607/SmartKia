@@ -70,7 +70,7 @@
 						   FROM 	LETTNQAINFO A
 						   LEFT OUTER JOIN LETTCCMMNDETAILCODE B
 						   ON		B.CODE_ID ='COM028' AND A.QNA_PROCESS_STTUS_CODE = B.CODE                               						                               			
-						   WHERE	1=1   			
+						   WHERE	1=1
 							
 			<if test="searchCondition == &quot;wrterNm&quot;">AND
 				WRTER_NM LIKE '%' || #{searchKeyword} || '%'
