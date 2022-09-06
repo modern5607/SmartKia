@@ -56,7 +56,7 @@ public class EgovMberManageServiceImpl extends EgovAbstractServiceImpl implement
 		//패스워드 암호화
 		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), mberManageVO.getMberId());
 		mberManageVO.setPassword(pass);
-
+		
 		int result = mberManageDAO.insertMber(mberManageVO);
 		return result;
 	}

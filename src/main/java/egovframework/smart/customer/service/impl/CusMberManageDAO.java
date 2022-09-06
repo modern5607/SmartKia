@@ -4,8 +4,6 @@ import java.util.List;
 
 import egovframework.smart.customer.service.CusMberDefaultVO;
 import egovframework.smart.customer.service.CusMberManageVO;
-import egovframework.smart.mdm.mber.service.SmartMberManageVO;
-import egovframework.smart.mdm.mber.service.UserDefaultVO;
 
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 

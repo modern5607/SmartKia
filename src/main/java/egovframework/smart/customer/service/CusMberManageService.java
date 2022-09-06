@@ -35,7 +35,7 @@ public interface CusMberManageService {
 	 * @return SmartMberManageVO 일반회원상세정보
 	 * @throws Exception
 	 */
-	public CusMberManageVO selectMber(String mberId) throws Exception;
+	public CusMberManageVO selectMber(String cusId) throws Exception;
 
 	/**
 	 * 기 등록된 회원 중 검색조건에 맞는 회원들의 정보를 데이터베이스에서 읽어와 화면에 출력

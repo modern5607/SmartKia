@@ -1,16 +1,16 @@
 <%--
-  Class Name : EgovMberPasswordUpdt.jsp
-  Description : 일반회원암호수정 JSP
+  Class Name : SmartCusMberSelectUpdt.jsp
+  Description : 일반회원상세조회, 수정 JSP
   Modification Information
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.02  JJY          최초 생성
+     2009.03.02  JJY          최초 생성
      2011.08.31  JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 JJY
-    since    : 2009.04.02
---%> 
+    since    : 2009.03.02
+--%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
@@ -30,28 +30,46 @@
 	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
 	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 	<script src="<c:url value='/'/>js/ui.js"></script>
-
-<title>기준정보 > 사용자관리</title>
+	<script src="<c:url value='/'/>js/jquery.js"></script>
+	<script src="<c:url value='/'/>js/jqueryui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+	
+<title>샘플 포털 > 포털시스템관리 > 사용자관리 > 회원관리</title>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="cusMberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript" defer="defer">
 
 function fnListPage(){
     document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberManage.do'/>";
-    document.cusMberManageVO.submit(); 
+    document.cusMberManageVO.submit();
 }
-function fnInsert(){
-	document.cusMberManageVO.submit();
+/* function fnDeleteMber(checkedIds) {
+    if(confirm('<spring:message code="common.delete.msg" />')) {
+        document.cusMberManageVO.checkedIdForDel.value=checkedIds;
+        document.cusMberManageVO.action = "<c:url value='/uss/umt/mber/EgovMberDelete.do'/>";
+        document.cusMberManageVO.submit(); 
+    }
+} */
+function fnUpdate(){
+	document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberSelectUpdt.do'/>";
+    if(validateMberManageVO(document.cusMberManageVO)){
+        document.cusMberManageVO.submit();
+    }
+}
 
 }
-<c:if test="${!empty resultMsg}">alert("<spring:message code='${resultMsg}' />");</c:if>
+/**********************************************************
+ * 모달 종료 버튼
+ ******************************************************** */
+function fn_egov_modal_remove() {
+	$('#modalPan').remove();
+}
 
 </script>
 </head>
 <body>
-<body>
 
-     <!-- Skip navigation -->
+    <!-- Skip navigation -->
     <a href="#contents" class="skip_navi">본문 바로가기</a>
 
     <div class="wrap">
@@ -67,7 +85,7 @@ function fnInsert(){
 	                    <%-- <c:import url="/sym/mms/EgovMenuLeft.do" /> --%>
 	                    <!--// Left menu -->
         
-                        <div class="content_wrap">
+                         <div class="content_wrap">
                             <div id="contents" class="content">
                                  <!-- Location -->
                                 <div class="location">
@@ -80,7 +98,7 @@ function fnInsert(){
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="cusMberManageVO" name="cusMberManageVO" action="${pageContext.request.contextPath}/customer/SmartCusMberInsert.do" method="post" >
+								<form:form modelAttribute="cusMberManageVO" name="cusMberManageVO" method="post" >
 
                                 <h1 class="tit_1">포털시스템관리</h1>
 
@@ -108,8 +126,7 @@ function fnInsert(){
                                             <td>
                                                 <!-- <input name="autoNo" id="autoNo" class="f_txt" type="text" value="" maxlength="100" /> -->
                                                 <form:input path="autoNo" id="autoNo" class="f_txt w_350" title="차량번호" maxlength="100" />
-                                                <form:errors path="autoNo" cssClass="error" />    
-							                    
+                                                <form:errors path="autoNo" cssClass="error" />              
                                             </td>
                                         </tr>
                                         <tr>

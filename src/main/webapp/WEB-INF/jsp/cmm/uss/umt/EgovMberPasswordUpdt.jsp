@@ -35,7 +35,7 @@
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="passwordChgVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript" defer="defer">
-<!--
+
 function fnListPage(){
     document.passwordChgVO.action = "<c:url value='/uss/umt/mber/EgovMberManage.do'/>";
     document.passwordChgVO.submit();
@@ -50,7 +50,7 @@ function fnUpdate(){
     }
 }
 <c:if test="${!empty resultMsg}">alert("<spring:message code='${resultMsg}' />");</c:if>
-//-->
+
 </script>
 </head>
 <body>

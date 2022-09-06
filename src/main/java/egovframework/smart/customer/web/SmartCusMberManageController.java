@@ -78,7 +78,7 @@ public class SmartCusMberManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/customer/SmartCusMberManage.do")
-	public String selectCusMberList(@ModelAttribute("userSearchVO") CusMberDefaultVO userSearchVO, ModelMap model,
+public String selectCusMberList(@ModelAttribute("userSearchVO") CusMberDefaultVO userSearchVO, ModelMap model,
 			HttpServletRequest request, @RequestParam(value = "menuNo", required = false) String menuNo)
 			throws Exception {
 
@@ -109,17 +109,12 @@ public class SmartCusMberManageController {
 		userSearchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
 
-		model.addAttribute("resultList", cusMberManageService.selectMberList(userSearchVO));
-		
+		model.addAttribute("resultList", cusMberManageService.selectMberList(userSearchVO));		
 		int totCnt = cusMberManageService.selectMberListTotCnt(userSearchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		//System.out.println(model.getAttribute("resultList"));
-		System.out.println(userSearchVO);
-		//일반회원 상태코드를 코드정보로부터 조회
-		ComDefaultCodeVO vo = new ComDefaultCodeVO();
-		vo.setCodeId("COM013");
-		model.addAttribute("entrprsMberSttus_result", cmmUseService.selectCmmCodeDetail(vo));
+		
+		//System.out.println(userSearchVO);
 							 
 		return "customer/SmartCusMberManage";
 	}
@@ -133,11 +128,12 @@ public class SmartCusMberManageController {
 	 * @return cmm/uss/umt/EgovMberInsert
 	 * @throws Exception
 	 */
-	@RequestMapping("/customer/SmartCusMberInsertView.do")
-	public String insertMberView(@ModelAttribute("userSearchVO") CusMberDefaultVO userSearchVO,
+@RequestMapping("/customer/SmartCusMberInsertView.do")
+public String insertMberView(@ModelAttribute("userSearchVO") CusMberDefaultVO userSearchVO,
 			@ModelAttribute("cusMberManageVO") CusMberManageVO cusmberManageVO, Model model) throws Exception {
 
-				
+		
+	
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
     	if(!isAuthenticated) {
@@ -145,7 +141,6 @@ public class SmartCusMberManageController {
         	return "uat/uia/EgovLoginUsr";
     	}
     	
-
 		return "customer/SmartCusMberInsert";
 	}
 
@@ -159,8 +154,8 @@ public class SmartCusMberManageController {
 	 * @throws Exception
 	 */
 	
-	  @RequestMapping("/customer/SmartCusMberInsert.do") public String
-	  insertMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusmberManageVO,
+@RequestMapping("/customer/SmartCusMberInsert.do") public String 
+insertMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,
 	  BindingResult bindingResult, Model model) throws Exception {
 	  
 		// 미인증 사용자에 대한 보안처리
@@ -168,12 +163,12 @@ public class SmartCusMberManageController {
 	    if(!isAuthenticated) {model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 	        	return "uat/uia/EgovLoginUsr";
 	    }
-	   
-	    	System.out.println(cusmberManageVO);
-	 	   	System.out.println("뭐임");
-	 	  cusMberManageService.insertMber(cusmberManageVO);
-	 	  model.addAttribute("resultMsg", "success.common.insert");
-	  return "forward:/customer/SmartCusMberManage"; }
+	    
+
+	 	cusMberManageService.insertMber(cusMberManageVO);
+	 	System.out.println(cusMberManageVO);
+	 	model.addAttribute("resultMsg", "success.common.insert");
+	  return "forward:/customer/SmartCusMberManage.do"; }
 	  
 	 /**
 		 * 일반회원정보 수정을 위해 일반회원정보를 상세조회한다.
@@ -184,42 +179,23 @@ public class SmartCusMberManageController {
 		 * @return cmm/uss/umt/EgovMberSelectUpdt
 		 * @throws Exception
 		 */
-	/*
-	 * @RequestMapping("/uss/umt/mber/EgovMberSelectUpdtView.do") public String
-	 * updateMberView(@RequestParam("selectedId") String
-	 * mberId, @ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model)
-	 * throws Exception {
-	 * 
-	 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-	 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-	 * model.addAttribute("message",
-	 * egovMessageSource.getMessage("fail.common.login")); return
-	 * "uat/uia/EgovLoginUsr"; }
-	 * 
-	 * ComDefaultCodeVO vo = new ComDefaultCodeVO();
-	 * 
-	 * //패스워드힌트목록을 코드정보로부터 조회 vo.setCodeId("COM022");
-	 * model.addAttribute("passwordHint_result",
-	 * cmmUseService.selectCmmCodeDetail(vo));
-	 * 
-	 * //성별구분코드를 코드정보로부터 조회 vo.setCodeId("COM014");
-	 * model.addAttribute("sexdstnCode_result",
-	 * cmmUseService.selectCmmCodeDetail(vo));
-	 * 
-	 * //사용자상태코드를 코드정보로부터 조회 vo.setCodeId("COM013");
-	 * model.addAttribute("mberSttus_result",
-	 * cmmUseService.selectCmmCodeDetail(vo));
-	 * 
-	 * //그룹정보를 조회 - GROUP_ID정보 vo.setTableNm("LETTNORGNZTINFO");
-	 * model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
-	 * 
-	 * MberManageVO mberManageVO = mberManageService.selectMber(mberId);
-	 * model.addAttribute("mberManageVO", mberManageVO);
-	 * model.addAttribute("userSearchVO", userSearchVO);
-	 * 
-	 * return "cmm/uss/umt/EgovMberSelectUpdt"; }
-	 * 
-	 *//**
+	
+@RequestMapping("/customer/SmartCusMberSelectUpdtView.do") 
+public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAttribute("searchVO") CusMberDefaultVO userSearchVO, Model model)
+	  throws Exception {
+	  // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
+		  Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		  if(!isAuthenticated) {model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+		        	return "uat/uia/EgovLoginUsr";
+		  }
+	  
+	  CusMberManageVO cusmberManageVO = cusMberManageService.selectMber(cusId);
+	  model.addAttribute("cusMberManageVO", cusmberManageVO);
+	  model.addAttribute("userSearchVO", userSearchVO);
+	  
+	  return "/customer/SmartCusMberSelectUpdt"; }
+	  
+	 /**
 		 * 일반회원정보 수정후 목록조회 화면으로 이동한다.
 		 * 
 		 * @param mberManageVO  일반회원수정정보
@@ -228,40 +204,23 @@ public class SmartCusMberManageController {
 		 * @return forward:/uss/umt/mber/EgovMberManage.do
 		 * @throws Exception
 		 */
-	/*
-	 * @RequestMapping("/uss/umt/mber/EgovMberSelectUpdt.do") public String
-	 * updateMber(@ModelAttribute("mberManageVO") MberManageVO mberManageVO,
-	 * BindingResult bindingResult, Model model) throws Exception {
-	 * 
-	 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-	 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-	 * model.addAttribute("message",
-	 * egovMessageSource.getMessage("fail.common.login")); return
-	 * "uat/uia/EgovLoginUsr"; }
-	 * 
-	 * beanValidator.validate(mberManageVO, bindingResult); if
-	 * (bindingResult.hasErrors()) { ComDefaultCodeVO vo = new ComDefaultCodeVO();
-	 * 
-	 * //패스워드힌트목록을 코드정보로부터 조회 vo.setCodeId("COM022");
-	 * model.addAttribute("passwordHint_result",
-	 * cmmUseService.selectCmmCodeDetail(vo));
-	 * 
-	 * //성별구분코드를 코드정보로부터 조회 vo.setCodeId("COM014");
-	 * model.addAttribute("sexdstnCode_result",
-	 * cmmUseService.selectCmmCodeDetail(vo));
-	 * 
-	 * //사용자상태코드를 코드정보로부터 조회 vo.setCodeId("COM013");
-	 * model.addAttribute("mberSttus_result",
-	 * cmmUseService.selectCmmCodeDetail(vo));
-	 * 
-	 * //그룹정보를 조회 - GROUP_ID정보 vo.setTableNm("LETTNORGNZTINFO");
-	 * model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
-	 * return "cmm/uss/umt/EgovMberSelectUpdt"; } else {
-	 * mberManageService.updateMber(mberManageVO); //Exception 없이 진행시 수정성공메시지
-	 * model.addAttribute("resultMsg", "success.common.update"); return
-	 * "forward:/uss/umt/mber/EgovMberManage.do"; } }
-	 * 
-	 *//**
+	
+	  @RequestMapping("/customer/SmartCusMberSelectUpdt.do") public String
+	  updateMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,
+	  BindingResult bindingResult, Model model) throws Exception {
+	  
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if(!isAuthenticated) {model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+		    return "uat/uia/EgovLoginUsr";
+		}
+	  
+	  cusMberManageService.updateMber(cusMberManageVO); //Exception 없이 진행시 수정성공메시지
+	  model.addAttribute("resultMsg", "success.common.update"); return
+	  "forward:/customer/SmartCusMberManage"; } } 
+
+  
+	 /**
 		 * 일반회원정보삭제후 목록조회 화면으로 이동한다.
 		 * 
 		 * @param checkedIdForDel 삭제대상 아이디 정보
@@ -500,4 +459,4 @@ public class SmartCusMberManageController {
 			 * 
 			 * return "cmm/uss/umt/EgovIdDplctCnfirm"; }
 			 */
-}
+			

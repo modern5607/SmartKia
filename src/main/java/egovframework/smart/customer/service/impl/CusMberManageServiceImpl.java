@@ -48,20 +48,18 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	@Override
 	public int insertMber(CusMberManageVO cusMberManageVO) throws Exception  {
-		//고유아이디 셋팅
-		String uniqId = idgenService.getNextStringId();
-		cusMberManageVO.setUniqId(uniqId);
-		//패스워드 암호화
-		String pass = EgovFileScrty.encryptPassword(cusMberManageVO.getPassword(), cusMberManageVO.getMberId());
-		cusMberManageVO.setPassword(pass);
-
+		
+		//String year = getBoard_sdate().replace("-", "").substring(0, 6);
+		String cusId = idgenService.getNextStringId();
+		cusMberManageVO.setCusId(cusId);
+		
 		int result = cusMberManageDAO.insertMber(cusMberManageVO);
 		return result;
 	}
 
 	@Override
-	public CusMberManageVO selectMber(String uniqId) {
-		CusMberManageVO cusMberManageVO = cusMberManageDAO.selectMber(uniqId);
+	public CusMberManageVO selectMber(String cusId) {
+		CusMberManageVO cusMberManageVO = cusMberManageDAO.selectMber(cusId);
 		return cusMberManageVO;
 	}
 

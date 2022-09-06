@@ -53,8 +53,7 @@
                     CUSTOMER_AUTONO     ,
                     CUSTOMER_AUTOKIND   ,
                     CUSTOMER_TEL    	,
-                    NOTE    			
-                    )
+                    NOTE    			)
               VALUES(
                     #{cusId},
                     #{cusNm},
@@ -65,7 +64,7 @@
                     )              
     </insert>
     
-<!--     <delete id="deleteMber_S">
+    <delete id="deleteMber_S">
         
             DELETE FROM LETTNGNRLMBER 
             WHERE ESNTL_ID=#{delId}
@@ -103,25 +102,13 @@
     
     <update id="updateMber_S">
         
-            UPDATE LETTNGNRLMBER 
-            SET MBER_ID          = #{mberId},
-                MBER_NM          = #{mberNm},
-                PASSWORD_HINT    = #{passwordHint},
-                PASSWORD_CNSR    = #{passwordCnsr},
-                IHIDNUM          = #{ihidnum},
-                SEXDSTN_CODE     = #{sexdstnCode},
-                ZIP              = #{zip},
-                ADRES            = #{adres},
-                AREA_NO          = #{areaNo},
-                MBER_STTUS       = #{mberSttus},
-                DETAIL_ADRES     = #{detailAdres},
-                END_TELNO        = #{endTelno},
-                MBTLNUM      = #{moblphonNo},
-                GROUP_ID         = #{groupId},
-                MBER_FXNUM       = #{mberFxnum},
-                MBER_EMAIL_ADRES = #{mberEmailAdres},
-                MIDDLE_TELNO     = #{middleTelno}
-            WHERE ESNTL_ID=#{uniqId}
+            UPDATE CAR_CUSTOMER 
+            SET CUSTOMER_AUTONO         = #{autoNo},
+                CUSTOMER_AUTOKIND       = #{autoKind},
+                CUSTOMER_NAME    		= #{cusNm},
+                CUSTOMER_TEL    		= #{cusTel},
+                NOTE     				= #{note}
+            WHERE CUSTOMER_ID=#{cusId}
         
     </update>
     
@@ -173,5 +160,5 @@
              ) A
          WHERE userId = #{checkId}
      
-    </select> -->
+    </select>
 </mapper>

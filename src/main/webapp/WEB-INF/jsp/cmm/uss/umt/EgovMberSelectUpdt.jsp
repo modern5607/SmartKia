@@ -38,7 +38,7 @@
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="mberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript" defer="defer">
-<!--
+
 function fnListPage(){
     document.mberManageVO.action = "<c:url value='/uss/umt/mber/EgovMberManage.do'/>";
     document.mberManageVO.submit();
@@ -90,7 +90,7 @@ function fn_egov_returnValue(retVal){
 function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
-//-->
+
 </script>
 </head>
 <body>
