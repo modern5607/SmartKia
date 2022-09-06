@@ -105,6 +105,11 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	 * 비밀번호 힌트
 	 */
 	private String passwordHint;
+	
+	/**
+	 * 사용여부
+	 */
+	private String useYn;
 	/**
 	 * 가입 일자
 	 */
@@ -117,6 +122,8 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	 * 이메일주소
 	 */
 	private String mberEmailAdres;
+	
+	private String teams;
 	/**
 	 * oldPassword attribute 값을  리턴한다.
 	 * @return String
@@ -437,5 +444,19 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	public void setMberEmailAdres(String mberEmailAdres) {
 		this.mberEmailAdres = mberEmailAdres;
 	}
+
+	public String getUseYn() {
+		return useYn;
+	}
+	public void setUseYn(String useYn) {
+		this.useYn = useYn;
+	}
+	public String getTeam() {
+		return teams;
+	}
+	public void setTeam(String teams) {
+		this.teams = teams;
+	}
+	
 	
 }

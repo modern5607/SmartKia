@@ -23,7 +23,7 @@ public interface SmartMberManageService {
 
 	/**
 	 * 사용자의 기본정보를 화면에서 입력하여 항목의 정합성을 체크하고 데이터베이스에 저장
-	 * @param SmartMberManageVO 일반회원 등록정보
+	 * @param SmartCrmVO 일반회원 등록정보
 	 * @return 등록결과
 	 * @throws Exception
 	 */
@@ -55,7 +55,7 @@ public interface SmartMberManageService {
 
 	/**
 	 * 화면에 조회된 일반회원의 기본정보를 수정하여 항목의 정합성을 체크하고 수정된 데이터를 데이터베이스에 반영
-	 * @param SmartMberManageVO 일반회원수정정보
+	 * @param SmartCrmVO 일반회원수정정보
 	 * @throws Exception
 	 */
 	public void updateMber(SmartMberManageVO smartMberManageVO) throws Exception;
@@ -77,7 +77,7 @@ public interface SmartMberManageService {
 
 	/**
 	 * 일반회원암호수정
-	 * @param SmartMberManageVO 일반회원수정정보(비밀번호)
+	 * @param SmartCrmVO 일반회원수정정보(비밀번호)
 	 * @throws Exception
 	 */
 	public void updatePassword(SmartMberManageVO smartMberManageVO) throws Exception;

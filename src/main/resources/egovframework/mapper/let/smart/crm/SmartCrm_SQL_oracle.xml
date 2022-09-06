@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="smartCrmDAO">
+
+	<select id="selectCrmList" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="egovMap">
+	SELECT	B.SEQ,
+			C.CUSTOMER_ID,
+			C.CUSTOMER_AUTONO,
+			C.CUSTOMER_AUTOKIND,
+	        C.CUSTOMER_NAME,
+	        C.CUSTOMER_TEL,
+	        A.TASKSTAT,
+	        A.POSITION,
+	        A.COMPTIME,
+	        A.NOTE,
+	        A.TURNOVER,
+	        A.TURNOVERTIME,
+	        A.TURNOVER_NOTE
+	        
+	FROM 	CAR_TAKEREPAIR A, CAR_TRANSFERPROC B, CAR_CUSTOMER C           						                               			
+	WHERE	1=1
+			
+	</select> 
+    
+</mapper>

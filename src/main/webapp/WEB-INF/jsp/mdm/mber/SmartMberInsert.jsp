@@ -111,6 +111,10 @@ function fnInsert(){
 		document.smartMberManageVO.submit();
 	} 
 }
+/* 전화번호 하이폰 자동생성 */
+$(document).on("keyup", ".phoneNumber", function() { 
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+});
 </script>
 </head>
 <body>
@@ -193,7 +197,7 @@ function fnInsert(){
                                                 <form:errors path="password" cssClass="error" />
                                             </td>
                                         </tr>
-                                        <tr>
+                                         <tr>
                                             <td class="lb">
                                                 <label for="password2">비밀번호확인</label>
                                                 <span class="req">필수</span>
@@ -204,55 +208,72 @@ function fnInsert(){
                                         </tr>
                                         <tr>
                                             <td class="lb">
-                                            	비밀번호힌트
-                                                <span class="req">필수</span>
+                                            	반
+                                              <!-- <span class="req">필수</span> -->
                                             </td>
                                             <td>
-                                                <label class="f_select w_350" for="passwordHint">
-                                                    <form:select path="passwordHint" id="passwordHint" title="비밀번호힌트">
-                                                        <form:option value="" label="--선택하세요--"/>
-                                                        <form:options items="${passwordHint_result}" itemValue="code" itemLabel="codeNm"/>
-                                                    </form:select>
-                                                    <form:errors path="passwordHint" cssClass="error"/>
-                                                </label>
+	                                            <label class="f_select w_350" for="team">
+		                                          <form:select id="team" name="team" path="team" title="team">
+		                                          	<form:option path="team" type="hidden" value='A'>A</form:option>
+		                                           	<form:option path="team" type="hidden" value='B'>B</form:option>
+		                                          	<form:option path="team" type="hidden" value='C'>C</form:option>
+		                                          </form:select>
+	                                          	</label>
                                             </td>
+                                            <%-- <td>
+                                                 <label class="f_select w_350" for="group">
+                                                    <form:select path="team" id="team" title="반">
+                                                        <form:option value="" label="--선택하세요--"/>
+                                                        <form:options items="${team}" itemValue="code" itemLabel="codeNm"/>
+                                                    </form:select>
+                                                    <form:errors path="team" cssClass="error"/>
+                                                </label>
+                                            </td> 
+                                            <form:select id="bbsTyCode" name="bbsTyCode" path="bbsTyCode" title="게시판유형선택">
+                                                    	<form:option value='' label="선택하세요" />
+                                                    	<form:options items="${team}" itemValue="code" itemLabel="codeNm" />
+                                                    </form:select> --%>
+                                            
                                         </tr>
                                         <tr>
                                             <td class="lb">
-                                                <label for="passwordCnsr">비밀번호정답</label>
+                                            	<label for="useYn">사용여부</label>
                                                 <span class="req">필수</span>
                                             </td>
-                                            <td>
-                                                <form:input path="passwordCnsr" id="passwordCnsr" class="f_txt w_350" title="비밀번호정답" maxlength="100" />
-                                                <form:errors path="passwordCnsr" cssClass="error"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                            	성별구분코드
-                                            </td>
-                                            <td>
-                                                <label class="f_select w_350" for="sexdstnCode">
-                                                    <form:select path="sexdstnCode" id="sexdstnCode" title="성별구분코드">
-                                                        <form:option value="" label="--선택하세요--"/>
-                                                        <form:options items="${sexdstnCode_result}" itemValue="code" itemLabel="codeNm"/>
-                                                    </form:select>
+                                            <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
+                                                <label for="rdo1" class="mr30 <c:if test="${smartMbermanageVO.useYn == 'Y'}"> on</c:if>">
+                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" <c:if test="${smartMbermanageVO.useYn == 'Y'}"> checked="checked"</c:if>>
+                                                    사용
                                                 </label>
+                                                <label for="rdo2" class="<c:if test="${smartMbermanageVO.useYn == 'N'}"> on</c:if>">
+                                                    <input type="radio" id="rdo2" name="useYn" class="radio2" value="N" <c:if test="${smartMbermanageVO.useYn == 'N'}"> checked="checked"</c:if>>
+                                                    미사용
+                                                </label>
+                                                <br/><form:errors path="useYn" />
                                             </td>
+                                          <%--   <td>
+                                              <label class="f_select w_350" for="useYn">
+                                                    <form:select path="useYn" id="useYn" title="사용여부">
+                                                        <form:option value="" label="--선택하세요--"/>
+                                                        <form:options items="${mberYn_result}" itemValue="code" itemLabel="codeNm"/>
+                                                    </form:select>
+                                                    <form:errors path="mberYn" cssClass="error"/>
+                                                </label>  
+                                            </td> --%>
                                         </tr>
                                         <tr>
                                             <td class="lb">
                                                 <label for="areaNo">전화번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="areaNo" id="areaNo" class="f_txt w_80" title="전화번호" maxlength="5" />
-                                                <span class="f_txt_inner mr5 ml5" title="전화번호 첫번째">-</span>
+                                                <form:input path="areaNo" id="areaNo" class="f_txt w_350 phoneNumber" title="전화번호" maxlength="15" />
+                                                <%-- <span class="f_txt_inner mr5 ml5" title="전화번호 첫번째">-</span>
                                                 <form:input path="middleTelno" id="middleTelno" class="f_txt w_80" title="전화번호 두번째" maxlength="5" />
                                                 <span class="f_txt_inner mr5 ml5">-</span>
-                                                <form:input path="endTelno" id="endTelno" class="f_txt w_80" title="전화번호 세번째" maxlength="5" />
+                                                <form:input path="endTelno" id="endTelno" class="f_txt w_80" title="전화번호 세번째" maxlength="5" /> --%>
                                                 <form:errors path="areaNo" cssClass="error" />
-                                                <form:errors path="middleTelno" cssClass="error" />
-                                                <form:errors path="endTelno" cssClass="error" />
+                                                <%-- <form:errors path="middleTelno" cssClass="error" />
+                                                <form:errors path="endTelno" cssClass="error" /> --%>
                                             </td>
                                         </tr>
                                         <tr>
@@ -269,14 +290,14 @@ function fnInsert(){
                                                 <label for="mberFxnum">핸드폰번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="moblphonNo" id="moblphonNo" class="f_txt w_80" title="핸드폰번호" maxlength="4" />
-                                                <span class="f_txt_inner mr5 ml5" title="핸드폰번호 첫번째">-</span>
+                                                <form:input path="moblphonNo" id="moblphonNo" class="f_txt w_350 phoneNumber" title="핸드폰번호" maxlength="15" />
+                                                <%-- <span class="f_txt_inner mr5 ml5" title="핸드폰번호 첫번째">-</span>
                                                 <form:input path="middleMoblphonNo" id="middleMoblphonNo" class="f_txt w_80" title="핸드폰번호 두번째" maxlength="4" />
                                                 <span class="f_txt_inner mr5 ml5">-</span>      
-                                                <form:input path="endMoblphonNo" id="endMoblphonNo" class="f_txt w_80" title="핸드폰번호 세번째" maxlength="4" />
+                                                <form:input path="endMoblphonNo" id="endMoblphonNo" class="f_txt w_80" title="핸드폰번호 세번째" maxlength="4" /> --%>
                                                 <form:errors path="moblphonNo" cssClass="error" />
-                                                <form:errors path="middleMoblphonNo" cssClass="error" />
-                                                <form:errors path="endMoblphonNo" cssClass="error" />
+                                                <%-- <form:errors path="middleMoblphonNo" cssClass="error" />
+                                                <form:errors path="endMoblphonNo" cssClass="error" /> --%>
                                             </td>
                                         </tr>
                                         <tr>
@@ -288,76 +309,14 @@ function fnInsert(){
                                                 <form:errors path="mberEmailAdres" cssClass="error" />
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="lb">
-                                                <label for="zip_view">우편번호</label>
-                                            </td>
-                                            <td>
-                                                <span class="f_search2 w_350">
-                                                    <input name="zip_view" id="zip_view" title="우편번호" type="text" value="<c:out value='${smartMberManageVO.zip}'/>" maxlength="8" readonly="readonly" />
-                                                    <form:hidden path="zip" />
-                                                    <button type="button" class="btn" onclick="fn_egov_ZipSearch();"></button>
-                                                    <form:errors path="zip" cssClass="error" />
-                                                </span>
-                                                <span class="f_txt_inner ml15">(우편번호 검색)</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                                <label for="adres">주소</label>
-                                            </td>
-                                            <td>
-                                                <form:input path="adres" id="adres" class="f_txt w_full" title="주소" maxlength="100" readonly="true" />
-                                                <form:errors path="adres" cssClass="error" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                                <label for="detailAdres">상세주소</label>
-                                            </td>
-                                            <td>
-                                                <form:input path="detailAdres" id="detailAdres" class="f_txt w_full" title="상세주소" maxlength="100" />
-                                                <form:errors path="detailAdres" cssClass="error" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                            	그룹아이디
-                                                <span class="req">필수</span>
-                                            </td>
-                                            <td>
-                                                <label class="f_select w_350" for="groupId">
-                                                    <form:select path="groupId" id="groupId" title="그룹아이디">
-                                                        <form:option value="" label="--선택하세요--"/>
-                                                        <form:options items="${groupId_result}" itemValue="code" itemLabel="codeNm"/>
-                                                    </form:select>
-                                                    <form:errors path="groupId" cssClass="error"/>
-                                                </label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                            	일반회원상태코드
-                                                <span class="req">필수</span>
-                                            </td>
-                                            <td>
-                                                <label class="f_select w_350" for="mberSttus">
-                                                    <form:select path="mberSttus" id="mberSttus" title="일반회원상태코드">
-                                                        <form:option value="" label="--선택하세요--"/>
-                                                        <form:options items="${mberSttus_result}" itemValue="code" itemLabel="codeNm"/>
-                                                    </form:select>
-                                                    <form:errors path="mberSttus" cssClass="error"/>
-                                                </label>
-                                            </td>
-                                        </tr>
                                     </table>
                                 </div>
 
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
-                                    <div class="left_col btn3">
+                                    <%-- <div class="left_col btn3">
                                         <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.smartMberManageVO.reset();"><spring:message code="button.reset" /></a><!-- 취소 -->
-                                    </div>
+                                    </div> --%>
 
                                     <div class="right_col btn1">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnInsert(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->

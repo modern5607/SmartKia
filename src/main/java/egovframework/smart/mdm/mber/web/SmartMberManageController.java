@@ -1,5 +1,6 @@
 package egovframework.smart.mdm.mber.web;
 
+import java.io.PrintWriter;
 /*import java.io.PrintWriter;*/
 import java.util.Map;
 
@@ -96,7 +97,7 @@ public class SmartMberManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "uat/uia/EgovLoginUsr";
     	}
-
+    	
 		/** EgovPropertyService */
 		userSearchVO.setPageUnit(propertiesService.getInt("pageUnit"));
 		userSearchVO.setPageSize(propertiesService.getInt("pageSize"));
@@ -121,6 +122,9 @@ public class SmartMberManageController {
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
 		vo.setCodeId("COM013");
 		model.addAttribute("entrprsMberSttus_result", cmmUseService.selectCmmCodeDetail(vo));
+		System.out.println(userSearchVO);
+
+    	System.out.println(smartMberManageService.selectMberList(userSearchVO));
 		
 		return "/mdm/mber/SmartMberManage";
 	}
@@ -135,24 +139,12 @@ public class SmartMberManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "uat/uia/EgovLoginUsr";
     	}
+    	
+    	SmartMberManageVO vo = new SmartMberManageVO(); 
+		
+		System.out.println(userSearchVO);
 
-		ComDefaultCodeVO vo = new ComDefaultCodeVO();
-
-		//패스워드힌트목록을 코드정보로부터 조회
-		vo.setCodeId("COM022");
-		model.addAttribute("passwordHint_result", cmmUseService.selectCmmCodeDetail(vo));
-
-		//성별구분코드를 코드정보로부터 조회
-		vo.setCodeId("COM014");
-		model.addAttribute("sexdstnCode_result", cmmUseService.selectCmmCodeDetail(vo));
-
-		//사용자상태코드를 코드정보로부터 조회
-		vo.setCodeId("COM013");
-		model.addAttribute("mberSttus_result", cmmUseService.selectCmmCodeDetail(vo));
-
-		//그룹정보를 조회 - GROUP_ID정보
-		vo.setTableNm("LETTNORGNZTINFO");
-		model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
+    	System.out.println(smartMberManageService.selectMberList(userSearchVO));
 
 		return "mdm/mber/SmartMberInsert";
 	}
@@ -160,28 +152,24 @@ public class SmartMberManageController {
 	 * 거래처 관리 등록
 	 */
 	
-//	@RequestMapping(value = "/mdm/SmartMberInsert.do")
-//	public void insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, 
-//			BindingResult bindingResult, Model model, HttpServletResponse response) throws Exception {
-//		response.setContentType("text/html; charset=euc-kr");
-//		PrintWriter out = response.getWriter();
-//	
-//		int result = smartMberManageService.insertMber(smartMberManageVO);
-//		if (result == 0) // insert실패
-//		{
-//			out.println("<script>");
-//			out.println("alert('업체코드가 중복입니다.')");
-//			out.println("history.back()");
-//			out.println("</script>");
-//		} else {
-//			out.println("<script>");
-//			out.println("alert('성공적으로 등록되었습니다.')");
-//			out.println("location.href='/mdm/SmartMberManage.do'");
-//			out.println("</script>");
-//		}
-//	}
+	/*
+	 * @RequestMapping(value = "/mdm/SmartMberInsert.do") public void
+	 * insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO
+	 * smartMberManageVO, BindingResult bindingResult, Model model,
+	 * HttpServletResponse response) throws Exception {
+	 * response.setContentType("text/html; charset=euc-kr"); PrintWriter out =
+	 * response.getWriter();
+	 * 
+	 * int result = smartMberManageService.insertMber(smartMberManageVO); if (result
+	 * == 0) // insert실패 { out.println("<script>");
+	 * out.println("alert('업체코드가 중복입니다.')"); out.println("history.back()");
+	 * out.println("</script>"); } else { out.println("<script>");
+	 * out.println("alert('성공적으로 등록되었습니다.')");
+	 * out.println("location.href='/mdm/SmartMberManage.do'");
+	 * out.println("</script>"); } }
+	 */
 	
-	@RequestMapping("/mdm/SmartMberManageInsert.do")
+	@RequestMapping(value = "/mdm/SmartMberInsert.do")
 	public String insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, 
 			BindingResult bindingResult, Model model) throws Exception {
 		
@@ -194,23 +182,7 @@ public class SmartMberManageController {
     	
 		beanValidator.validate(smartMberManageVO, bindingResult);
 		if (bindingResult.hasErrors()) {
-			ComDefaultCodeVO vo = new ComDefaultCodeVO();
-
-			//패스워드힌트목록을 코드정보로부터 조회
-			vo.setCodeId("COM022");
-			model.addAttribute("passwordHint_result", cmmUseService.selectCmmCodeDetail(vo));
-
-			//성별구분코드를 코드정보로부터 조회
-			vo.setCodeId("COM014");
-			model.addAttribute("sexdstnCode_result", cmmUseService.selectCmmCodeDetail(vo));
-
-			//사용자상태코드를 코드정보로부터 조회
-			vo.setCodeId("COM013");
-			model.addAttribute("mberSttus_result", cmmUseService.selectCmmCodeDetail(vo));
-
-			//그룹정보를 조회 - GROUP_ID정보
-			vo.setTableNm("LETTNORGNZTINFO");
-			model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
+			 SmartMberManageVO vo = new SmartMberManageVO(); 
 			return "mdm/mber/SmartMberInsert";
 		} else {
 			smartMberManageService.insertMber(smartMberManageVO);

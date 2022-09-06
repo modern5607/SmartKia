@@ -263,3 +263,6 @@
     .smart_monitoring .board_list th {padding: 11px 0; border-right: 3px solid #fff; border-bottom: 5px solid #fff; color:#fff}
     .smart_monitoring .board_list th:last-child {border-right: 0;}
     .smart_monitoring .board_list table{font-size:24px;}
+    
+    .box_1 .req {display: inline-block; width: 7px; height: 7px; font-size: 0; background: url(../images/ico_req.png) no-repeat; vertical-align: 15px;}
+    .box_1 tr td{padding: 6px}
