@@ -1,6 +1,7 @@
 package egovframework.smart.mdm.web;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -348,7 +351,7 @@ public class SmartMdmController {
 		Map<String, Object> map = smartmdmservice.selectLeadTime(leadtimeVO);
 //		System.out.println("Map :" + map);
 
-		model.addAttribute("comCodeVO", leadtimeVO);
+		model.addAttribute("leadtimeVO", leadtimeVO);
 		model.addAttribute("leadtimelist", map.get("leadtime"));
 		model.addAttribute("mainlist", map.get("main"));
 		model.addAttribute("middlelist", map.get("middle"));
@@ -358,11 +361,9 @@ public class SmartMdmController {
 		return "/mdm/SmartLeadTimeView";
 	}
 
-	@RequestMapping(value = "/mdm/InsertLeadTime.do")
-	public ModelAndView InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model,	HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-
-
+	@RequestMapping(value = "/mdm/InsertLeadTime.do",method=RequestMethod.POST)
+	public void InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model,	HttpServletResponse response) throws Exception {
+		Map<String,Object> msg = new HashMap<String, Object>();
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
 		leadtimeVO.setId(id);
@@ -370,13 +371,8 @@ public class SmartMdmController {
 		System.out.println("InsertLeadTime.do -> leadtimeVO : "+leadtimeVO);
 
 
-		smartmdmservice.InsertLeadTime(leadtimeVO);
-		
-		mav.setViewName("redirect:/mdm/SmartLeadTime.do");
-		mav.addObject("SmartLeadTimeVO",leadtimeVO);
-		
-		return mav;
-//		return "redirect:/mdm/SmartLeadTime.do"; //이거 고칠것 새로고침하면 계속 insert호출됨.
+		int result = smartmdmservice.InsertLeadTime(leadtimeVO);
+		response.getWriter().print(result);
 	}
 
 	@RequestMapping(value = "/mdm/UpdateLeadTime.do")
