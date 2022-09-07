@@ -15,5 +15,6 @@ target/classes/egovframework/smart/mdm/service/impl/SmartMdmServiceImpl.class
 target/classes/egovframework/smart/mdm/service/SmartMdmService.class
 target/classes/egovframework/smart/mdm/web/SmartMdmController.class
 target/m2e-wtp/web-resources/META-INF/maven/egov/template-portal/pom.properties
-target/classes/egovframework/smart/mdm/web/SmartMdmController.class
-target/classes/egovframework/smart/mdm/web/SmartMdmController.class
+target/classes/egovframework/smart/mdm/mber/service/SmartMberManageVO.class
+target/classes/egovframework/mapper/let/smart/mdm/mber/SmartMberManage_SQL_oracle.xml
+.metadata/.lock

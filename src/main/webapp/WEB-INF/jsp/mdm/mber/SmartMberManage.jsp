@@ -162,8 +162,8 @@ function fnLinkPage(pageNo){
                                 <h3 class="tit_3">회원관리</h3> -->
                                 
                                 <!-- 검색조건 -->
-                                <div class="condition">
-                                    <label class="item f_select" for="sbscrbSttus">
+                                <div class="condition" style="text-align: left;">
+                                    <%-- <label class="item f_select" for="sbscrbSttus">
                                         <select name="sbscrbSttus" id="sbscrbSttus" title="조회조건1">
                                             <option value="0" <c:if test="${empty userSearchVO.sbscrbSttus || userSearchVO.sbscrbSttus == '0'}">selected="selected"</c:if> >상태(전체)</option>
 					                        <option value="A" <c:if test="${userSearchVO.sbscrbSttus == 'A'}">selected="selected"</c:if> >가입신청</option>
@@ -177,12 +177,20 @@ function fnLinkPage(pageNo){
                                             <option value="0" <c:if test="${userSearchVO.searchCondition == '0'}">selected="selected"</c:if> >ID</option>
                                             <option value="1" <c:if test="${empty userSearchVO.searchCondition || userSearchVO.searchCondition == '1'}">selected="selected"</c:if> >Name</option>
                                         </select>
-                                    </label>
-
-                                    <span class="item f_search">
+                                    </label> --%>
+				                    <span class="item f_search">
+					                    <p class="left">
+					                    <label for="searchKeyword">아이디</label>
+					                        <input class="f_input w_200" name="searchKeyword" id="searchKeyword" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchKeyword}"/>"/>
+					                    </p>
+					                    <p class="left">
+					                    </p>
+					                        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
+				                    </span>
+                                    <%-- <span class="item f_search">
                                         <input name="searchKeyword" id="searchKeyword" class="f_input w_500" title="검색" type="text" value="<c:out value="${userSearchVO.searchKeyword}"/>" />
                                         <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code="button.search" /></button><!-- 조회 -->
-                                    </span>
+                                    </span> --%>
                                 </div>
                                 <!--// 검색조건 -->
 
@@ -211,11 +219,10 @@ function fnLinkPage(pageNo){
                                             <col style="width: 60px;">
                                             <%-- <col style="width: 60px;"> --%>
                                             <col style="width: 100px;">
-                                            <col style="width: 105px;">
-                                            <col style="width: auto;">
-                                            <col style="width: 140px;">
-                                            <col style="width: 180px;">
-                                            <col style="width: 150px;">
+                                            <col style="width: 100px;">
+                                            <col style="width: 100px;">
+                                            <col style="width: 100px;">
+                                            <col style="width: 100px;">
                                         </colgroup>
                                         <thead>
                                             <tr>
@@ -227,10 +234,10 @@ function fnLinkPage(pageNo){
                                                 </th> -->
                                                 <th scope="col">아이디</th>
                                                 <th scope="col">사용자이름</th>
-                                                <th scope="col">사용자이메일</th>
+                                                <th scope="col">반</th>
                                                 <th scope="col">전화번호</th>
-                                                <th scope="col">등록일</th>
-                                                <th scope="col">가입상태</th>
+                                                <!-- <th scope="col">등록일</th> -->
+                                                <th scope="col">사용여부</th>
                                             </tr>
                                             
                                         </thead>
@@ -257,15 +264,13 @@ function fnLinkPage(pageNo){
                                                 	</a>
                                                 </td>
                                                 <td><c:out value="${result.userNm}"/></td>
-                                                <td><c:out value="${result.emailAdres}"/></td>
-                                                <td><c:out value="${result.areaNo}"/>)<c:out value="${result.middleTelno}"/>-<c:out value="${result.endTelno}"/></td>
-                                                <td><c:out value="${result.sbscrbDe}"/></td>
+                                                <td><c:out value="${result.team}"/></td>
+                                                <td><c:out value="${result.areaNo}"/><%-- <c:out value="${result.middleTelno}"/><c:out value="${result.endTelno}"/> --%></td>
+                                                <%-- <td><c:out value="${result.sbscrbDe}"/></td> --%>
+                                                
                                                 <td>
-                                                	<c:forEach var="entrprsMberSttus_result" items="${entrprsMberSttus_result}" varStatus="status">
-                                                		<c:if test="${result.sttus == entrprsMberSttus_result.code}">
-                                                			<c:out value="${entrprsMberSttus_result.codeNm}"/>
-                                                		</c:if>
-                                                	</c:forEach>
+                                                	<c:if test="${result.useYn == 'N'}"><spring:message code="button.notUsed" /></c:if>
+                                                	<c:if test="${result.useYn == 'Y'}"><spring:message code="button.use" /></c:if>
                                                 </td>
                                             </tr>
                                             </c:forEach>
