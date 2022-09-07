@@ -10,3 +10,8 @@ target/classes/egovframework/smart/mdm/mber/service/UserDefaultVO.class
 target/classes/egovframework/smart/mdm/mber/web/SmartMberManageController.class
 target/m2e-wtp/web-resources/META-INF/maven/egov/template-portal/pom.properties
 .metadata
+target/classes/egovframework/smart/mdm/service/impl/SmartMdmDAO.class
+target/classes/egovframework/smart/mdm/service/impl/SmartMdmServiceImpl.class
+target/classes/egovframework/smart/mdm/service/SmartMdmService.class
+target/classes/egovframework/smart/mdm/web/SmartMdmController.class
+target/m2e-wtp/web-resources/META-INF/maven/egov/template-portal/pom.properties

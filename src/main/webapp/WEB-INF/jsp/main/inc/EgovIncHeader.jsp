@@ -148,11 +148,16 @@ function fn_egov_modal_remove() {
                     <div>
                         <h2>현장관리</h2>
                         <ul>
-                            <li><a href="/uss/olp/qri/EgovQustnrRespondInfoList.do?menuNo=4000000">접수List조회</a></li>
-                            <li><a href="/uss/olh/qna/QnaListInqire.do?menuNo=4000000">접수작업분배</a></li>
-                            <li><a href="/uss/olp/qnn/EgovQustnrRespondInfoManageList.do?menuNo=4000000">작업장별처리내역</a></li>
-                            <li><a href="/uss/olp/qtm/EgovQustnrTmplatManageRegist.do?menuNo=4000000">긴급접수관리</a></li>
-                            <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4000000">접수현황내역</a></li>
+                            <!--
+                                <li><a href="/uss/olp/qri/EgovQustnrRespondInfoList.do?menuNo=4000000">접수List조회</a></li>
+                                <li><a href="/uss/olh/qna/QnaListInqire.do?menuNo=4000000">접수작업분배</a></li>
+                                <li><a href="/uss/olp/qnn/EgovQustnrRespondInfoManageList.do?menuNo=4000000">작업장별처리내역</a></li>
+                                <li><a href="/uss/olp/qtm/EgovQustnrTmplatManageRegist.do?menuNo=4000000">긴급접수관리</a></li>
+                                <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4000000">접수현황내역</a></li> 
+                            -->
+                            <li><a href="/tablet/SmartAssignGroup.do">작업반배정</a></li>
+                            <li><a href="/tablet/SmartWorkGroup.do">반별입고현황</a></li>
+                            <li><a href="/tablet/ProgressDetail.do">반별 진행 내역 조회</a></li>
                         </ul>
                     </div>
 

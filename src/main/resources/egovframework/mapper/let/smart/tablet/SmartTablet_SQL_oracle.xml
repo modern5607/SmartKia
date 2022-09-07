@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="SmartTabletDAO">
+
+	<select id="selectList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
+		
+    	SELECT TAKESEQ,
+       			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME, 
+       			FN_LEADTIME_NAME(REPAIRCODE, 'NAME') REPAIRCODE_NAME,
+       			FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+       			ESTIME, 
+       			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
+       			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
+			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
+			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+	</select>
+	
+</mapper>

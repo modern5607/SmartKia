@@ -100,6 +100,7 @@ body {min-width: 1400px;}
 .wrap_pop {padding: 20px;}
 .pop_container {padding: 29px 40px;}
 .pop_container .box_1 {padding: 26px; border: 1px solid #dde2e5; border-radius: 10px;}
+.pop_container.box_2 {padding: 50px; border: 50px solid #dde2e5; border-radius: 100px;}
 
 .popup .pop_inner h2 {margin: 29px;}
 

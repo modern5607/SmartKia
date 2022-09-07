@@ -415,7 +415,7 @@ public class SmartMdmController {
 	public String selectBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO searchVO, ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo,
 			HttpServletRequest request) throws Exception {
-		System.out.println(searchVO);
+		
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
 			request.getSession().setAttribute("menuNo", menuNo);
@@ -437,10 +437,10 @@ public class SmartMdmController {
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
 		paginationInfo.setPageSize(searchVO.getPageSize());
-
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
 
 		// service
 		Map<String, Object> map = smartmdmservice.selectBizList(searchVO);
@@ -467,8 +467,8 @@ public class SmartMdmController {
 		System.out.println(vo);
 
 		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
-		model.addAttribute("AUTO_000",map.get("info"));
-		//System.out.println(map.get("info"));
+		model.addAttribute("itemcode",map.get("info"));
+		System.out.println(map.get("info"));
 		//패스워드힌트목록을 코드정보로부터 조회
 		//vo.setGroupcode("AUTO_000");
 		//model.addAttribute("passwordHint_result", smartmdmservice.selectCmmCodeDetail(vo));
@@ -500,7 +500,7 @@ public class SmartMdmController {
 			out.println("</script>");
 		}
 	}
-
+	
 	/**
 	 * 중복 코드 검사 View
 	 */
@@ -535,10 +535,15 @@ public class SmartMdmController {
 	@RequestMapping(value = "/mdm/SmartUpdateBizView.do")
 	public String UpdateBizView(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO SmartMdmBizVO, ModelMap model) throws Exception {
 		
-		System.out.println("model:"+ model);
+		SmartCommonCodeVO vo = new SmartCommonCodeVO(); 
+		vo.setGroupcode("AUTO_000");
+
+		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
+		model.addAttribute("itemcode",map.get("info"));
+		
 		Map<String,Object> info = smartmdmservice.SelectCommonCustid(SmartMdmBizVO);
-		System.out.println("info : "+info.get("info"));
-		model.addAttribute("info", info.get("info"));
+		
+		model.addAttribute("bizinfo", info.get("info"));
 		model.addAttribute("UdateBiz",SmartMdmBizVO.getCustid());
 		
 		return "/mdm/SmartUpdateBiz";

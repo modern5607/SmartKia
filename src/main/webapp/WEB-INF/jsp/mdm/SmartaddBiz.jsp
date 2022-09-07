@@ -187,10 +187,15 @@
 													size="30" maxlength="30" /></td>
 											</tr>
 											<tr>
-												<td class="lb"><label for="Item">거래처구분</label></td>
+												<td class="lb"><label for="Item">주거래품목</label></td>
 												<td><label class="f_select w_300" for="Item"> <select
 														name="Item" id="Item">
-															<option value="${result.ITEM}"></option>
+															<option value="">선택</option>
+															<c:forEach var="info" items="${itemcode}"
+																varStatus="status">
+																<option value="<c:out value='${info.CODE}'/>"><c:out
+																		value="${info.NAME}" /></option>
+															</c:forEach>
 													</select>
 												</label></td>
 											</tr>
@@ -198,8 +203,8 @@
 												<td class="lb"><label for="Custtype">거래처구분</label></td>
 												<td><label class="f_select w_300" for="Custtype">
 														<select name="Custtype" id="Custtype">
-															<option value="수입">수입</option>
-															<option value="수출">수출</option>
+															<option value="매입">매입</option>
+															<option value="매출">매출</option>
 													</select>
 												</label></td>
 											</tr>
