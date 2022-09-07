@@ -22,32 +22,44 @@
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
 <script type="text/javascript">
-            <!-- 거래처 등록 페이지 호출-->
-            function fn_egov_regist_Smartbiz(){
+function TransferGroup()
+{
+	var url = "<c:url value='/tablet/TransferWorkGroupPOP.do'/>?";
 
-            	//document.QnaListForm.action = "<c:url value='/mdm/SmartaddBiz.do'/>";
-            	//document.QnaListForm.submit();
-            		
-            }
-            
-            function fn_egov_select_biz(){
+		var $dialog = $('<div id="modalPan"></div>').html(
+				'<iframe style="border: 0px;" src="'
+						+ "<c:url value='/tablet/TransferWorkGroupPOP.do'/>?"
+						+ '" width="100%" height="100%"></iframe>')
+				.dialog({
+					autoOpen : false,
+					modal : true,
+					width : 600,
+					height : 400
+				});
+		$(".ui-dialog-titlebar").hide();
+		$dialog.dialog('open');
+	
+}
 
-		        document.SmartBizList.action = "<c:url value='/mdm/SmartBiz.do'/>";
-		        document.SmartBizList.submit();	
-	        }
-            
-            function UpdateBiz(Custid)
-        	{
-           		document.SmartBizList.Custid.value = Custid;
-            	document.SmartBizList.action = "<c:url value='/mdm/SmartUpdateBizView.do'/>";
-            	document.SmartBizList.submit();
-        	}
-            function linkPage(pageNo){
-                document.SmartBizList.pageIndex.value = pageNo;
-                document.SmartBizList.action = "<c:url value='/mdm/SmartBiz.do'/>";
-                document.SmartBizList.submit();
-            }
-            </script>
+function OTGroup()
+{
+	var url = "<c:url value='/tablet/OTWorkGroupPOP.do'/>?";
+
+		var $dialog = $('<div id="modalPan"></div>').html(
+				'<iframe style="border: 0px;" src="'
+						+ "<c:url value='/tablet/OTWorkGroupPOP.do'/>?"
+						+ '" width="100%" height="100%"></iframe>')
+				.dialog({
+					autoOpen : false,
+					modal : true,
+					width : 600,
+					height : 400
+				});
+		$(".ui-dialog-titlebar").hide();
+		$dialog.dialog('open');
+	
+}
+</script>
 
 </head>
 <body>
@@ -73,52 +85,32 @@
 								<div class="location">
 									<ul>
 										<li><a class="home" href="">Home</a></li>
-										<li><a href="">기준정보</a></li>
-										<li><a href="">거래처관리</a></li>
+										<li><a href="">현장관리</a></li>
+										<li><a href="">반 별 입고현황</a></li>
 									</ul>
 								</div>
 								<!--// Location -->
-								<form modelAttribute="SmartMdmBizVO" name="SmartBizList"
-									id="SmartBizList" action="<c:url value='/mdm/SmartBiz.do'/>"
+								<form modelAttribute="SmartTabletVO" name="SmartList"
+									id="SmartList" action="<c:url value='/tablet/SmartWorkGroup.do'/>"
 									method="post">
 
-									<h1 class="tit_1">거래처 관리</h1>
-
-									<!-- <p class="txt_1">거래처 관리 TEST 화면입니다.</p> -->
-
-									<!-- 검색조건 -->
-									<div class="condition" style="margin-top: 20px;">
-
-										<label class="item f_select" for="sel1"> <select
-											id="sel1" name="searchCondition" title="검색조건 선택">
-												<option value='CUST_ID'
-													<c:if test="${searchVO.searchCondition == CUST_ID}">selected='selected'</c:if>>업체코드</option>
-												<option value='CUST_NM'
-													<c:if test="${searchVO.searchCondition == CUST_NM}">selected='selected' </c:if>>업체명</option>
-												<option value='ITEM'
-													<c:if test="${searchVO.searchCondition == ITEM}">selected='selected' </c:if>>주거래품목</option>
-										</select>
-										</label> <span class="item f_search"> <input type="hidden"
-											id="Custid" name="Custid" value=""> <input
-											class="f_input w_500" name="searchKeyword" type="text"
-											value='<c:out value="${searchVO.searchKeyword}" />'
-											title="검색어 입력" maxlength="35" />
-											<button class="btn" type="submit"
-												onclick="fn_egov_select_biz(); return false;">
-												<spring:message code="button.inquire" />
-											</button>
-											<!-- 조회 -->
-										</span>
-
-									</div>
+									<h1 class="tit_1">반 별 입고현황</h1>
+									<p class="txt_1">작업반,예상완료시간 클릭시 이관 또는 시간변경 가능합니다.</p>
 									<div class="board_list_top" style="margin-top: 20px;">
 										<div class="left_col">
-											<h1 class="txt_1">업체코드 클릭시 수정화면으로 이동됩니다.</h1>
+										<!-- <h1 class="txt_1">A반 입고처리 사항.</h1> -->
 										</div>
 										<div class="right_col">
-											<a href="<c:url value='/mdm/SmartaddBiz.do'/>"
-												class="item btn btn_blue_46 w_100"><spring:message
-													code="button.create" /></a>
+                                            <label class="f_select w_200" for="group">
+														<select name="group" id="group">
+															<option value="매입">A반</option>
+															<option value="매출">B반</option>
+															<option value="매출">C반</option>
+														</select>
+											</label>
+											<a class="item btn btn_blue_46 w_150"
+												href="<c:url value='/tablet/ReceiveWorkgroup.do'/>">입고처리</a> <a
+												href="<c:url value=''/>" class="item btn btn_blue_46 w_100">조회</a>
 											<!--　등록 -->
 										</div>
 									</div>
@@ -133,7 +125,9 @@
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
-												<col style="width: 10px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
@@ -141,14 +135,16 @@
 											<thead>
 												<tr>
 													<th scope="col">번호</th>
-													<th scope="col">업체코드</th>
-													<th scope="col">업체명</th>
-													<th scope="col">주소</th>
-													<th scope="col">대표자</th>
-													<th scope="col">본사연락처</th>
-													<th scope="col">주거래품목</th>
-													<th scope="col">담당자</th>
-													<th scope="col">담당연락처</th>
+													<th scope="col">접수일자</th>
+													<th scope="col">차량번호</th>
+													<th scope="col">차량종류</th>
+													<th scope="col">고객명</th>
+													<th scope="col">수리내용</th>
+													<th scope="col">작업반</th>
+													<th scope="col">예상완료시간</th>
+													<th scope="col">수리종류</th>
+													<th scope="col">작업상태</th>
+													<th scope="col">처리</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -163,16 +159,16 @@
 													<tr>
 														<td><c:out
 																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><a href="#"
-															onclick="UpdateBiz('<c:out value='${result.CUST_ID}'/>')"
-															class="lnk"><c:out value="${result.CUST_ID}" /></a>
-														<td><c:out value="${result.CUST_NM}" /></td>
-														<td><c:out value="${result.ADDRESS}" /></td>
-														<td><c:out value="${result.CEO}" /></td>
-														<td><c:out value="${result.TEL}" /></td>
-														<td><c:out value="${result.ITEM}" /></td>
-														<td><c:out value="${result.CUST_NAME}" /></td>
-														<td><c:out value="${result.CUST_TEL}" /></td>
+														<td><c:out value="${result.RECEIPTDATE}" /></td>
+														<td><c:out value="${result.AUTONUMBER}" /></td>
+														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
+														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
+														<td><a href="#" onclick="TransferGroup()" class="lnk"><c:out value="${result.POSITION_NAME}" /></a>
+														<td><a href="#" onclick="OTGroup()" class="lnk"><c:out value="${result.ESTIME}" /></a>
+														<td><c:out value="${result.REPAIRMETHOD_NAME}" /></td>
+														<td><c:out value="${result.TASKSTAT_NAME}" /></td>
+														<td><c:out value="완료" /></td>
 													</tr>
 												</c:forEach>
 											</tbody>

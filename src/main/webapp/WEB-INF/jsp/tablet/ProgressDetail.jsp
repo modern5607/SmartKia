@@ -73,8 +73,8 @@
 								<div class="location">
 									<ul>
 										<li><a class="home" href="">Home</a></li>
-										<li><a href="">기준정보</a></li>
-										<li><a href="">거래처관리</a></li>
+										<li><a href="">현장관리</a></li>
+										<li><a href="">반별 진행 내역 조회</a></li>
 									</ul>
 								</div>
 								<!--// Location -->
@@ -82,39 +82,40 @@
 									id="SmartBizList" action="<c:url value='/mdm/SmartBiz.do'/>"
 									method="post">
 
-									<h1 class="tit_1">거래처 관리</h1>
+									<h1 class="tit_1">반별 진행 내역 조회</h1>
 
 									<!-- <p class="txt_1">거래처 관리 TEST 화면입니다.</p> -->
 
 									<!-- 검색조건 -->
 									<div class="condition" style="margin-top: 20px;">
 
-										<label class="item f_select" for="sel1"> <select
-											id="sel1" name="searchCondition" title="검색조건 선택">
-												<option value='CUST_ID'
-													<c:if test="${searchVO.searchCondition == CUST_ID}">selected='selected'</c:if>>업체코드</option>
-												<option value='CUST_NM'
-													<c:if test="${searchVO.searchCondition == CUST_NM}">selected='selected' </c:if>>업체명</option>
-												<option value='ITEM'
-													<c:if test="${searchVO.searchCondition == ITEM}">selected='selected' </c:if>>주거래품목</option>
-										</select>
-										</label> <span class="item f_search"> <input type="hidden"
-											id="Custid" name="Custid" value=""> <input
-											class="f_input w_500" name="searchKeyword" type="text"
-											value='<c:out value="${searchVO.searchKeyword}" />'
-											title="검색어 입력" maxlength="35" />
-											<button class="btn" type="submit"
-												onclick="fn_egov_select_biz(); return false;">
-												<spring:message code="button.inquire" />
-											</button>
-											<!-- 조회 -->
-										</span>
+										<span class="item f_search">
+                                            <input type="hidden" id="groupcode" name="groupcode" value="">
+                                            <input type="hidden" id="code" name="code" value="">
+                                            <p class="left">
+                                                <label for="searchCode">차량번호</label>
+                                                <input class="f_input w_200" name="searchCode" id="searchCode" type="text" value="<c:out value='${comCodeVO.searchCode}'/>" />
+                                            </p>
+                                            <p class="left">
+                                                <label for="searchCode">연락처</label>
+                                                <input class="f_input w_200" name="searchCode" id="searchCode" type="text" value="<c:out value='${comCodeVO.searchCode}'/>" />
+                                            </p>
+                                            <p class="left">
+                                                <label for="searchCodename">접수일자</label>
+                                                <input class="f_input w_200" name="searchCodename" id="searchCodename" type="text" value="<c:out value='${comCodeVO.searchCodename}'/>" />
+                                            </p>
+                                            
+                                            <button class="btn" type="submit">
+                                                <spring:message code="button.inquire" />
+                                            </button>조회
+                                        </span>
 
 									</div>
 									<div class="board_list_top" style="margin-top: 20px;">
-										<div class="left_col">
+										<!-- <div class="left_col">
 											<h1 class="txt_1">업체코드 클릭시 수정화면으로 이동됩니다.</h1>
 										</div>
+										 -->
 										<div class="right_col">
 											<a href="<c:url value='/mdm/SmartaddBiz.do'/>"
 												class="item btn btn_blue_46 w_100"><spring:message
@@ -137,18 +138,22 @@
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
 											</colgroup>
 											<thead>
 												<tr>
 													<th scope="col">번호</th>
-													<th scope="col">업체코드</th>
-													<th scope="col">업체명</th>
-													<th scope="col">주소</th>
-													<th scope="col">대표자</th>
-													<th scope="col">본사연락처</th>
-													<th scope="col">주거래품목</th>
-													<th scope="col">담당자</th>
-													<th scope="col">담당연락처</th>
+													<th scope="col">차량번호</th>
+													<th scope="col">차량종류</th>
+													<th scope="col">고객명</th>
+													<th scope="col">연락처</th>
+													<th scope="col">수리내용</th>
+													<th scope="col">작업장(반)</th>
+													<th scope="col">접수일자</th>
+													<th scope="col">예상완료시간</th>
+													<th scope="col">작업상태</th>
+													<th scope="col">수리종류</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -163,32 +168,23 @@
 													<tr>
 														<td><c:out
 																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><a href="#"
-															onclick="UpdateBiz('<c:out value='${result.CUST_ID}'/>')"
-															class="lnk"><c:out value="${result.CUST_ID}" /></a>
-														<td><c:out value="${result.CUST_NM}" /></td>
-														<td><c:out value="${result.ADDRESS}" /></td>
-														<td><c:out value="${result.CEO}" /></td>
-														<td><c:out value="${result.TEL}" /></td>
-														<td><c:out value="${result.ITEM}" /></td>
-														<td><c:out value="${result.CUST_NAME}" /></td>
-														<td><c:out value="${result.CUST_TEL}" /></td>
+														<td><c:out value="15허1582" /></td>
+														<td><c:out value="소나타" /></td>
+														<td><c:out value="이몽룡" /></td>
+														<td><c:out value="010-1522-3333" /></td>
+														<td><c:out value="타이어펑크" /></td>
+														<td><c:out value="A반" /></td>
+														<td><c:out value="2022-09-05" /></td>
+														<td><c:out value="14:42" /></td>
+														<td><c:out value="대기" /></td>
+														<td><c:out value="일반" /></td>
 													</tr>
 												</c:forEach>
 											</tbody>
 										</table>
 									</div>
 								</form>
-								<!-- 페이징 -->
-								<div class="board_list_bot" style="margin-top: 20px;">
-									<div class="paging" id="paging_div">
-										<ul>
-											<ui:pagination paginationInfo="${paginationInfo}"
-												type="renew" jsFunction="linkPage" />
-										</ul>
-									</div>
-								</div>
-								<!-- // 페이징 끝 -->
+							
 							</div>
 						</div>
 					</div>
