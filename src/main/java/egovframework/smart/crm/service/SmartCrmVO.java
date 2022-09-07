@@ -21,7 +21,7 @@ import egovframework.com.cmm.ComDefaultVO;
  *
  * </pre>
  */
-public class SmartCrmVO extends ComDefaultVO implements Serializable{
+public class SmartCrmVO implements Serializable{
 
 
 	private int pageIndex = 1;
@@ -29,8 +29,32 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable{
     private int pageSize = 10;
     private int firstIndex = 1;
     private int lastIndex = 1;
-    private int recordCountPerPage = 10;	
-	
+    private int recordCountPerPage = 10;
+    
+    private String cusId;
+    
+    private String cusAutoNo;
+    
+    private String cusAutoKind;
+    
+    private String cusNm;
+    
+    private String cusTel;
+    
+    private String taskStat;
+    
+    private String positon;
+    
+    private String compTime;
+    
+    private String note;
+    
+    private String turnOver;
+    
+    private String turnoverTime;
+  
+    private String turnoverNote;
+    
 	public int getPageIndex() {
 		return pageIndex;
 	}
@@ -66,5 +90,80 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable{
 	}
 	public void setRecordCountPerPage(int recordCountPerPage) {
 		this.recordCountPerPage = recordCountPerPage;
+	}
+
+	public String getCusId() {
+		return cusId;
+	}
+	public void setCusId(String cusId) {
+		this.cusId = cusId;
+	}
+	public String getCusAutoNo() {
+		return cusAutoNo;
+	}
+	public void setCusAutoNo(String cusAutoNo) {
+		this.cusAutoNo = cusAutoNo;
+	}
+	public String getCusAutoKind() {
+		return cusAutoKind;
+	}
+	public void setCusAutoKind(String cusAutoKind) {
+		this.cusAutoKind = cusAutoKind;
+	}
+	public String getCusNm() {
+		return cusNm;
+	}
+	public void setCusNm(String cusNm) {
+		this.cusNm = cusNm;
+	}
+	public String getCusTel() {
+		return cusTel;
+	}
+	public void setCusTel(String cusTel) {
+		this.cusTel = cusTel;
+	}
+	public String getTaskStat() {
+		return taskStat;
+	}
+	public void setTaskStat(String taskStat) {
+		this.taskStat = taskStat;
+	}
+	public String getPositon() {
+		return positon;
+	}
+	public void setPositon(String positon) {
+		this.positon = positon;
+	}
+	public String getCompTime() {
+		return compTime;
+	}
+	public void setCompTime(String compTime) {
+		this.compTime = compTime;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	public String getTurnOver() {
+		return turnOver;
+	}
+	public void setTurnOver(String turnOver) {
+		this.turnOver = turnOver;
+	}
+	public String getTurnoverTime() {
+		return turnoverTime;
+	}
+	public void setTurnoverTime(String turnoverTime) {
+		this.turnoverTime = turnoverTime;
+	}
+	public String getTurnoverNote() {
+		return turnoverNote;
+	}
+	public void setTurnoverNote(String turnoverNote) {
+		this.turnoverNote = turnoverNote;
 	}	
+	
+	
 }

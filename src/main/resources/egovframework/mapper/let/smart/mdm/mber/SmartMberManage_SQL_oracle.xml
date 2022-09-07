@@ -39,10 +39,10 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
         MBTLNUM           	  as "moblphonNo",
         GROUP_ID              as "groupId",
         MBER_STTUS            as "Sttus",
-        FN_CODENAME(TEAM, 'AUTO_ROOM') as teams,
+        TEAM				  as team,
         SBSCRB_DE             as "sbscrbDe"
         
-    FROM    CAR_TAKEREPAIR A , LETTNGNRLMBER B
+    FROM    LETTNGNRLMBER
     WHERE 1=1
         <if test='sbscrbSttus != "0"'>
             AND MBER_STTUS LIKE  #{sbscrbSttus}
@@ -87,7 +87,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
                     MBER_FXNUM       ,
                     MBER_EMAIL_ADRES ,
         			USE_YN			 ,
-        			TEAMS			 ,
+        			TEAM			 ,
                     SBSCRB_DE        )
               VALUES(
                     #{uniqId},
@@ -100,7 +100,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
                     #{mberFxnum},
                     #{mberEmailAdres},
                     #{useYn},
-                    #{teams},
+                    #{team},
                     sysdate  )              
         
     </insert>

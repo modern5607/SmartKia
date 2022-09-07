@@ -123,7 +123,7 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	 */
 	private String mberEmailAdres;
 	
-	private String teams;
+	private String team;
 	/**
 	 * oldPassword attribute 값을  리턴한다.
 	 * @return String
@@ -452,10 +452,10 @@ public class SmartMberManageVO  extends UserDefaultVO{
 		this.useYn = useYn;
 	}
 	public String getTeam() {
-		return teams;
+		return team;
 	}
-	public void setTeam(String teams) {
-		this.teams = teams;
+	public void setTeam(String team) {
+		this.team = team;
 	}
 	
 	

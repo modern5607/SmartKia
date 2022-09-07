@@ -3,24 +3,48 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="smartCrmDAO">
 
+ <!-- 	<resultMap id="smartCrmVO" type="egovframework.smart.crm.service.smartCrmVO">
+		<result property="cusId" column="CUSTOMER_ID"/>
+		<result property="cusAutoNo" column="CUSTOMER_AUTONO"/>
+		<result property="cusKind" column="CUSTOMER_AUTOKIND"/>
+		<result property="cusNm" column="CUSTOMER_NAME"/>
+		<result property="cusTel" column="CUSTOMER_TEL"/>
+		<result property="taskStat" column="TASKSTAT"/>
+		<result property="position" column="POSITION"/>
+		<result property="compTime" column="COMPTIME"/>		
+		<result property="note" column="NOTE"/>
+		<result property="turnOver" column="TURNOVER"/>
+		<result property="turnOverTime" column="TURNOVERTIME"/>
+		<result property="turnOverNote" column="TURNOVER_NOTE"/>				
+	</resultMap>  -->
+	
 	<select id="selectCrmList" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="egovMap">
-	SELECT	B.SEQ,
-			C.CUSTOMER_ID,
-			C.CUSTOMER_AUTONO,
-			C.CUSTOMER_AUTOKIND,
-	        C.CUSTOMER_NAME,
-	        C.CUSTOMER_TEL,
-	        A.TASKSTAT,
-	        A.POSITION,
-	        A.COMPTIME,
-	        A.NOTE,
-	        A.TURNOVER,
-	        A.TURNOVERTIME,
-	        A.TURNOVER_NOTE
+	SELECT	
+			C.CUSTOMER_ID as "cusId",
+			C.CUSTOMER_AUTONO as "cusAutoNo",
+			C.CUSTOMER_AUTOKIND as "cusAutoKind",
+	        C.CUSTOMER_NAME as "cusNm",
+	        C.CUSTOMER_TEL as "cusTel",
+	        A.TASKSTAT as "TASKSTAT",
+	        A.POSITION as "cusId",
+	        A.COMPTIME as "compTime",
+	        A.NOTE as "note",
+	        A.TURNOVER as "turnOver",
+	        A.TURNOVERTIME as "turnOverTime",
+	        A.TURNOVER_NOTE as "turnOverNote"
 	        
-	FROM 	CAR_TAKEREPAIR A, CAR_TRANSFERPROC B, CAR_CUSTOMER C           						                               			
+	FROM 	CAR_TAKEREPAIR A, CAR_CUSTOMER C           						                               			
 	WHERE	1=1
 			
 	</select> 
-    
+	
+   	<select id="selectCrmListTotCnt" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="int">
+		
+			SELECT 	COUNT(*) totcnt
+			FROM 	CAR_TAKEREPAIR A, CAR_CUSTOMER C  
+			WHERE 	1=1
+			<!-- <if test="searchCondition == &quot;qestnSj&quot;">AND
+				C.CUSTOMER_ID, LIKE '%' || #{searchKeyword} || '%'
+			</if> -->
+	</select>
 </mapper>

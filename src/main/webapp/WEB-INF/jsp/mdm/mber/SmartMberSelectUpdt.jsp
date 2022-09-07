@@ -161,7 +161,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <form:input readonly="readonly" path="mberId" id="mberId" class="f_txt w_350" size="20" maxlength="20"  />
+                                                <form:input readonly="true" path="mberId" id="mberId" class="f_txt f_select w_350" size="20" maxlength="20"  disabled="disabled"/>
                                                 <form:errors path="mberId" cssClass="error" />
                                                 <form:hidden path="uniqId" />
                                             </td>

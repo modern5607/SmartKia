@@ -2,6 +2,9 @@ package egovframework.smart.crm.service;
 
 import java.util.List;
 
+import egovframework.smart.mdm.mber.service.SmartMberManageVO;
+import egovframework.smart.mdm.mber.service.UserDefaultVO;
+
 /**
  * 일반회원관리에 관한 인터페이스클래스를 정의한다.
  * @author 공통서비스 개발팀 조재영
@@ -20,5 +23,9 @@ import java.util.List;
  * </pre>
  */
 public interface SmartCrmService {
+
+	public List<SmartCrmVO> selectCrmList(SmartCrmVO smartCrmVO) throws Exception;
+	
+	public int selectCrmListTotCnt(SmartCrmVO smartCrmVO) throws Exception;
 
 }

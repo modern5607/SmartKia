@@ -7,6 +7,7 @@ import java.util.Map;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.service.EgovCmmUseService;
+import egovframework.smart.crm.service.SmartCrmService;
 import egovframework.smart.crm.service.SmartCrmVO;
 import egovframework.smart.mdm.mber.service.SmartMberManageService;
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
@@ -56,6 +57,9 @@ public class SmartCrmController {
 	
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
+	/** mberManageService */
+	@Resource(name = "smartCrmService")
+	private SmartCrmService smartCrmService;
 
 
 	@RequestMapping(value = "/crm/SmartAddRepairCar.do")
@@ -64,19 +68,26 @@ public class SmartCrmController {
 			) throws Exception {
 
 
-		smartCrmVO.setPageUnit(propertyService.getInt("pageUnit"));
-		smartCrmVO.setPageSize(propertyService.getInt("pageSize"));
-
-		PaginationInfo paginationInfo = new PaginationInfo();
-
-		paginationInfo.setCurrentPageNo(smartCrmVO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(smartCrmVO.getPageUnit());
-		paginationInfo.setPageSize(smartCrmVO.getPageSize());
-
-		smartCrmVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		smartCrmVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		smartCrmVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
+				
+				  smartCrmVO.setPageUnit(propertyService.getInt("pageUnit"));
+				  smartCrmVO.setPageSize(propertyService.getInt("pageSize"));
+				  
+				  PaginationInfo paginationInfo = new PaginationInfo();
+				  
+				  paginationInfo.setCurrentPageNo(smartCrmVO.getPageIndex());
+				  paginationInfo.setRecordCountPerPage(smartCrmVO.getPageUnit());
+				  paginationInfo.setPageSize(smartCrmVO.getPageSize());
+				  
+				  smartCrmVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+				  smartCrmVO.setLastIndex(paginationInfo.getLastRecordIndex());
+				  smartCrmVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+				  
+				  model.addAttribute("resultList", smartCrmService.selectCrmList(smartCrmVO));
+				  
+				  int totCnt = smartCrmService.selectCrmListTotCnt(smartCrmVO);
+				  paginationInfo.setTotalRecordCount(totCnt);
+				  model.addAttribute("paginationInfo", paginationInfo);
+				 
 		System.out.println(smartCrmVO);
 		
 		return "/crm/SmartAddRepairCar";
