@@ -130,8 +130,9 @@ function fn_egov_modal_remove() {
                     <div>
                         <h2>접수관리</h2>
                         <ul>
-                            <li><a href="/order/SmartWebOrder.do?menuNo=2000000">일일접수관리</a></li>
-                            <li><a href="/EgovPageLink.do?link=main/sample_menu/EgovServiceResult?menuNo=2000000">접수/등록조회</a></li>
+                            <li><a href="/rcpt/SmartWebRcptView.do">접수등록(WEB)</a></li>
+                            <li><a href="/rcpt/SmartMobileRcptView.do">예약접수등록(모바일)</a></li>
+                            <li><a href="https://www.figma.com/proto/qseOBDwGeOJQJUCemliAL5/%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC%ED%99%94%EB%A9%B4?page-id=0%3A1&node-id=13%3A23&viewport=246%2C546%2C0.33&scaling=scale-down&starting-point-node-id=2%3A2">키오스크 등록</a></li>
                         </ul>
                     </div>
 

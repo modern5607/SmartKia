@@ -54,13 +54,32 @@
     function InsertLeadTime()
     {
         if(document.SmartLeadTimeVO.insertname.value == "")
-            {
-                alert("부품명을 입력해 주세요");
-                document.SmartLeadTimeVO.insertname.focus();
-                return false;
+        {
+            alert("부품명을 입력해 주세요");
+            document.SmartLeadTimeVO.insertname.focus();
+            return false;
+        }
+        $.ajax({
+            type: "post",
+            url: "/mdm/InsertLeadTime.do",
+            data: {
+                insertleadtime:document.SmartLeadTimeVO.insertleadtime.value,
+                insertname:document.SmartLeadTimeVO.insertname.value,
+                main:document.SmartLeadTimeVO.main.value,
+                middle:document.SmartLeadTimeVO.middle.value
+            },
+            success: function (msg) {
+				if(msg==1)
+					location.reload();
+				else
+				{
+					alert("등록에 실패하였습니다. 다시 시도해 주세요.");
+					location.reload();
+				}
             }
-        document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertLeadTime.do'/>";
-        document.SmartLeadTimeVO.submit();
+        });
+        // document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertLeadTime.do'/>";
+        // document.SmartLeadTimeVO.submit();
     }
     </script>
 
@@ -92,9 +111,9 @@
                                 <!--// Location -->
                                     <!-- 검색조건 -->
                                     <form name="SmartLeadTimeVO" id="SmartLeadTimeVO" action="<c:url value='/mdm/SmartLeadTime.do'/>" method="post">
-                                    <input type="hidden" id="main" name="main" value="<c:out value='${comCodeVO.main}'/>">
-                                    <input type="hidden" id="middle" name="middle" value="<c:out value='${comCodeVO.middle}'/>">
-                                    <input type="hidden" id="sub" name="sub" value="<c:out value='${comCodeVO.sub}'/>">
+                                    <input type="hidden" id="main" name="main" value="<c:out value='${leadtimeVO.main}'/>">
+                                    <input type="hidden" id="middle" name="middle" value="<c:out value='${leadtimeVO.middle}'/>">
+                                    <input type="hidden" id="sub" name="sub" value="<c:out value='${leadtimeVO.sub}'/>">
                                     <input type="hidden" id="updatehcode" name="updatehcode" value="">
                                     <input type="hidden" id="updatecode" name="updatecode" value="">
                                     <input type="hidden" id="updateleadtime" name="updateleadtime" value="">
@@ -117,7 +136,7 @@
                                         <span class="item f_search">
                                             
                                             <input class="f_input w_500" name="searchKeyword" type="text"
-                                                value="<c:out value='${comCodeVO.searchKeyword}'/>" title="검색어 입력" maxlength="35" />
+                                                value="<c:out value='${leadtimeVO.searchKeyword}'/>" title="검색어 입력" maxlength="35" />
                                             <button class="btn" type="submit">
                                                 <spring:message code="button.inquire" />
                                             </button>조회
@@ -209,25 +228,29 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    	<tr>
-                                                            <td></td>
-                                                            <td>
-                                                                <label class="f_input" style="height: 30px;">
-                                                                	<input name="insertname" class="w_200" type="text">
-                                                                </label>
-                                                            </td>
-                                                            <td>
-                                                                <label for="" class="f_select" style="width:80%; padding-left:10px; height: 30px;">
-                                                                    <select name="insertleadtime" id="insertleadtime">
-                                                                        <option value="">선택</option>
-                                                                        <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
-                                                                        <option value="<c:out value='${leadtime.CODE}'/>"><c:out value="${leadtime.NAME}"/></option>
-                                                                        </c:forEach>
-                                                                    </select>
-                                                                </label>
-                                                            </td>
-                                                            <td><a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="InsertLeadTime()"><spring:message code="button.create" /></a></td>
-                                                        </tr>
+                                                        <c:if test="${leadtimeVO.main ne '' and leadtimeVO.main ne null and leadtimeVO.middle ne '' and leadtimeVO.middle ne null}">
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>
+                                                                    <label class="f_input" style="height: 30px;">
+                                                                        <input name="insertname" class="w_200" type="text">
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label for="" class="f_select" style="width:80%; padding-left:10px; height: 30px;">
+                                                                        <select name="insertleadtime" id="insertleadtime">
+                                                                            <option value="">선택</option>
+                                                                            <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
+                                                                            <option value="<c:out value='${leadtime.CODE}'/>"><c:out value="${leadtime.NAME}"/></option>
+                                                                            </c:forEach>
+                                                                        </select>
+                                                                    </label>
+                                                                </td>
+                                                                <td><a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="InsertLeadTime()"><spring:message code="button.create" /></a></td>
+                                                            </tr>
+
+                                                        </c:if>
+                                                    	
                                                         <c:if test="${fn:length(sublist) == 0}">
                                                         <tr>
                                                             <td colspan="4">데이터가 없습니다. 항목을 추가해 주시거나 다른 중분류를 선택해 주세요.</td>
