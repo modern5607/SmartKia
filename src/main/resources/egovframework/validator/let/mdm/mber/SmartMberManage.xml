@@ -149,11 +149,11 @@
             
             <!-- <field property="team" depends="required">
                 <arg0 key="반" resource="false"/>
-            </field>
+            </field> -->
             
             <field property="useYn" depends="required">
                 <arg0 key="사용여부" resource="false"/>
-            </field> -->
+            </field> 
             
         </form>
         

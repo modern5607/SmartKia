@@ -26,15 +26,13 @@
 	        C.CUSTOMER_NAME as "cusNm",
 	        C.CUSTOMER_TEL as "cusTel",
 	        A.TASKSTAT as "TASKSTAT",
-	        A.POSITION as "cusId",
-	        A.COMPTIME as "compTime",
 	        A.NOTE as "note",
 	        A.TURNOVER as "turnOver",
 	        A.TURNOVERTIME as "turnOverTime",
 	        A.TURNOVER_NOTE as "turnOverNote"
 	        
 	FROM 	CAR_TAKEREPAIR A, CAR_CUSTOMER C           						                               			
-	WHERE	1=1
+	WHERE	A.CUSTOMER_ID = C.CUSTOMER_ID
 			
 	</select> 
 	
@@ -42,7 +40,7 @@
 		
 			SELECT 	COUNT(*) totcnt
 			FROM 	CAR_TAKEREPAIR A, CAR_CUSTOMER C  
-			WHERE 	1=1
+			WHERE 	A.CUSTOMER_ID = C.CUSTOMER_ID
 			<!-- <if test="searchCondition == &quot;qestnSj&quot;">AND
 				C.CUSTOMER_ID, LIKE '%' || #{searchKeyword} || '%'
 			</if> -->

@@ -141,7 +141,7 @@
 						<!--// Left menu -->
 
 						<div class="content_wrap">
-							<div id="contents">
+							<div id="contents" style="margin-bottom:10px">
 								<!-- Location -->
 								<div class="location">
 									<ul>
@@ -170,32 +170,35 @@
 
 									<!-- 검색조건 -->
 
-									<span class="item f_search" >
-										<p class="left">
-											<label for="searchKeyword">차량번호 :</label> <input
-												name="searchKeyword" id="searchKeyword"
-												class="f_input w_200" title="검색" type="text" maxlength="20"
-												value="<c:out value="${userSearchVO.searchKeyword}"/>" /> <label
-												for="searchKeyword1">고객명 :</label> <input
-												name="searchKeyword1" id="searchKeyword1"
-												class="f_input w_200" title="검색" type="text"
-												value="<c:out value=""/>" /> <label for="searchKeyword2">연락처
-												:</label> <input name="searchKeyword2" id="searchKeyword2"
-												class="f_input w_200" title="검색" type="text" maxlength="20"
-												value="<c:out value="${userSearchVO.searchKeyword}"/>" /> <label
-												for="searchKeyword3">접수일시 :</label> <input
-												name="searchKeyword3" id="searchKeyword3"
-												class="f_input w_200" title="검색" type="text"
-												value="<c:out value=""/>" /> <label for="searchKeyword4">출고일시
-												:</label> <input name="searchKeyword4" id="searchKeyword4"
-												class="f_input w_200" title="검색" type="text"
-												value="<c:out value=""/>" />
-											<button class="btn" type="submit"
-												onclick="fnSearch(); return false;">
-												<spring:message code="button.search" />
-											</button>
-										</p>
-									</span>
+									<div class="condition" style="text-align: left;">
+										<span class="item f_search">
+											<p class="left">
+												<label for="searchKeyword">차량번호 :</label> <input
+													name="searchKeyword" id="searchKeyword"
+													class="f_input w_200" title="검색" type="text" maxlength="20"
+													value="<c:out value="${userSearchVO.searchKeyword}"/>" />
+												<label for="searchKeyword1">고객명 :</label> <input
+													name="searchKeyword1" id="searchKeyword1"
+													class="f_input w_200" title="검색" type="text"
+													value="<c:out value=""/>" /> <label for="searchKeyword2">연락처
+													:</label> <input name="searchKeyword2" id="searchKeyword2"
+													class="f_input w_200" title="검색" type="text" maxlength="20"
+													value="<c:out value="${userSearchVO.searchKeyword}"/>" />
+												<label for="searchKeyword3">접수기간 :</label> <input
+													name="searchKeyword3" id="searchKeyword3"
+													class="f_input w_150" title="검색" type="date"
+													value="<c:out value=""/>" />
+													<label for="searchKeyword3"> ~ </label> <input
+													name="searchKeyword3" id="searchKeyword3"
+													class="f_input w_150" title="검색" type="date"
+													value="<c:out value=""/>" />
+												<button class="btn" type="submit"
+													onclick="fnSearch(); return false;" style="right: -50px;">
+													<spring:message code="button.search" />
+												</button>
+											</p>
+										</span>
+									</div>
 							</div>
 							<!--// 검색조건 -->
 
@@ -213,7 +216,7 @@
 								</div>
 							</div> --%>
 
-							<div class="board_list">
+							<div class="board_list3">
 								<table summary="고객목록">
 									<caption>고객목록</caption>
 									<colgroup>
@@ -223,14 +226,14 @@
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
+										<%-- <col style="width: 100px;"> --%>
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
-										<col style="width: 100px;">
-										<col style="width: 100px;">
+										<%-- <col style="width: 100px;"> --%>
 									</colgroup>
 									<thead>
 										<tr>
@@ -238,23 +241,23 @@
 											<th scope="col">고객번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차량종류</th>
-											<th scope="col">고객이름</th>
+											<th scope="col">고객명</th>
 											<th scope="col">연락처</th>
-											<th scope="col">작업상태</th>
+											<!-- <th scope="col">작업상태</th> -->
 											<th scope="col">작업반</th>
 											<th scope="col">완료시간</th>
 											<th scope="col">접수비고</th>
 											<th scope="col">출고여부</th>
 											<th scope="col">출고일시</th>
 											<th scope="col">출고비고</th>
-											<th scope="col">입고/이관</th>
+											<!-- <th scope="col">입고/이관</th> -->
 										</tr>
 
 									</thead>
 									<tbody>
 										<c:if test="${fn:length(resultList) == 0}">
 											<tr>
-												<td colspan="14"><spring:message
+												<td colspan="12"><spring:message
 														code="common.nodata.msg" /></td>
 											</tr>
 										</c:if>
@@ -270,21 +273,21 @@
 												<td><c:out value="${result.cusAutoKind}" /></td>
 												<td><c:out value="${result.cusNm}" /></td>
 												<td><c:out value="${result.cusTel}" /></td>
-												<td><c:out value="${result.taskStat}" /></td>
+												<%-- <td><c:out value="${result.taskStat}" /></td> --%>
 												<td><c:out value="${result.positon}" /></td>
 												<td><c:out value="${result.compTime}" /></td>
 												<td><c:out value="${result.note}" /></td>
 												<td><c:out value="${result.turnOver}" /></td>
 												<td><c:out value="${result.turnoverTime}" /></td>
 												<td><c:out value="${result.turnoverNote}" /></td>
-												<td>
+												<%-- <td>
 													<button type="button" class="btn btn_blue_46 w_100"
 														onclick="javascript:TransferGroup(); return false;">
 														<spring:message code="button.create" />
-													</button> <%-- <a href="<c:url value='/mdm/mber/SmartMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>" class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
+													</button> <a href="<c:url value='/mdm/mber/SmartMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>" class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
 	                                                		<c:out value="${result.userId}"/>
-	                                                	</a> --%>
-												</td>
+	                                                	</a>
+												</td> --%>
 												<!-- <td>
 	                                                    <a href="#LINK" class="btn btn_blue_30 w_80">
 	                                                    	상세보기

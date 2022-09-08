@@ -57,6 +57,35 @@ public class UserDefaultVO implements Serializable {
 
     /** recordCountPerPage */
     private int recordCountPerPage = 10;
+    
+
+    private String searchId = "";
+    private String searchNm = "";
+    private String searchTeam = "";
+
+	public String getSearchId() {
+		return searchId;
+	}
+
+	public void setSearchId(String searchId) {
+		this.searchId = searchId;
+	}
+
+	public String getSearchNm() {
+		return searchNm;
+	}
+
+	public void setSearchNm(String searchNm) {
+		this.searchNm = searchNm;
+	}
+
+	public String getSearchTeam() {
+		return searchTeam;
+	}
+
+	public void setSearchTeam(String searchTeam) {
+		this.searchTeam = searchTeam;
+	}
 
 	/**
 	 * sbscrbSttus attribute 값을  리턴한다.

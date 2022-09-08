@@ -39,7 +39,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
         MBTLNUM           	  as "moblphonNo",
         GROUP_ID              as "groupId",
         MBER_STTUS            as "Sttus",
-        TEAM				  as team,
+        TEAM				  as "team",
         SBSCRB_DE             as "sbscrbDe"
         
     FROM    LETTNGNRLMBER
@@ -47,12 +47,15 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
         <if test='sbscrbSttus != "0"'>
             AND MBER_STTUS LIKE  #{sbscrbSttus}
         </if>
-        <if test="searchCondition == 0">
-            AND MBER_ID LIKE '%' ||#{searchKeyword}|| '%'
+        <if test="searchId != null">
+            AND MBER_ID LIKE '%' ||#{searchId}|| '%'
         </if>
-        <if test="searchCondition == 1">
-            AND MBER_NM LIKE '%' ||#{searchKeyword}|| '%'
-        </if> 
+        <if test="searchNm != null">
+            AND MBER_NM LIKE '%' ||#{searchNm}|| '%'
+        </if>
+        <if test="searchTeam != null">
+            AND TEAM LIKE '%' ||#{searchTeam}|| '%'
+        </if>
         ORDER BY 12 DESC
         ) TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
     </select>
@@ -65,12 +68,15 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
              <if test='sbscrbSttus != "0"'>
             AND MBER_STTUS LIKE  #{sbscrbSttus}
 	        </if>
-	        <if test="searchCondition == 0">
-	            AND MBER_ID LIKE '%' ||#{searchKeyword}|| '%'
+	        <if test="searchId != null">
+	            AND MBER_ID LIKE '%' ||#{searchId}|| '%'
 	        </if>
-	        <if test="searchCondition == 1">
-	            AND MBER_NM LIKE '%' ||#{searchKeyword}|| '%'
-	        </if> 
+	        <if test="searchNm != null">
+	            AND MBER_NM LIKE '%' ||#{searchNm}|| '%'
+	        </if>
+	        <if test="searchTeam != null">
+	            AND TEAM LIKE '%' ||#{searchTeam}|| '%'
+	        </if>
     </select>
     
     <insert id="insertMber_S">

@@ -242,7 +242,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             </td>
                                             <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
                                                 <label for="rdo1" class="mr30 <c:if test="${smartMbermanageVO.useYn == 'Y'}"> on</c:if>">
-                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" checked="checked"<c:if test="${smartMbermanageVO.useYn == 'Y'}"> </c:if>>
+                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" checked="checked"<c:if test="${smartMbermanageVO.useYn == 'Y'}"> checked="checked"</c:if>>
                                                     사용
                                                 </label>
                                                 <label for="rdo2" class="<c:if test="${smartMbermanageVO.useYn == 'N'}"> on</c:if>">

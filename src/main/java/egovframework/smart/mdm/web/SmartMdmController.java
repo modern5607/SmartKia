@@ -469,7 +469,7 @@ public class SmartMdmController {
 		//vo.setGroupcode("AUTO_000");
 		//model.addAttribute("passwordHint_result", smartmdmservice.selectCmmCodeDetail(vo));
 
-		return "/mdm/SmartaddBiz";
+		return "/mdm/SmartAddBiz";
 	}
 
 	/**
