@@ -20,35 +20,36 @@
     <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
     <script type="text/javascript">
-        /*
-    function ClickGroupCode(groupcode)
-    {
-        document.searchform.groupcode.value = groupcode;
-        document.searchform.action = "<c:url value='/mdm/SmartCode.do'/>";
-        document.searchform.submit();
-    }
-    
-    function UpdateCommonGroupCode(groupcode)
-    {
-        document.searchform.groupcode.value = groupcode;
-        document.searchform.action = "<c:url value='/mdm/UpdateCommonGroupCodeView.do'/>";
-        document.searchform.submit();
+    function fnIdCheck(){
+        var url = "<c:url value='/rcpt/searchCarPopupView.do'/>?";
+        
+        // var varParam = new Object();
+        // var checkId = document.mberManageVO.mberId.value;
+        // var varParam = "checkId="+checkId;
+        
+        var $dialog = $('<div id="modalPan"></div>')
+        .html('<iframe style="border: 0px;" src="' + "<c:url value='/rcpt/searchCarPopupView.do'/>?" +'" width="100%" height="100%"></iframe>')
+        .dialog({
+            autoOpen: false,
+            modal: true,
+            width: 900,
+            height: 700
+        });
+        $(".ui-dialog-titlebar").hide();
+        $dialog.dialog('open');
     }
 
-    function UpdateCommonCode(groupcode,code)
-    {
-        document.searchform.groupcode.value = groupcode;
-        document.searchform.code.value = code;
-        document.searchform.action = "<c:url value='/mdm/UpdateCommonCodeView.do'/>";
-        document.searchform.submit();
+    function returnValue(carnum,name,kind,tel){
+        console.log("carnum :" + carnum);
+        console.log("name :" + name);
+        console.log("kind :" + kind);
+        console.log("tel :" + tel);
+        
+        document.searchform.name.value = name;
+        document.searchform.carnum.value = carnum;
+        document.searchform.tel.value = tel;
+        //여기서부터
     }
-    function DeleteCommonCode(groupcode,code)
-    {
-    	confirm("정말 삭제하시겠습니까?");
-    	
-    }
-    */
-    
     </script>
 
 </head>
@@ -66,9 +67,6 @@
             <div class="sub_layout">
                 <div class="sub_in">
                     <div class="layout">
-                        <!-- Left menu -->
-                        <!-- <c:import url="/sym/mms/EgovMenuLeft.do" /> -->
-                        <!--// Left menu -->
                         <div class="content_wrap">
                             <div id="contents" class="content">
                                 <!-- Location -->
@@ -80,6 +78,14 @@
                                     </ul>
                                 </div>
                                 <!--// Location -->
+                                <div class="condition" style="height: 64px;padding: 10px; margin-bottom:5px;">
+                                    <span class="item">
+                                        <a href="#" class="btn btn_blue_46 w_100" onclick="fnIdCheck()" style="float:left;"><spring:message code="button.inquire"/></a>
+                                    </span>
+                                    
+
+                                </div>
+
 
                                 <form name="searchform" id="searchform" action="<c:url value='/mdm/SmartCode.do'/>" method="post">
 
@@ -93,7 +99,7 @@
                                             </colgroup>
                                             <tr>
                                                 <td class="lb">
-                                                    <label for="bbsNm">수리종류</label>
+                                                    <label for="chk_repair">수리종류</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
@@ -103,27 +109,27 @@
                                                     
                                                 </td>
                                                 <td class="lb">
-                                                    <label for="bbsNm">고객명</label>
+                                                    <label for="name">고객명</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input id="" class="f_txtsmall" style="width: 70%;"  />
+                                                    <input name="name" id="name" class="f_txtsmall" readonly style="width: 70%;"  />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="lb">
-                                                    <label for="bbsNm">차량번호</label>
+                                                    <label for="carnum">차량번호</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input id="bbsNm" class="f_txtsmall" style="width: 70%;" />
+                                                    <input name="carnum" id="carnum" class="f_txtsmall" readonly style="width: 70%;" />
                                                 </td>
                                                 <td class="lb">
-                                                    <label for="bbsNm">고객연락처</label>
+                                                    <label for="tel">고객연락처</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input id="" class="f_txtsmall" style="width: 70%;" />
+                                                    <input name="tel" id="tel" class="f_txtsmall" readonly style="width: 70%;" />
                                                 </td>
                                             </tr>
                                              <tr>

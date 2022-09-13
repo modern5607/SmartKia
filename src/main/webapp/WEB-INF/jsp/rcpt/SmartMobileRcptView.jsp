@@ -80,6 +80,10 @@
                                     </ul>
                                 </div>
                                 <!--// Location -->
+                                <div class="condition">
+
+
+                                </div>
 
                                 <form name="searchform" id="searchform" action="<c:url value='/mdm/SmartCode.do'/>" method="post">
 
@@ -251,21 +255,8 @@
                                     </div>
                                     
                                 </form>
-                                <!-- 페이징 -->
-                                <!-- div class="board_list_bot">
-                                    <div class="paging" id="paging_div">
-                                        <ul>
-                                            <ui:pagination paginationInfo = "${paginationInfo}" type="renew" jsFunction="linkPage" />
-                                        </ul>
-                                    </div>
-                                </div-->
-                                <!-- // 페이징 끝 -->
                             </div>
-                            <!-- <div class="content">
-                            <div id="contents" class="tab_contents" style="padding: 44px 10px 20px 20px;">
-                                <a href="<c:url value='/kiosk/selectKioskin.do'/>" class="item btn btn_blue_46 w_500 h_400" style="font-size: 70px; padding: 160px 0px 0px 0px;">일반수리</a>
-                                <a href="<c:url value='/kiosk/selectKioskinsurance.do'/>" class="item btn btn_blue_46 w_500 h_400" style="font-size: 70px;  padding: 160px 0px 0px 0px;">보증수리</a>
-                            </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

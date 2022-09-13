@@ -44,6 +44,17 @@
     </listener>
     <!-- security end -->
 
+    <!-- Mobile detect start-->
+    <filter>
+        <filter-name>deviceResolverRequestFilter</filter-name>
+        <filter-class>org.springframework.mobile.device.DeviceResolverRequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>deviceResolverRequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- Mobile detect end-->
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:egovframework/spring/com/context-*.xml</param-value>
@@ -90,4 +101,6 @@
         <error-code>500</error-code>
         <location>/common/error.jsp</location>
     </error-page>
+
+
 </web-app>

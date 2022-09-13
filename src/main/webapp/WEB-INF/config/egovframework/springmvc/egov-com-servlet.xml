@@ -71,4 +71,5 @@
 	</property>
     </bean> -->
 
+    <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
 </beans>
