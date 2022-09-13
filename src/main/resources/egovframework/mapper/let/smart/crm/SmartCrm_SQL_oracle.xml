@@ -3,44 +3,42 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="smartCrmDAO">
 
- <!-- 	<resultMap id="smartCrmVO" type="egovframework.smart.crm.service.smartCrmVO">
-		<result property="cusId" column="CUSTOMER_ID"/>
-		<result property="cusAutoNo" column="CUSTOMER_AUTONO"/>
-		<result property="cusKind" column="CUSTOMER_AUTOKIND"/>
-		<result property="cusNm" column="CUSTOMER_NAME"/>
-		<result property="cusTel" column="CUSTOMER_TEL"/>
-		<result property="taskStat" column="TASKSTAT"/>
-		<result property="position" column="POSITION"/>
-		<result property="compTime" column="COMPTIME"/>		
-		<result property="note" column="NOTE"/>
-		<result property="turnOver" column="TURNOVER"/>
-		<result property="turnOverTime" column="TURNOVERTIME"/>
-		<result property="turnOverNote" column="TURNOVER_NOTE"/>				
-	</resultMap>  -->
-	
-	<select id="selectCrmList" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="egovMap">
-	SELECT	
-			C.CUSTOMER_ID as "cusId",
-			C.CUSTOMER_AUTONO as "cusAutoNo",
-			C.CUSTOMER_AUTOKIND as "cusAutoKind",
-	        C.CUSTOMER_NAME as "cusNm",
-	        C.CUSTOMER_TEL as "cusTel",
-	        A.TASKSTAT as "TASKSTAT",
-	        A.NOTE as "note",
-	        A.TURNOVER as "turnOver",
-	        A.TURNOVERTIME as "turnOverTime",
-	        A.TURNOVER_NOTE as "turnOverNote"
-	        
-	FROM 	CAR_TAKEREPAIR A, CAR_CUSTOMER C           						                               			
-	WHERE	A.CUSTOMER_ID = C.CUSTOMER_ID
-			
-	</select> 
-	
+
+	<select id="selectCrmList" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+		SELECT
+		TAKESEQ,
+		TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI') RECEIPTDATE,
+		A.CUSTOMER_ID as "cusId",
+		A.CUSTOMER_AUTONO as "cusAutoNo",
+		A.CUSTOMER_AUTOKIND as "cusAutoKind",
+		FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+		A.CUSTOMER_NAME as "cusNm",
+		A.CUSTOMER_TEL as "cusTel",
+		FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
+		B.NOTE as "note",
+		B.TURNOVER as "turnOver",
+		B.TURNOVERTIME as "turnOverTime",
+		B.TURNOVER_NOTE as "turnOverNote"
+
+		FROM CAR_CUSTOMER A, CAR_TAKEREPAIR B
+		WHERE A.CUSTOMER_ID = B.CUSTOMER_ID
+		
+		
+        <if test="searchAutoNo != ''">
+            AND A.CUSTOMER_AUTONO LIKE '%' ||#{searchAutoNo}|| '%'
+        </if>
+        <if test="searchCusNm != ''">
+            AND A.CUSTOMER_NAME LIKE '%' ||#{searchCusNm}|| '%'
+        </if>
+        <if test="searchCusTel != ''">
+            AND A.CUSTOMER_TEL LIKE '%' ||#{searchCusTel}|| '%'
+        </if>
+	</select>
    	<select id="selectCrmListTotCnt" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="int">
 		
 			SELECT 	COUNT(*) totcnt
-			FROM 	CAR_TAKEREPAIR A, CAR_CUSTOMER C  
-			WHERE 	A.CUSTOMER_ID = C.CUSTOMER_ID
+			FROM 	CAR_CUSTOMER A, CAR_TAKEREPAIR B 
+			WHERE 	A.CUSTOMER_ID = B.CUSTOMER_ID
 			<!-- <if test="searchCondition == &quot;qestnSj&quot;">AND
 				C.CUSTOMER_ID, LIKE '%' || #{searchKeyword} || '%'
 			</if> -->

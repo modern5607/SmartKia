@@ -55,34 +55,13 @@ function fnPasswordMove(){
     document.smartMberManageVO.submit();
 }
 function fnUpdate(){
-	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberSelectUpdt.do'/>";
+	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberManage.do'/>";
     if(validateSmartMberManageVO(document.smartMberManageVO)){
         document.smartMberManageVO.submit();
     }
 }
 
-function fn_egov_ZipSearch(){
-    
-    var $dialog = $('<div id="modalPan"></div>')
-	.html('<iframe style="border: 0px; " src="' + "<c:url value='/sym/cmm/EgovCcmZipSearchList.do'/>" +'" width="100%" height="100%"></iframe>')
-	.dialog({
-    	autoOpen: false,
-        modal: true,
-        width: 1100,
-        height: 600
-	});
-    $(".ui-dialog-titlebar").hide();
-	$dialog.dialog('open');
-}
 
-function fn_egov_returnValue(retVal){
-	if (retVal) {
-		document.getElementById("zip_view").value  = retVal.vZip;
-		document.getElementById("adres").value  = retVal.sAddr;
-	}
-	
-	fn_egov_modal_remove();
-}
 
 /**********************************************************
  * 모달 종료 버튼
@@ -90,11 +69,12 @@ function fn_egov_returnValue(retVal){
 function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
-//-->
 /* 전화번호 하이폰 자동생성 */
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
 });
+//-->
+
 </script>
 </head>
 <body>
@@ -179,15 +159,16 @@ $(document).on("keyup", ".phoneNumber", function() {
                                         <tr>
                                             <td class="lb">
                                             	반
-                                              <span class="req">필수</span>
+                                              <!-- <span class="req">필수</span> -->
                                             </td>
                                             <td>
 	                                            <label class="f_select w_350" for="team">
-		                                          <form:select id="team" name="team" path="team" title="team">
-		                                          	<form:option path="team" type="hidden" value='A'>A</form:option>
-		                                           	<form:option path="team" type="hidden" value='B'>B</form:option>
-		                                          	<form:option path="team" type="hidden" value='C'>C</form:option>
-		                                          </form:select>
+		                                          <select id="team" name="team">
+		                                          	<option value=''>없음</option>
+		                                          	<c:forEach var="team" items="${team}" varStatus="status">
+		                                          		<option value="<c:out value='${team.CODE}'/>"><c:out value='${team.NAME}'/> </option>
+		                                          	</c:forEach>
+		                                          </select>
 	                                          	</label>
                                             </td>
                                         </tr>

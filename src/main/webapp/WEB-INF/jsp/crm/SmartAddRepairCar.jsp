@@ -61,7 +61,7 @@
 		$dialog.dialog('open');
 
 	}
-	<!--
+/*
 	function fnDeleteUser() {
 		var checkField = document.listForm.checkField;
 		var id = document.listForm.checkId;
@@ -106,20 +106,22 @@
 		document.listForm.action = "<c:url value='/mdm/SmartMberInsertView.do'/>";
 		document.listForm.submit();
 	}
+	*/
 	function fnSearch() {
-		document.listForm.pageIndex.value = 1;
-		document.listForm.action = "<c:url value='/crm/SmartAddRepairCar.do'/>";
-		document.listForm.submit();
+		document.smartCrmVO.pageIndex.value = 1;
+		document.smartCrmVO.action = "<c:url value='/crm/SmartAddRepairCar.do'/>";
+		document.smartCrmVO.submit();
 	}
 	/*********************************************************
 	 * 페이징 처리 함수
 	 ******************************************************** */
+	 /*
 	function fnLinkPage(pageNo) {
 		document.listForm.pageIndex.value = pageNo;
 		document.listForm.action = "<c:url value='/crm/SmartAddRepairCar.do'/>";
 		document.listForm.submit();
 	}
-//-->
+	*/
 </script>
 </head>
 <body>
@@ -136,10 +138,6 @@
 			<div class="sub_layout">
 				<div class="sub_in">
 					<div class="layout">
-						<!-- Left menu -->
-						<%-- <c:import url="/sym/mms/EgovMenuLeft.do" /> --%>
-						<!--// Left menu -->
-
 						<div class="content_wrap">
 							<div id="contents" style="margin-bottom:10px">
 								<!-- Location -->
@@ -151,9 +149,7 @@
 									</ul>
 								</div>
 								<!--// Location -->
-
-								<form name="listForm" action="/crm/SmartAddRepaire.do"
-									method="post">
+								<form name="smartCrmVO" action="/crm/SmartAddRepairCar.do" method="post">
 									<input name="selectedId" type="hidden" /> <input
 										name="checkedIdForDel" type="hidden" /> <input
 										name="pageIndex" type="hidden"
@@ -161,6 +157,7 @@
 
 									<h1 class="tit_1" style="padding-bottom: 20px;">차량 수리 이력
 										조회</h1>
+									
 
 									<!-- <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>  -->
 
@@ -170,32 +167,31 @@
 
 									<!-- 검색조건 -->
 
-									<div class="condition" style="text-align: left;">
+									<div class="condition" style="text-align: left; margin-top: 20px;">
 										<span class="item f_search">
 											<p class="left">
-												<label for="searchKeyword">차량번호 :</label> <input
-													name="searchKeyword" id="searchKeyword"
-													class="f_input w_200" title="검색" type="text" maxlength="20"
-													value="<c:out value="${userSearchVO.searchKeyword}"/>" />
-												<label for="searchKeyword1">고객명 :</label> <input
-													name="searchKeyword1" id="searchKeyword1"
+												<label for="searchAutoNo">차량번호 :</label> <input name="searchAutoNo" id="searchAutoNo" class="f_input w_200" title="검색" type="text" maxlength="20" value="<c:out value="${SmartCrmVO.searchAutoNo}"/>" />
+												<label for="searchCusNm">고객명 :</label> <input
+													name="searchCusNm" id="searchCusNm"
 													class="f_input w_200" title="검색" type="text"
-													value="<c:out value=""/>" /> <label for="searchKeyword2">연락처
-													:</label> <input name="searchKeyword2" id="searchKeyword2"
+													value="<c:out value="${SmartCrmVO.searchCusNm}"/>" />
+												<label for="searchCusTel">연락처
+													:</label> <input name="searchCusTel" id="searchCusTel"
 													class="f_input w_200" title="검색" type="text" maxlength="20"
-													value="<c:out value="${userSearchVO.searchKeyword}"/>" />
-												<label for="searchKeyword3">접수기간 :</label> <input
+													value="<c:out value="${SmartCrmVO.searchCusTel}"/>" />
+													
+												<%-- <label for="searchKeyword3">접수기간 :</label> <input
 													name="searchKeyword3" id="searchKeyword3"
 													class="f_input w_150" title="검색" type="date"
 													value="<c:out value=""/>" />
 													<label for="searchKeyword3"> ~ </label> <input
 													name="searchKeyword3" id="searchKeyword3"
 													class="f_input w_150" title="검색" type="date"
-													value="<c:out value=""/>" />
+													value="<c:out value=""/>" />--%>
 												<button class="btn" type="submit"
 													onclick="fnSearch(); return false;" style="right: -50px;">
-													<spring:message code="button.search" />
-												</button>
+													<spring:message code='button.search' /><!-- 조회 -->
+												</button> 
 											</p>
 										</span>
 									</div>
@@ -203,7 +199,7 @@
 							<!--// 검색조건 -->
 
 							<!-- 등록 , 목록 -->
-							<%-- <div class="board_list_top">
+							<!-- <div class="board_list_top">
 								<div class="right_col">
 									<button type="button" class="btn btn_blue_46 w_100"
 										onclick="javascript:TransferGroup(); return false;">
@@ -212,9 +208,8 @@
 									<a href="<c:url value='/crm/SmartAddRepairCar.do'/>"
 										class="btn btn_blue_46 w_100"><spring:message
 											code="button.list" /></a>
-									<!-- 목록 -->
 								</div>
-							</div> --%>
+							</div> -->
 
 							<div class="board_list3">
 								<table summary="고객목록">
@@ -273,7 +268,7 @@
 												<td><c:out value="${result.cusAutoKind}" /></td>
 												<td><c:out value="${result.cusNm}" /></td>
 												<td><c:out value="${result.cusTel}" /></td>
-												<%-- <td><c:out value="${result.taskStat}" /></td> --%>
+												<!-- <td><c:out value="${result.taskStat}" /></td> -->
 												<td><c:out value="${result.positon}" /></td>
 												<td><c:out value="${result.compTime}" /></td>
 												<td><c:out value="${result.note}" /></td>
@@ -296,8 +291,8 @@
 											</tr>
 										</c:forEach>
 									</tbody>
-									</thead>
 								</table>
+								</form>
 							</div>
 
 							<!-- 페이징 -->
@@ -311,7 +306,6 @@
 							</div>
 							<!-- // 페이징 끝 -->
 
-							</form>
 
 						</div>
 					</div>

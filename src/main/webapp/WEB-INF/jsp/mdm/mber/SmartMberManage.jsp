@@ -180,11 +180,11 @@ function fnLinkPage(pageNo){
                                     </label> --%>
 				                    <span class="item f_search">
 					                    <p class="left">
-					                    <label for="searchKeyword">아이디</label>
+					                    <label for="searchId">아이디</label>
 					                        <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchId}"/>"/>
-					                    <label for="searchKeyword">사용자이름</label>
+					                    <label for="searchNm">사용자이름</label>
 					                        <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchNm}"/>"/>
-					                    <label for="searchKeyword">작업반</label>
+					                    <label for="searchTeam">작업반</label>
 					                        <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchTeam}"/>"/>
 					                    </p>
 					                    <p class="left">
@@ -268,7 +268,8 @@ function fnLinkPage(pageNo){
                                                 	</a>
                                                 </td>
                                                 <td><c:out value="${result.userNm}"/></td>
-                                                <td><c:out value="${result.team}"/></td>
+		                                          	
+                                                <td><c:out value="${result.positionName}"/></td>
                                                 <td><c:out value="${result.areaNo}"/><%-- <c:out value="${result.middleTelno}"/><c:out value="${result.endTelno}"/> --%></td>
                                                 <%-- <td><c:out value="${result.sbscrbDe}"/></td> --%>
                                                 

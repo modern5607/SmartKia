@@ -213,27 +213,14 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             </td>
                                             <td>
 	                                            <label class="f_select w_350" for="team">
-		                                          <form:select id="team" name="team" path="team" title="team">
-		                                          	<form:option path="team" type="hidden" value='A'>A</form:option>
-		                                           	<form:option path="team" type="hidden" value='B'>B</form:option>
-		                                          	<form:option path="team" type="hidden" value='C'>C</form:option>
-		                                          </form:select>
+		                                          <select id="team" name="team">
+		                                          	<option value=''>없음</option>
+		                                          	<c:forEach var="team" items="${team}" varStatus="status">
+		                                          		<option value="<c:out value='${team.CODE}'/>"><c:out value='${team.NAME}'/> </option>
+		                                          	</c:forEach>
+		                                          </select>
 	                                          	</label>
                                             </td>
-                                            <%-- <td>
-                                                 <label class="f_select w_350" for="group">
-                                                    <form:select path="team" id="team" title="반">
-                                                        <form:option value="" label="--선택하세요--"/>
-                                                        <form:options items="${team}" itemValue="code" itemLabel="codeNm"/>
-                                                    </form:select>
-                                                    <form:errors path="team" cssClass="error"/>
-                                                </label>
-                                            </td> 
-                                            <form:select id="bbsTyCode" name="bbsTyCode" path="bbsTyCode" title="게시판유형선택">
-                                                    	<form:option value='' label="선택하세요" />
-                                                    	<form:options items="${team}" itemValue="code" itemLabel="codeNm" />
-                                                    </form:select> --%>
-                                            
                                         </tr>
                                         <tr>
                                             <td class="lb">

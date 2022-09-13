@@ -4,63 +4,48 @@
 <mapper namespace="smartMberManageDAO">
 
 
-<!-- 	<resultMap id="SmartMberManageVO" type="egovframework.smart.mdm.mber.service.SmartMberMangeVO">
-		<result property="userTy" column="ESNTL_ID"/>
-		<result property="userId" column="MBER_ID"/>
-		<result property="userNm" column="MBER_NM"/>
-		<result property="emailAdres" column="MBER_EMAIL_ADRES"/>
-		<result property="areaNo" column="AREA_NO"/>
-		<result property="middleTelno" column="MIDDLE_TELNO"/>
-		<result property="endTelno" column="END_TELNO"/>
-		<result property="moblphonNo" column="MBTLNUM"/>
-		<result property="middleMoblphonNo" column="MIDDLE_MBTLNUM"/>		
-		<result property="endMoblphonNo" column="END_MBTLNUM"/>
-		<result property="groupId" column="GROUP_ID"/>
-		<result property="sttus" column="MBER_STTUS"/>
-		<result property="sbscrbDe" column="SBSCRB_DE"/>				
-	</resultMap> -->
-	
+
     <resultMap id="stplatMap" type="egovframework.smart.mdm.mber.service.StplatVO">
         <result property="useStplatId" column="USE_STPLAT_ID"/>
         <result property="useStplatCn" column="USE_STPLAT_CN"/>
         <result property="infoProvdAgeCn" column="INFO_PROVD_AGRE_CN"/>
     </resultMap>
     
- <select id="selectMberList" parameterType="egovframework.smart.mdm.mber.service.UserDefaultVO" resultType="egovMap">
+<select id="selectMberList" parameterType="egovframework.smart.mdm.mber.service.UserDefaultVO" resultType="egovMap">
 SELECT * FROM ( SELECT rownum rn, TB.* FROM (
-    SELECT 
-        ESNTL_ID               as "uniqId",
+   	SELECT 
+        A.ESNTL_ID              as "uniqId",
         'USR01'               as "userTy",
-        MBER_ID               as "userId",
-        MBER_NM               as "userNm",
-        MBER_EMAIL_ADRES      as "emailAdres",
-        AREA_NO               as "areaNo",
-        USE_YN                as "useYn" ,
-        MBTLNUM           	  as "moblphonNo",
-        GROUP_ID              as "groupId",
-        MBER_STTUS            as "Sttus",
-        TEAM				  as "team",
-        SBSCRB_DE             as "sbscrbDe"
+        A.MBER_ID               as "userId",
+        A.MBER_NM               as "userNm",
+        A.MBER_EMAIL_ADRES      as "emailAdres",
+        A.AREA_NO               as "areaNo",
+        A.USE_YN                as "useYn" ,
+        A.MBTLNUM           	  as "moblphonNo",
+        A.GROUP_ID              as "groupId",
+        A.MBER_STTUS            as "Sttus",
+        A.TEAM					as "team",
+       	FN_CODENAME(TEAM, 'AUTO_ROOM') position_name,
+        A.SBSCRB_DE             as "sbscrbDe"
         
-    FROM    LETTNGNRLMBER
+    FROM  LETTNGNRLMBER A
     WHERE 1=1
         <if test='sbscrbSttus != "0"'>
             AND MBER_STTUS LIKE  #{sbscrbSttus}
-        </if>
-        <if test="searchId != null">
-            AND MBER_ID LIKE '%' ||#{searchId}|| '%'
-        </if>
-        <if test="searchNm != null">
-            AND MBER_NM LIKE '%' ||#{searchNm}|| '%'
-        </if>
-        <if test="searchTeam != null">
-            AND TEAM LIKE '%' ||#{searchTeam}|| '%'
-        </if>
-        ORDER BY 12 DESC
+	        </if>
+	        <if test="searchId != ''">
+	            AND MBER_ID LIKE '%' ||#{searchId}|| '%'
+	        </if>
+	        <if test="searchNm != ''">
+	            AND MBER_NM LIKE '%' ||#{searchNm}|| '%'
+	        </if>
+	        <if test="searchTeam != ''">
+	            AND TEAM LIKE '%' ||#{searchTeam}|| '%'
+	        </if>
+        ORDER BY ESNTL_ID DESC
         ) TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
     </select>
-    
-    
+ 
         <select id="selectMberListTotCnt" parameterType="egovframework.smart.mdm.mber.service.UserDefaultVO" resultType="int">
             SELECT COUNT(*) totcnt
             FROM   LETTNGNRLMBER
@@ -68,13 +53,13 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
              <if test='sbscrbSttus != "0"'>
             AND MBER_STTUS LIKE  #{sbscrbSttus}
 	        </if>
-	        <if test="searchId != null">
+	        <if test="searchId != ''">
 	            AND MBER_ID LIKE '%' ||#{searchId}|| '%'
 	        </if>
-	        <if test="searchNm != null">
+	        <if test="searchNm != ''">
 	            AND MBER_NM LIKE '%' ||#{searchNm}|| '%'
 	        </if>
-	        <if test="searchTeam != null">
+	        <if test="searchTeam != ''">
 	            AND TEAM LIKE '%' ||#{searchTeam}|| '%'
 	        </if>
     </select>
