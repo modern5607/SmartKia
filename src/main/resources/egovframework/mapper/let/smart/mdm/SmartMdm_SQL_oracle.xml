@@ -187,5 +187,9 @@
 			,UPDATE_DATE = SYSDATE
 		WHERE CUST_ID =#{Custid}
 	</update>
+
+	<select id="SelectCmmCode" parameterType="String" resultType="java.util.HashMap">
+		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = #{groupcode}
+	</select>
 	
 </mapper>

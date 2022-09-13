@@ -106,7 +106,7 @@ function fnUpdate(){
                                         </colgroup>
                                         <tr>
                                             <td class="lb">
-                                                <label for="">일반회원아이디</label>
+                                                <label for="">사용자아이디</label>
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>

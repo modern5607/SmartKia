@@ -58,6 +58,9 @@ public class SmartRcptController {
 	@Resource(name = "SmartMdmService")
 	private SmartMdmService smartmdmservice;
 	
+	@Resource(name = "SmartMdmService")
+	private SmartMdmService smartmdmservie;
+	
 	@RequestMapping(value="/rcpt/SmartWebRcptView.do")
 	public String SmartWebRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO ,ModelMap model ) throws Exception{
 		

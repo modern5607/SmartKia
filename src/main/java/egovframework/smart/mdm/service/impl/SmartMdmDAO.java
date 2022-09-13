@@ -95,4 +95,8 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 		return update("SmartMdmDAO.UpdateBiz", vo);
 
 	}
+
+	public List<Object> selectCmmCode(String groupcode){
+		return selectList("SmartMdmDAO.SelectCmmCode",groupcode);
+	}
 }
