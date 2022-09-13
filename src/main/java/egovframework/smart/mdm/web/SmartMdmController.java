@@ -349,7 +349,9 @@ public class SmartMdmController {
 		leadtimeVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
 		Map<String, Object> map = smartmdmservice.selectLeadTime(leadtimeVO);
-//		System.out.println("Map :" + map);
+		List<Object> test = smartmdmservice.SelectCode("USE_YN");
+
+		System.out.println("test :" + test);
 
 		model.addAttribute("leadtimeVO", leadtimeVO);
 		model.addAttribute("leadtimelist", map.get("leadtime"));

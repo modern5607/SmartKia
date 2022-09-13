@@ -5,6 +5,7 @@ import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.com.service.EgovTemplateManageService;
+import egovframework.smart.mdm.service.SmartMdmService;
 import egovframework.smart.rcpt.service.SmartRcptService;
 import egovframework.smart.rcpt.service.SmartRcptVO;
 
@@ -44,6 +45,9 @@ public class SmartRcptController {
 
 	@Resource(name = "EgovBBSAttributeManageService")
 	private EgovBBSAttributeManageService bbsAttrbService;
+	
+	@Resource(name = "SmartMdmService")
+	private SmartMdmService smartmdmservie;
 	
 	@RequestMapping(value="/rcpt/SmartWebRcptView.do")
 	public String SmartWebRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO ,ModelMap model ) throws Exception{

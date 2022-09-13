@@ -202,4 +202,12 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 		System.out.println("result : "+ result);
 		return result;
 	}
+
+	/*
+	 * @param GroupCode 그룹코드
+	 */
+	@Override
+	public List<Object> SelectCode(String GroupCode) throws Exception {
+		return smartDAO.selectCmmCode(GroupCode);
+	}
 }
