@@ -33,6 +33,10 @@
         <if test="searchCusTel != ''">
             AND A.CUSTOMER_TEL LIKE '%' ||#{searchCusTel}|| '%'
         </if>
+        <if test="(sdate != null and edate != null)">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI') between #{sdate_dt} and #{edate_dt}
+        </if>
+		
 	</select>
    	<select id="selectCrmListTotCnt" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="int">
 		

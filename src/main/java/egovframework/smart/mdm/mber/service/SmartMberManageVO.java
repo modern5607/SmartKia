@@ -23,92 +23,92 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	/**
 	 * 주소
 	 */
-	private String adres;
+	private String adres="";
 	/**
 	 * 상세주소
 	 */
-	private String detailAdres;
+	private String detailAdres="";
 	/**
 	 * 끝전화번호
 	 */
-	private String endTelno;
+	private String endTelno="";
 	/**
 	 * 팩스번호
 	 */
-	private String mberFxnum;
+	private String mberFxnum="";
 	/**
 	 * 그룹 ID
 	 */
-	private String groupId;
+	private String groupId="";
 	/**
 	 * 주민등록번호
 	 */
-	private String ihidnum;
+	private String ihidnum="";
 	/**
 	 * 성별코드
 	 */
-	private String sexdstnCode;
+	private String sexdstnCode="";
 	/**
 	 * 회원 ID
 	 */
-	private String mberId;
+	private String mberId="";
 	/**
 	 * 회원명
 	 */
-	private String mberNm;
+	private String mberNm="";
 	/**
 	 * 회원상태
 	 */
-	private String mberSttus;
+	private String mberSttus="";
 	/**
 	 * 지역번호
 	 */
-	private String areaNo;
+	private String areaNo="";
 	/**
 	 * 중간전화번호
 	 */
-	private String middleTelno;
+	private String middleTelno="";
 	/**
 	 * 핸드폰번호
 	 */
-	private String moblphonNo;
+	private String moblphonNo="";
 	
-	private String middleMoblphonNo;
+	private String middleMoblphonNo="";
 	
-	private String endMoblphonNo;
+	private String endMoblphonNo="";
 	/**
 	 * 비밀번호
 	 */
-	private String password;
+	private String password="";
 	/**
 	 * 비밀번호 정답
 	 */
-	private String passwordCnsr;
+	private String passwordCnsr="";
 	/**
 	 * 비밀번호 힌트
 	 */
-	private String passwordHint;
+	private String passwordHint="";
 	
 	/**
 	 * 사용여부
 	 */
-	private String useYn;
+	private String useYn="";
 	/**
 	 * 가입 일자
 	 */
-	private String sbscrbDe;
+	private String sbscrbDe="";
 	/**
 	 * 우편번호
 	 */
-	private String zip;
+	private String zip="";
 	/**
 	 * 이메일주소
 	 */
-	private String mberEmailAdres;
+	private String mberEmailAdres="";
 	
-	private String team;
+	private String team="";
 	
-	private String positionName;
+	private String positionName="";
 	/**
 	 * oldPassword attribute 값을  리턴한다.
 	 * @return String

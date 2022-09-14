@@ -42,7 +42,7 @@ public interface SmartMberManageService {
 	 * @param SmartCrmVO 일반회원수정정보
 	 * @throws Exception
 	 */
-	public void updateMber(SmartMberManageVO smartMberManageVO) throws Exception;
+	public int updateMber(SmartMberManageVO smartMberManageVO) throws Exception;
 
 	/**
 	 * 화면에 조회된 사용자의 정보를 데이터베이스에서 삭제

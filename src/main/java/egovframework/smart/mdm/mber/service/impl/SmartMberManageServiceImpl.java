@@ -77,11 +77,13 @@ public class SmartMberManageServiceImpl extends EgovAbstractServiceImpl implemen
 
 
 	@Override
-	public void updateMber(SmartMberManageVO smartMberManageVO) throws Exception {
+	public int updateMber(SmartMberManageVO smartMberManageVO) throws Exception {
 		//패스워드 암호화
 		String pass = EgovFileScrty.encryptPassword(smartMberManageVO.getPassword(), smartMberManageVO.getMberId());
 		smartMberManageVO.setPassword(pass);
-		smartMberManageDAO.updateMber(smartMberManageVO);
+		int result = smartMberManageDAO.updateMber(smartMberManageVO);
+		System.out.println("result : "+result);
+		return result;
 	}
 
 

@@ -38,7 +38,7 @@
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="smartMberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript" defer="defer">
-<!--
+/*
 function fnListPage(){
     document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberManage.do'/>";
     document.smartMberManageVO.submit();
@@ -54,13 +54,20 @@ function fnPasswordMove(){
     document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberPasswordUpdtView.do'/>";
     document.smartMberManageVO.submit();
 }
-function fnUpdate(){
-	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberManage.do'/>";
-    if(validateSmartMberManageVO(document.smartMberManageVO)){
+
+*/
+function fnUpdates(){
+	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberSelectUpdt.do'/>";
+	if(validateSmartMberManageVO(document.smartMberManageVO)){
         document.smartMberManageVO.submit();
     }
+    
 }
-
+function fnUpdate(){
+	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberSelectUpdt.do'/>";
+        document.smartMberManageVO.submit();
+    
+}
 
 
 /**********************************************************
@@ -73,7 +80,7 @@ function fn_egov_modal_remove() {
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
 });
-//-->
+
 
 </script>
 </head>

@@ -1,16 +1,3 @@
-<%--
-  Class Name : EgovMberInsert.jsp
-  Description : 일반회원등록 JSP
-  Modification Information
- 
-      수정일         수정자                   수정내용
-    -------    --------    ---------------------------
-     2009.03.02  JJY          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
- 
-    author   : 공통서비스개발팀 JJY
-    since    : 2009.03.02    
---%> 
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
@@ -102,7 +89,7 @@ function fnListPage(){
     document.smartMberManageVO.submit();
 }
 
-function fnInsert(){
+function fnInserts(){
 	if(validateSmartMberManageVO(document.smartMberManageVO)){ 
 		if(document.smartMberManageVO.password.value != document.smartMberManageVO.password2.value){
     		alert("<spring:message code="fail.user.passwordUpdate2" />");
@@ -110,6 +97,9 @@ function fnInsert(){
 		}
 		document.smartMberManageVO.submit();
 	} 
+}
+function fnInsert(){
+		document.smartMberManageVO.submit();
 }
 /* 전화번호 하이폰 자동생성 */
 $(document).on("keyup", ".phoneNumber", function() { 
@@ -150,13 +140,6 @@ $(document).on("keyup", ".phoneNumber", function() {
 
 								<form:form modelAttribute="smartMberManageVO" name="smartMberManageVO" action="${pageContext.request.contextPath}/mdm/SmartMberInsert.do" method="post" >
 
-                                <!-- <h1 class="tit_1">사용자관리</h1>
-
-                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
- -->
-<!--                                 <h2 class="tit_2">사용자관리</h2>
-
-                                <h3 class="tit_3">회원관리</h3> -->
 
                                 <div class="board_view2">
                                     <table summary="일반회원 등록정보">
@@ -254,13 +237,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             </td>
                                             <td>
                                                 <form:input path="areaNo" id="areaNo" class="f_txt w_350 phoneNumber" title="전화번호" maxlength="15" />
-                                                <%-- <span class="f_txt_inner mr5 ml5" title="전화번호 첫번째">-</span>
-                                                <form:input path="middleTelno" id="middleTelno" class="f_txt w_80" title="전화번호 두번째" maxlength="5" />
-                                                <span class="f_txt_inner mr5 ml5">-</span>
-                                                <form:input path="endTelno" id="endTelno" class="f_txt w_80" title="전화번호 세번째" maxlength="5" /> --%>
                                                 <form:errors path="areaNo" cssClass="error" />
-                                                <%-- <form:errors path="middleTelno" cssClass="error" />
-                                                <form:errors path="endTelno" cssClass="error" /> --%>
                                             </td>
                                         </tr>
                                         <tr>
@@ -278,13 +255,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             </td>
                                             <td>
                                                 <form:input path="moblphonNo" id="moblphonNo" class="f_txt w_350 phoneNumber" title="핸드폰번호" maxlength="15" />
-                                                <%-- <span class="f_txt_inner mr5 ml5" title="핸드폰번호 첫번째">-</span>
-                                                <form:input path="middleMoblphonNo" id="middleMoblphonNo" class="f_txt w_80" title="핸드폰번호 두번째" maxlength="4" />
-                                                <span class="f_txt_inner mr5 ml5">-</span>      
-                                                <form:input path="endMoblphonNo" id="endMoblphonNo" class="f_txt w_80" title="핸드폰번호 세번째" maxlength="4" /> --%>
                                                 <form:errors path="moblphonNo" cssClass="error" />
-                                                <%-- <form:errors path="middleMoblphonNo" cssClass="error" />
-                                                <form:errors path="endMoblphonNo" cssClass="error" /> --%>
                                             </td>
                                         </tr>
                                         <tr>

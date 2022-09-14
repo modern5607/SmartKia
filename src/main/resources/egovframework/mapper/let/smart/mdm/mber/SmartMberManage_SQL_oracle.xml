@@ -40,7 +40,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
 	            AND MBER_NM LIKE '%' ||#{searchNm}|| '%'
 	        </if>
 	        <if test="searchTeam != ''">
-	            AND TEAM LIKE '%' ||#{searchTeam}|| '%'
+	            AND FN_CODENAME(TEAM, 'AUTO_ROOM') LIKE '%' ||UPPER(#{searchTeam})|| '%'
 	        </if>
         ORDER BY ESNTL_ID DESC
         ) TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
@@ -131,11 +131,8 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
             SET MBER_ID          = #{mberId},
                 MBER_NM          = #{mberNm},
                 IHIDNUM          = #{ihidnum},
-                ZIP              = #{zip},
-                ADRES            = #{adres},
                 AREA_NO          = #{areaNo},
                 MBER_STTUS       = #{mberSttus},
-                DETAIL_ADRES     = #{detailAdres},
                 MBTLNUM      	 = #{moblphonNo},
                 GROUP_ID         = #{groupId},
                 MBER_FXNUM       = #{mberFxnum},

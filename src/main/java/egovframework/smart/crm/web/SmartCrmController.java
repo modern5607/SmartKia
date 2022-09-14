@@ -58,29 +58,29 @@ public class SmartCrmController {
 		smartCrmVO.setPageUnit(propertyService.getInt("pageUnit"));
 		smartCrmVO.setPageSize(propertyService.getInt("pageSize"));
 			  
-			  PaginationInfo paginationInfo = new PaginationInfo();
-			  
-			  paginationInfo.setCurrentPageNo(smartCrmVO.getPageIndex());
-			  paginationInfo.setRecordCountPerPage(smartCrmVO.getPageUnit());
-			  paginationInfo.setPageSize(smartCrmVO.getPageSize());
-			  
-			  smartCrmVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-			  smartCrmVO.setLastIndex(paginationInfo.getLastRecordIndex());
-			  smartCrmVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-			  
+		PaginationInfo paginationInfo = new PaginationInfo();
+		  
+		paginationInfo.setCurrentPageNo(smartCrmVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(smartCrmVO.getPageUnit());
+		paginationInfo.setPageSize(smartCrmVO.getPageSize());
+		  
+		smartCrmVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		smartCrmVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		smartCrmVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		  
 //			  model.addAttribute("resultList", smartCrmService.selectCrmList(smartCrmVO));
-			  Map<String, Object> map = smartCrmService.selectCrmList(smartCrmVO);
+		Map<String, Object> map = smartCrmService.selectCrmList(smartCrmVO);
 //			  int totCnt = smartCrmService.selectCrmListTotCnt(smartCrmVO);
-			  int totCnt = Integer.parseInt((String) map.get("resultCnt"));
-			  paginationInfo.setTotalRecordCount(totCnt);
-			  
-			  model.addAttribute("smartCrmVO", smartCrmVO);
-				model.addAttribute("resultList", map.get("resultList"));
-				model.addAttribute("resultCnt", map.get("resultCnt"));
-			  model.addAttribute("paginationInfo", paginationInfo);
-			
-			  System.out.println(smartCrmVO);
-			  System.out.println(smartCrmService.selectCrmList(smartCrmVO));
+		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
+		paginationInfo.setTotalRecordCount(totCnt);
+		  
+		model.addAttribute("smartCrmVO", smartCrmVO);
+		model.addAttribute("resultList", map.get("resultList"));
+		model.addAttribute("resultCnt", map.get("resultCnt"));
+		model.addAttribute("paginationInfo", paginationInfo);
+		
+		System.out.println(smartCrmVO);
+		System.out.println(smartCrmService.selectCrmList(smartCrmVO));
 								 
 		
 		return "/crm/SmartAddRepairCar";

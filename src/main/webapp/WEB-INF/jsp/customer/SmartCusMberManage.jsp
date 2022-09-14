@@ -182,21 +182,21 @@ function fnSearch(){
 	</div> --%>
 	
 	
-					                    <span class="item f_search">
-					                    <p class="left">
-					                    <label for="searchKeyword">고객번호</label>
-					                        <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusId}"/>"/> 
-					                    <label for="searchKeyword">고객명</label>
-					                        <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusNm}"/>"/>
-					                    <label for="searchKeyword">차량번호</label>
-					                        <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcarNum}"/>"/>
-					                    </p>
-					                    <p class="left">
-					                    </p>
-					                        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
-				                    </span>
+    <span class="item f_search">
+    <p class="left">
+    <label for="searchKeyword">고객번호</label>
+        <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusId}"/>"/> 
+    <label for="searchKeyword">고객명</label>
+        <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusNm}"/>"/>
+    <label for="searchKeyword">차량번호</label>
+        <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcarNum}"/>"/>
+    </p>
+    <p class="left">
+    </p>
+        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
+    </span>
 	<!--// 검색조건 -->
-	
+
 
 	<!-- 게시판 -->
 	<div class="board_list_top">

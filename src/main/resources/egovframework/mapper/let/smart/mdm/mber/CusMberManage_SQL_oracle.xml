@@ -22,11 +22,14 @@
         NOTE                  as "note"
     FROM    CAR_CUSTOMER
     WHERE 1=1
-        <if test="searchCondition == 0">
-            AND CUSTOMER_AUTONO LIKE '%' ||#{searchKeyword}|| '%'
+        <if test="searchcusId != ''">
+            AND CUSTOMER_ID LIKE '%' ||#{searchcusId}|| '%'
         </if>
-        <if test="searchCondition == 1">
-            AND CUSTOMER_TEL LIKE '%' ||#{searchKeyword}|| '%'
+        <if test="searchcusNm != ''">
+            AND CUSTOMER_NAME LIKE '%' ||#{searchcusNm}|| '%'
+        </if>
+        <if test="searchcarNum != ''">
+            AND CUSTOMER_AUTOKIND LIKE '%' ||#{searchcarNum}|| '%'
         </if>
         ORDER BY 1,2 DESC) <!-- 오더바이옆에있는 숫자를 기준으로 정렬  -->
         TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
@@ -36,12 +39,15 @@
             SELECT COUNT(1) totcnt
             FROM   CAR_CUSTOMER
             WHERE 1=1
-			<if test="searchCondition == 0">
-            AND CUSTOMER_AUTONO LIKE #{searchKeyword}
-        	</if>
-        	<if test="searchCondition == 1">
-            AND CUSTOMER_TEL LIKE '%' ||#{searchKeyword}|| '%'
-        	</if>
+			<if test="searchcusId != ''">
+	            AND CUSTOMER_ID LIKE '%' ||#{searchcusId}|| '%'
+	        </if>
+	        <if test="searchcusNm != ''">
+	            AND CUSTOMER_NAME LIKE '%' ||#{searchcusNm}|| '%'
+	        </if>
+	        <if test="searchcarNum != ''">
+	            AND CUSTOMER_AUTOKIND LIKE '%' ||#{searchcarNum}|| '%'
+	        </if>
     </select>
     
     <insert id="insertMber_S">

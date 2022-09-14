@@ -41,6 +41,10 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
     
     private String searchCusTel = "";
     
+
+    private String sdate_dt = "";
+    private String edate_dt = "";
+    
 	private int pageIndex = 1;
     private int pageUnit = 10;
     private int pageSize = 10;
@@ -67,6 +71,18 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
 		this.searchCusTel = searchCusTel;
 	}
 	
+	public String getSdate_dt() {
+		return sdate_dt;
+	}
+	public void setSdate_dt(String sdate_dt) {
+		this.sdate_dt = sdate_dt;
+	}
+	public String getEdate_dt() {
+		return edate_dt;
+	}
+	public void setEdate_dt(String edate_dt) {
+		this.edate_dt = edate_dt;
+	}
 	public int getPageIndex() {
 		return pageIndex;
 	}

@@ -26,6 +26,11 @@
 <link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
 <link rel="stylesheet" href="<c:url value='/'/>css/component.css">
 <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+<!-- 캘린더 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<!-- /캘린더 -->
 <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 <script src="<c:url value='/'/>js/ui.js"></script>
 
@@ -122,6 +127,41 @@
 		document.listForm.submit();
 	}
 	*/
+
+	/*캘린더*/
+	$(document).ready(function () {
+    $.datepicker.regional['ko'] = {
+        prevText: '이전달',
+        nextText: '다음달',
+        monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+        '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+        '7월','8월','9월','10월','11월','12월'],
+        dayNames: ['일','월','화','수','목','금','토'],
+        dayNamesShort: ['일','월','화','수','목','금','토'],
+        dayNamesMin: ['일','월','화','수','목','금','토'],
+        weekHeader: 'Wk',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 0,
+        isRTL: false,
+        showMonthAfterYear: true,
+        yearSuffix: '',
+        yearRange: 'c-99:c+99',
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ko']);
+
+    $('#sdate_dt').datepicker();
+    $('#sdate_dt').datepicker("option", "maxDate", $("#edate_dt").val());
+    $('#sdate_dt').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#edate_dt").datepicker( "option", "minDate", selectedDate );
+    });
+
+    $('#edate_dt').datepicker();
+    $('#edate_dt').datepicker("option", "minDate", $("#sdate_dt").val());
+    $('#edate_dt').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#sdate_dt").datepicker( "option", "maxDate", selectedDate );
+    });
+});
 </script>
 </head>
 <body>
@@ -179,15 +219,18 @@
 													:</label> <input name="searchCusTel" id="searchCusTel"
 													class="f_input w_200" title="검색" type="text" maxlength="20"
 													value="<c:out value="${SmartCrmVO.searchCusTel}"/>" />
-													
-												<%-- <label for="searchKeyword3">접수기간 :</label> <input
-													name="searchKeyword3" id="searchKeyword3"
-													class="f_input w_150" title="검색" type="date"
-													value="<c:out value=""/>" />
-													<label for="searchKeyword3"> ~ </label> <input
-													name="searchKeyword3" id="searchKeyword3"
-													class="f_input w_150" title="검색" type="date"
-													value="<c:out value=""/>" />--%>
+													<!-- <label for="from">접수기간 :</label>
+													<input type="text" id="from" name="from">
+													<label for="to"> ~ </label>
+													<input type="text" id="to" name="to"> -->
+												  <label for="sdate_dt">접수기간 :</label> <input
+													name="sdate_dt" id="sdate_dt" readonly="readonly"
+													class="f_input w_150" title="검색" type="text"
+													value="<c:out value="${SmartCrmVO.sdate_dt}"/>" />
+													<label for="edate_dt"> ~ </label> <input
+													name="edate_dt" id="edate_dt" readonly="readonly"
+													class="f_input w_150" title="검색" type="text"
+													value="<c:out value="${SmartCrmVO.edate_dt}"/>" /> 
 												<button class="btn" type="submit"
 													onclick="fnSearch(); return false;" style="right: -50px;">
 													<spring:message code='button.search' /><!-- 조회 -->
@@ -269,7 +312,7 @@
 												<td><c:out value="${result.cusNm}" /></td>
 												<td><c:out value="${result.cusTel}" /></td>
 												<!-- <td><c:out value="${result.taskStat}" /></td> -->
-												<td><c:out value="${result.positon}" /></td>
+												<td><c:out value="${result.POSITION_NAME}" /></td>
 												<td><c:out value="${result.compTime}" /></td>
 												<td><c:out value="${result.note}" /></td>
 												<td><c:out value="${result.turnOver}" /></td>
@@ -307,8 +350,9 @@
 							<!-- // 페이징 끝 -->
 
 
-						</div>
+						</div>						
 					</div>
+					<br/>
 				</div>
 			</div>
 		</div>
