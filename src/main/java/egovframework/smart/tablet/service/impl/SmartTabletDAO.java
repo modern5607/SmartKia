@@ -16,5 +16,17 @@ public class SmartTabletDAO extends EgovAbstractMapper {
 		
 		 return (List<SmartTabletVO>) list("SmartTabletDAO.selectList", vo);
 	} 
+	 
+	 @SuppressWarnings("unchecked")
+	 public List<SmartTabletVO> assignmentList(SmartTabletVO vo) {
+		
+		 return (List<SmartTabletVO>) list("SmartTabletDAO.assignmentList", vo);
+	} 
+
+	@SuppressWarnings("unchecked")
+	public int updateassign(SmartTabletVO vo) {
+	
+		return update("SmartTabletDAO.UpdateAssign",vo);
+   } 
    
 }

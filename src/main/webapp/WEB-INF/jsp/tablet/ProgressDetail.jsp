@@ -134,7 +134,7 @@
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
-												<col style="width: 10px;">
+												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
@@ -168,16 +168,16 @@
 													<tr>
 														<td><c:out
 																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><c:out value="15허1582" /></td>
-														<td><c:out value="소나타" /></td>
-														<td><c:out value="이몽룡" /></td>
-														<td><c:out value="010-1522-3333" /></td>
-														<td><c:out value="타이어펑크" /></td>
-														<td><c:out value="A반" /></td>
-														<td><c:out value="2022-09-05" /></td>
-														<td><c:out value="14:42" /></td>
-														<td><c:out value="대기" /></td>
-														<td><c:out value="일반" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
+														<td><c:out value="" /></td>
 													</tr>
 												</c:forEach>
 											</tbody>

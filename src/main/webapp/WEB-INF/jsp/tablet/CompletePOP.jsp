@@ -23,13 +23,6 @@
 	src="<c:url value='/js/showModalDialogCallee.js'/>"></script>
 <script type="text/javaScript" language="javascript">
 	
-	function fnReturnId() {
-		var autoroom = $("#autoroom option:selected").val();
-		var remark = $("#remark").val();
-		console.log(autoroom, remark);
-		parent.ReceiveAutoRoom(autoroom,remark);
-		fn_egov_cancel_popup();
-	}
 
 	/* ********************************************************
 	 * 취소처리
@@ -39,18 +32,7 @@
 		parent.fn_egov_modal_remove();
 	}
 
-	function fnCheckNotKorean(koreanStr) {
-		for (var i = 0; i < koreanStr.length; i++) {
-			var koreanChar = koreanStr.charCodeAt(i);
-			if (!(0xAC00 <= koreanChar && koreanChar <= 0xD7A3)
-					&& !(0x3131 <= koreanChar && koreanChar <= 0x318E)) {
-			} else {
-				//hangul finding....
-				return false;
-			}
-		}
-		return true;
-	}
+	
 </script>
 </head>
 <body>
@@ -58,33 +40,34 @@
 	<!-- 아이디중복확인 팝업 -->
 	<div class="popup POP_DUPID_CONF" style="background-color: white;">
 
-		<form name="checkForm" action="<c:url value='/tablet/ReceiveGroupPOP.do'/>">
+		<form name="checkForm" action="<c:url value='/tablet/Complete.do'/>">
 
 			<div class="pop_inner">
 				<div class="pop_header">
-					<h1>입고 처리</h1>
+					<h1>작업 완료 처리</h1>
 					<button type="button" class="close"
 						onclick="fn_egov_cancel_popup(); return false;">닫기</button>
 				</div>
 
 				<div class="pop_container">
-					<div class="box_1">
-						<label for="" >목적지 작업반</label> 
-                        <label class="f_select w_300" for="autoroom" style="margin-top:-10px;">
-                            <select name="autoroom" id="autoroom">
-								<option value="">선택</option>
-								<c:forEach var="info" items="${positions}" varStatus="status">
-									<option value="<c:out value='${info.CODE}'/>"><c:out value="${info.NAME}" /></option>
-								</c:forEach>
-                            </select>
-                        </label>
-                        <label for="">입고 비고</label> 
-                        <input id="remark" class="f_select w_300" type="text" name="remark" value="" maxlength="50" style="margin-left: 30px; margin-top: 5px;"/>
-					</div>
+					<p class="result">
+						<c:choose>
+							<c:when test="${usedCnt eq -1}">
+	                     	작업을 완료 하시겠습니까?
+	                </c:when>
+							<c:when test="${usedCnt eq 0}">
+								<span>${checkId}</span> 작업을 완료 하시겠습니까?
+	                </c:when>
+							<c:otherwise>
+								<span>${checkId}</span> 작업을 완료 하시겠습니까?
+	                </c:otherwise>
+						</c:choose>
+					</p>
 					<div class="btn_area al_c pt20">
 						<a href="#LINK" class="btn btn_blue_46 w_100"
-							onclick="javascript:fnReturnId(); return false;">배정</a>
-						<!-- 조회 -->
+							onclick="javascript:fnCheckId(); return false;">예</a>
+							<a href="#LINK" class="btn btn_blue_46 w_100"
+							onclick="javascript:fnCheckId(); return false;">아니요</a>
 					</div>
 				</div>
 			</div>
