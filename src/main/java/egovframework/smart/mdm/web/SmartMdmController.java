@@ -349,7 +349,7 @@ public class SmartMdmController {
 		leadtimeVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
 		Map<String, Object> map = smartmdmservice.selectLeadTime(leadtimeVO);
-		List<Object> test = smartmdmservice.SelectCode("USE_YN");
+		List<Object> test = smartmdmservice.SelectCmmCode("USE_YN");
 
 		System.out.println("test :" + test);
 
@@ -363,8 +363,10 @@ public class SmartMdmController {
 		return "/mdm/SmartLeadTimeView";
 	}
 
+	
+
 	@RequestMapping(value = "/mdm/InsertLeadTime.do",method=RequestMethod.POST)
-	public void InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model,	HttpServletResponse response) throws Exception {
+	public void InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response) throws Exception {
 		Map<String,Object> msg = new HashMap<String, Object>();
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();

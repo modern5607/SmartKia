@@ -99,4 +99,9 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 	public List<Object> selectCmmCode(String groupcode){
 		return selectList("SmartMdmDAO.SelectCmmCode",groupcode);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object> selectCode(SmartCommonCodeVO vo){
+		return selectList("SmartMdmDAO.SelectCode",vo);
+	}
 }

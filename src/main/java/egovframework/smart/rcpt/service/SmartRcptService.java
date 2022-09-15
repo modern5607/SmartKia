@@ -10,5 +10,8 @@ public interface SmartRcptService {
 
     List<?> selectCarInfo(SmartRcptVO vo) throws Exception;
 
+    List<Object> SelectMiddleLeadTime(String s)throws Exception;
+    int InsertWebRcpt(Map<String,Object> map)throws Exception;
+    List<Object> SelectRcptList() throws Exception ;
 
 }

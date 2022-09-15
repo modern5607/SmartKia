@@ -38,11 +38,12 @@ function fnCheckId(){
     }
 }
 
-function fnReturnId(carnum,name,kind,tel){
+function fnReturnId(id,carnum,name,kind,tel){
     
-    parent.returnValue(carnum,name,kind,tel);
+    parent.returnValue(id,carnum,name,kind,tel);
     fn_egov_cancel_popup();
 }
+
 
 /* ********************************************************
  * 취소처리
@@ -115,7 +116,7 @@ function fnCheckNotKorean(koreanStr){
                                     <td><c:out value="${list.CUSTOMER_NAME}"/></td>
                                     <td><c:out value="${list.CUSTOMER_AUTOKIND}"/></td>
                                     <td><c:out value="${list.CUSTOMER_TEL}"/></td>
-                                    <td><a href="#LINK" class="btn btn_blue_30 w_50" onclick="javascript:fnReturnId('${list.CUSTOMER_AUTONO}','${list.CUSTOMER_NAME}','${list.CUSTOMER_AUTOKIND}','${list.CUSTOMER_TEL}'); return false;"><spring:message code="button.use" /></a></td>
+                                    <td><a href="#LINK" class="btn btn_blue_30 w_50" onclick="javascript:fnReturnId('${list.CUSTOMER_ID}','${list.CUSTOMER_AUTONO}','${list.CUSTOMER_NAME}','${list.CUSTOMER_AUTOKIND}','${list.CUSTOMER_TEL}'); return false;"><spring:message code="button.use" /></a></td>
                                 </tr>
     
                             </c:forEach>

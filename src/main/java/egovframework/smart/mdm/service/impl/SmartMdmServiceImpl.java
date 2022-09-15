@@ -207,7 +207,16 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 	 * @param GroupCode 그룹코드
 	 */
 	@Override
-	public List<Object> SelectCode(String GroupCode) throws Exception {
+	public List<Object> SelectCmmCode(String GroupCode) throws Exception {
 		return smartDAO.selectCmmCode(GroupCode);
+	}
+
+	@Override
+	public List<Object> SelectCode(String groupcode,String code) throws Exception {
+		SmartCommonCodeVO codeVO = new SmartCommonCodeVO();
+		codeVO.setCode(code);
+		codeVO.setGroupcode(groupcode);
+		
+		return smartDAO.selectCode(codeVO);
 	}
 }

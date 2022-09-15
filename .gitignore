@@ -32,3 +32,10 @@ target/classes/egovframework/smart/mdm/web/SmartMdmController.class
 target/classes/egovframework/smart/mdm/web/SmartMdmController.class
 target/m2e-wtp/web-resources/META-INF/maven/egov/template-portal/pom.properties
 target/m2e-wtp/web-resources/META-INF/maven/egov/template-portal/pom.xml
+target/classes/egovframework/mapper/let/smart/mdm/SmartMdm_SQL_oracle.xml
+target/classes/egovframework/smart/mdm/service/impl/SmartMdmDAO.class
+target/classes/egovframework/smart/mdm/service/impl/SmartMdmServiceImpl.class
+target/classes/egovframework/smart/mdm/service/SmartMdmService.class
+target/classes/egovframework/smart/mdm/web/SmartMdmController.class
+target/m2e-wtp/web-resources/META-INF/maven/egov/template-portal/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/egov/template-portal/pom.xml

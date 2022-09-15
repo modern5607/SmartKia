@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
     <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
     <script src="<c:url value='/'/>js/ui.js"></script>
-    <title>샘플 포털 > 사이트 소개 > 사이트 소개</title>
+    <title>접수등록</title>
     <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
     <script type="text/javascript">
@@ -39,17 +39,66 @@
         $dialog.dialog('open');
     }
 
-    function returnValue(carnum,name,kind,tel){
+    function returnValue(id,carnum,name,kind,tel){
+        console.log("id :" + id);
         console.log("carnum :" + carnum);
         console.log("name :" + name);
         console.log("kind :" + kind);
         console.log("tel :" + tel);
         
-        document.searchform.name.value = name;
-        document.searchform.carnum.value = carnum;
-        document.searchform.tel.value = tel;
-        //여기서부터
+        document.rcptform.id.value = id;
+        document.rcptform.name.value = name;
+        document.rcptform.carnum.value = carnum;
+        document.rcptform.tel.value = tel;
     }
+
+    function InsertWebRcpt(){
+        
+        if($("input[name=chk_repair]").is(":checked")==false)
+        {
+            alert("수리종류를 선택해 주세요");
+            return;
+        }
+        if($("input[name=name]").val()=="")
+        {
+            alert("조회를 통해 차량및 고객을 선택해 주세요");
+            return;
+        }
+        if($("input[name=carnum]").val()=="")
+        {
+            alert("조회를 통해 차량및 고객을 선택해 주세요");
+            return;
+        }
+        if($("select[name=leadtimemain]").val()=="")
+        {
+            alert("수리사항을 선택해 주세요");
+            return;
+        }
+        if($("select[name=leadtimemiddle]").val()=="")
+        {
+            alert("수리사항을 선택해 주세요");
+            return;
+        }
+        if($("select[name=leadtimesub]").val()=="")
+        {
+            alert("수리사항을 선택해 주세요");
+            return;
+        }
+        
+
+        if($("#urgent").is(":checked"))
+            $("#urgent").val("Y");
+        else
+        {
+            $("#urgent").val("N");
+            $("#urgent").prop("checked",true);            
+        }
+
+        document.rcptform.action = "<c:url value='InsertWebRcpt.do'/>";
+        document.rcptform.submit();
+    }
+
+    
     </script>
 
 </head>
@@ -82,13 +131,11 @@
                                     <span class="item">
                                         <a href="#" class="btn btn_blue_46 w_100" onclick="fnIdCheck()" style="float:left;"><spring:message code="button.inquire"/></a>
                                     </span>
-                                    
-
                                 </div>
-
-
-                                <form name="searchform" id="searchform" action="<c:url value='/mdm/SmartCode.do'/>" method="post">
-
+                                <form name="rcptform" id="rcptform" action="" method="post">
+                                    <input type="hidden" name="id" value="">
+                                    <input type="hidden" name="taskstat" value="<c:out value='CB-receipt'/>">
+                                    <input type="hidden" name="servicesys" value="<c:out value='${servicesys[0].CODE}'/>">
                                     <div class="board_view2">
                                         <table>
                                             <colgroup>
@@ -103,8 +150,9 @@
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                        <input type="radio" name="chk_repair" class="f_rdo ">일반
-                                                        <input type="radio" name="chk_repair" class="f_rdo ">보증
+                                                    <c:forEach var="i" items="${autome}" varStatus="status">
+                                                        <input type="radio" name="chk_repair" class="f_rdo" value="<c:out value='${i.CODE}'/>">${i.NAME}
+                                                    </c:forEach>
                                                     
                                                     
                                                 </td>
@@ -139,26 +187,21 @@
                                                 </td>
                                                 <td colspan="3">
                                                     <label class="f_selectsmall">
-                                                        <select>
-                                                            <option value="">대분류1</option>
-                                                            <option value="">대분류2</option>
-                                                            <option value="">대분류3</option>
+                                                        <select name="leadtimemain" id="leadtimemain">
+                                                            <option value="">선택</option>
+                                                            <c:forEach var="i" items="${leadtime}" varStatus="status">
+                                                                <option value="<c:out value='${i.CODE}'/>"><c:out value="${i.NAME}"/></option>
+                                                            </c:forEach>
                                                         </select>
                                                     </label>
                                                     
                                                     <label class="f_selectsmall">
-                                                        <select>
-                                                            <option value="">중분류1</option>
-                                                            <option value="">중분류2</option>
-                                                            <option value="">중분류3</option>
+                                                        <select name="leadtimemiddle" id="leadtimemiddle">
                                                         </select>
                                                     </label>
                                                     
                                                     <label class="f_selectsmall">
-                                                        <select>
-                                                            <option value="">소분류1</option>
-                                                            <option value="">소분류2</option>
-                                                            <option value="">소분류3</option>
+                                                        <select name="leadtimesub" id="leadtimesub">
                                                         </select>
 
                                                     </label>
@@ -174,7 +217,7 @@
                                                         <label>
                                                             소요시간(분단위) + 추가 소요시간(분단위)
                                                         </label> 
-                                                        <input class="f_txtsmall" /> + <input class="f_txtsmall"/> = <input class="f_txtsmall"/>
+                                                        <input class="f_txtsmall w_100" type="number" name="timerequired" id="timerequired" readonly/> + <input class="f_txtsmall w_100" type="number" value="0" name="addtime" id="addtime"/> = <input class="f_txtsmall w_100" name="totaltime" id="totaltime" readonly/>
                                                 	</p>
                                                 </td>
                                             </tr>
@@ -185,23 +228,20 @@
                                                 <td colspan="2">
                                                     <p>
                                                         <label class="f_selectsmall" style="vertical-align:middle;">
-                                                            <select> 
-                                                                <option value="">A</option>
-                                                                <option value="">B</option>
-                                                                <option value="">C</option>
+                                                            <select name="position" id="position"> 
+                                                                <option value="">미정</option>
+                                                                <c:forEach var="i" items="${autorooms}" varStatus="status">
+                                                                <option value="<c:out value='${i.CODE}'/>">${i.NAME}</option>
+                                                                </c:forEach>
                                                             </select>
                                                         </label>
-                                                        <label class="v_middle">긴급여부 <input type="checkbox" name="" id=""></label>
-                                                        
+                                                        <label class="v_middle">긴급여부 <input type="checkbox" name="urgent" id="urgent" value=""></label>
                                                     </p>
                                                 </td>
                                                 <td>
-                                                    <a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()" style="float: right;"><spring:message code="button.create"/></a>
+                                                    <a href="#" class="btn btn_blue_46 w_100 btnmargin" onclick="InsertWebRcpt()" style="float: right;"><spring:message code="button.create"/></a>
                                                 </td>
-                                                
                                             </tr>
-                                            
-                                           
                                         </table>
                                     </div>
                                     <!-- 검색조건 -->
@@ -214,12 +254,7 @@
 
                                                 <label class="right">차량번호
                                                     <input class="f_input w_200" type="text"/></label>
-                                            </span>
-                                           
-                                                
-                                           
-                                                
-                                                
+                                            </span> 
                                             
                                             <button class="btn" type="submit">
                                                 <spring:message code="button.inquire" />
@@ -262,19 +297,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:if test="${fn:length(resultList) == 0}">
+                                                <c:if test="${fn:length(rcptlist) == 0}">
                                                 <tr>
                                                     <td colspan="11"><spring:message code="common.nodata.msg" /></td>
                                                 </tr>
                                                 </c:if>
-                                                <c:forEach var="result" items="${resultList}" varStatus="status">
+                                                <c:forEach var="result" items="${rcptlist}" varStatus="status">
                                                 <tr>
-                                                    <td><c:out value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}"/></td>
-                                                    <td><a href="#" onclick="ClickGroupCode('<c:out value='${result.GROUP_CODE}'/>')" class="lnk"><c:out value="${result.GROUP_CODE}"/></a></td>
-                                                    <td><c:out value="${result.GROUP_NAME}"/></td>
-                                                    <td><c:out value="${result.USE_YN}"/></td>
-                                                    <td><c:out value="${result.INSERT_ID}"/></td>
-                                                    <td><c:out value="${result.UPDATE_DATE}"/></td>
+                                                    <td><c:out value="${result.RECEIPTDATE}"/></td>
+                                                    <td><c:out value="${result.AUTONUMBER}"/></td>
+                                                    <td><c:out value=""/></td>
+                                                    <td><c:out value="${result.REPAIR_NAME}"/></td>
+                                                    <td><c:out value="${result.CUSTOMER_ID}"/></td>
+                                                    <td><c:out value=""/></td>
+                                                    <td><c:out value="${result.POSITION}"/></td>
+                                                    <td><c:out value="${result.ESTIME}"/></td>
+                                                    <td><c:out value="${result.TASKSTAT}"/></td>
+                                                    <td><c:out value="${result.REPAIRMETHOD}"/></td>
                                                     <td><a href="#LINK" class="btn btn_blue_30 btnmargin" onclick="UpdateCommonGroupCode('<c:out value='${result.GROUP_CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.update" /></a></td>
                                                 </tr>
                                                 </c:forEach>
@@ -312,3 +351,71 @@
 </body>
 
 </html>
+
+<script>
+$("#leadtimemain").change(function(){
+    var selectedvar = $(this).val();
+    //console.log(selectedvar);
+    $.ajax({
+        type: "post",
+        url: "/rcpt/SelectLeadtime.do",
+        //contentType:"application/json;charset=UTF-8",
+        //dataType:"json",
+        data: {
+        	selectedvar:selectedvar
+        },
+        success: function (resp) {
+        	var html="<option value=''>선택</option>";
+        	$.each(resp.list,function(index,item){
+        		console.log(item);
+        		html+="<option value='"+item.CODE+"'>"+item.NAME+"</option>";
+        	});
+        	$("#leadtimemiddle").html(html);
+        }
+    });
+});
+
+$("#leadtimemiddle").change(function(){
+    var selectedvar = $(this).val();
+    //console.log(selectedvar);
+    $.ajax({
+        type: "post",
+        url: "/rcpt/SelectLeadtime.do",
+        //contentType:"application/json;charset=UTF-8",
+        //dataType:"json",
+        data: {
+        	selectedvar:selectedvar
+        },
+        success: function (resp) {
+        	var html="<option value=''>선택</option>";
+        	$.each(resp.list,function(index,item){
+        		console.log(item);
+        		html+="<option value='"+item.CODE+"' data-time='"+(item.LEADTIME_NM).slice(0,2)+"' data-timenm='"+item.LEADTIME_NM+"'>"+item.NAME+" / "+item.LEADTIME_NM+"</option>";
+        	});
+        	$("#leadtimesub").html(html);
+        }
+    });
+});
+
+$("#leadtimesub").change(function(){
+    var time = $("#leadtimesub option:selected").data("time");
+    console.log(time);
+    $("#timerequired").val(time);
+    updatetotaltime();    
+});
+function updatetotaltime(){
+    var total = Number($("#timerequired").val()) + Number($("#addtime").val());
+	console.log(total);
+	$("#totaltime").val(total);
+}
+
+$("#timerequired").on("change keyup paste", function() {
+    updatetotaltime();
+});
+	
+$("#addtime").on("change keyup paste", function() {
+	updatetotaltime();
+});
+
+
+</script>

@@ -6,4 +6,17 @@
         WHERE CUSTOMER_AUTONO LIKE '%'||#{checkcarnum}||'%'
 
     </select>
+    <select id="SelectMiddleLeadTime" parameterType="String" resultType="java.util.HashMap">
+        SELECT IDX,H_CODE,CODE,NAME,LEAD_TIME,FN_CODENAME(LEAD_TIME,'LEADTIME') AS LEADTIME_NM FROM CAR_LEADTIME WHERE H_CODE = #{hcode} AND USE_YN='Y'
+    </select>
+    <insert id="InsertWebRcpt" parameterType="java.util.HashMap">
+        INSERT INTO CAR_TAKEREPAIR
+        (TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,REPAIRMETHOD,REPAIRCODE,POSITION,RECEIPTDATE,TASKSTAT,URGENT,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
+        VALUES((TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.NEXTVAL, '0000')),#{servicesys},#{id},#{carnum},#{chk_repair},#{leadtimesub},#{position},SYSDATE,#{taskstat},#{urgent},#{loginid},SYSDATE,'','')
+    </insert>
+    <select id="SelectRcptList" resultType="java.util.HashMap">
+        SELECT TAKESEQ,RECEIPTDATE,AUTONUMBER,REPAIRCODE,FN_LEADTIME_NAME(REPAIRCODE,'NAME') REPAIR_NAME,CUSTOMER_ID,FN_CODENAME(POSITION,'AUTO_ROOM') POSITION,ESTIME,FN_CODENAME(TASKSTAT,'AUTO_PROC') TASKSTAT,FN_CODENAME(REPAIRMETHOD,'AUTO_ME') REPAIRMETHOD FROM CAR_TAKEREPAIR
+        ORDER BY RECEIPTDATE DESC
+
+    </select>
 </mapper>

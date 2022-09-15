@@ -188,6 +188,9 @@
 		WHERE CUST_ID =#{Custid}
 	</update>
 
+	<select id="SelectCode" parameterType="egovframework.smart.mdm.service.SmartCommonCodeVO" resultType="java.util.HashMap">
+		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = #{groupcode} AND CODE = #{code}
+	</select>
 	<select id="SelectCmmCode" parameterType="String" resultType="java.util.HashMap">
 		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = #{groupcode}
 	</select>

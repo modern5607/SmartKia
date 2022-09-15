@@ -40,6 +40,9 @@ public Map<String, Object> selectCommonCodeList(SmartCommonCodeVO vo) throws Exc
 
 	public int InsertLeadTime(SmartLeadTimeVO leadtimeVO) throws Exception;
 
-	public List<Object> SelectCode(String GroupCode) throws Exception;
+	public List<Object> SelectCmmCode(String GroupCode) throws Exception;
+
+	public List<Object> SelectCode(String groupcode,String code) throws Exception;
+
 
 }

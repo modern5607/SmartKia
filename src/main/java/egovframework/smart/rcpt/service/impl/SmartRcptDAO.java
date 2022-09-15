@@ -16,6 +16,17 @@ public class SmartRcptDAO extends EgovAbstractMapper {
     public List<?> selectCarInfo(SmartRcptVO vo) {
         return selectList("SmartRcptDAO.selectCarInfo",vo);
     }
+
+    public List<Object> SelectMiddleLeadTime(String hcode) {
+        return selectList("SmartRcptDAO.SelectMiddleLeadTime",hcode);
+    }
+
+    public int InsertWebRcpt(Map<String, Object> map) {
+        return insert("SmartRcptDAO.InsertWebRcpt",map);
+    }
     
+    public List<Object> SelectRcptList(){
+        return selectList("SelectRcptList");
+    }
 	 
 }
