@@ -22,32 +22,56 @@
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
 <script type="text/javascript">
+	function ReceiveGroup() {
+		if ($('input:checkbox[name=check]').is(":checked") == true) {
 
-function ReceiveGroup()
-{
-	var url = "<c:url value='/tablet/ReceiveGroupPOP.do'/>?";
+			var url = "<c:url value='/tablet/ReceiveGroupPOP.do'/>?";
 
-		var $dialog = $('<div id="modalPan"></div>').html(
-				'<iframe style="border: 0px;" src="'
-						+ "<c:url value='/tablet/ReceiveGroupPOP.do'/>?"
-						+ '" width="100%" height="100%"></iframe>')
-				.dialog({
-					autoOpen : false,
-					modal : true,
-					width : 600,
-					height : 400
-				});
-		$(".ui-dialog-titlebar").hide();
-		$dialog.dialog('open');
-	
-}
-           
-            function linkPage(pageNo){
-                document.SmartBizList.pageIndex.value = pageNo;
-                document.SmartBizList.action = "<c:url value='/mdm/SmartBiz.do'/>";
-                document.SmartBizList.submit();
-            }
-            </script>
+			var $dialog = $('<div id="modalPan"></div>').html(
+					'<iframe style="border: 0px;" src="'
+							+ "<c:url value='/tablet/ReceiveGroupPOP.do'/>?"
+							+ '" width="100%" height="100%"></iframe>').dialog(
+					{
+						autoOpen : false,
+						modal : true,
+						width : 600,
+						height : 400
+					});
+			$(".ui-dialog-titlebar").hide();
+			$dialog.dialog('open');
+		} else {
+			alert("배정을 체크하여 주세요.");
+		}
+	}
+
+	function linkPage(pageNo) {
+		document.SmartBizList.pageIndex.value = pageNo;
+		document.SmartBizList.action = "<c:url value='/mdm/SmartBiz.do'/>";
+		document.SmartBizList.submit();
+	}
+
+	function ReceiveAutoRoom(autoroom, remark) {
+		console.log(autoroom, remark);
+		document.SmartList.autoroom.value = autoroom;
+		document.SmartList.remark.value = remark;
+		UpdateAssign();
+
+	}
+
+	//작업반배정 프로세스 실행
+	function UpdateAssign() {
+		var array = new Array();
+		$('input:checkbox[name=check]').each(function(index) {
+			if ($(this).is(":checked") == true) {
+				array.push($(this).data("seq"));
+			}
+		});
+		$("#checkboxs").val(array);
+
+		document.SmartList.action = "<c:url value='/tablet/checkboxtest.do'/>";
+		document.SmartList.submit();
+	}
+</script>
 
 </head>
 <body>
@@ -79,9 +103,12 @@ function ReceiveGroup()
 								</div>
 								<!--// Location -->
 								<form modelAttribute="SmartTabletVO" name="SmartList"
-									id="SmartList" action="<c:url value='/tablet/SmartAssignGroup.do'/>"
+									id="SmartList"
+									action="<c:url value='/tablet/SmartAssignGroup.do'/>"
 									method="post">
-
+									<input type="hidden" name="checkboxs" id="checkboxs"> <input
+										type="hidden" name="autoroom" id="autoroom"> <input
+										type="hidden" name="remark" id="remark">
 									<h1 class="tit_1">작업반배정</h1>
 
 									<!-- <p class="txt_1">거래처 관리 TEST 화면입니다.</p> -->
@@ -90,29 +117,26 @@ function ReceiveGroup()
 									<div class="condition" style="margin-top: 20px;">
 
 										<span class="item f_search">
-                                            <input type="hidden" id="groupcode" name="groupcode" value="">
-                                            <input type="hidden" id="code" name="code" value="">
-                                            <p class="left">
-                                                <label for="searchCode">차량번호</label>
-                                                <input class="f_input w_200" name="searchCode" id="searchCode" type="text" value="<c:out value='${comCodeVO.searchCode}'/>" />
-                                            </p>
-                                            <p class="left">
-                                                <label for="searchCode">연락처</label>
-                                                <input class="f_input w_200" name="searchCode" id="searchCode" type="text" value="<c:out value='${comCodeVO.searchCode}'/>" />
-                                            </p>
-                                            <p class="left">
-                                                <label for="searchCodename">접수일자</label>
-                                                <input class="f_input w_200" name="searchCodename" id="searchCodename" type="text" value="<c:out value='${comCodeVO.searchCodename}'/>" />
-                                            </p>
-                                            <p class="left">
-                                                <label for="searchCodename">작업반</label>
-                                                <input class="f_input w_200" name="searchCodename" id="searchCodename" type="text" value="<c:out value='${comCodeVO.searchCodename}'/>" />
-                                            </p>
-                                            
-                                            <button class="btn" type="submit">
-                                                <spring:message code="button.inquire" />
-                                            </button>조회
-                                        </span>
+											<p class="left">
+												<label for="searchcarnum">차량번호</label> <input
+													class="f_input w_200" name="searchcarnum" id="searchcarnum"
+													type="text"
+													value="<c:out value='${searchVO.searchcarnum}'/>" />
+											</p>
+											<p class="left">
+												<label for="searchTel">연락처</label> <input
+													class="f_input w_200" name="searchTel" id="searchTel"
+													type="text" value="<c:out value='${searchVO.searchTel}'/>" />
+											<p class="left">
+												<label for="searchname">고객명</label> <input
+													class="f_input w_200" name="searchname" id="searchname"
+													type="text" value="<c:out value='${searchVO.searchname}'/>" />
+											</p>
+
+											<button class="btn" type="submit">
+												<spring:message code="button.inquire" />
+											</button>조회
+										</span>
 
 									</div>
 									<div class="board_list_top" style="margin-top: 20px;">
@@ -121,7 +145,8 @@ function ReceiveGroup()
 										</div>
 										 -->
 										<div class="right_col">
-											<a href="#" onclick="ReceiveGroup()" class="item btn btn_blue_46 w_100">배정</a>
+											<a href="#" onclick="ReceiveGroup()"
+												class="item btn btn_blue_46 w_100">배정</a>
 										</div>
 									</div>
 									<!--// 검색조건 -->
@@ -135,7 +160,6 @@ function ReceiveGroup()
 												<col style="width: 50px;">
 												<col style="width: 50px;">
 												<col style="width: 50px;">
-                                                <col style="width: 50px;">
 												<col style="width: 50px;">
 												<col style="width: 50px;">
 												<col style="width: 50px;">
@@ -144,16 +168,15 @@ function ReceiveGroup()
 											</colgroup>
 											<thead>
 												<tr>
-                                                    <th scope="col">배정</th>
+													<th scope="col">배정</th>
 													<th scope="col">번호</th>
-                                                    <th scope="col">접수일자</th>
+													<th scope="col">접수일자</th>
 													<th scope="col">차량번호</th>
 													<th scope="col">차량종류</th>
 													<th scope="col">고객명</th>
+													<th scope="col">연락처</th>
 													<th scope="col">수리내용</th>
-													<th scope="col">작업반</th>
-													<th scope="col">예상완료시간</th>
-													<th scope="col">작업상태</th>
+													<th scope="col">소요시간</th>
 													<th scope="col">수리종류</th>
 												</tr>
 											</thead>
@@ -167,29 +190,29 @@ function ReceiveGroup()
 												<c:forEach var="result" items="${resultList}"
 													varStatus="status">
 													<tr>
-                                                        <td>
-                                                        	<span class="f_chk_only">
-                                                        		<input type="checkbox" name="delYn" title="선택">
-                                                        		<input type="hidden" name="checkId" value="<c:out value=""/>" />
-                                                    		</span>
-                                                		</td>
-														<td><c:out value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-                                                        <td><c:out value="${result.RECEIPTDATE}" /></td>
-                                                        <td><c:out value="${result.AUTONUMBER}" /></td>
-                                                        <td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
-                                                        <td><c:out value="${result.CUSTOMER_NAME}" /></td>
-                                                        <td><c:out value="${result.REPAIRCODE_NAME}" /></td>
-                                                        <td><c:out value="${result.POSITION_NAME}" /></a>
-                                                        <td><c:out value="${result.ESTIME}" /></td>
-                                                        <td><c:out value="${result.TASKSTAT_NAME}" /></td>
-                                                        <td><c:out value="${result.REPAIRMETHOD_NAME}" /></td>
+														<td><span class="f_chk_only"> <input
+																type="checkbox" name="check"
+																data-seq="<c:out value='${result.TAKESEQ}'/>"> <input
+																type="hidden" name="checkId"
+																value="<c:out value='${result.TAKESEQ}'/>" />
+														</span></td>
+														<td><c:out
+																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
+														<td><c:out value="${result.RECEIPTDATE}" /></td>
+														<td><c:out value="${result.AUTONUMBER}" /></td>
+														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
+														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
+														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
+														<td><c:out value="${result.LEADTIME_NM}" /></td>
+														<td><c:out value="${result.REPAIRMETHOD_NAME}" /></td>
 													</tr>
 												</c:forEach>
 											</tbody>
 										</table>
 									</div>
 								</form>
-							
+
 							</div>
 						</div>
 					</div>

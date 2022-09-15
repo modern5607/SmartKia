@@ -36,6 +36,23 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 		map.put("resultCnt", cnt);
 		return map;
 	}
+
+	@Override
+	public Map<String, Object> assignmentList(SmartTabletVO vo) throws Exception {
+		List<SmartTabletVO> result = SmartTabletDAO.assignmentList(vo);
+		String cnt = Integer.toString(result.size());
+
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("resultList", result);
+		map.put("resultCnt", cnt);
+		return map;
+	}
+
+	@Override
+	public int updateAssign(SmartTabletVO vo) throws Exception {
+		 return SmartTabletDAO.updateassign(vo); 
+	}
+
 	
 	
 }

@@ -1,6 +1,7 @@
 package egovframework.smart.tablet.web;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -208,7 +209,7 @@ public class SmartTabletController {
 
 
 		// service
-		Map<String, Object> map = smarttabletservice.selectList(searchVO);
+		Map<String, Object> map = smarttabletservice.assignmentList(searchVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -233,8 +234,14 @@ public class SmartTabletController {
 	}
 	
 	@RequestMapping(value = "/tablet/ReceiveGroupPOP.do")
-	public String ReceivePopView() throws Exception {
+	public String ReceivePopView(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model) throws Exception {
 
+		SmartCommonCodeVO vo =new SmartCommonCodeVO();
+		vo.setGroupcode("AUTO_ROOM");
+		
+		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
+		model.addAttribute("positions",map.get("info"));
+		System.out.println(map.get("info"));
 		return "/tablet/ReceiveGroupPOP";
 	}
 	
@@ -242,6 +249,45 @@ public class SmartTabletController {
 	public String ProgressDetailView() throws Exception {
 
 		return "/tablet/ProgressDetail";
+	}
+	
+	@RequestMapping(value = "/tablet/CompletePOP.do")
+	public String CompleteView() throws Exception {
+
+		return "/tablet/CompletePOP";
+	}
+
+
+	@RequestMapping(value = "/tablet/checkboxtest.do")
+	public void checkboxtest(@RequestParam HashMap<String,Object> map,SmartTabletVO vo,HttpServletResponse response) throws Exception {
+		response.setContentType("text/html; charset=euc-kr");
+		PrintWriter out = response.getWriter();
+		
+		String checkboxs = map.get("checkboxs").toString();
+		String[] checkarr = checkboxs.split(",");
+		vo.setAutoroom(map.get("autoroom").toString());
+		vo.setRemark(map.get("remark").toString());
+		
+		for(int i=0;i<checkarr.length;i++)
+		{
+			vo.setSeq(checkarr[i]);
+			int result = smarttabletservice.updateAssign(vo);
+			
+			if (result==0){
+				
+				out.println("<script>");
+				out.println("alert('배정에 실패하였습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+			}
+			else {
+				
+				out.println("<script>");
+				out.println("alert('배정이 완료되었습니다.')");
+				out.println("location.href='/tablet/SmartAssignGroup.do'");
+				out.println("</script>");
+			}
+		}
 	}
 }
 

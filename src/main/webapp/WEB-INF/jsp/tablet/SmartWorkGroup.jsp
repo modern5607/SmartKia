@@ -59,6 +59,25 @@ function OTGroup()
 		$dialog.dialog('open');
 	
 }
+
+function Complete()
+{
+	var url = "<c:url value='/tablet/CompletePOP.do'/>?";
+
+		var $dialog = $('<div id="modalPan"></div>').html(
+				'<iframe style="border: 0px;" src="'
+						+ "<c:url value='/tablet/CompletePOP.do'/>?"
+						+ '" width="100%" height="100%"></iframe>')
+				.dialog({
+					autoOpen : false,
+					modal : true,
+					width : 600,
+					height : 400
+				});
+		$(".ui-dialog-titlebar").hide();
+		$dialog.dialog('open');
+	
+}
 </script>
 
 </head>
@@ -135,16 +154,16 @@ function OTGroup()
 											<thead>
 												<tr>
 													<th scope="col">번호</th>
-													<th scope="col">접수일자</th>
+													<th scope="col">접수번호</th>
 													<th scope="col">차량번호</th>
 													<th scope="col">차량종류</th>
 													<th scope="col">고객명</th>
+													<th scope="col">연락처</th>
 													<th scope="col">수리내용</th>
 													<th scope="col">작업반</th>
 													<th scope="col">예상완료시간</th>
 													<th scope="col">수리종류</th>
 													<th scope="col">작업상태</th>
-													<th scope="col">처리</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -159,16 +178,16 @@ function OTGroup()
 													<tr>
 														<td><c:out
 																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><c:out value="${result.RECEIPTDATE}" /></td>
+														<td><c:out value="${result.TAKESEQ}" /></td>
 														<td><c:out value="${result.AUTONUMBER}" /></td>
 														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
+														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
 														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
 														<td><a href="#" onclick="TransferGroup()" class="lnk"><c:out value="${result.POSITION_NAME}" /></a>
 														<td><a href="#" onclick="OTGroup()" class="lnk"><c:out value="${result.ESTIME}" /></a>
 														<td><c:out value="${result.REPAIRMETHOD_NAME}" /></td>
-														<td><c:out value="${result.TASKSTAT_NAME}" /></td>
-														<td><c:out value="완료" /></td>
+														<td><a href="#" onclick="Complete()" class="lnk"><c:out value="${result.TASKSTAT_NAME}" /></a>
 													</tr>
 												</c:forEach>
 											</tbody>

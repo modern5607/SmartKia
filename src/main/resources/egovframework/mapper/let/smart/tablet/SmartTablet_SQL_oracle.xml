@@ -8,7 +8,8 @@
        			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
 			 	AUTONUMBER,
        			CUSTOMER_AUTOKIND,
-       			CUSTOMER_NAME, 
+       			CUSTOMER_NAME,
+            	CUSTOMER_TEL, 
        			FN_LEADTIME_NAME(REPAIRCODE, 'NAME') REPAIRCODE_NAME,
        			FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
        			ESTIME, 
@@ -16,6 +17,49 @@
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.TASKSTAT != 'CB-receipt'
+	</select>
+
+	<select id="assignmentList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
+		
+     SELECT TAKESEQ,
+			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
+			AUTONUMBER,
+			CUSTOMER_AUTOKIND,
+			CUSTOMER_NAME,
+			CUSTOMER_TEL, 
+			FN_LEADTIME_NAME(REPAIRCODE, 'NAME') REPAIRCODE_NAME,
+			FN_LEADTIME_NAME(REPAIRCODE, 'LEAD_TIME') LEADTIME,
+			FN_CODENAME(FN_LEADTIME_NAME(REPAIRCODE, 'LEAD_TIME'),'LEADTIME') LEADTIME_NM,
+			POSITION,
+			FN_CODENAME(POSITION, 'AUTO_ROOM') AS POSITION_NAME,
+			ESTIME,
+			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
+			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
+		FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
+		WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.POSITION IS NULL
+			AND A.TASKSTAT = 'CB-receipt'
+			
+		<if test="searchcarnum != ''">
+			AND A.AUTONUMBER LIKE '%' || #{searchcarnum} || '%'
+		</if>
+		<if test="searchTel != ''">
+			AND B.CUSTOMER_TEL LIKE '%' || #{searchTel} || '%'
+		</if>
+		<if test="searchname != ''">
+			AND B.CUSTOMER_NAME LIKE '%' || #{searchname} || '%'
+		</if>
 	</select>
 	
+	<update id="UpdateAssign" parameterType="egovframework.smart.tablet.service.SmartTabletVO">
+		UPDATE CAR_TAKEREPAIR
+		SET
+			POSITION = #{autoroom},
+			NOTE = #{remark},
+			TASKSTAT = 'CB-standby'
+			
+			WHERE TAKESEQ = #{seq}
+	
+	</update>
 </mapper>
