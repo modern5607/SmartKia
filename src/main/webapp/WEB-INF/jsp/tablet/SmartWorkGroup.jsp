@@ -78,6 +78,13 @@ function Complete()
 		$dialog.dialog('open');
 	
 }
+
+function fnCheckId(){
+	
+    document.SmartList.submit();
+    return;
+}
+
 </script>
 
 </head>
@@ -120,16 +127,16 @@ function Complete()
 										<!-- <h1 class="txt_1">A반 입고처리 사항.</h1> -->
 										</div>
 										<div class="right_col">
-                                            <label class="f_select w_200" for="group">
-														<select name="group" id="group">
-															<option value="매입">A반</option>
-															<option value="매출">B반</option>
-															<option value="매출">C반</option>
+                                            <label class="f_select w_200" for="autoroom">
+														<select name="autoroom" id="autoroom">
+																<option value="">전체</option>
+															<c:forEach var="i" items="${autorooms}" varStatus="status">
+                                                               <option value="<c:out value='${i.CODE}'/>">${i.NAME}</option>
+                                                             </c:forEach>
 														</select>
 											</label>
-											<a class="item btn btn_blue_46 w_150"
-												href="<c:url value='/tablet/ReceiveWorkgroup.do'/>">입고처리</a> <a
-												href="<c:url value=''/>" class="item btn btn_blue_46 w_100">조회</a>
+											<a class="item btn btn_blue_46 w_150" href="<c:url value='/tablet/ReceiveWorkgroup.do'/>">입고처리</a> 
+											<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
 											<!--　등록 -->
 										</div>
 									</div>

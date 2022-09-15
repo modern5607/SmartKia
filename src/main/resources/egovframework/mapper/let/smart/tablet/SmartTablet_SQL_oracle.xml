@@ -18,6 +18,10 @@
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.TASKSTAT != 'CB-receipt'
+			
+			<if test="autoroom != ''">
+			AND A.POSITION LIKE '%' || #{autoroom} || '%'
+			</if>
 	</select>
 
 	<select id="assignmentList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">

@@ -113,8 +113,10 @@ public class SmartTabletController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-
+		
 		// service
+		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
+		
 		Map<String, Object> map = smarttabletservice.selectList(searchVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
@@ -123,6 +125,7 @@ public class SmartTabletController {
 		model.addAttribute("resultList", map.get("resultList"));
 		model.addAttribute("resultCnt", map.get("resultCnt"));
 		model.addAttribute("paginationInfo", paginationInfo);
+		
 
 		return "/tablet/SmartWorkGroup";
 	}
@@ -256,10 +259,12 @@ public class SmartTabletController {
 
 		return "/tablet/CompletePOP";
 	}
-
-
-	@RequestMapping(value = "/tablet/checkboxtest.do")
-	public void checkboxtest(@RequestParam HashMap<String,Object> map,SmartTabletVO vo,HttpServletResponse response) throws Exception {
+	
+	/**
+	 * 작업반 배정 Update
+	 */
+	@RequestMapping(value = "/tablet/UpdateAssignGroup.do")
+	public void UpdateAssignGroup(@RequestParam HashMap<String,Object> map,SmartTabletVO vo,HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
 		
