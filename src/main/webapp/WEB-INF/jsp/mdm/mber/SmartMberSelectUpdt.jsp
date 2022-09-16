@@ -38,7 +38,7 @@
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="smartMberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript" defer="defer">
-<!--
+/*
 function fnListPage(){
     document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberManage.do'/>";
     document.smartMberManageVO.submit();
@@ -54,35 +54,21 @@ function fnPasswordMove(){
     document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberPasswordUpdtView.do'/>";
     document.smartMberManageVO.submit();
 }
-function fnUpdate(){
+
+*/
+function fnUpdates(){
 	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberSelectUpdt.do'/>";
-    if(validateSmartMberManageVO(document.smartMberManageVO)){
+	if(validateSmartMberManageVO(document.smartMberManageVO)){
         document.smartMberManageVO.submit();
     }
-}
-
-function fn_egov_ZipSearch(){
     
-    var $dialog = $('<div id="modalPan"></div>')
-	.html('<iframe style="border: 0px; " src="' + "<c:url value='/sym/cmm/EgovCcmZipSearchList.do'/>" +'" width="100%" height="100%"></iframe>')
-	.dialog({
-    	autoOpen: false,
-        modal: true,
-        width: 1100,
-        height: 600
-	});
-    $(".ui-dialog-titlebar").hide();
-	$dialog.dialog('open');
+}
+function fnUpdate(){
+	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberSelectUpdt.do'/>";
+        document.smartMberManageVO.submit();
+    
 }
 
-function fn_egov_returnValue(retVal){
-	if (retVal) {
-		document.getElementById("zip_view").value  = retVal.vZip;
-		document.getElementById("adres").value  = retVal.sAddr;
-	}
-	
-	fn_egov_modal_remove();
-}
 
 /**********************************************************
  * 모달 종료 버튼
@@ -90,11 +76,12 @@ function fn_egov_returnValue(retVal){
 function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
-//-->
 /* 전화번호 하이폰 자동생성 */
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
 });
+
+
 </script>
 </head>
 <body>
@@ -178,6 +165,39 @@ $(document).on("keyup", ".phoneNumber", function() {
                                         </tr>
                                         <tr>
                                             <td class="lb">
+                                            	반
+                                              <!-- <span class="req">필수</span> -->
+                                            </td>
+                                            <td>
+	                                            <label class="f_select w_350" for="team">
+		                                          <select id="team" name="team">
+		                                          	<option value=''>없음</option>
+		                                          	<c:forEach var="team" items="${team}" varStatus="status">
+		                                          		<option value="<c:out value='${team.CODE}'/>"><c:out value='${team.NAME}'/> </option>
+		                                          	</c:forEach>
+		                                          </select>
+	                                          	</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                            	<label for="useYn">사용여부</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
+                                                <label for="rdo1" class="mr30 <c:if test="${smartMbermanageVO.useYn == 'Y'}"> on</c:if>">
+                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" <c:if test="${smartMbermanageVO.useYn == 'Y'}"> checked="checked"</c:if>>
+                                                    사용
+                                                </label>
+                                                <label for="rdo2" class="<c:if test="${smartMbermanageVO.useYn == 'N'}"> on</c:if>">
+                                                    <input type="radio" id="rdo2" name="useYn" class="radio2" value="N" <c:if test="${smartMbermanageVO.useYn == 'N'}"> checked="checked"</c:if>>
+                                                    미사용
+                                                </label>
+                                                <br/><form:errors path="useYn" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
                                                 <label for="areaNo">전화번호</label>
                                             </td>
                                             <td>
@@ -212,70 +232,8 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <form:errors path="mberEmailAdres" cssClass="error" />
                                             </td>
                                         </tr>
-                                       <%--  <tr>
-                                            <td class="lb">
-                                                <label for="zip_view">우편번호</label>
-                                            </td>
-                                            <td>
-                                                <span class="f_search2 w_350">
-                                                    <input name="zip_view" id="zip_view" type="text" value="<c:out value='${mberManageVO.zip}'/>" maxlength="8" readonly="readonly" />
-                                                    <form:hidden path="zip" />
-                                                    <button type="button" class="btn" onclick="fn_egov_ZipSearch();"></button>
-                                                </span>
-                                                <span class="f_txt_inner ml15">(우편번호 검색)</span>
-                                                <form:errors path="zip" cssClass="error" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                                <label for="adres">주소</label>
-                                            </td>
-                                            <td>
-                                                <form:input path="adres" id="adres" class="f_txt w_full" maxlength="100" readonly="true" />
-                                                <form:errors path="adres" cssClass="error" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                                <label for="detailAdres">상세주소</label>
-                                            </td>
-                                            <td>
-                                                <form:input path="detailAdres" id="detailAdres" class="f_txt w_full" maxlength="100" />
-                                                <form:errors path="detailAdres" cssClass="error" />
-                                            </td>
-                                        </tr> --%>
-                                        <tr>
-                                            <td class="lb">
-                                            	반
-                                              <span class="req">필수</span>
-                                            </td>
-                                            <td>
-	                                            <label class="f_select w_350" for="team">
-		                                          <form:select id="team" name="team" path="team" title="team">
-		                                          	<form:option path="team" type="hidden" value='A'>A</form:option>
-		                                           	<form:option path="team" type="hidden" value='B'>B</form:option>
-		                                          	<form:option path="team" type="hidden" value='C'>C</form:option>
-		                                          </form:select>
-	                                          	</label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                            	<label for="useYn">사용여부</label>
-                                                <span class="req">필수</span>
-                                            </td>
-                                            <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
-                                                <label for="rdo1" class="mr30 <c:if test="${smartMbermanageVO.useYn == 'Y'}"> on</c:if>">
-                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" <c:if test="${smartMbermanageVO.useYn == 'Y'}"> checked="checked"</c:if>>
-                                                    사용
-                                                </label>
-                                                <label for="rdo2" class="<c:if test="${smartMbermanageVO.useYn == 'N'}"> on</c:if>">
-                                                    <input type="radio" id="rdo2" name="useYn" class="radio2" value="N" <c:if test="${smartMbermanageVO.useYn == 'N'}"> checked="checked"</c:if>>
-                                                    미사용
-                                                </label>
-                                                <br/><form:errors path="useYn" />
-                                            </td>
-                                        </tr>
+                                       
+                                        
                                         <%-- <tr>
                                             <td class="lb">
                                             	<label for="groupId">그룹아이디</label>

@@ -2,23 +2,7 @@ package egovframework.smart.mdm.mber.service;
 
 import java.util.List;
 
-/**
- * 일반회원관리에 관한 인터페이스클래스를 정의한다.
- * @author 공통서비스 개발팀 조재영
- * @since 2009.04.10
- * @version 1.0
- * @see
- *
- * <pre>
- * << 개정이력(Modification Information) >>
- *
- *   수정일      수정자           수정내용
- *  -------    --------    ---------------------------
- *   2009.04.10  조재영          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
- *
- * </pre>
- */
+
 public interface SmartMberManageService {
 
 	/**
@@ -58,7 +42,7 @@ public interface SmartMberManageService {
 	 * @param SmartCrmVO 일반회원수정정보
 	 * @throws Exception
 	 */
-	public void updateMber(SmartMberManageVO smartMberManageVO) throws Exception;
+	public int updateMber(SmartMberManageVO smartMberManageVO) throws Exception;
 
 	/**
 	 * 화면에 조회된 사용자의 정보를 데이터베이스에서 삭제

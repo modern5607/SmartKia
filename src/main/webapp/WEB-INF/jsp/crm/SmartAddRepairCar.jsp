@@ -1,16 +1,4 @@
-<%--
-  Class Name : EgovUserManage.jsp
-  Description : 사용자관리(조회,삭제) JSP
-  Modification Information
- 
-      수정일         수정자                   수정내용
-    -------    --------    ---------------------------
-     2009.03.02  JJY          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
- 
-    author   : 공통서비스 개발팀 JJY
-    since    : 2009.03.02
---%>
+
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
@@ -26,6 +14,11 @@
 <link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
 <link rel="stylesheet" href="<c:url value='/'/>css/component.css">
 <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+<!-- 캘린더 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<!-- /캘린더 -->
 <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 <script src="<c:url value='/'/>js/ui.js"></script>
 
@@ -61,7 +54,7 @@
 		$dialog.dialog('open');
 
 	}
-	<!--
+/*
 	function fnDeleteUser() {
 		var checkField = document.listForm.checkField;
 		var id = document.listForm.checkId;
@@ -106,20 +99,57 @@
 		document.listForm.action = "<c:url value='/mdm/SmartMberInsertView.do'/>";
 		document.listForm.submit();
 	}
+	*/
 	function fnSearch() {
-		document.listForm.pageIndex.value = 1;
-		document.listForm.action = "<c:url value='/crm/SmartAddRepairCar.do'/>";
-		document.listForm.submit();
+		document.smartCrmVO.pageIndex.value = 1;
+		document.smartCrmVO.action = "<c:url value='/crm/SmartAddRepairCar.do'/>";
+		document.smartCrmVO.submit();
 	}
 	/*********************************************************
 	 * 페이징 처리 함수
 	 ******************************************************** */
+	 /*
 	function fnLinkPage(pageNo) {
 		document.listForm.pageIndex.value = pageNo;
 		document.listForm.action = "<c:url value='/crm/SmartAddRepairCar.do'/>";
 		document.listForm.submit();
 	}
-//-->
+	*/
+
+	/*캘린더*/
+	$(document).ready(function () {
+    $.datepicker.regional['ko'] = {
+        prevText: '이전달',
+        nextText: '다음달',
+        monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+        '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+        '7월','8월','9월','10월','11월','12월'],
+        dayNames: ['일','월','화','수','목','금','토'],
+        dayNamesShort: ['일','월','화','수','목','금','토'],
+        dayNamesMin: ['일','월','화','수','목','금','토'],
+        weekHeader: 'Wk',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 0,
+        isRTL: false,
+        showMonthAfterYear: true,
+        yearSuffix: '',
+        yearRange: 'c-99:c+99',
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ko']);
+
+    $('#sdate').datepicker();
+    $('#sdate').datepicker("option", "maxDate", $("#edate").val());
+    $('#sdate').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#edate").datepicker( "option", "minDate", selectedDate );
+    });
+
+    $('#edate').datepicker();
+    $('#edate').datepicker("option", "minDate", $("#sdate").val());
+    $('#edate').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#sdate").datepicker( "option", "maxDate", selectedDate );
+    });
+});
 </script>
 </head>
 <body>
@@ -136,12 +166,8 @@
 			<div class="sub_layout">
 				<div class="sub_in">
 					<div class="layout">
-						<!-- Left menu -->
-						<%-- <c:import url="/sym/mms/EgovMenuLeft.do" /> --%>
-						<!--// Left menu -->
-
 						<div class="content_wrap">
-							<div id="contents">
+							<div id="contents" style="margin-bottom:10px">
 								<!-- Location -->
 								<div class="location">
 									<ul>
@@ -151,9 +177,7 @@
 									</ul>
 								</div>
 								<!--// Location -->
-
-								<form name="listForm" action="/crm/SmartAddRepaire.do"
-									method="post">
+								<form name="smartCrmVO" action="/crm/SmartAddRepairCar.do" method="post">
 									<input name="selectedId" type="hidden" /> <input
 										name="checkedIdForDel" type="hidden" /> <input
 										name="pageIndex" type="hidden"
@@ -161,6 +185,7 @@
 
 									<h1 class="tit_1" style="padding-bottom: 20px;">차량 수리 이력
 										조회</h1>
+									
 
 									<!-- <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>  -->
 
@@ -170,37 +195,42 @@
 
 									<!-- 검색조건 -->
 
-									<span class="item f_search" >
-										<p class="left">
-											<label for="searchKeyword">차량번호 :</label> <input
-												name="searchKeyword" id="searchKeyword"
-												class="f_input w_200" title="검색" type="text" maxlength="20"
-												value="<c:out value="${userSearchVO.searchKeyword}"/>" /> <label
-												for="searchKeyword1">고객명 :</label> <input
-												name="searchKeyword1" id="searchKeyword1"
-												class="f_input w_200" title="검색" type="text"
-												value="<c:out value=""/>" /> <label for="searchKeyword2">연락처
-												:</label> <input name="searchKeyword2" id="searchKeyword2"
-												class="f_input w_200" title="검색" type="text" maxlength="20"
-												value="<c:out value="${userSearchVO.searchKeyword}"/>" /> <label
-												for="searchKeyword3">접수일시 :</label> <input
-												name="searchKeyword3" id="searchKeyword3"
-												class="f_input w_200" title="검색" type="text"
-												value="<c:out value=""/>" /> <label for="searchKeyword4">출고일시
-												:</label> <input name="searchKeyword4" id="searchKeyword4"
-												class="f_input w_200" title="검색" type="text"
-												value="<c:out value=""/>" />
-											<button class="btn" type="submit"
-												onclick="fnSearch(); return false;">
-												<spring:message code="button.search" />
-											</button>
-										</p>
-									</span>
+									<div class="condition" style="text-align: left; margin-top: 20px;">
+										<span class="item f_search">
+											<p class="left">
+												<label for="searchAutoNo">차량번호 :</label> <input name="searchAutoNo" id="searchAutoNo" class="f_input w_200" title="검색" type="text" maxlength="20" value="<c:out value="${SmartCrmVO.searchAutoNo}"/>" />
+												<label for="searchCusNm">고객명 :</label> <input
+													name="searchCusNm" id="searchCusNm"
+													class="f_input w_200" title="검색" type="text"
+													value="<c:out value="${SmartCrmVO.searchCusNm}"/>" />
+												<label for="searchCusTel">연락처
+													:</label> <input name="searchCusTel" id="searchCusTel"
+													class="f_input w_200" title="검색" type="text" maxlength="20"
+													value="<c:out value="${SmartCrmVO.searchCusTel}"/>" />
+													<!-- <label for="from">접수기간 :</label>
+													<input type="text" id="from" name="from">
+													<label for="to"> ~ </label>
+													<input type="text" id="to" name="to"> -->
+												  <label for="sdate">접수기간 :</label> <input
+													name="sdate" id="sdate" readonly="readonly"
+													class="f_input w_150" title="검색" type="text"
+													value="<c:out value="${SmartCrmVO.sdate}"/>" />
+													<label for="edate"> ~ </label> <input
+													name="edate" id="edate" readonly="readonly"
+													class="f_input w_150" title="검색" type="text"
+													value="<c:out value="${SmartCrmVO.edate}"/>" /> 
+												<button class="btn" type="submit"
+													onclick="fnSearch(); return false;" style="right: -50px;">
+													<spring:message code='button.search' /><!-- 조회 -->
+												</button> 
+											</p>
+										</span>
+									</div>
 							</div>
 							<!--// 검색조건 -->
 
 							<!-- 등록 , 목록 -->
-							<%-- <div class="board_list_top">
+							<!-- <div class="board_list_top">
 								<div class="right_col">
 									<button type="button" class="btn btn_blue_46 w_100"
 										onclick="javascript:TransferGroup(); return false;">
@@ -209,11 +239,10 @@
 									<a href="<c:url value='/crm/SmartAddRepairCar.do'/>"
 										class="btn btn_blue_46 w_100"><spring:message
 											code="button.list" /></a>
-									<!-- 목록 -->
 								</div>
-							</div> --%>
+							</div> -->
 
-							<div class="board_list">
+							<div class="board_list3">
 								<table summary="고객목록">
 									<caption>고객목록</caption>
 									<colgroup>
@@ -223,14 +252,14 @@
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
+										<%-- <col style="width: 100px;"> --%>
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
-										<col style="width: 100px;">
-										<col style="width: 100px;">
+										<%-- <col style="width: 100px;"> --%>
 									</colgroup>
 									<thead>
 										<tr>
@@ -238,23 +267,23 @@
 											<th scope="col">고객번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차량종류</th>
-											<th scope="col">고객이름</th>
+											<th scope="col">고객명</th>
 											<th scope="col">연락처</th>
-											<th scope="col">작업상태</th>
+											<!-- <th scope="col">작업상태</th> -->
 											<th scope="col">작업반</th>
 											<th scope="col">완료시간</th>
 											<th scope="col">접수비고</th>
 											<th scope="col">출고여부</th>
 											<th scope="col">출고일시</th>
 											<th scope="col">출고비고</th>
-											<th scope="col">입고/이관</th>
+											<!-- <th scope="col">입고/이관</th> -->
 										</tr>
 
 									</thead>
 									<tbody>
 										<c:if test="${fn:length(resultList) == 0}">
 											<tr>
-												<td colspan="14"><spring:message
+												<td colspan="12"><spring:message
 														code="common.nodata.msg" /></td>
 											</tr>
 										</c:if>
@@ -270,21 +299,21 @@
 												<td><c:out value="${result.cusAutoKind}" /></td>
 												<td><c:out value="${result.cusNm}" /></td>
 												<td><c:out value="${result.cusTel}" /></td>
-												<td><c:out value="${result.taskStat}" /></td>
-												<td><c:out value="${result.positon}" /></td>
+												<!-- <td><c:out value="${result.taskStat}" /></td> -->
+												<td><c:out value="${result.POSITION_NAME}" /></td>
 												<td><c:out value="${result.compTime}" /></td>
 												<td><c:out value="${result.note}" /></td>
 												<td><c:out value="${result.turnOver}" /></td>
 												<td><c:out value="${result.turnoverTime}" /></td>
 												<td><c:out value="${result.turnoverNote}" /></td>
-												<td>
+												<%-- <td>
 													<button type="button" class="btn btn_blue_46 w_100"
 														onclick="javascript:TransferGroup(); return false;">
 														<spring:message code="button.create" />
-													</button> <%-- <a href="<c:url value='/mdm/mber/SmartMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>" class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
+													</button> <a href="<c:url value='/mdm/mber/SmartMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>" class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
 	                                                		<c:out value="${result.userId}"/>
-	                                                	</a> --%>
-												</td>
+	                                                	</a>
+												</td> --%>
 												<!-- <td>
 	                                                    <a href="#LINK" class="btn btn_blue_30 w_80">
 	                                                    	상세보기
@@ -293,8 +322,8 @@
 											</tr>
 										</c:forEach>
 									</tbody>
-									</thead>
 								</table>
+								</form>
 							</div>
 
 							<!-- 페이징 -->
@@ -308,10 +337,10 @@
 							</div>
 							<!-- // 페이징 끝 -->
 
-							</form>
 
-						</div>
+						</div>						
 					</div>
+					<br/>
 				</div>
 			</div>
 		</div>

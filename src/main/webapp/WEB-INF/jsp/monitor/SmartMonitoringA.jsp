@@ -39,75 +39,125 @@
             <div class="smart_monitoring">
                 <div class="sub_in">
                     <div class="layout">
-        
-                        <div class="content_wrap">
+						
+                        <div class="content_wrap" style="grid:">
                             <div id="contents" class="content" style="padding: 70px 10px 20px 10px;">
-                                 <!-- Location -->
-                                <!-- <div class="location">
-                                    <ul>
-                                        <li><a class="home" href="">Home</a></li>
-                                        <li><a href="">포털서비스관리</a></li>
-                                        <li><a href="">설문관리</a></li>
-                                        <li>설문템플릿</li>
-                                    </ul>
-                                </div> -->
-                                <!--// Location -->
-
-                                <h1 class="tit_1" style="text-align: center; padding-bottom: 50px">작업장 A 접수 현황</h1>
-
-                                <!-- 게시판 -->
-                                <div class="board_list">
-                                    <table>
-                                    	<%-- <caption>약관목록</caption> --%>
-                                        <colgroup>
-                                            <col style="width: 25%;">
-                                            <col style="width: auto;">
-                                            <col style="width: 15%;">
-                                            <col style="width: 25%;">
-                                            <col style="width: 10%;">
-                                        </colgroup>
-                                        <thead>
-                                            <tr style="background: lightblue;">
-                                                <th scope="col">차량번호</th>
-                                                <th scope="col">수리내용</th>
-                                                <th scope="col">위치</th>
-                                                <th scope="col">예상완료시간</th>
-                                                <th scope="col">비고</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        	<c:if test="${fn:length(resultList) == 0}">
-                                            <tr>
-                                                <td colspan="6"><spring:message code="common.nodata.msg" /></td>
-                                            </tr>
-                                            </c:if>
-                                            
-                                            <c:forEach items="${resultList}" var="result" varStatus="status">
-                                            <tr>
-                                            	<%-- <td>
-                                            		<div>${result.AUTONUMBER}</div>
-                                            	</td>
-                                                <td>
-                                                	<div class="divDotText" style="width:200px;">${result.REPAIRNOTE}</div>
-                                                </td>
-                                                <td>
-                                                	<div class="divDotText" style="width:70px;">${result.POSITION}</div>
-                                                </td>
-                                                <td>
-                                                	<div class="divDotText" style="width:70px;">${result.ESTIME}</div>
-                                                </td>
-                                                <td>${result.NOTE}</td> --%>
-                                                <td><c:out value="${result.AUTONUMBER}"/></td>
-                                                <td><c:out value="${result.REPAIRNOTE}"/></td>
-                                                <td><c:out value="${result.POSITION}"/></td>
-                                                <td><c:out value="${result.ESTIME}"/></td>
-                                                <td><c:out value="${result.NOTE}"/></td>
-                                                
-                                                
-                                            </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+								<div style="display:grid; grid-template-columns:1fr 1fr 1fr; grid-gap:20px">
+									<h1 class="tit_1" style="text-align: center; padding-bottom: 50px">A반 작업 현황</h1>
+									<h1 class="tit_1" style="text-align: center; padding-bottom: 50px">B반 작업 현황</h1>
+									<h1 class="tit_1" style="text-align: center; padding-bottom: 50px">C반 작업 현황</h1>
+								</div>
+                                
+								                                <!-- 게시판 -->
+                                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; grid-gap:20px">
+	                                <div class="board_list">
+	                                    <table>
+	                                        <colgroup>
+	                                            <col style="width: 25%;">
+	                                            <col style="width: 20%;">
+	                                            <col style="width: auto%;">
+	                                            <col style="width: 20%;">
+	                                        </colgroup>
+	                                        <thead>
+	                                            <tr style="background: lightblue;">
+	                                                <th scope="col">차량번호</th>
+	                                                <th scope="col">고객명</th>
+	                                                <th scope="col">예상완료시간</th>
+	                                                <th scope="col">상태</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        	<c:if test="${fn:length(resultList) == 0}">
+	                                            <tr>
+	                                                <td colspan="6"><spring:message code="common.nodata.msg" /></td>
+	                                            </tr>
+	                                            </c:if>
+	                                            
+	                                            <c:forEach items="${resultList}" var="result" varStatus="status">
+	                                            <tr>
+	                                                <td><c:out value="${result.AUTONUMBER}"/></td>
+	                                                <td><c:out value="${result.REPAIRNOTE}"/></td>
+	                                                <td><c:out value="${result.ESTIME}"/></td>
+	                                                <td><c:out value="${result.NOTE}"/></td>
+	                                                
+	                                                
+	                                            </tr>
+	                                            </c:forEach>
+	                                        </tbody>
+	                                    </table>
+	                                </div>
+	                                <div class="board_list">
+	                                    <table>
+	                                        <colgroup>
+	                                            <col style="width: 25%;">
+	                                            <col style="width: 20%;">
+	                                            <col style="width: auto%;">
+	                                            <col style="width: 20%;">
+	                                        </colgroup>
+	                                        <thead>
+	                                            <tr style="background: lightblue;">
+	                                            	<th scope="col">차량번호</th>
+	                                                <th scope="col">고객명</th>
+	                                                <th scope="col">예상완료시간</th>
+	                                                <th scope="col">상태</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        	<c:if test="${fn:length(resultList) == 0}">
+	                                            <tr>
+	                                                <td colspan="6"><spring:message code="common.nodata.msg" /></td>
+	                                            </tr>
+	                                            </c:if>
+	                                            
+	                                            <c:forEach items="${resultList}" var="result" varStatus="status">
+	                                            <tr>
+	                                                <td><c:out value="${result.AUTONUMBER}"/></td>
+	                                                <td><c:out value="${result.REPAIRNOTE}"/></td>
+	                                                <td><c:out value="${result.ESTIME}"/></td>
+	                                                <td><c:out value="${result.NOTE}"/></td>
+	                                                
+	                                                
+	                                            </tr>
+	                                            </c:forEach>
+	                                        </tbody>
+	                                    </table>
+	                                </div>
+	                                <div class="board_list">
+	                                    <table>
+	                                        <colgroup>
+	                                            <col style="width: 25%;">
+	                                            <col style="width: 20%;">
+	                                            <col style="width: auto%;">
+	                                            <col style="width: 20%;">
+	                                        </colgroup>
+	                                        <thead>
+	                                            <tr style="background: lightblue;">
+	                                                <th scope="col">차량번호</th>
+	                                                <th scope="col">고객명</th>
+	                                                <th scope="col">예상완료시간</th>
+	                                                <th scope="col">상태</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        	<c:if test="${fn:length(resultList) == 0}">
+	                                            <tr>
+	                                                <td colspan="6"><spring:message code="common.nodata.msg" /></td>
+	                                            </tr>
+	                                            </c:if>
+	                                            
+	                                            <c:forEach items="${resultList}" var="result" varStatus="status">
+	                                            <tr>
+	                                                <td><c:out value="${result.AUTONUMBER}"/></td>
+	                                                <td><c:out value="${result.REPAIRNOTE}"/></td>
+	                                                <td><c:out value="${result.ESTIME}"/></td>
+	                                                <td><c:out value="${result.NOTE}"/></td>
+	                                                
+	                                                
+	                                            </tr>
+	                                            </c:forEach>
+	                                        </tbody>
+	                                    </table>
+	                                </div>
                                 </div>
 
 

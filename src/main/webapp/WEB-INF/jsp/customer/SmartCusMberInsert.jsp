@@ -73,8 +73,7 @@ function fnInsert(){
                                 <div class="location">
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
-                                        <li><a href="">포털시스템관리</a></li>
-                                        <li><a href="">사용자관리</a></li>
+                                        <li><a href="">기준정보</a></li>
                                         <li>고객관리</li>
                                     </ul>
                                 </div>
@@ -82,17 +81,8 @@ function fnInsert(){
 
 								<form:form modelAttribute="cusMberManageVO" name="cusMberManageVO" action="${pageContext.request.contextPath}/customer/SmartCusMberInsert.do" method="post" >
 
-                                <h1 class="tit_1">포털시스템관리</h1>
 
-                                <p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
-
-                                <h2 class="tit_2">사용자관리</h2>
-
-                                <h3 class="tit_3">회원관리</h3>
-
-                                <h1 class="tit_1">사용자관리</h1>
-
-                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
+                                <h1 class="tit_1" style="padding-bottom:20px">고객관리</h1>
 
                                 <div class="board_view2">
                                     <table summary="고객 등록 정보">

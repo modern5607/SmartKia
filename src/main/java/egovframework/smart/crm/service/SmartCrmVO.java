@@ -4,26 +4,47 @@ import java.io.Serializable;
 
 import egovframework.com.cmm.ComDefaultVO;
 
-/**
- * 일반회원VO클래스로서 일반회원관리 비지니스로직 처리용 항목을 구성한다.
- * @author 공통서비스 개발팀 조재영
- * @since 2009.04.10
- * @version 1.0
- * @see
- *
- * <pre>
- * << 개정이력(Modification Information) >>
- *   
- *   수정일      수정자           수정내용
- *  -------    --------    ---------------------------
- *   2009.04.10  JJY            최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성 
- *
- * </pre>
- */
-public class SmartCrmVO implements Serializable{
+
+public class SmartCrmVO extends ComDefaultVO implements Serializable {
 
 
+	private static final long serialVersionUID = 1L;
+	
+
+    private String cusId = "";
+    
+    private String cusAutoNo = "";
+    
+    private String cusAutoKind = "";
+    
+    private String cusNm = "";
+    
+    private String cusTel = "";
+    
+    private String taskStat = "";
+    
+    private String positon = "";
+    
+    private String compTime = "";
+    
+    private String note = "";
+    
+    private String turnOver = "";
+    
+    private String turnoverTime = "";
+  
+    private String turnoverNote = "";
+    
+    private String searchAutoNo = "";
+    
+    private String searchCusNm = "";
+    
+    private String searchCusTel = "";
+    
+
+    private String sdate = "";
+    private String edate = "";
+    
 	private int pageIndex = 1;
     private int pageUnit = 10;
     private int pageSize = 10;
@@ -31,30 +52,37 @@ public class SmartCrmVO implements Serializable{
     private int lastIndex = 1;
     private int recordCountPerPage = 10;
     
-    private String cusId;
-    
-    private String cusAutoNo;
-    
-    private String cusAutoKind;
-    
-    private String cusNm;
-    
-    private String cusTel;
-    
-    private String taskStat;
-    
-    private String positon;
-    
-    private String compTime;
-    
-    private String note;
-    
-    private String turnOver;
-    
-    private String turnoverTime;
-  
-    private String turnoverNote;
-    
+	public String getSearchAutoNo() {
+		return searchAutoNo;
+	}
+	public void setSearchAutoNo(String searchAutoNo) {
+		this.searchAutoNo = searchAutoNo;
+	}
+	public String getSearchCusNm() {
+		return searchCusNm;
+	}
+	public void setSearchCusNm(String searchCusNm) {
+		this.searchCusNm = searchCusNm;
+	}
+	public String getSearchCusTel() {
+		return searchCusTel;
+	}
+	public void setSearchCusTel(String searchCusTel) {
+		this.searchCusTel = searchCusTel;
+	}
+	
+	public String getSdate() {
+		return sdate;
+	}
+	public void setSdate(String sdate) {
+		this.sdate = sdate;
+	}
+	public String getEdate() {
+		return edate;
+	}
+	public void setEdate(String edate) {
+		this.edate = edate;
+	}
 	public int getPageIndex() {
 		return pageIndex;
 	}

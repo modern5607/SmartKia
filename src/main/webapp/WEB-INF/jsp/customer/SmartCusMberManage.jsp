@@ -131,8 +131,7 @@ function fnSearch(){
 		<div class="location">
 	<ul>
 		<li><a class="home" href="">Home</a></li>
-		<li><a href="">포털시스템관리</a></li>
-		<li><a href="">사용자관리</a></li>
+		<li><a href="">기준정보</a></li>
 		<li>고객관리</li>
 	</ul>
 </div>
@@ -145,17 +144,17 @@ function fnSearch(){
 		name="pageIndex" type="hidden"
 		value="<c:out value='${userSearchVO.pageIndex}'/>" />
 
-	<h1 class="tit_1">포털시스템관리</h1>
+	<h1 class="tit_1">고객관리</h1>
 
-	<p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
+<!-- 	<p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
 
 	<h2 class="tit_2">사용자관리</h2>
 
-	<h3 class="tit_3">고객관리</h3>
+	<h3 class="tit_3">고객관리</h3> -->
 
 	<!-- 검색조건 -->
-	<div class="condition">
-		<%-- <label class="item f_select" for="sbscrbSttus">
+<%-- 	<div class="condition">
+		<label class="item f_select" for="sbscrbSttus">
 		 <select name="sbscrbSttus" id="sbscrbSttus" title="조회조건1">
 				<option value="0"
 					<c:if test="${empty userSearchVO.sbscrbSttus || userSearchVO.sbscrbSttus == '0'}">selected="selected"</c:if>>상태(전체)</option>
@@ -166,7 +165,7 @@ function fnSearch(){
 				<option value="P"
 					<c:if test="${userSearchVO.sbscrbSttus == 'P'}">selected="selected"</c:if>>승인</option>
 		</select> 
-		</label> --%>
+		</label>
 		
 		<label class="item f_select" for="searchCondition"> 
 		<select name="searchCondition" id="searchCondition" title="조회조건1">
@@ -180,8 +179,24 @@ function fnSearch(){
 				<spring:message code="button.search" />
 			</button> <!-- 조회 -->
 		</span>
-	</div>
+	</div> --%>
+	
+	
+    <span class="item f_search">
+    <p class="left">
+    <label for="searchKeyword">고객번호</label>
+        <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusId}"/>"/> 
+    <label for="searchKeyword">고객명</label>
+        <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusNm}"/>"/>
+    <label for="searchKeyword">차량번호</label>
+        <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcarNum}"/>"/>
+    </p>
+    <p class="left">
+    </p>
+        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
+    </span>
 	<!--// 검색조건 -->
+
 
 	<!-- 게시판 -->
 	<div class="board_list_top">
@@ -193,9 +208,9 @@ function fnSearch(){
 		</div>
 
 		<div class="right_col">
-			<a href="#LINK" class="btn btn_blue_46 w_100"
+			<%-- <a href="#LINK" class="btn btn_blue_46 w_100"
 				onclick="fnDeleteUser(); return false;"><spring:message
-					code="button.delete" /></a>
+					code="button.delete" /></a> --%>
 			<!-- 삭제 -->
 			<a href="<c:url value='/customer/SmartCusMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
 			<!-- 

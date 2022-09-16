@@ -153,16 +153,16 @@ function fnLinkPage(pageNo){
 								<input name="checkedIdForDel" type="hidden" />
 								<input name="pageIndex" type="hidden" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
 
-                                <!-- <h1 class="tit_1">사용자관리</h1>
+                                <h1 class="tit_1">사용자관리</h1>
 
-                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
+                               <!--  <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
  -->
                                 <!-- <h2 class="tit_2">사용자관리</h2>
 
                                 <h3 class="tit_3">회원관리</h3> -->
                                 
                                 <!-- 검색조건 -->
-                                <div class="condition" style="text-align: left;">
+                                <div class="condition" style="text-align: left; margin-top: 20px;">
                                     <%-- <label class="item f_select" for="sbscrbSttus">
                                         <select name="sbscrbSttus" id="sbscrbSttus" title="조회조건1">
                                             <option value="0" <c:if test="${empty userSearchVO.sbscrbSttus || userSearchVO.sbscrbSttus == '0'}">selected="selected"</c:if> >상태(전체)</option>
@@ -180,8 +180,12 @@ function fnLinkPage(pageNo){
                                     </label> --%>
 				                    <span class="item f_search">
 					                    <p class="left">
-					                    <label for="searchKeyword">아이디</label>
-					                        <input class="f_input w_200" name="searchKeyword" id="searchKeyword" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchKeyword}"/>"/>
+					                    <label for="searchId">아이디</label>
+					                        <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchId}"/>"/>
+					                    <label for="searchNm">사용자이름</label>
+					                        <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchNm}"/>"/>
+					                    <label for="searchTeam">작업반</label>
+					                        <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchTeam}"/>"/>
 					                    </p>
 					                    <p class="left">
 					                    </p>
@@ -234,7 +238,7 @@ function fnLinkPage(pageNo){
                                                 </th> -->
                                                 <th scope="col">아이디</th>
                                                 <th scope="col">사용자이름</th>
-                                                <th scope="col">반</th>
+                                                <th scope="col">작업반</th>
                                                 <th scope="col">전화번호</th>
                                                 <!-- <th scope="col">등록일</th> -->
                                                 <th scope="col">사용여부</th>
@@ -264,7 +268,8 @@ function fnLinkPage(pageNo){
                                                 	</a>
                                                 </td>
                                                 <td><c:out value="${result.userNm}"/></td>
-                                                <td><c:out value="${result.team}"/></td>
+		                                          	
+                                                <td><c:out value="${result.positionName}"/></td>
                                                 <td><c:out value="${result.areaNo}"/><%-- <c:out value="${result.middleTelno}"/><c:out value="${result.endTelno}"/> --%></td>
                                                 <%-- <td><c:out value="${result.sbscrbDe}"/></td> --%>
                                                 
