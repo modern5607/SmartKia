@@ -29,6 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -131,7 +132,7 @@ public class SmartRcptController {
 	public Map<String,Object> SelectLeadtime(@RequestParam Map<String,Object> params, HttpServletResponse response) throws Exception {
 		// System.out.println(params.get("selectedvar"));
 		List<Object> list = smartrcptservice.SelectMiddleLeadTime(params.get("selectedvar").toString());
-		// System.out.println(list);
+		System.out.println(list);
 		Map<String,Object> map =new HashMap<String,Object>();
 		map.put("list", list);
 		return map;
@@ -188,7 +189,7 @@ public class SmartRcptController {
 		return "rcpt/SmartMobileRcptView";
 	}
 
-	
+	//차량조회 팝업화면
 	@RequestMapping(value = "/rcpt/searchCarPopupView.do")
 	public String searchCarPopupView(ModelMap model) throws Exception {
 		/*
@@ -202,6 +203,14 @@ public class SmartRcptController {
 		model.addAttribute("checkId", "");
 		model.addAttribute("usedCnt", "-1");
 		return "rcpt/searchCarPopupView";
+	}
+
+	//수리사항 검색 팝업화면
+	@RequestMapping(value = "/rcpt/searchRepairPopupView.do")
+	public String searchRepairPopupView(ModelMap model) throws Exception {		
+		model.addAttribute("checkId", "");
+		model.addAttribute("usedCnt", "-1");
+		return "rcpt/searchRepairPopupView";
 	}
 
 	//차량 조회팝업
@@ -230,6 +239,8 @@ public class SmartRcptController {
 	@RequestMapping(value = "/rcpt/InsertWebRcpt.do")
 	public String InsertWebRcpt(@RequestParam Map<String,Object> params,ModelMap model) throws Exception {
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -243,13 +254,16 @@ public class SmartRcptController {
 		
 		System.out.println(params);
 
+		//접수등록
 		int result = smartrcptservice.InsertWebRcpt(params);
-		System.out.println(result);
+		
+		
 		if (result == 0) // insert실패
 		{
-			model.addAttribute("msg","접수 실패, 다시 시도해 주세요.");
+			model.addAttribute("msg","수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
 			model.addAttribute("url","");
-		} else {
+		}
+		else{
 			model.addAttribute("msg","접수등록되었습니다.");
 			model.addAttribute("url","SmartWebRcptView.do");
 		}
