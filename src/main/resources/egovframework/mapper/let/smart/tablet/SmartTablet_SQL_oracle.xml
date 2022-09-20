@@ -14,6 +14,7 @@
        			FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
        			ESTIME, 
        			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
+       			A.TASKSTAT,
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
@@ -62,6 +63,23 @@
 			POSITION = #{autoroom},
 			NOTE = #{remark},
 			TASKSTAT = 'CB-standby'
+			
+			WHERE TAKESEQ = #{seq}
+	
+	</update>
+	
+		<select id="checkstatus" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		
+    	SELECT TAKESEQ,
+			TASKSTAT
+      FROM CAR_TAKEREPAIR 
+      WHERE TAKESEQ = #{seq} AND TASKSTAT = #{taskstat}
+	</select>
+	
+	<update id="updatestatus" parameterType="java.util.HashMap">
+		UPDATE CAR_TAKEREPAIR
+		SET
+			TASKSTAT = #{update_taskstat}
 			
 			WHERE TAKESEQ = #{seq}
 	

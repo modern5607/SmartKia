@@ -38,19 +38,7 @@
 
 		parent.fn_egov_modal_remove();
 	}
-
-	function fnCheckNotKorean(koreanStr) {
-		for (var i = 0; i < koreanStr.length; i++) {
-			var koreanChar = koreanStr.charCodeAt(i);
-			if (!(0xAC00 <= koreanChar && koreanChar <= 0xD7A3)
-					&& !(0x3131 <= koreanChar && koreanChar <= 0x318E)) {
-			} else {
-				//hangul finding....
-				return false;
-			}
-		}
-		return true;
-	}
+	
 </script>
 </head>
 <body>

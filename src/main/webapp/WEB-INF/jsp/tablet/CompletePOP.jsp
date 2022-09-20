@@ -23,6 +23,12 @@
 	src="<c:url value='/js/showModalDialogCallee.js'/>"></script>
 <script type="text/javaScript" language="javascript">
 	
+function UpdateStatus() {
+	var seq = $("#seq").val();
+	var taskstat = $("#taskstat").val();
+	parent.UpdateStatus(seq,taskstat);
+	fn_egov_cancel_popup();
+}
 
 	/* ********************************************************
 	 * 취소처리
@@ -47,27 +53,29 @@
 					<h1>작업 완료 처리</h1>
 					<button type="button" class="close"
 						onclick="fn_egov_cancel_popup(); return false;">닫기</button>
+					<input type="hidden" name="seq" id="seq" value ="${seq}" >
+					<input type="hidden" name="taskstat" id="taskstat" value ="${taskstat}" >
 				</div>
 
 				<div class="pop_container">
 					<p class="result">
 						<c:choose>
-							<c:when test="${usedCnt eq -1}">
-	                     	작업을 완료 하시겠습니까?
+							<c:when test="${taskstat eq 'CB-standby'}">
+	                     	수리를 시작하겠습니까?
 	                </c:when>
-							<c:when test="${usedCnt eq 0}">
-								<span>${checkId}</span> 작업을 완료 하시겠습니까?
+							<c:when test="${taskstat eq 'CB-repaired'}">
+								작업을 완료하시겠습니까?
 	                </c:when>
 							<c:otherwise>
-								<span>${checkId}</span> 작업을 완료 하시겠습니까?
+								Error : 접수번호 <c:out value="${seq}" /> 작업 상태를 확인해주세요. 
 	                </c:otherwise>
 						</c:choose>
 					</p>
 					<div class="btn_area al_c pt20">
 						<a href="#LINK" class="btn btn_blue_46 w_100"
-							onclick="javascript:fnCheckId(); return false;">예</a>
+							onclick="UpdateStatus(); return false;">예</a>
 							<a href="#LINK" class="btn btn_blue_46 w_100"
-							onclick="javascript:fnCheckId(); return false;">아니요</a>
+							onclick= "fn_egov_cancel_popup(); return false;">아니요</a>
 					</div>
 				</div>
 			</div>

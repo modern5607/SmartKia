@@ -53,6 +53,17 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 		 return SmartTabletDAO.updateassign(vo); 
 	}
 
+	@Override
+	public Map<String,Object> checkstatus(Map<String, Object> params) {
+		return SmartTabletDAO.checkstatus(params);
+
+	}
+
+	@Override
+	public int updatestatus(Map<String, Object> params) {
+		return SmartTabletDAO.updatestatus(params);
+	}
+
 	
 	
 }
