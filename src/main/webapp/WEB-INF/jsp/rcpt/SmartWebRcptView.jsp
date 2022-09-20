@@ -48,17 +48,82 @@
         
         document.rcptform.id.value = id;
         document.rcptform.name.value = name;
+        document.rcptform.carkind.value = kind;
         document.rcptform.carnum.value = carnum;
         document.rcptform.tel.value = tel;
     }
 
-    function InsertWebRcpt(){
+    function AddRepair()
+    {
+    	console.log($("#repair").children("tbody").length);
+        var main = $("#leadtimemain option:selected");
+        var middle = $("#leadtimemiddle option:selected");
+        var sub = $("#leadtimesub option:selected");
         
-        if($("input[name=chk_repair]").is(":checked")==false)
+        if(main.val()==""||middle.val()==""||sub.val()=="")
         {
-            alert("수리종류를 선택해 주세요");
+            alert("수리사항을 선택해 주세요");
             return;
         }
+        
+        var splits = sub.text().split('/');
+        var code = sub.val();
+        var code_nm = splits[0];
+        var time_nm = splits[1];
+        var time = sub.data("time");
+        var repair = $("#repair").children("tbody");
+        console.log(repair);
+        var childCount = repair.children().length;
+        var html="";
+        html+="<tr id='repair_"+(childCount+1)+"'>";
+        // html+="<td>"+(childCount+1)+"</td>";
+        html+="<td>"+code_nm+"</td>";
+        html+="<td>";
+        html+="<label class='f_selectsmall'><select id='chk_repair_"+(childCount+1)+"' name='chk_repair' >";
+        html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
+        html+="</select></label>";
+        html+="</td>";
+        html+="<td>"+time_nm+"</td>";
+        html+="<td><input type='text' name='note' id='note' placeholder='비고' value=''/></td>";
+        html+="<td><input type='hidden' name='repair' data-time='"+time+"' value='"+code+"'/><a href='#' class='btn btn_blue_30 w_50' onclick='DeleteRepair("+(childCount+1)+")'><spring:message code='button.delete'/></a></td>";
+        html+="</tr>";
+        
+        repair.append(html);
+
+        CalculateTime();
+
+    }
+
+    function DeleteRepair(i)
+    {
+        var deleteSelector = $();
+        $("tr#repair_"+i).remove();
+
+        CalculateTime();
+    }
+
+    function CalculateTime()
+    {
+        var repair = $("#repair").children("tbody").children();
+        var totalTime=0;
+        for(var i=0;i<repair.length;i++)
+        {
+        	totalTime += Number($("input[name=repair]").eq(i).data("time"));
+        }
+        // console.log(totalTime);
+        $("#timerequired").val(totalTime);
+        updatetotaltime();
+    }
+
+    function InsertWebRcpt(){
+        
+        // if($("input[name=chk_repair]").is(":checked")==false)
+        // {
+        //     alert("수리종류를 선택해 주세요");
+        //     return;
+        // }
+
+        
         if($("input[name=name]").val()=="")
         {
             alert("조회를 통해 차량및 고객을 선택해 주세요");
@@ -67,21 +132,6 @@
         if($("input[name=carnum]").val()=="")
         {
             alert("조회를 통해 차량및 고객을 선택해 주세요");
-            return;
-        }
-        if($("select[name=leadtimemain]").val()=="")
-        {
-            alert("수리사항을 선택해 주세요");
-            return;
-        }
-        if($("select[name=leadtimemiddle]").val()=="")
-        {
-            alert("수리사항을 선택해 주세요");
-            return;
-        }
-        if($("select[name=leadtimesub]").val()=="")
-        {
-            alert("수리사항을 선택해 주세요");
             return;
         }
         
@@ -94,8 +144,55 @@
             $("#urgent").prop("checked",true);            
         }
 
+        //수리항목 리스트화
+        var array = new Array();
+		$('input[name=repair]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairlist").val(array);
+        if($("#repairlist").val()==null||$("#repairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        //수리 리드타임 리스트화
+        var array = new Array();
+		$('input[name=repair]').each(function(index) {
+			array.push($(this).data("time"));
+			
+		});
+		$("#repairleadtime").val(array);
+
+        //수리종류 리스트화
+        var array = new Array();
+		$('select[name=chk_repair]').find("option:selected").each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#chkrepairlist").val(array);
+        if($("#chkrepairlist").val()==null||$("#chkrepairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        //수리항목 비고 리스트화
+        var array = new Array();
+		$('input[name=note]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#notelist").val(array);
+
+        console.log($("#chkrepairlist").val());
+        console.log($("#repairlist").val());
+        console.log($("#notelist").val());
+        
         document.rcptform.action = "<c:url value='InsertWebRcpt.do'/>";
         document.rcptform.submit();
+        
     }
 
     
@@ -136,16 +233,51 @@
                                     <input type="hidden" name="id" value="">
                                     <input type="hidden" name="taskstat" value="<c:out value='CB-receipt'/>">
                                     <input type="hidden" name="servicesys" value="<c:out value='${servicesys[0].CODE}'/>">
+                                    <input type="hidden" name="repairlist" id="repairlist" value="">
+                                    <input type="hidden" name="repairleadtime" id="repairleadtime" value="">
+                                    <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
+                                    <input type="hidden" name="notelist" id="notelist" value="">
                                     <div class="board_view2">
                                         <table>
                                             <colgroup>
+                                                <col style="width: 400px;">
+                                                <col style="width: 600px;">
                                                 <col style="width: 150px;">
                                                 <col style="width: 600px;">
                                                 <col style="width: 150px;">
+                                                <col style="width: 600px;">
+                                                <col style="width: 160px;">
                                                 <col style="width: 600px;">
                                             </colgroup>
                                             <tr>
                                                 <td class="lb">
+                                                    <label for="name">고객명</label>
+                                                    <span class="req">필수</span>
+                                                </td>
+                                                <td>
+                                                    <input name="name" id="name" class="f_txtsmall" readonly />
+                                                </td>
+                                                <td class="lb">
+                                                    <label for="carkind">차종</label>
+                                                </td>
+                                                <td>
+                                                    <input name="carkind" id="carkind" class="f_txtsmall" readonly/>
+                                                </td>
+                                                <td class="lb">
+                                                    <label for="carnum">차량번호</label>
+                                                    <span class="req">필수</span>
+                                                </td>
+                                                <td>
+                                                    <input name="carnum" id="carnum" class="f_txtsmall" readonly/>
+                                                </td>
+                                                <td class="lb">
+                                                    <label for="tel">고객연락처</label>
+                                                    <span class="req">필수</span>
+                                                </td>
+                                                <td>
+                                                    <input name="tel" id="tel" class="f_txtsmall" readonly/>
+                                                </td>
+                                                <!-- <td class="lb">
                                                     <label for="chk_repair">수리종류</label>
                                                     <span class="req">필수</span>
                                                 </td>
@@ -153,39 +285,15 @@
                                                     <c:forEach var="i" items="${autome}" varStatus="status">
                                                         <input type="radio" name="chk_repair" class="f_rdo" value="<c:out value='${i.CODE}'/>">${i.NAME}
                                                     </c:forEach>
-                                                    
-                                                    
-                                                </td>
-                                                <td class="lb">
-                                                    <label for="name">고객명</label>
-                                                    <span class="req">필수</span>
-                                                </td>
-                                                <td>
-                                                    <input name="name" id="name" class="f_txtsmall" readonly style="width: 70%;"  />
-                                                </td>
+                                                </td> -->
+                                                
                                             </tr>
                                             <tr>
-                                                <td class="lb">
-                                                    <label for="carnum">차량번호</label>
-                                                    <span class="req">필수</span>
-                                                </td>
-                                                <td>
-                                                    <input name="carnum" id="carnum" class="f_txtsmall" readonly style="width: 70%;" />
-                                                </td>
-                                                <td class="lb">
-                                                    <label for="tel">고객연락처</label>
-                                                    <span class="req">필수</span>
-                                                </td>
-                                                <td>
-                                                    <input name="tel" id="tel" class="f_txtsmall" readonly style="width: 70%;" />
-                                                </td>
-                                            </tr>
-                                             <tr>
                                                 <td class="lb">
                                                     <label for="bbsNm">수리사항</label>
                                                     <span class="req">필수</span>
                                                 </td>
-                                                <td colspan="3">
+                                                <td colspan="7">
                                                     <label class="f_selectsmall">
                                                         <select name="leadtimemain" id="leadtimemain">
                                                             <option value="">선택</option>
@@ -205,19 +313,42 @@
                                                         </select>
 
                                                     </label>
+                                                    <label>
+                                                        <a href="#" class="btn btn_blue_30 w_50" onclick="AddRepair()"><spring:message code="cop.sms.addRecptn"/></a>
+                                                    </label>
                                                     
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="lb">
+                                                    <label for="bbsNm">수리사항 목록</label>
+                                                </td>
+                                                <td colspan="5">
+                                                    <table id="repair">
+                                                        <colgroup>
+                                                            <col style="width: auto;">
+                                                            <col style="width: 200px;">
+                                                            <col style="width: 200px;">
+                                                            <col style="width: 70px;">
+                                                        </colgroup>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                              <tr>
                                                 <td class="lb">
                                                     <label for="bbsNm">예상 완료 시간</label>
                                                 </td>
-                                                <td colspan="3">
+                                                <td colspan="7">
                                                 	<p>
                                                         <label>
                                                             소요시간(분단위) + 추가 소요시간(분단위)
                                                         </label> 
                                                         <input class="f_txtsmall w_100" type="number" name="timerequired" id="timerequired" readonly/> + <input class="f_txtsmall w_100" type="number" value="0" name="addtime" id="addtime"/> = <input class="f_txtsmall w_100" name="totaltime" id="totaltime" readonly/>
+                                                        <input type="text" class="f_txtsmall" name="estime" id="estime" readonly>
                                                 	</p>
                                                 </td>
                                             </tr>
@@ -225,7 +356,7 @@
                                                 <td class="lb">
                                                     <label>작업반</label>
                                                 </td>
-                                                <td colspan="2">
+                                                <td>
                                                     <p>
                                                         <label class="f_selectsmall" style="vertical-align:middle;">
                                                             <select name="position" id="position"> 
@@ -238,7 +369,13 @@
                                                         <label class="v_middle">긴급여부 <input type="checkbox" name="urgent" id="urgent" value=""></label>
                                                     </p>
                                                 </td>
-                                                <td>
+                                                <td class="lb">
+                                                    <label>비고</label>
+                                                </td>
+                                                <td colspan="3">
+                                                    <input name="repairnote" id="repairnote" class="f_txtsmall w_500"/>
+                                                </td>
+                                                <td colspan="2">
                                                     <a href="#" class="btn btn_blue_46 w_100 btnmargin" onclick="InsertWebRcpt()" style="float: right;"><spring:message code="button.create"/></a>
                                                 </td>
                                             </tr>
@@ -306,10 +443,10 @@
                                                 <tr>
                                                     <td><c:out value="${result.RECEIPTDATE}"/></td>
                                                     <td><c:out value="${result.AUTONUMBER}"/></td>
-                                                    <td><c:out value=""/></td>
+                                                    <td><c:out value="${result.CUSTOMER_AUTOKIND}"/></td>
                                                     <td><c:out value="${result.REPAIR_NAME}"/></td>
-                                                    <td><c:out value="${result.CUSTOMER_ID}"/></td>
-                                                    <td><c:out value=""/></td>
+                                                    <td><c:out value="${result.CUSTOMER_NAME}"/></td>
+                                                    <td><c:out value="${result.CUSTOMER_TEL}"/></td>
                                                     <td><c:out value="${result.POSITION}"/></td>
                                                     <td><c:out value="${result.ESTIME}"/></td>
                                                     <td><c:out value="${result.TASKSTAT}"/></td>
@@ -397,17 +534,12 @@ $("#leadtimemiddle").change(function(){
     });
 });
 
-$("#leadtimesub").change(function(){
-    var time = $("#leadtimesub option:selected").data("time");
-    console.log(time);
-    $("#timerequired").val(time);
-    updatetotaltime();    
-});
-function updatetotaltime(){
-    var total = Number($("#timerequired").val()) + Number($("#addtime").val());
-	console.log(total);
-	$("#totaltime").val(total);
-}
+// $("#leadtimesub").change(function(){
+//     var time = $("#leadtimesub option:selected").data("time");
+//     console.log(time);
+//     $("#timerequired").val(time);
+//     updatetotaltime();    
+// });
 
 $("#timerequired").on("change keyup paste", function() {
     updatetotaltime();
@@ -416,6 +548,18 @@ $("#timerequired").on("change keyup paste", function() {
 $("#addtime").on("change keyup paste", function() {
 	updatetotaltime();
 });
+
+function updatetotaltime(){
+    var total = Number($("#timerequired").val()) + Number($("#addtime").val());
+    var now = new Date();
+    var estime = new Date(now.setMinutes(now.getMinutes() + total));
+    var converttime = estime.getFullYear()+'-'+(estime.getMonth()+1)+"-"+estime.getDate()+" "+estime.getHours()+":"+estime.getMinutes()+":"+estime.getSeconds();
+	console.log(converttime);
+	$("#totaltime").val(total);
+    $("#estime").val(converttime);
+}
+
+
 
 
 </script>

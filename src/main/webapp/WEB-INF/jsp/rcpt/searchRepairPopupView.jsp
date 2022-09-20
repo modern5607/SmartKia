@@ -23,12 +23,8 @@
 
 <script type="text/javascript" src="<c:url value='/js/showModalDialogCallee.js'/>" ></script>
 <script type="text/javaScript" language="javascript">
-$(document).ready(function () {
-	console.log("asdf");
-    $("#checkcarnum").focus();
-});
+
 function fnCheckId(){
-    
     if(document.SmartRcptVO.checkcarnum.value==""){
         alert("차량번호를 입력해 주세요");
         document.SmartRcptVO.focus();

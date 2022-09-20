@@ -14,4 +14,6 @@ public interface SmartRcptService {
     int InsertWebRcpt(Map<String,Object> map)throws Exception;
     List<Object> SelectRcptList() throws Exception ;
 
+    int InsertLeadRepair(Map<String, Object> leadrepairmap)throws Exception;
+
 }

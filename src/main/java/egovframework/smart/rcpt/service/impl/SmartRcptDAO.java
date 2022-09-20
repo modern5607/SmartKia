@@ -1,6 +1,7 @@
 package egovframework.smart.rcpt.service.impl;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,20 @@ public class SmartRcptDAO extends EgovAbstractMapper {
         return selectList("SmartRcptDAO.SelectMiddleLeadTime",hcode);
     }
 
-    public int InsertWebRcpt(Map<String, Object> map) {
-        return insert("SmartRcptDAO.InsertWebRcpt",map);
+    public Map<String, Object> InsertWebRcpt(Map<String, Object> map) {
+        insert("SmartRcptDAO.InsertWebRcpt",map);
+        Map<String, Object> resultmap = new HashMap<String,Object>();
+        resultmap.put("takeseq", map.get("takeseq"));
+        // System.out.println(map);
+        return resultmap;
     }
     
     public List<Object> SelectRcptList(){
         return selectList("SelectRcptList");
+    }
+
+    public int InsertLeadRepair(Map<String, Object> leadrepairmap) {
+        return insert("SmartRcptDAO.InsertLeadRepair",leadrepairmap);
     }
 	 
 }
