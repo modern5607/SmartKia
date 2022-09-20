@@ -84,7 +84,7 @@
         html+="</select></label>";
         html+="</td>";
         html+="<td>"+time_nm+"</td>";
-        html+="<td><input type='text' name='note' id='note' placeholder='비고' value=''/></td>";
+        // html+="<td><input type='text' name='note' id='note' placeholder='비고' value=''/></td>";
         html+="<td><input type='hidden' name='repair' data-time='"+time+"' value='"+code+"'/><a href='#' class='btn btn_blue_30 w_50' onclick='DeleteRepair("+(childCount+1)+")'><spring:message code='button.delete'/></a></td>";
         html+="</tr>";
         
@@ -179,20 +179,30 @@
         }
 
         //수리항목 비고 리스트화
-        var array = new Array();
-		$('input[name=note]').each(function(index) {
-			array.push($(this).val());
+        // var array = new Array();
+		// $('input[name=note]').each(function(index) {
+		// 	array.push($(this).val());
 			
-		});
-		$("#notelist").val(array);
+		// });
+		// $("#notelist").val(array);
 
         console.log($("#chkrepairlist").val());
         console.log($("#repairlist").val());
-        console.log($("#notelist").val());
+        // console.log($("#notelist").val());
         
         document.rcptform.action = "<c:url value='InsertWebRcpt.do'/>";
         document.rcptform.submit();
         
+    }
+
+    function DeleteRcpt(takeseq)
+    {
+        console.log(takeseq);
+        if(takeseq==''){
+            alert("해당 접수정보가 조회되지 않습니다. 새로고침후 다시 시도해 주세요");
+            return;
+        }
+        $("#deletetakeseq").val(takeseq);
     }
 
     
@@ -236,18 +246,19 @@
                                     <input type="hidden" name="repairlist" id="repairlist" value="">
                                     <input type="hidden" name="repairleadtime" id="repairleadtime" value="">
                                     <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
-                                    <input type="hidden" name="notelist" id="notelist" value="">
+                                    <!-- <input type="hidden" name="notelist" id="notelist" value=""> -->
+                                    <input type="hidden" name="deletetakeseq" id="deletetakeseq" value="">
                                     <div class="board_view2">
                                         <table>
                                             <colgroup>
-                                                <col style="width: 400px;">
-                                                <col style="width: 600px;">
-                                                <col style="width: 150px;">
-                                                <col style="width: 600px;">
-                                                <col style="width: 150px;">
-                                                <col style="width: 600px;">
-                                                <col style="width: 160px;">
-                                                <col style="width: 600px;">
+                                                <col style="width:auto;">
+                                                <col style="width:auto;">
+                                                <col style="width:auto;">
+                                                <col style="width:auto;">
+                                                <col style="width:auto;">
+                                                <col style="width:auto;">
+                                                <col style="width:auto;">
+                                                <col style="width:auto;">
                                             </colgroup>
                                             <tr>
                                                 <td class="lb">
@@ -316,7 +327,7 @@
                                                     <label>
                                                         <a href="#" class="btn btn_blue_30 w_50" onclick="AddRepair()"><spring:message code="cop.sms.addRecptn"/></a>
                                                     </label>
-                                                    
+                                                    <input name="repairnote" id="repairnote" class="f_txtsmall" placeholder="수리 비고"/>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -373,7 +384,7 @@
                                                     <label>비고</label>
                                                 </td>
                                                 <td colspan="3">
-                                                    <input name="repairnote" id="repairnote" class="f_txtsmall w_500"/>
+                                                    <input name="note" id="note" class="f_txtsmall w_500" placeholder="접수 비고"/>
                                                 </td>
                                                 <td colspan="2">
                                                     <a href="#" class="btn btn_blue_46 w_100 btnmargin" onclick="InsertWebRcpt()" style="float: right;"><spring:message code="button.create"/></a>
@@ -449,9 +460,13 @@
                                                     <td><c:out value="${result.CUSTOMER_TEL}"/></td>
                                                     <td><c:out value="${result.POSITION}"/></td>
                                                     <td><c:out value="${result.ESTIME}"/></td>
-                                                    <td><c:out value="${result.TASKSTAT}"/></td>
+                                                    <td><c:out value="${result.TASKSTAT_NM}"/></td>
                                                     <td><c:out value="${result.REPAIRMETHOD}"/></td>
-                                                    <td><a href="#LINK" class="btn btn_blue_30 btnmargin" onclick="UpdateCommonGroupCode('<c:out value='${result.GROUP_CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.update" /></a></td>
+                                                    <td>
+                                                        <c:if test="${result.TASKSTAT== 'CB-receipt'}">
+                                                        <a href="#LINK" class="btn btn_blue_30 w_80" onclick="DeleteRcpt('<c:out value='${result.TAKESEQ}'/>'); return false;">접수취소</a>
+                                                        </c:if>
+                                                    </td>
                                                 </tr>
                                                 </c:forEach>
                                             </tbody>

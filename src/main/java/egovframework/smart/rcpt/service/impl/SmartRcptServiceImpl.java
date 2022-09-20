@@ -46,8 +46,8 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 				String[] chkrepairlist = params.get("chkrepairlist").toString().split(",");
 				
 				//비어있으면 할당을 안해주면서 out of index 에러나기 때문에 -1옵션을 넣어 null이여도 공백으로 할당해줌
-				String[] notelist = params.get("notelist").toString().split(",",-1);
-				System.out.println("notelist len: "+notelist.length+"notelist :"+notelist);
+				// String[] notelist = params.get("notelist").toString().split(",",-1);
+				// System.out.println("notelist len: "+notelist.length+"notelist :"+notelist);
 				//수리항목 등록
 				for(int i=0;i<repairlist.length;i++)
 				{
@@ -61,7 +61,7 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 					leadrepairmap.put("method", chkrepairlist[i]);
 					leadrepairmap.put("code", repairlist[i]);
 					leadrepairmap.put("leadtime", repairleadtime[i]);
-					leadrepairmap.put("note", notelist[i]);
+					// leadrepairmap.put("note", notelist[i]);
 					leadrepairmap.put("insertid", params.get("loginid"));
 					System.out.println(leadrepairmap);
 

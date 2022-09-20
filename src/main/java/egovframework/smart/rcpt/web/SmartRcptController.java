@@ -96,9 +96,9 @@ public class SmartRcptController {
 
 		// model
 		// Map<String, Object> map = smartrcptservice.selectCommonCodeList(smartrcptVO);
-		// System.out.println("Map :" + map);
+		 
 		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime(smartrcptVO);
-		
+		System.out.println("leadtimelist :" + leadtimelist);
 		//  System.out.println("leadtimelist :" +leadtimelist.get("main"));
 		int totCnt = 1;//Integer.parseInt((String) map.get("resultCnt"));
 		// List<Object> servicesysMap = smartmdmservice.SelectCode("AUTO_SYSTEM");

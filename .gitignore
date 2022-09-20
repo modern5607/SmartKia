@@ -1,4 +1,6 @@
 target/
+**/target
+/target
 target/classes/egovframework/let/sym/ccm/zip/web/EgovCcmZipManageController.class
 target/classes/egovframework/let/sym/ccm/zip/web/EgovCcmZipManageController.class
 target/classes/egovframework/smart/mdm/mber/service/SmartMberManageVO.class
