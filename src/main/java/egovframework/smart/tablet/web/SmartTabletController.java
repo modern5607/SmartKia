@@ -45,6 +45,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -122,11 +123,11 @@ public class SmartTabletController {
 
 		paginationInfo.setTotalRecordCount(totCnt);
 
+		model.addAttribute("searchVO",searchVO);
 		model.addAttribute("resultList", map.get("resultList"));
 		model.addAttribute("resultCnt", map.get("resultCnt"));
 		model.addAttribute("paginationInfo", paginationInfo);
 		
-
 		return "/tablet/SmartWorkGroup";
 	}
 	
@@ -254,10 +255,63 @@ public class SmartTabletController {
 		return "/tablet/ProgressDetail";
 	}
 	
-	@RequestMapping(value = "/tablet/CompletePOP.do")
-	public String CompleteView() throws Exception {
-
+	/**
+	 * 작업상태 변경 view
+	 */
+	@RequestMapping(value = "/tablet/CompletePOP.do",method = RequestMethod.GET)
+	public String CompleteView(@RequestParam String taskstat, String seq,ModelMap model) throws Exception {
+		
+		model.addAttribute("taskstat",taskstat);
+		model.addAttribute("seq",seq);
 		return "/tablet/CompletePOP";
+	}
+	
+	/**
+	 * 작업반 배정 Update
+	 */
+	@RequestMapping(value = "/tablet/UpdateStatus.do")
+	public String UpdateStatus(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
+		
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		
+		System.out.println("params :"+params);
+		System.out.println("vo :"+vo);
+
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap = smarttabletservice.checkstatus(params);
+		System.out.println("result :"+resultMap);
+		
+		int result=0;
+		if(resultMap.get("TASKSTAT").toString().equals(params.get("taskstat").toString()))
+		{
+			System.out.println("둘이 같음");
+			if(params.get("taskstat").toString().equals("CB-standby")) {
+				params.put("update_taskstat", "CB-repaired");
+			}
+			else if(params.get("taskstat").toString().equals("CB-repaired")) {
+				params.put("update_taskstat", "CB-perfect");
+			}
+			result = smarttabletservice.updatestatus(params);
+		}
+		
+		 if (result == 0) // insert실패
+		 {
+		 	model.addAttribute("msg","접수상태를 확인하여 주세요.");
+		 	model.addAttribute("url","");
+		 } else {
+		 	model.addAttribute("msg","상태변경이 완료되었습니다.");
+		 	model.addAttribute("url","SmartWorkGroup.do");
+		 }
+		return "alert";
 	}
 	
 	/**

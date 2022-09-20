@@ -15,7 +15,14 @@ public class SmartTabletVO extends ComDefaultVO implements Serializable {
 	private String seq = "";
 	private String autoroom = "";
 	private String remark = "";
+	private String taskstat = "";
 	
+	public String getTaskstat() {
+		return taskstat;
+	}
+	public void setTaskstat(String taskstat) {
+		this.taskstat = taskstat;
+	}
 	private String searchcarnum="";
 	private String searchTel="";
 

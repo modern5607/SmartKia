@@ -36,7 +36,7 @@
 </script>
 </head>
 <body>
-
+  
 	<!-- 아이디중복확인 팝업 -->
 	<div class="popup POP_DUPID_CONF" style="background-color: white;">
 
@@ -51,10 +51,11 @@
 
 				<div class="pop_container">
 					<div class="box_1">
-						<label for="mid">시분초 추가</label> <input id="mid"
-							class="f_txt2 ml15" type="text" name="checkId" title="선택여부"
-							value="<c:out value="${checkId}"/>" maxlength="20" /> <input
-							type="hidden" name="resultId" value="<c:out value="${checkId}"/>" />
+						<label for="mid">시간 추가</label> 
+						<input id="mid" class="f_txtsmall w_100" type="text" name="checkId" value="<c:out value="${checkId}"/>" maxlength="5" />시
+						<input id="mid" class="f_txtsmall w_100" type="text" name="checkId" value="<c:out value="${checkId}"/>" maxlength="5" /> 분
+							<input type="hidden" name="resultId" value="<c:out value="${checkId}"/>" />
+							<input type="hidden" name="resultId" value="<c:out value="${checkId}"/>" />
 							<a href="#LINK" class="btn btn_blue_46 w_50"
 							onclick="javascript:fnReturnId(); return false;">계산</a>
 					</div>

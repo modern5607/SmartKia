@@ -60,13 +60,17 @@ function OTGroup()
 	
 }
 
-function Complete()
-{
-	var url = "<c:url value='/tablet/CompletePOP.do'/>?";
-
+function Complete(taskstat,seq)
+{	
+	
+	if (taskstat == "CB-perfect" ){
+		alert("완료처리된 항목입니다.");
+		return;
+	}
+	else{
 		var $dialog = $('<div id="modalPan"></div>').html(
 				'<iframe style="border: 0px;" src="'
-						+ "<c:url value='/tablet/CompletePOP.do'/>?"
+						+ "<c:url value='/tablet/CompletePOP.do?taskstat="+taskstat+"&seq="+seq+"'/>"
 						+ '" width="100%" height="100%"></iframe>')
 				.dialog({
 					autoOpen : false,
@@ -74,9 +78,19 @@ function Complete()
 					width : 600,
 					height : 400
 				});
-		$(".ui-dialog-titlebar").hide();
-		$dialog.dialog('open');
+			$(".ui-dialog-titlebar").hide();
+			$dialog.dialog('open');
+	}
+}
+
+function UpdateStatus(seq,taskstat) {
+
+	console.log(seq,taskstat);
+	document.SmartList.seq.value = seq
+	document.SmartList.taskstat.value = taskstat
 	
+	document.SmartList.action = "<c:url value='/tablet/UpdateStatus.do'/>";
+	document.SmartList.submit();
 }
 
 function fnCheckId(){
@@ -119,6 +133,8 @@ function fnCheckId(){
 								<form modelAttribute="SmartTabletVO" name="SmartList"
 									id="SmartList" action="<c:url value='/tablet/SmartWorkGroup.do'/>"
 									method="post">
+									<input type="hidden" name="seq" id="seq" >
+									<input type="hidden" name="taskstat" id="taskstat" >
 
 									<h1 class="tit_1">반 별 입고현황</h1>
 									<p class="txt_1">작업반,예상완료시간 클릭시 이관 또는 시간변경 가능합니다.</p>
@@ -131,7 +147,7 @@ function fnCheckId(){
 														<select name="autoroom" id="autoroom">
 																<option value="">전체</option>
 															<c:forEach var="i" items="${autorooms}" varStatus="status">
-                                                               <option value="<c:out value='${i.CODE}'/>">${i.NAME}</option>
+                                                               <option value="<c:out value='${i.CODE}'/>" <c:if test='${i.CODE == searchVO.autoroom}'>selected</c:if>  >${i.NAME}</option>
                                                              </c:forEach>
 														</select>
 											</label>
@@ -194,7 +210,7 @@ function fnCheckId(){
 														<td><a href="#" onclick="TransferGroup()" class="lnk"><c:out value="${result.POSITION_NAME}" /></a>
 														<td><a href="#" onclick="OTGroup()" class="lnk"><c:out value="${result.ESTIME}" /></a>
 														<td><c:out value="${result.REPAIRMETHOD_NAME}" /></td>
-														<td><a href="#" onclick="Complete()" class="lnk"><c:out value="${result.TASKSTAT_NAME}" /></a>
+														<td><a href="#" onclick="Complete('${result.TASKSTAT}','${result.TAKESEQ}')"><c:out value="${result.TASKSTAT_NAME}" /></a>
 													</tr>
 												</c:forEach>
 											</tbody>

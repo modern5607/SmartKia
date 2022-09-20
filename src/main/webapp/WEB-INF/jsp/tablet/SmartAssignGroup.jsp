@@ -61,7 +61,7 @@
 	//작업반배정 프로세스 실행
 	function UpdateAssign() {
 		var array = new Array();
-		$('input:chUpdateAssignGroupeckbox[name=check]').each(function(index) {
+		$('input:checkbox[name=check]').each(function(index) {
 			if ($(this).is(":checked") == true) {
 				array.push($(this).data("seq"));
 			}
@@ -142,8 +142,7 @@
 									<div class="board_list_top" style="margin-top: 20px;">
 										<!-- <div class="left_col">
 											<h1 class="txt_1">업체코드 클릭시 수정화면으로 이동됩니다.</h1>
-										</div>
-										 -->
+										</div> -->
 										<div class="right_col">
 											<a href="#" onclick="ReceiveGroup()"
 												class="item btn btn_blue_46 w_100">배정</a>
