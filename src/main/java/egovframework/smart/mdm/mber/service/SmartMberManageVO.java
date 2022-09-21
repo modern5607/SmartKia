@@ -21,18 +21,6 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	 */
 	private String userTy="";
 	/**
-	 * 주소
-	 */
-	private String adres="";
-	/**
-	 * 상세주소
-	 */
-	private String detailAdres="";
-	/**
-	 * 끝전화번호
-	 */
-	private String endTelno="";
-	/**
 	 * 팩스번호
 	 */
 	private String mberFxnum="";
@@ -44,10 +32,6 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	 * 주민등록번호
 	 */
 	private String ihidnum="";
-	/**
-	 * 성별코드
-	 */
-	private String sexdstnCode="";
 	/**
 	 * 회원 ID
 	 */
@@ -61,38 +45,17 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	 */
 	private String mberSttus="";
 	/**
-	 * 지역번호
+	 * 전화번호
 	 */
-	private String areaNo="";
-	/**
-	 * 중간전화번호
-	 */
-	private String middleTelno="";
+	private String telNo="";
 	/**
 	 * 핸드폰번호
 	 */
 	private String moblphonNo="";
-	
-	private String middleMoblphonNo="";
-	
-	private String endMoblphonNo="";
 	/**
 	 * 비밀번호
 	 */
 	private String password="";
-	/**
-	 * 비밀번호 정답
-	 */
-	private String passwordCnsr="";
-	/**
-	 * 비밀번호 힌트
-	 */
-	private String passwordHint="";
-	
-	/**
-	 * 사용여부
-	 */
-	private String useYn="";
 	/**
 	 * 가입 일자
 	 */
@@ -109,6 +72,13 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	private String team="";
 	
 	private String positionName="";
+	
+	private String authorCode="";
+	
+	private String mberTyCode="";
+	
+
+	private String useYn="";
 	/**
 	 * oldPassword attribute 값을  리턴한다.
 	 * @return String
@@ -150,48 +120,6 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	 */
 	public void setUserTy(String userTy) {
 		this.userTy = userTy;
-	}
-	/**
-	 * adres attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getAdres() {
-		return adres;
-	}
-	/**
-	 * adres attribute 값을 설정한다.
-	 * @param adres String
-	 */
-	public void setAdres(String adres) {
-		this.adres = adres;
-	}
-	/**
-	 * detailAdres attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getDetailAdres() {
-		return detailAdres;
-	}
-	/**
-	 * detailAdres attribute 값을 설정한다.
-	 * @param detailAdres String
-	 */
-	public void setDetailAdres(String detailAdres) {
-		this.detailAdres = detailAdres;
-	}
-	/**
-	 * endTelno attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getEndTelno() {
-		return endTelno;
-	}
-	/**
-	 * endTelno attribute 값을 설정한다.
-	 * @param endTelno String
-	 */
-	public void setEndTelno(String endTelno) {
-		this.endTelno = endTelno;
 	}
 	/**
 	 * mberFxnum attribute 값을  리턴한다.
@@ -236,20 +164,6 @@ public class SmartMberManageVO  extends UserDefaultVO{
 		this.ihidnum = ihidnum;
 	}
 	/**
-	 * sexdstnCode attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getSexdstnCode() {
-		return sexdstnCode;
-	}
-	/**
-	 * sexdstnCode attribute 값을 설정한다.
-	 * @param sexdstnCode String
-	 */
-	public void setSexdstnCode(String sexdstnCode) {
-		this.sexdstnCode = sexdstnCode;
-	}
-	/**
 	 * mberId attribute 값을  리턴한다.
 	 * @return String
 	 */
@@ -291,34 +205,7 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	public void setMberSttus(String mberSttus) {
 		this.mberSttus = mberSttus;
 	}
-	/**
-	 * areaNo attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getAreaNo() {
-		return areaNo;
-	}
-	/**
-	 * areaNo attribute 값을 설정한다.
-	 * @param areaNo String
-	 */
-	public void setAreaNo(String areaNo) {
-		this.areaNo = areaNo;
-	}
-	/**
-	 * middleTelno attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getMiddleTelno() {
-		return middleTelno;
-	}
-	/**
-	 * middleTelno attribute 값을 설정한다.
-	 * @param middleTelno String
-	 */
-	public void setMiddleTelno(String middleTelno) {
-		this.middleTelno = middleTelno;
-	}
+
 	/**
 	 * moblphonNo attribute 값을  리턴한다.
 	 * @return String
@@ -333,18 +220,6 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	public void setMoblphonNo(String moblphonNo) {
 		this.moblphonNo = moblphonNo;
 	}
-	public String getMiddleMoblphonNo() {
-		return middleMoblphonNo;
-	}
-	public void setMiddleMoblphonNo(String middleMoblphonNo) {
-		this.middleMoblphonNo = middleMoblphonNo;
-	}
-	public String getEndMoblphonNo() {
-		return endMoblphonNo;
-	}
-	public void setEndMoblphonNo(String endMoblphonNo) {
-		this.endMoblphonNo = endMoblphonNo;
-	}
 	/**
 	 * password attribute 값을  리턴한다.
 	 * @return String
@@ -358,34 +233,6 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	 */
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	/**
-	 * passwordCnsr attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getPasswordCnsr() {
-		return passwordCnsr;
-	}
-	/**
-	 * passwordCnsr attribute 값을 설정한다.
-	 * @param passwordCnsr String
-	 */
-	public void setPasswordCnsr(String passwordCnsr) {
-		this.passwordCnsr = passwordCnsr;
-	}
-	/**
-	 * passwordHint attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getPasswordHint() {
-		return passwordHint;
-	}
-	/**
-	 * passwordHint attribute 값을 설정한다.
-	 * @param passwordHint String
-	 */
-	public void setPasswordHint(String passwordHint) {
-		this.passwordHint = passwordHint;
 	}
 	/**
 	 * sbscrbDe attribute 값을  리턴한다.
@@ -430,12 +277,6 @@ public class SmartMberManageVO  extends UserDefaultVO{
 		this.mberEmailAdres = mberEmailAdres;
 	}
 
-	public String getUseYn() {
-		return useYn;
-	}
-	public void setUseYn(String useYn) {
-		this.useYn = useYn;
-	}
 	public String getTeam() {
 		return team;
 	}
@@ -448,6 +289,30 @@ public class SmartMberManageVO  extends UserDefaultVO{
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
 	}
-	
+	public String getAuthorCode() {
+		return authorCode;
+	}
+	public void setAuthorCode(String authorCode) {
+		this.authorCode = authorCode;
+	}
+	public String getTelNo() {
+		return telNo;
+	}
+	public void setTelNo(String telNo) {
+		this.telNo = telNo;
+	}
+	public String getMberTyCode() {
+		return mberTyCode;
+	}
+	public void setMberTyCode(String mberTyCode) {
+		this.mberTyCode = mberTyCode;
+	}
+	public String getUseYn() {
+		return useYn;
+	}
+	public void setUseYn(String useYn) {
+		this.useYn = useYn;
+	}
+
 	
 }

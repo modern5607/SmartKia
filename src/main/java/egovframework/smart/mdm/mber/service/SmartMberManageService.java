@@ -3,6 +3,7 @@ package egovframework.smart.mdm.mber.service;
 import java.util.List;
 
 
+
 public interface SmartMberManageService {
 
 	/**
@@ -81,5 +82,32 @@ public interface SmartMberManageService {
 	 * @throws Exception
 	 */
 	public int checkIdDplct(String checkId) throws Exception;
+
+
+	/**
+	 *@Override
+	 그룹별 할당된 시스템 메뉴 접근권한을 삭제
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	public void deleteAuthor(SmartMberManageVO smartMberManageVO) throws Exception;
+
+	/**
+	 * 화면에 조회된 그룹권한정보를 수정하여 항목의 정합성을 체크하고 수정된 데이터를 데이터베이스에 반영
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	public void updateAuthor(SmartMberManageVO smartMberManageVO) throws Exception;
+	
+	/**
+	 * 그룹에 권한정보를 할당하여 데이터베이스에 등록
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	public void insertAuthor(SmartMberManageVO smartMberManageVO) throws Exception;
+	
+	public int checkAuthorYn(SmartMberManageVO smartMberManageVO) throws Exception;
+
+
 
 }

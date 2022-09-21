@@ -31,31 +31,30 @@
 
 <title>기준정보 > 사용자관리</title>
 <script type="text/javaScript" language="javascript" defer="defer">
+
+/* function ReceiveAuthor() {
+	if ($('input:checkbox[name=check]').is(":checked") == true) {
+
+		var url = "<c:url value='/mdm/mber/ReceiveAuthorPOP.do'/>?";
+
+		var $dialog = $('<div id="modalPan"></div>').html(
+				'<iframe style="border: 0px;" src="'
+						+ "<c:url value='/mdm/mber/ReceiveAuthorPOP.do'/>?"
+						+ '" width="100%" height="100%"></iframe>').dialog(
+				{
+					autoOpen : false,
+					modal : true,
+					width : 600,
+					height : 300
+				});
+		$(".ui-dialog-titlebar").hide();
+		$dialog.dialog('open');
+	} else {
+		alert("변경할 사용자를 체크하여 주세요.");
+	}
+} */
 <!--
-function fnCheckAll() {
-    var checkField = document.listForm.checkField;
-    if(document.listForm.checkAll.checked) {
-        if(checkField) {
-            if(checkField.length > 1) {
-                for(var i=0; i < checkField.length; i++) {
-                    checkField[i].checked = true;
-                }
-            } else {
-                checkField.checked = true;
-            }
-        }
-    } else {
-        if(checkField) {
-            if(checkField.length > 1) {
-                for(var j=0; j < checkField.length; j++) {
-                    checkField[j].checked = false;
-                }
-            } else {
-                checkField.checked = false;
-            }
-        }
-    }
-}
+
 function fnDeleteUser() {
     var checkField = document.listForm.checkField;
     var id = document.listForm.checkId;
@@ -163,21 +162,6 @@ function fnLinkPage(pageNo){
                                 
                                 <!-- 검색조건 -->
                                 <div class="condition" style="text-align: left; margin-top: 20px;">
-                                    <%-- <label class="item f_select" for="sbscrbSttus">
-                                        <select name="sbscrbSttus" id="sbscrbSttus" title="조회조건1">
-                                            <option value="0" <c:if test="${empty userSearchVO.sbscrbSttus || userSearchVO.sbscrbSttus == '0'}">selected="selected"</c:if> >상태(전체)</option>
-					                        <option value="A" <c:if test="${userSearchVO.sbscrbSttus == 'A'}">selected="selected"</c:if> >가입신청</option>
-					                        <option value="D" <c:if test="${userSearchVO.sbscrbSttus == 'D'}">selected="selected"</c:if> >삭제</option>
-					                        <option value="P" <c:if test="${userSearchVO.sbscrbSttus == 'P'}">selected="selected"</c:if> >승인</option>
-                                        </select>
-                                    </label>
-
-                                    <label class="item f_select" for="searchCondition">
-                                        <select name="searchCondition" id="searchCondition" title="조회조건2">
-                                            <option value="0" <c:if test="${userSearchVO.searchCondition == '0'}">selected="selected"</c:if> >ID</option>
-                                            <option value="1" <c:if test="${empty userSearchVO.searchCondition || userSearchVO.searchCondition == '1'}">selected="selected"</c:if> >Name</option>
-                                        </select>
-                                    </label> --%>
 				                    <span class="item f_search">
 					                    <p class="left">
 					                    <label for="searchId">아이디</label>
@@ -191,10 +175,6 @@ function fnLinkPage(pageNo){
 					                    </p>
 					                        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
 				                    </span>
-                                    <%-- <span class="item f_search">
-                                        <input name="searchKeyword" id="searchKeyword" class="f_input w_500" title="검색" type="text" value="<c:out value="${userSearchVO.searchKeyword}"/>" />
-                                        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code="button.search" /></button><!-- 조회 -->
-                                    </span> --%>
                                 </div>
                                 <!--// 검색조건 -->
 
@@ -208,11 +188,14 @@ function fnLinkPage(pageNo){
                                     </div> 
 
                                     <div class="right_col">
+                                    	<!-- <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAddAuthorInsert()" style="selector-dummy:expression(this.hideFocus=false);">사용</a>
+										<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAuthorDelete()" style="selector-dummy:expression(this.hideFocus=false);">사용중지</a> -->
+										<!-- <a href="#" onclick="ReceiveAuthor()" class="item btn btn_blue_46 w_100">사용여부</a> -->
                                         <%-- <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 --> --%>
-                                        <a href="<c:url value='/mdm/SmartMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
                                         <!-- 
                                         <a href="<c:url value='/uss/umt/mber/EgovMberManage.do'/>" class="btn btn_blue_46 w_100"><spring:message code="button.list" /></a>목록
-                                         -->
+                                         -->                     
+                                         <a href="<c:url value='/mdm/SmartMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
                                     </div>
                                 </div>
 
@@ -221,27 +204,27 @@ function fnLinkPage(pageNo){
                                     	<caption>회원목록</caption>
                                         <colgroup>
                                             <col style="width: 60px;">
-                                            <%-- <col style="width: 60px;"> --%>
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
-                                            <col style="width: 100px;">
+                                            <col style="width: 80px;">
+                                            <%-- <col style="width: 20px;"> --%>
                                         </colgroup>
                                         <thead>
                                             <tr>
                                                 <th scope="col">No.</th>
-                                                <!-- <th scope="col">
-                                                    <span class="f_chk_only chkAll">
-                                                        <input name="checkAll" type="checkbox" title="Check All" onclick="javascript:fnCheckAll();"/>
-                                                    </span>
-                                                </th> -->
                                                 <th scope="col">아이디</th>
                                                 <th scope="col">사용자이름</th>
                                                 <th scope="col">작업반</th>
                                                 <th scope="col">전화번호</th>
                                                 <!-- <th scope="col">등록일</th> -->
                                                 <th scope="col">사용여부</th>
+                                                <!-- <th scope="col">
+                                                    <span class="f_chk_only chkAll">
+                                                        <input type="checkbox" name="checkAll" title="선택여부" onclick="javascript:fncCheckAll()">
+                                                    </span>
+                                                </th> -->
                                             </tr>
                                             
                                         </thead>
@@ -256,12 +239,7 @@ function fnLinkPage(pageNo){
                                             <tr>
                                             <%-- <td><c:out value="${(userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count}"/></td> --%>
                                             <td><c:out value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}"/></td>
-                                                <%-- <td>
-                                                    <span class="f_chk_only">
-                                                        <input name="checkField" title="checkField <c:out value="${status.count}"/>" type="checkbox"/>
-                                                        <input name="checkId" type="hidden" value="<c:out value='${result.userTy}'/>:<c:out value='${result.uniqId}'/>"/>
-                                                    </span>
-                                                </td> --%>
+                                                
                                                 <td>
                                                 	<a href="<c:url value='/mdm/mber/SmartMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>" class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
                                                 		<c:out value="${result.userId}"/>
@@ -270,14 +248,23 @@ function fnLinkPage(pageNo){
                                                 <td><c:out value="${result.userNm}"/></td>
 		                                          	
                                                 <td><c:out value="${result.positionName}"/></td>
-                                                <td><c:out value="${result.areaNo}"/><%-- <c:out value="${result.middleTelno}"/><c:out value="${result.endTelno}"/> --%></td>
+                                                <td><c:out value="${result.telNo}"/></td>
                                                 <%-- <td><c:out value="${result.sbscrbDe}"/></td> --%>
                                                 
                                                 <td>
-                                                	<c:if test="${result.useYn == 'N'}"><spring:message code="button.notUsed" /></c:if>
-                                                	<c:if test="${result.useYn == 'Y'}"><spring:message code="button.use" /></c:if>
+                                                	<c:if test="${result.useyn == 'N'}"><spring:message code="button.notUsed" /></c:if>
+                                                	<c:if test="${result.useyn == 'Y'}"><spring:message code="button.use" /></c:if>
+                                                	<!-- <input type="radio" name="useYn" value="Y">사용
+                                                	<input type="radio" name="useYn" value="N">미사용 -->
                                                 </td>
+                                                <%-- <td>
+                                                    <span class="f_chk_only">
+                                                        <input name="checkField" title="checkField <c:out value="${status.count}"/>" type="checkbox"/>
+                                                        <input name="checkId" type="hidden" value="<c:out value='${result.userTy}'/>:<c:out value='${result.uniqId}'/>"/>
+                                                    </span>
+                                                </td> --%>
                                             </tr>
+                                            
                                             </c:forEach>
                                         </tbody>
                                     </table>

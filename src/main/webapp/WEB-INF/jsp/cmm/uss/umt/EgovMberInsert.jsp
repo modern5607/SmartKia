@@ -105,7 +105,7 @@ function fnInsert(){
 		if(document.mberManageVO.password.value != document.mberManageVO.password2.value){
             alert("<spring:message code="fail.user.passwordUpdate2" />");
             return;
-        }
+        } 
         document.mberManageVO.submit();
     }
 }

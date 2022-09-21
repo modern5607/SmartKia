@@ -195,17 +195,17 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 </label>
                                                 <br/><form:errors path="useYn" />
                                             </td>
-                                        </tr>
+                                        </tr> 
                                         <tr>
                                             <td class="lb">
-                                                <label for="areaNo">전화번호</label>
+                                                <label for="telNo">전화번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="areaNo" id="areaNo" class="f_txt w_350 phoneNumber" maxlength="15" />
-                                                <form:errors path="areaNo" cssClass="error" />
+                                                <form:input path="telNo" id="telNo" class="f_txt w_350 phoneNumber" maxlength="15" />
+                                                <form:errors path="telNo" cssClass="error" />
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <%-- <tr>
                                             <td class="lb">
                                                 <label for="mberFxnum">팩스번호</label>
                                             </td>
@@ -213,7 +213,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <form:input path="mberFxnum" id="mberFxnum" class="f_txt w_350" maxlength="15" />
                                                 <form:errors path="mberFxnum" cssClass="error" />
                                             </td>
-                                        </tr>
+                                        </tr> --%>
                                         <tr>
                                             <td class="lb">
                                                 <label for="moblphonNo">핸드폰번호</label>

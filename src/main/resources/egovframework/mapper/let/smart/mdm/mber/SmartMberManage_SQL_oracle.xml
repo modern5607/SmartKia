@@ -4,7 +4,6 @@
 <mapper namespace="smartMberManageDAO">
 
 
-
     <resultMap id="stplatMap" type="egovframework.smart.mdm.mber.service.StplatVO">
         <result property="useStplatId" column="USE_STPLAT_ID"/>
         <result property="useStplatCn" column="USE_STPLAT_CN"/>
@@ -19,8 +18,9 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
         A.MBER_ID               as "userId",
         A.MBER_NM               as "userNm",
         A.MBER_EMAIL_ADRES      as "emailAdres",
-        A.AREA_NO               as "areaNo",
-        A.USE_YN                as "useYn" ,
+        A.TELNO               as "telNo",
+        B.AUTHOR_CODE 			as "authorCode",
+       (CASE WHEN B.SCRTY_DTRMN_TRGET_ID IS NULL THEN 'N' ELSE 'Y' END) AS useyn,
         A.MBTLNUM           	  as "moblphonNo",
         A.GROUP_ID              as "groupId",
         A.MBER_STTUS            as "Sttus",
@@ -28,16 +28,17 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
        	FN_CODENAME(TEAM, 'AUTO_ROOM') position_name,
         A.SBSCRB_DE             as "sbscrbDe"
         
-    FROM  LETTNGNRLMBER A
-    WHERE 1=1
+    FROM  LETTNGNRLMBER A LEFT OUTER JOIN LETTNEMPLYRSCRTYESTBS B
+    ON A.ESNTL_ID = B.SCRTY_DTRMN_TRGET_ID
+    WHERE 1 = 1
         <if test='sbscrbSttus != "0"'>
             AND MBER_STTUS LIKE  #{sbscrbSttus}
 	        </if>
 	        <if test="searchId != ''">
-	            AND MBER_ID LIKE '%' ||#{searchId}|| '%'
+	            AND UPPER(MBER_ID) LIKE '%' ||UPPER(#{searchId})|| '%'
 	        </if>
 	        <if test="searchNm != ''">
-	            AND MBER_NM LIKE '%' ||#{searchNm}|| '%'
+	            AND UPPER(MBER_NM) LIKE '%' ||UPPER(#{searchNm})|| '%'
 	        </if>
 	        <if test="searchTeam != ''">
 	            AND FN_CODENAME(TEAM, 'AUTO_ROOM') LIKE '%' ||UPPER(#{searchTeam})|| '%'
@@ -48,36 +49,39 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
  
         <select id="selectMberListTotCnt" parameterType="egovframework.smart.mdm.mber.service.UserDefaultVO" resultType="int">
             SELECT COUNT(*) totcnt
-            FROM   LETTNGNRLMBER
-            WHERE 1=1
+            <!-- FROM   LETTNGNRLMBER
+            WHERE 1=1 -->
+            FROM  LETTNGNRLMBER A LEFT OUTER JOIN LETTNEMPLYRSCRTYESTBS B
+		    ON A.ESNTL_ID = B.SCRTY_DTRMN_TRGET_ID
+		    WHERE 1 = 1
              <if test='sbscrbSttus != "0"'>
             AND MBER_STTUS LIKE  #{sbscrbSttus}
 	        </if>
 	        <if test="searchId != ''">
-	            AND MBER_ID LIKE '%' ||#{searchId}|| '%'
+	            AND UPPER(MBER_ID) LIKE '%' ||UPPER(#{searchId})|| '%'
 	        </if>
 	        <if test="searchNm != ''">
-	            AND MBER_NM LIKE '%' ||#{searchNm}|| '%'
+	            AND UPPER(MBER_NM) LIKE '%' ||UPPER(#{searchNm})|| '%'
 	        </if>
 	        <if test="searchTeam != ''">
-	            AND TEAM LIKE '%' ||#{searchTeam}|| '%'
+	            AND FN_CODENAME(TEAM, 'AUTO_ROOM') LIKE '%' ||UPPER(#{searchTeam})|| '%'
 	        </if>
     </select>
     
     <insert id="insertMber_S">
         
-            INSERT INTO LETTNGNRLMBER 
+		INSERT ALL 
+            INTO LETTNGNRLMBER 
                 (   
                     ESNTL_ID         ,
                     MBER_ID          ,
                     MBER_NM          ,
                     PASSWORD         ,
-                    AREA_NO          ,
+                    TELNO          ,
                     MBER_STTUS       ,
                     MBTLNUM      	 ,
                     MBER_FXNUM       ,
                     MBER_EMAIL_ADRES ,
-        			USE_YN			 ,
         			TEAM			 ,
                     SBSCRB_DE        )
               VALUES(
@@ -85,17 +89,26 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
                     #{mberId},
                     #{mberNm},
                     #{password},
-                    #{areaNo},
-                    #{mberSttus},
+                    #{telNo},
+                    'P',
                     #{moblphonNo},
                     #{mberFxnum},
                     #{mberEmailAdres},
-                    #{useYn},
                     #{team},
-                    sysdate  )              
+                    sysdate  ) 
+			INTO LETTNEMPLYRSCRTYESTBS( 
+				SCRTY_DTRMN_TRGET_ID,
+				MBER_TY_CODE,
+				AUTHOR_CODE)
+			VALUES(
+				#{uniqId}, 
+				'USR01', 
+				'ROLE_ADMIN')        
+			SELECT *
+			FROM dual
         
     </insert>
-    
+
     <delete id="deleteMber_S">
         
             DELETE FROM LETTNGNRLMBER 
@@ -112,12 +125,11 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
                 MBER_NM          mberNm,
                 PASSWORD         password,
                 ADRES            adres,
-                AREA_NO          areaNo,
+                TELNO          telNo,
                 MBER_STTUS       mberSttus,
                 MBTLNUM      	 moblphonNo,
                 MBER_FXNUM       mberFxnum,
                 MBER_EMAIL_ADRES mberEmailAdres,
-                USE_YN			 useYn,
                 TEAM			 team,
                 SBSCRB_DE        sbscrbDe
             FROM LETTNGNRLMBER
@@ -131,13 +143,14 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
             SET MBER_ID          = #{mberId},
                 MBER_NM          = #{mberNm},
                 IHIDNUM          = #{ihidnum},
-                AREA_NO          = #{areaNo},
-                MBER_STTUS       = #{mberSttus},
+                TELNO            = #{telNo},
+                USE_YN			 =#{useYn},
+                <!-- MBER_STTUS       = #{mberSttus}, -->
+                MBER_STTUS       = 'P',
                 MBTLNUM      	 = #{moblphonNo},
                 GROUP_ID         = #{groupId},
                 MBER_FXNUM       = #{mberFxnum},
                 MBER_EMAIL_ADRES = #{mberEmailAdres},
-                USE_YN			 = #{useYn},
                 TEAM			 = #{team}
             WHERE ESNTL_ID=#{uniqId}
         
@@ -192,4 +205,27 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
          WHERE userId = #{checkId}
      
     </select>
+    <select id="checkAuthorYn" resultType="int">
+	    SELECT COUNT(*) CNT
+		FROM LETTNEMPLYRSCRTYESTBS
+		WHERE SCRTY_DTRMN_TRGET_ID = #{uniqId}
+    </select>
+    <insert id="insertAuthor">
+     
+		INSERT INTO LETTNEMPLYRSCRTYESTBS( 
+			SCRTY_DTRMN_TRGET_ID,
+			MBER_TY_CODE,
+			AUTHOR_CODE)
+		VALUES(
+			#{uniqId}, 
+			'USR01', 
+			'ROLE_ADMIN')    
+        
+    </insert>
+    <delete id="deleteAuthor">
+        
+            DELETE FROM LETTNEMPLYRSCRTYESTBS 
+             WHERE SCRTY_DTRMN_TRGET_ID=#{uniqId}
+        
+    </delete>
 </mapper>

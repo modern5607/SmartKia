@@ -185,11 +185,11 @@ function fnSearch(){
     <span class="item f_search">
     <p class="left">
     <label for="searchKeyword">고객번호</label>
-        <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusId}"/>"/> 
+        <%-- <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusId}"/>"/>  --%>
     <label for="searchKeyword">고객명</label>
-        <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusNm}"/>"/>
+        <%-- <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusNm}"/>"/> --%>
     <label for="searchKeyword">차량번호</label>
-        <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcarNum}"/>"/>
+        <%-- <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcarNum}"/>"/> --%>
     </p>
     <p class="left">
     </p>

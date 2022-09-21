@@ -22,7 +22,7 @@
         NOTE                  as "note"
     FROM    CAR_CUSTOMER
     WHERE 1=1
-        <if test="searchcusId != ''">
+        <!-- <if test="searchcusId != ''">
             AND CUSTOMER_ID LIKE '%' ||#{searchcusId}|| '%'
         </if>
         <if test="searchcusNm != ''">
@@ -30,7 +30,7 @@
         </if>
         <if test="searchcarNum != ''">
             AND CUSTOMER_AUTOKIND LIKE '%' ||#{searchcarNum}|| '%'
-        </if>
+        </if> -->
         ORDER BY 1,2 DESC) <!-- 오더바이옆에있는 숫자를 기준으로 정렬  -->
         TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
     </select>
@@ -39,7 +39,7 @@
             SELECT COUNT(1) totcnt
             FROM   CAR_CUSTOMER
             WHERE 1=1
-			<if test="searchcusId != ''">
+			<!-- <if test="searchcusId != ''">
 	            AND CUSTOMER_ID LIKE '%' ||#{searchcusId}|| '%'
 	        </if>
 	        <if test="searchcusNm != ''">
@@ -47,7 +47,7 @@
 	        </if>
 	        <if test="searchcarNum != ''">
 	            AND CUSTOMER_AUTOKIND LIKE '%' ||#{searchcarNum}|| '%'
-	        </if>
+	        </if> -->
     </select>
     
     <insert id="insertMber_S">
@@ -91,7 +91,7 @@
                 SEXDSTN_CODE     sexdstnCode,
                 ZIP              zip,
                 ADRES            adres,
-                AREA_NO          areaNo,
+                TELNO          telNo,
                 MBER_STTUS       mberSttus,
                 DETAIL_ADRES     detailAdres,
                 END_TELNO        endTelno,

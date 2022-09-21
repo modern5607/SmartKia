@@ -33,7 +33,7 @@
         <if test="searchCusTel != ''">
             AND A.CUSTOMER_TEL LIKE '%' ||#{searchCusTel}|| '%'
         </if>
-        <if test="(sdate != null and edate != null)">
+        <if test="(sdate != '' and edate != '')">
         	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI') between #{sdate} and #{edate}
         </if>
 		

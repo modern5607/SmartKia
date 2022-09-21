@@ -89,18 +89,24 @@ function fnListPage(){
     document.smartMberManageVO.submit();
 }
 
-function fnInserts(){
-	if(validateSmartMberManageVO(document.smartMberManageVO)){ 
+function fnInsert(){
 		if(document.smartMberManageVO.password.value != document.smartMberManageVO.password2.value){
     		alert("<spring:message code="fail.user.passwordUpdate2" />");
     		return;
 		}
 		document.smartMberManageVO.submit();
-	} 
+	}
+function fnInserts1(){
+	if(validateSmartMberManageVO(document.smartMberManageVO)){
+		if(document.smartMberManageVO.password.value != document.smartMberManageVO.password2.value){
+            alert("<spring:message code="fail.user.passwordUpdate2" />");
+            return;
+        } else {
+        	document.smartMberManageVO.submit();
+		}
+    }
 }
-function fnInsert(){
-		document.smartMberManageVO.submit();
-}
+
 /* 전화번호 하이폰 자동생성 */
 $(document).on("keyup", ".phoneNumber", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
@@ -176,7 +182,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <form:password path="password" id="password" class="f_txt w_350" title="비밀번호" maxlength="20" />
+                                                <form:password path="password" name= "password" id="password" class="f_txt w_350" title="비밀번호" maxlength="20" />
                                                 <form:errors path="password" cssClass="error" />
                                             </td>
                                         </tr>
@@ -205,7 +211,7 @@ $(document).on("keyup", ".phoneNumber", function() {
 	                                          	</label>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <%-- <tr>
                                             <td class="lb">
                                             	<label for="useYn">사용여부</label>
                                                 <span class="req">필수</span>
@@ -221,7 +227,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 </label>
                                                 <br/><form:errors path="useYn" />
                                             </td>
-                                          <%--   <td>
+                                            <td>
                                               <label class="f_select w_350" for="useYn">
                                                     <form:select path="useYn" id="useYn" title="사용여부">
                                                         <form:option value="" label="--선택하세요--"/>
@@ -229,18 +235,18 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                     </form:select>
                                                     <form:errors path="mberYn" cssClass="error"/>
                                                 </label>  
-                                            </td> --%>
-                                        </tr>
+                                            </td>
+                                        </tr> --%>
                                         <tr>
                                             <td class="lb">
-                                                <label for="areaNo">전화번호</label>
+                                                <label for="telNo">전화번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="areaNo" id="areaNo" class="f_txt w_350 phoneNumber" title="전화번호" maxlength="15" />
-                                                <form:errors path="areaNo" cssClass="error" />
+                                                <form:input path="telNo" id="telNo" class="f_txt w_350 phoneNumber" title="전화번호" maxlength="15" />
+                                                <form:errors path="telNo" cssClass="error" />
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <%-- <tr>
                                             <td class="lb">
                                                 <label for="">팩스번호</label>
                                             </td>
@@ -248,7 +254,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <form:input path="mberFxnum" id="mberFxnum" class="f_txt w_350" title="팩스번호" maxlength="15" />
                                                 <form:errors path="mberFxnum" cssClass="error" />
                                             </td>
-                                        </tr>
+                                        </tr> --%>
                                         <tr>
                                             <td class="lb">
                                                 <label for="mberFxnum">핸드폰번호</label>

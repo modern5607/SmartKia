@@ -61,7 +61,7 @@
 	//작업반배정 프로세스 실행
 	function UpdateAssign() {
 		var array = new Array();
-		$('input:chUpdateAssignGroupeckbox[name=check]').each(function(index) {
+		$('input:checkbox[name=check]').each(function(index) {
 			if ($(this).is(":checked") == true) {
 				array.push($(this).data("seq"));
 			}
