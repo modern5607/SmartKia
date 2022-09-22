@@ -163,7 +163,6 @@
 												<col style="width: 50px;">
 												<col style="width: 50px;">
 												<col style="width: 50px;">
-												<col style="width: 50px;">
 											</colgroup>
 											<thead>
 												<tr>
@@ -176,7 +175,6 @@
 													<th scope="col">연락처</th>
 													<th scope="col">수리내용</th>
 													<th scope="col">소요시간</th>
-													<th scope="col">수리종류</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -203,8 +201,7 @@
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
 														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
-														<td><c:out value="${result.LEADTIME_NM}" /></td>
-														<td><c:out value="${result.REPAIRMETHOD_NAME}" /></td>
+														<td><c:out value="${result.TOTAL_LEADTIME}" />분</td>
 													</tr>
 												</c:forEach>
 											</tbody>

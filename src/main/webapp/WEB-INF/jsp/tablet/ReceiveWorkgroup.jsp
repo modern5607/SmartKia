@@ -76,13 +76,14 @@ function ReceiveGroup()
 									id="SmartList" action="<c:url value='/tablet/ReceiveWorkgroup.do'/>"
 									method="post">
 
-									<h1 class="tit_1">입고처리</h1>
+									<h1 class="tit_1">수리차량</h1>
 
 									<!-- <p class="txt_1">거래처 관리 TEST 화면입니다.</p> -->
 									<div class="board_list_top" style="margin-top: 20px;">
-										<div class="left_col">
+										<!-- <div class="left_col">
 											<h1 class="txt_1">수리 차량.</h1>
 										</div>
+										 -->
 										<div class="right_col">
 											<a href="<c:url value=''/>" class="item btn btn_blue_46 w_100">조회</a>
 											<!--　등록 -->

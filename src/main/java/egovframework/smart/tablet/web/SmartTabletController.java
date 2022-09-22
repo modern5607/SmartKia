@@ -164,9 +164,11 @@ public class SmartTabletController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-
+		
+		System.out.println(searchVO);
+		
 		// service
-		Map<String, Object> map = smarttabletservice.selectList(searchVO);
+		Map<String, Object> map = smarttabletservice.receiveList(searchVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -225,11 +227,64 @@ public class SmartTabletController {
 		return "/tablet/SmartAssignGroup";
 	}
 	
-	@RequestMapping(value = "/tablet/TransferWorkGroupPOP.do")
-	public String TransferView() throws Exception {
-
+	/**
+	 *이관 처리 view
+	 */
+	@RequestMapping(value = "/tablet/TransferWorkGroupPOP.do",method = RequestMethod.GET)
+	public String TransferView(@RequestParam String seq,String position,ModelMap model) throws Exception {
+		
+		SmartCommonCodeVO vo =new SmartCommonCodeVO();
+		vo.setGroupcode("AUTO_ROOM");
+		
+		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
+		model.addAttribute("positions",map.get("info"));
+		model.addAttribute("seq",seq);
+		model.addAttribute("position",position);
+		System.out.println(map.get("info"));
+		System.out.println(model);
 		return "/tablet/TransferWorkGroupPOP";
 	}
+	/**
+	 * 이관 처리 Update
+	 */
+	@RequestMapping(value = "/tablet/Transfergroup.do")
+	public String Transfergroup(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
+		
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		
+		System.out.println("params :"+params);
+		int result = smarttabletservice.insertlog(params);
+		System.out.println("result : "+ result);
+		if(result==0) //log insert 실패 
+		{
+			model.addAttribute("msg","로그 입력 실패.");
+		 	model.addAttribute("url","");
+		}
+		else {
+			int result1 = smarttabletservice.Transfergroup(params);
+				if(result1 ==0) //업데이트 실패 
+				{
+					model.addAttribute("msg","작업반을 확인하여주세요.");
+				 	model.addAttribute("url","");
+				}
+				else {
+					model.addAttribute("msg","작업반이 이관되었습니다.");
+				 	model.addAttribute("url","SmartWorkGroup.do");
+				}
+		}
+		
+		return "alert";
+	}
+	
 	
 	@RequestMapping(value = "/tablet/OTWorkGroupPOP.do")
 	public String OTGroupView() throws Exception {

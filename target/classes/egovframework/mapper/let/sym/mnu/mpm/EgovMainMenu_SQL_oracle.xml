@@ -22,6 +22,7 @@
 			AND    A.MENU_NO  = B.MENU_NO 
 			AND    A.AUTHOR_CODE = (SELECT C.AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS C
 	                                WHERE  C.SCRTY_DTRMN_TRGET_ID = #{tmp_UniqId})
+			AND B.MENU_NO &lt; 5000000 /*포털서비스관리,포털시스템관리 숨기기*/
 			ORDER BY B.MENU_NO, B.UPPER_MENU_NO,  B.MENU_ORDR
 		 
 	</select>

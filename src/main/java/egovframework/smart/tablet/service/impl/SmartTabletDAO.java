@@ -38,6 +38,20 @@ public class SmartTabletDAO extends EgovAbstractMapper {
 
 	public int updatestatus(Map<String, Object> params) {
 		return update("SmartTabletDAO.updatestatus",params);
+	}
+
+	public List<SmartTabletVO> receiveList(SmartTabletVO searchVO) {
+		return (List<SmartTabletVO>) list("SmartTabletDAO.receiveList", searchVO);
+	}
+
+	public int Transfergroup(Map<String, Object> params) {
+
+		return update("SmartTabletDAO.Transfergroup",params);
+	}
+
+	@SuppressWarnings("unchecked")
+	public int insertlog(Map<String, Object> params) {
+		return insert("SmartTabletDAO.insertlog",params);
 	} 
    
 }

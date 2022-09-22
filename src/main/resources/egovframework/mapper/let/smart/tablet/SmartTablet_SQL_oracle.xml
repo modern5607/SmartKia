@@ -10,8 +10,11 @@
        			CUSTOMER_AUTOKIND,
        			CUSTOMER_NAME,
             	CUSTOMER_TEL, 
-       			FN_LEADTIME_NAME(REPAIRCODE, 'NAME') REPAIRCODE_NAME,
+       			REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
        			FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+       			A.POSITION,
+       			B.KILRO_TOTAL,
+       			A.KILRO_NOW,
        			ESTIME, 
        			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
        			A.TASKSTAT,
@@ -33,8 +36,9 @@
 			CUSTOMER_AUTOKIND,
 			CUSTOMER_NAME,
 			CUSTOMER_TEL, 
-			FN_LEADTIME_NAME(REPAIRCODE, 'NAME') REPAIRCODE_NAME,
+			REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
 			FN_LEADTIME_NAME(REPAIRCODE, 'LEAD_TIME') LEADTIME,
+			TOTAL_LEADTIME,
 			FN_CODENAME(FN_LEADTIME_NAME(REPAIRCODE, 'LEAD_TIME'),'LEADTIME') LEADTIME_NM,
 			POSITION,
 			FN_CODENAME(POSITION, 'AUTO_ROOM') AS POSITION_NAME,
@@ -83,5 +87,44 @@
 			
 			WHERE TAKESEQ = #{seq}
 	
+	</update>
+	<select id="receiveList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
+		
+    	SELECT TAKESEQ,
+       			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME,
+            	CUSTOMER_TEL, 
+       			FN_LEADTIME_NAME(REPAIRCODE, 'NAME') REPAIRCODE_NAME,
+       			FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+       			A.POSITION,
+       			ESTIME, 
+       			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
+       			A.TASKSTAT,
+       			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
+			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
+			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.TASKSTAT != 'CB-perfect'
+			AND A.TASKSTAT != 'CB-receipt'
+			
+			<if test="autoroom != ''">
+				AND A.POSITION != #{autoroom}
+			</if>
+			
+	</select>
+	<insert id="insertlog" parameterType="java.util.HashMap">
+		INSERT INTO CAR_TRANSFERPROC
+        (SEQ,TASKSEQ,TRANS_EVENT,TRANS_DATE,SOURCE_POSITION,TARGET_POSITION,NOTE)
+        VALUES ( SIRA('CAR_TRANSFERPROC', 'SEQ'),#{seq},'Income',SYSDATE,#{position},#{room},#{remark})    
+	</insert>
+	
+	<update id="Transfergroup" parameterType="java.util.HashMap">
+		UPDATE CAR_TAKEREPAIR
+		SET
+			POSITION = #{room},
+			NOTE = #{remark}
+			
+		WHERE TAKESEQ = #{seq}
 	</update>
 </mapper>

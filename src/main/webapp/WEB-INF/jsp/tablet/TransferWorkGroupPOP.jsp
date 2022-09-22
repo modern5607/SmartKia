@@ -22,57 +22,24 @@
 <script type="text/javascript"
 	src="<c:url value='/js/showModalDialogCallee.js'/>"></script>
 <script type="text/javaScript" language="javascript">
-	function fnCheckId() {
-		document.checkForm.checkId.value = document.checkForm.checkId.value
-				.toUpperCase();
-		if (document.checkForm.checkId.value == "") {
-			alert("중복 조회할 아이디를 입력하십시오.");
-			document.checkForm.focus();
-			return;
-		}
-		if (fnCheckNotKorean(document.checkForm.checkId.value)) {
-			document.checkForm.submit();
-		} else {
-			alert("한글은 사용할 수 없습니다.");
-			return;
-		}
-	}
-	function fnReturnId() {
-		var retVal = "";
-		if (document.checkForm.usedCnt.value == 0) {
-			retVal = document.checkForm.resultId.value;
-			//console.log(retVal);
-			parent.showModalDialogCallback(retVal);
-			fn_egov_cancel_popup();
-		} else if (document.checkForm.usedCnt.value == 1) {
-			alert("이미 사용 중인 아이디입니다.");
-			return;
-		} else {
-			alert("먼저 중복 확인을 실행하십시오");
-			return;
-		}
-	}
+	
 
-	/* ********************************************************
-	 * 취소처리
-	 ******************************************************** */
 	function fn_egov_cancel_popup() {
 
 		parent.fn_egov_modal_remove();
 	}
-
-	function fnCheckNotKorean(koreanStr) {
-		for (var i = 0; i < koreanStr.length; i++) {
-			var koreanChar = koreanStr.charCodeAt(i);
-			if (!(0xAC00 <= koreanChar && koreanChar <= 0xD7A3)
-					&& !(0x3131 <= koreanChar && koreanChar <= 0x318E)) {
-			} else {
-				//hangul finding....
-				return false;
-			}
-		}
-		return true;
+	
+	function Transfergroup(){
+		var room = $("#autoroom option:selected").val();
+		var remark = $("#remark").val();
+		var seq = $("#seq").val();
+		var position = $("#position").val();
+		
+		parent.TransferAutoRoom(room,remark,seq,position);
+		fn_egov_cancel_popup();
 	}
+
+	
 </script>
 </head>
 <body>
@@ -81,7 +48,8 @@
 	<div class="popup POP_DUPID_CONF" style="background-color: white;">
 
 		<form name="checkForm" action="<c:url value='/tablet/TransferWorkGroupPOP.do'/>">
-
+			<input type="hidden" name="seq" id="seq" value ="${seq}" >
+			<input type="hidden" name="position" id="position" value ="${position}" >
 			<div class="pop_inner">
 				<div class="pop_header">
 					<h1>이관 처리</h1>
@@ -93,21 +61,19 @@
 					<div class="box_1">
 						<label for="mid" >목적지 작업반</label> 
                         <label class="f_select w_300" for="mid" style="margin-top:-10px;">
-                            <select name="Custtype" id="Custtype">
-                                <option value="매입">A반</option>
-                                <option value="매출">B반</option>
-                                <option value="매입">C반</option>
+                           <select name="autoroom" id="autoroom">
+								<option value="">선택</option>
+								<c:forEach var="info" items="${positions}" varStatus="status">
+									<option value="<c:out value='${info.CODE}'/>"><c:out value="${info.NAME}" /></option>
+								</c:forEach>
                             </select>
                         </label>
-                        <label for="mid">이관 비고</label> 
-                        <input id="mid"
-							class="f_select w_300" type="text" name="checkId" title="선택여부"
-							value="" maxlength="20" style="margin-left: 30px; margin-top: 5px;"/> <input
-							type="hidden" name="resultId" value="<c:out value=""/>" />
+                        <label for="">이관 비고</label> 
+                       <input id="remark" class="f_select w_300" type="text" name="remark" value="" maxlength="50" style="margin-left: 30px; margin-top: 5px;"/>
 					</div>
 					<div class="btn_area al_c pt20">
-						<a href="#LINK" class="btn btn_blue_46 w_100"
-							onclick="javascript:fnCheckId(); return false;">저장</a>
+						<a href="#" class="btn btn_blue_46 w_100"
+							onclick="Transfergroup(); return false;">이관</a>
 						<!-- 조회 -->
 					</div>
 				</div>

@@ -17,6 +17,14 @@ public interface SmartTabletService {
 
 	public Map<String,Object> checkstatus(Map<String, Object> params);
 
-	int updatestatus(Map<String, Object> params);
+	public int updatestatus(Map<String, Object> params);
+
+	public Map<String, Object> receiveList(SmartTabletVO searchVO);
+
+	public int Transfergroup(Map<String, Object> params);
+
+	public int insertlog(Map<String, Object> params)throws Exception;
+
+	
 	
 }

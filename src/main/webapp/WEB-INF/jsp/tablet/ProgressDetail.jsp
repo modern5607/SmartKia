@@ -139,21 +139,19 @@
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
-												<col style="width: 100px;">
 											</colgroup>
 											<thead>
 												<tr>
-													<th scope="col">번호</th>
+													<th scope="col">접수일자</th>
 													<th scope="col">차량번호</th>
 													<th scope="col">차량종류</th>
 													<th scope="col">고객명</th>
 													<th scope="col">연락처</th>
 													<th scope="col">수리내용</th>
 													<th scope="col">작업장(반)</th>
-													<th scope="col">접수일자</th>
 													<th scope="col">예상완료시간</th>
 													<th scope="col">작업상태</th>
-													<th scope="col">수리종류</th>
+													<th scope="col">출고처리</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -168,7 +166,6 @@
 													<tr>
 														<td><c:out
 																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><c:out value="" /></td>
 														<td><c:out value="" /></td>
 														<td><c:out value="" /></td>
 														<td><c:out value="" /></td>

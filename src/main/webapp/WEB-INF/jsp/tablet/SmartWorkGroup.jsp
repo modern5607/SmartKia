@@ -22,13 +22,13 @@
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
 <script type="text/javascript">
-function TransferGroup()
+function TransferGroup(seq,position)
 {
-	var url = "<c:url value='/tablet/TransferWorkGroupPOP.do'/>?";
+	var url = "<c:url value='/tablet/TransferWorkGroupPOP.do?seq="+seq+"&position="+position+"'/>?";
 
 		var $dialog = $('<div id="modalPan"></div>').html(
 				'<iframe style="border: 0px;" src="'
-						+ "<c:url value='/tablet/TransferWorkGroupPOP.do'/>?"
+						+ "<c:url value='/tablet/TransferWorkGroupPOP.do?seq="+seq+"&position="+position+"'/>"
 						+ '" width="100%" height="100%"></iframe>')
 				.dialog({
 					autoOpen : false,
@@ -38,7 +38,7 @@ function TransferGroup()
 				});
 		$(".ui-dialog-titlebar").hide();
 		$dialog.dialog('open');
-	
+
 }
 
 function OTGroup()
@@ -99,6 +99,26 @@ function fnCheckId(){
     return;
 }
 
+function ReceiveView(){
+	var autoroom = $('#autoroom').val();
+	console.log(autoroom);
+	
+	document.SmartList.action = "<c:url value='/tablet/ReceiveWorkgroup.do?'/>";
+    document.SmartList.submit();
+    
+}
+function TransferAutoRoom(room,remark,seq,position){
+	
+	document.SmartList.room.value=room;
+	document.SmartList.remark.value=remark;
+	document.SmartList.seq.value=seq;
+	document.SmartList.position.value=position;
+	
+	document.SmartList.action = "<c:url value='/tablet/Transfergroup.do'/>";
+    document.SmartList.submit();
+}
+
+
 </script>
 
 </head>
@@ -134,10 +154,13 @@ function fnCheckId(){
 									id="SmartList" action="<c:url value='/tablet/SmartWorkGroup.do'/>"
 									method="post">
 									<input type="hidden" name="seq" id="seq" >
+									<input type="hidden" name="room" id="room" >
+									<input type="hidden" name="remark" id="remark" >
+									<input type="hidden" name="position" id="position" >
 									<input type="hidden" name="taskstat" id="taskstat" >
 
-									<h1 class="tit_1">반 별 입고현황</h1>
-									<p class="txt_1">작업반,예상완료시간 클릭시 이관 또는 시간변경 가능합니다.</p>
+									<h1 class="tit_1"> 입고처리사항</h1>
+									<!--  <p class="txt_1">작업반,예상완료시간 클릭시 이관 또는 시간변경 가능합니다.</p> -->
 									<div class="board_list_top" style="margin-top: 20px;">
 										<div class="left_col">
 										<!-- <h1 class="txt_1">A반 입고처리 사항.</h1> -->
@@ -145,14 +168,13 @@ function fnCheckId(){
 										<div class="right_col">
                                             <label class="f_select w_200" for="autoroom">
 														<select name="autoroom" id="autoroom">
-																<option value="">전체</option>
 															<c:forEach var="i" items="${autorooms}" varStatus="status">
                                                                <option value="<c:out value='${i.CODE}'/>" <c:if test='${i.CODE == searchVO.autoroom}'>selected</c:if>  >${i.NAME}</option>
                                                              </c:forEach>
 														</select>
 											</label>
-											<a class="item btn btn_blue_46 w_150" href="<c:url value='/tablet/ReceiveWorkgroup.do'/>">입고처리</a> 
-											<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
+											<a href="#"onclick="ReceiveView(); return false;" class="btn btn_blue_46 w_150" >입고처리</a> 
+											<a href="#" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
 											<!--　등록 -->
 										</div>
 									</div>
@@ -163,6 +185,7 @@ function fnCheckId(){
 											<caption>게시판목록</caption>
 											<colgroup>
 												<col style="width: 50px;">
+												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
@@ -185,7 +208,8 @@ function fnCheckId(){
 													<th scope="col">수리내용</th>
 													<th scope="col">작업반</th>
 													<th scope="col">예상완료시간</th>
-													<th scope="col">수리종류</th>
+													<th scope="col">총주행거리</th>
+													<th scope="col">운행거리</th>
 													<th scope="col">작업상태</th>
 												</tr>
 											</thead>
@@ -207,9 +231,10 @@ function fnCheckId(){
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
 														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
-														<td><a href="#" onclick="TransferGroup()" class="lnk"><c:out value="${result.POSITION_NAME}" /></a>
+														<td><a href="#" onclick="TransferGroup('${result.TAKESEQ}','${result.POSITION}')" class="lnk"><c:out value="${result.POSITION_NAME}" /></a>
 														<td><a href="#" onclick="OTGroup()" class="lnk"><c:out value="${result.ESTIME}" /></a>
-														<td><c:out value="${result.REPAIRMETHOD_NAME}" /></td>
+														<td><c:out value="${result.KILRO_TOTAL}" />km</td>
+														<td><c:out value="${result.KILRO_NOW}" />km</td>
 														<td><a href="#" onclick="Complete('${result.TASKSTAT}','${result.TAKESEQ}')"><c:out value="${result.TASKSTAT_NAME}" /></a>
 													</tr>
 												</c:forEach>
