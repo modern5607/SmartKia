@@ -1,6 +1,9 @@
 package egovframework.smart.mdm.mber.web;
 
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /*import java.io.PrintWriter;*/
 import java.util.Map;
 
@@ -13,6 +16,8 @@ import egovframework.smart.mdm.mber.service.UserDefaultVO;
 import egovframework.smart.mdm.service.SmartCommonCodeVO;
 import egovframework.smart.mdm.service.SmartMdmBizVO;
 import egovframework.smart.mdm.service.SmartMdmService;
+import egovframework.smart.tablet.service.SmartTabletVO;
+import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -31,6 +36,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 /**
@@ -153,12 +159,8 @@ public class SmartMberManageController {
 
     	model.addAttribute("team",map.get("info"));
     	System.out.println("map : "+map.get("info"));
-//    	SmartMberManageVO vo1 = new SmartMberManageVO(); 
-		
-//		System.out.println(userSearchVO);
-//
-//    	System.out.println(smartMberManageService.selectMberList(userSearchVO));
 
+    	System.out.println(smartMberManageVO);
 		return "mdm/mber/SmartMberInsert";
 	}
 
@@ -171,7 +173,8 @@ public class SmartMberManageController {
 	  response.setContentType("text/html; charset=euc-kr");
 	  PrintWriter out = response.getWriter();
 	  
-	  int result = smartMberManageService.insertMber(smartMberManageVO); 		
+	  int result = smartMberManageService.insertMber(smartMberManageVO); smartMberManageVO.setAuthorCode("ROLE_ADMIN"); smartMberManageVO.setUserTy("USR01");
+	  
 	  if (result == 0) // insert실패
 		{
 			out.println("<script>");
@@ -215,10 +218,22 @@ public String updateMberView(@RequestParam("selectedId") String mberId, @ModelAt
 public void updateMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, BindingResult bindingResult, ModelMap model,HttpServletResponse response) throws Exception {
 	response.setContentType("text/html; charset=euc-kr");
 	PrintWriter out = response.getWriter();
-	System.out.println(smartMberManageVO);
+	
 	
 	int result = smartMberManageService.updateMber(smartMberManageVO);
+	int cnt = smartMberManageService.checkAuthorYn(smartMberManageVO);
 	
+	if(smartMberManageVO.getUseYn().equals("Y") && cnt < 1) {
+		smartMberManageService.insertAuthor(smartMberManageVO);
+	}
+	else if(smartMberManageVO.getUseYn().equals("N") && cnt > 0) {
+		smartMberManageService.deleteAuthor(smartMberManageVO);
+	}
+	
+	System.out.println(smartMberManageVO);
+
+	System.out.println(smartMberManageVO.getUseYn());
+	System.out.println(cnt);
 	if (result == 0) //실패
 	{
 		out.println("<script>");
@@ -374,7 +389,7 @@ public String updatePassword(ModelMap model, @RequestParam Map<String, Object> c
 	smartMberManageVO.setPassword(newPassword);
 	smartMberManageVO.setOldPassword(oldPassword);
 	smartMberManageVO.setUniqId(uniqId);
-
+	
 	String resultMsg = "";
 	resultVO = smartMberManageService.selectPassword(smartMberManageVO);
 	//패스워드 암호화
@@ -401,7 +416,9 @@ public String updatePassword(ModelMap model, @RequestParam Map<String, Object> c
 	}
 	model.addAttribute("userSearchVO", userSearchVO);
 	model.addAttribute("resultMsg", resultMsg);
+ 
 
+	
 	return "mdm/mber/SmartMberPasswordUpdt";
 }
 
@@ -481,4 +498,5 @@ public String checkIdDplct(@RequestParam Map<String, Object> commandMap, ModelMa
 
 	return "mdm/mber/SmartIdDplctCnfirm";
 }
+
 }

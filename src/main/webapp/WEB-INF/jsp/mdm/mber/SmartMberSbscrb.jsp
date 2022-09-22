@@ -240,18 +240,12 @@ function fnSbscrb(){
                                         </tr>
                                         <tr>
                                             <td class="lb">
-                                                <label for="areaNo">전화번호</label>
+                                                <label for="telNo">전화번호</label>
                                             </td>
                                             <td>
-                                                <form:input id="areaNo" class="f_txt w_80" path="areaNo" maxlength="5" />
-                                                <span class="f_txt_inner mr5 ml5" title="전화번호 첫번째">-</span>
-                                                <form:input class="f_txt w_80" path="middleTelno" maxlength="5" />
-                                                <span class="f_txt_inner mr5 ml5">-</span>
-                                                <form:input class="f_txt w_80" path="endTelno" maxlength="5" />
-                                                
-                                                <form:errors path="areaNo" />
-                                                <form:errors path="middleTelno" />
-                                                <form:errors path="endTelno" />
+                                                <form:input id="telNo" class="f_txt w_80" path="telNo" maxlength="5" />
+                                                <span class="f_txt_inner mr5 ml5" title="전화번호">-</span>
+                                                <form:errors path="telNo" />
                                             </td>
                                         </tr>
                                         <tr>

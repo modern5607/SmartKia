@@ -31,136 +31,76 @@
 	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
 	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 	<script src="<c:url value='/'/>js/ui.js"></script>
-
-<script type="text/javaScript" language="javascript">
-</script>
+	<style>
+	 /* tr:nth-child(even){
+	 background-color:#9cc0ff; 
+	 }*/
+	</style>
 </head>
 <body>
 <body>
 
-    <!-- Skip navigation -->
-    <a href="#contents" class="skip_navi">본문 바로가기</a>
-
-    <div class="wrap">
-        <!-- header start -->
-	    <c:import url="/sym/mms/EgovHeader.do" />
-	    <!-- //header end -->
-
         <div class="container">
-             <div class="sub_layout">
+            <div class="smart_monitoring">
                 <div class="sub_in">
                     <div class="layout">
-                        <!-- Left menu -->
-	                    <c:import url="/sym/mms/EgovMenuLeft.do" />
-	                    <!--// Left menu -->
-        
-                        <div class="content_wrap">
-                            <div id="contents" class="content" style="padding: 70px 10px 20px 20px;">
-                                 <!-- Location -->
-                                <!-- <div class="location">
-                                    <ul>
-                                        <li><a class="home" href="">Home</a></li>
-                                        <li><a href="">포털서비스관리</a></li>
-                                        <li><a href="">설문관리</a></li>
-                                        <li>설문템플릿</li>
-                                    </ul>
-                                </div> -->
-                                <!--// Location -->
-
-                                <!-- <h1 class="tit_1">포털서비스관리</h1>
-
-                                <p class="txt_1">포털시스템에서 제공되는 서비스들에 대한 컨텐츠를 관리합니다.</p>
-
-                                <h2 class="tit_2">설문관리</h2>
-
-                                <h3 class="tit_3">설문템플릿</h3> -->
-
-                                <!-- 검색조건 -->
-                                <div class="condition">
-                                	
-                                	<form name="listForm" id="listForm" action="<c:url value='${pageContext.request.contextPath}/monitor/SmartMonitoring.do'/>" method="post">
-                                	
-                                    <label class="item f_select" for="sel1">
-                                        <select name="searchCondition" title="검색조건 선택" id="sel1">
-                                            <option value='AUTONUMBER' <c:if test="${searchCondition == 'AUTONUMBER'}">selected</c:if>>차량번호</option>
-                                            <option value='POSITION' <c:if test="${searchCondition == 'POSITION'}">selected</c:if>>위치</option>
-                                        </select>
-                                    </label>
-
-                                    <span class="item f_search">
-                                        <input class="f_input w_500" name="searchKeyword" type="text" size="30" value="${searchKeyword}" maxlength="35" title="검색어 입력" >
-                                        <button class="btn" type="submit" value="<spring:message code="button.inquire" />" onclick="fn_egov_search_QustnrTmplatManage(); return false;">조회</button><!-- 조회 -->
-                                    </span>
-
-	                               	<a href="${pageContext.request.contextPath}/monitor/SmartMonitoringInsertView.do" class="item btn btn_blue_46 w_100"><spring:message code="button.create" /></a><!-- 등록 -->
-
-                                    <input name="qestnrTmplatId" type="hidden" value="">
-									<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>">
-									</form>
-                                    
-                                </div>
-                                <!--// 검색조건 -->
-
-                                <!-- 게시판 -->
-                                <div class="board_list">
-                                    <table>
-                                    	<caption>약관목록</caption>
-                                        <colgroup>
-                                            <col style="width: 20%;">
-                                            <col style="width: auto;">
-                                            <col style="width: 15%;">
-                                            <col style="width: 20%;">
-                                            <col style="width: 10%;">
-                                        </colgroup>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">차량번호</th>
-                                                <th scope="col">수리내용</th>
-                                                <th scope="col">위치</th>
-                                                <th scope="col">예상완료시간</th>
-                                                <th scope="col">비고</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        	<c:if test="${fn:length(resultList) == 0}">
-                                            <tr>
-                                                <td colspan="6"><spring:message code="common.nodata.msg" /></td>
-                                            </tr>
-                                            </c:if>
-                                            
-                                            <c:forEach items="${resultList}" var="result" varStatus="status">
-                                            <tr>
-                                            	<td><c:out value="${result.AUTONUMBER}"/></td>
-                                                <%-- <td>${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}</td> --%>
-                                                <td><c:out value="${result.REPAIRNOTE}"/></td>
-                                                <td><c:out value="${result.POSITION}"/></td>
-                                                <td><c:out value="${result.ESTIME}"/></td>
-                                                <td><c:out value="${result.NOTE}"/></td>
-                                           	</tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+						
+                        <div class="content_wrap" style="grid:">
+                            <div id="contents" class="content" style="padding: 70px 10px 20px 10px;">
+								<div style="display:grid; grid-template-columns:1f; grid-gap:20px">
+									<h1 class="tit_1" style="text-align: center; padding-bottom: 50px">접수 현황</h1>
+								</div>
+                                
+								                                <!-- 게시판 -->
+                                <div style="display:grid; grid-template-columns:1fr; grid-gap:20px">
+	                               
+	                                </div>
+	                                <div class="board_list">
+	                                    <table>
+	                                        <colgroup>
+	                                            <col style="width: 25%;">
+	                                            <col style="width: 20%;">
+	                                            <col style="width: auto%;">
+	                                            <col style="width: 20%;">
+	                                        </colgroup>
+	                                        <thead>
+	                                            <tr style="background: #9cc0ff;">
+	                                                <th scope="col">차량번호</th>
+	                                                <th scope="col">고객명</th>
+	                                                <th scope="col">예상완료시간</th>
+	                                                <th scope="col">상태</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        	<c:if test="${fn:length(resultList) == 0}">
+	                                            <tr>
+	                                                <td colspan="6"><spring:message code="common.nodata.msg" /></td>
+	                                            </tr>
+	                                            </c:if>
+	                                            
+	                                            <c:forEach items="${resultList}" var="result" varStatus="status">
+	                                            <tr>
+	                                                <td><c:out value="${result.AUTONUMBER}"/></td>
+	                                                <td><c:out value="${result.REPAIRNOTE}"/></td>
+	                                                <td><c:out value="${result.ESTIME}"/></td>
+	                                                <td><c:out value="${result.TASKSTAT}"/></td>
+	                                                
+	                                                
+	                                            </tr>
+	                                            </c:forEach>
+	                                        </tbody>
+	                                    </table>
+	                                </div>
                                 </div>
 
-                                <div class="board_list_bot">
-                                    <div class="paging" id="paging_div">
-                                        <ul>
-                                            <ui:pagination paginationInfo = "${paginationInfo}" type="renew" jsFunction="linkPage" />
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!--// 게시판 -->
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div> 
+            </div>
+        </div>
 
-        <!-- footer 시작 -->
-	    <c:import url="/sym/mms/EgovFooter.do" />
-	    <!-- //footer 끝 -->
-    </div>
-    
+
 </body>
 </html>

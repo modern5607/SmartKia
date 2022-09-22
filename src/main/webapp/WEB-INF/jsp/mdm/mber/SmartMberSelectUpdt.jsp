@@ -66,7 +66,6 @@ function fnUpdates(){
 function fnUpdate(){
 	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberSelectUpdt.do'/>";
         document.smartMberManageVO.submit();
-    
 }
 
 
@@ -185,27 +184,28 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
-                                                <label for="rdo1" class="mr30 <c:if test="${smartMbermanageVO.useYn == 'Y'}"> on</c:if>">
-                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" <c:if test="${smartMbermanageVO.useYn == 'Y'}"> checked="checked"</c:if>>
+                                                <label for="rdo1" class="mr30 <c:if test="${SmartMbermanageVO.useYn == 'Y'}"> on</c:if>">
+                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" <c:if test="${SmartMberManageVO.useYn == 'Y'}"> checked="checked"</c:if>>
                                                     사용
                                                 </label>
-                                                <label for="rdo2" class="<c:if test="${smartMbermanageVO.useYn == 'N'}"> on</c:if>">
-                                                    <input type="radio" id="rdo2" name="useYn" class="radio2" value="N" <c:if test="${smartMbermanageVO.useYn == 'N'}"> checked="checked"</c:if>>
+                                                <label for="rdo2" class="<c:if test="${SmartMbermanageVO.useYn == 'N'}"> on</c:if>">
+                                                    <input type="radio" id="rdo2" name="useYn" class="radio2" value="N" <c:if test="${SmartMberManageVO.useYn == 'N'}"> checked="checked"</c:if>>
                                                     미사용
                                                 </label>
+                                                
                                                 <br/><form:errors path="useYn" />
                                             </td>
-                                        </tr>
+                                        </tr> 
                                         <tr>
                                             <td class="lb">
-                                                <label for="areaNo">전화번호</label>
+                                                <label for="telNo">전화번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="areaNo" id="areaNo" class="f_txt w_350 phoneNumber" maxlength="15" />
-                                                <form:errors path="areaNo" cssClass="error" />
+                                                <form:input path="telNo" id="telNo" class="f_txt w_350 phoneNumber" maxlength="15" />
+                                                <form:errors path="telNo" cssClass="error" />
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <%-- <tr>
                                             <td class="lb">
                                                 <label for="mberFxnum">팩스번호</label>
                                             </td>
@@ -213,7 +213,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <form:input path="mberFxnum" id="mberFxnum" class="f_txt w_350" maxlength="15" />
                                                 <form:errors path="mberFxnum" cssClass="error" />
                                             </td>
-                                        </tr>
+                                        </tr> --%>
                                         <tr>
                                             <td class="lb">
                                                 <label for="moblphonNo">핸드폰번호</label>
@@ -233,37 +233,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             </td>
                                         </tr>
                                        
-                                        
-                                        <%-- <tr>
-                                            <td class="lb">
-                                            	<label for="groupId">그룹아이디</label>
-                                                <span class="req">필수</span>
-                                            </td>
-                                            <td>
-                                                <label class="f_select w_350" for="groupId">
-                                                    <form:select path="groupId" id="groupId" name="groupId">
-					                                    <form:option value="" label="--선택하세요--"/>
-					                                    <form:options items="${groupId_result}" itemValue="code" itemLabel="codeNm"/>
-					                                </form:select>
-					                                <form:errors path="groupId" cssClass="error"/>
-                                                </label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lb">
-                                            	<label for="mberSttus">일반회원상태코드</label>
-                                                <span class="req">필수</span>
-                                            </td>
-                                            <td>
-                                                <label class="f_select w_350" for="mberSttus">
-                                                    <form:select path="mberSttus" id="mberSttus" name="mberSttus">
-					                                    <form:option value="" label="--선택하세요--"/>
-					                                    <form:options items="${mberSttus_result}" itemValue="code" itemLabel="codeNm"/>
-					                                </form:select>
-					                                <form:errors path="mberSttus" cssClass="error"/>
-                                                </label>
-                                            </td>
-                                        </tr> --%>
+
                                     </table>
                                 </div>
 

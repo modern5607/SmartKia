@@ -246,7 +246,7 @@
 								<table summary="고객목록">
 									<caption>고객목록</caption>
 									<colgroup>
-										<col style="width: 50px;">
+										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
@@ -292,8 +292,8 @@
 											varStatus="status">
 											<tr>
 												<%-- <td><c:out value="${(userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count}"/></td> --%>
-												<td><c:out
-														value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}" /></td>
+												<%-- <td><c:out value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}" /></td> --%>
+												<td><c:out value="${result.seq}" /></td>
 												<td><c:out value="${result.cusId}" /></td>
 												<td><c:out value="${result.cusAutoNo}" /></td>
 												<td><c:out value="${result.cusAutoKind}" /></td>
@@ -301,7 +301,7 @@
 												<td><c:out value="${result.cusTel}" /></td>
 												<!-- <td><c:out value="${result.taskStat}" /></td> -->
 												<td><c:out value="${result.POSITION_NAME}" /></td>
-												<td><c:out value="${result.compTime}" /></td>
+												<td><c:out value="${result.COMPTIME}" /></td>
 												<td><c:out value="${result.note}" /></td>
 												<td><c:out value="${result.turnOver}" /></td>
 												<td><c:out value="${result.turnoverTime}" /></td>

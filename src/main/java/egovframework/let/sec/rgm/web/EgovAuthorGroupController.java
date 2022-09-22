@@ -133,7 +133,6 @@ public class EgovAuthorGroupController {
     		else 
     		    egovAuthorGroupService.updateAuthorGroup(authorGroup);
     	}
-
         status.setComplete();
         model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));		
 		return "forward:/sec/rgm/EgovAuthorGroupList.do";

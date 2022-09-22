@@ -2,6 +2,7 @@ package egovframework.smart.mdm.mber.service.impl;
 
 import java.util.List;
 
+import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
 import egovframework.smart.mdm.mber.service.UserDefaultVO;
 
@@ -117,5 +118,33 @@ public class SmartMberManageDAO extends EgovAbstractMapper{
     public int checkIdDplct(String checkId){
         return (Integer)selectOne("smartMberManageDAO.checkIdDplct_S", checkId);
     }
+	/**
+	 * 그룹에 권한정보를 할당하여 데이터베이스에 등록
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	public int checkAuthorYn(SmartMberManageVO smartMberManageVO) throws Exception {
+		 return (Integer) selectOne("smartMberManageDAO.checkAuthorYn", smartMberManageVO);
+	}
+	public void insertAuthor(SmartMberManageVO smartMberManageVO) throws Exception {
+		insert("smartMberManageDAO.insertAuthor", smartMberManageVO);
+	}
 
+	/**
+	 * 화면에 조회된 그룹권한정보를 수정하여 항목의 정합성을 체크하고 수정된 데이터를 데이터베이스에 반영
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	public void updateAuthor(SmartMberManageVO smartMberManageVO) throws Exception {
+		update("smartMberManageDAO.updateAuthor", smartMberManageVO);
+	}
+
+	/**
+	 * 그룹별 할당된 시스템 메뉴 접근권한을 삭제
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	public void deleteAuthor(SmartMberManageVO smartMberManageVO) throws Exception {
+		delete("smartMberManageDAO.deleteAuthor", smartMberManageVO);
+	}
 }

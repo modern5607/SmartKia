@@ -5,6 +5,7 @@ import java.util.List;
 import egovframework.smart.mdm.mber.service.SmartMberManageService;
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
 import egovframework.smart.mdm.mber.service.UserDefaultVO;
+import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -74,8 +75,12 @@ public class SmartMberManageServiceImpl extends EgovAbstractServiceImpl implemen
 	public int selectMberListTotCnt(UserDefaultVO userSearchVO) {
     	return smartMberManageDAO.selectMberListTotCnt(userSearchVO);
     }
-
-
+    
+    @Override
+    public int checkAuthorYn(SmartMberManageVO smartMberManageVO) throws Exception{
+		return smartMberManageDAO.checkAuthorYn(smartMberManageVO);
+		
+	}
 	@Override
 	public int updateMber(SmartMberManageVO smartMberManageVO) throws Exception {
 		//패스워드 암호화
@@ -128,4 +133,35 @@ public class SmartMberManageServiceImpl extends EgovAbstractServiceImpl implemen
 		return smartMberManageDAO.checkIdDplct(checkId);
 	}
 
+	/**
+	 * 그룹에 권한정보를 할당하여 데이터베이스에 등록
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	@Override
+	public void insertAuthor(SmartMberManageVO smartMberManageVO) throws Exception{
+		smartMberManageDAO.insertAuthor(smartMberManageVO);
+		
+	}
+	
+	/**
+	 * 화면에 조회된 그룹권한정보를 수정하여 항목의 정합성을 체크하고 수정된 데이터를 데이터베이스에 반영
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	@Override
+	public void updateAuthor(SmartMberManageVO smartMberManageVO) throws Exception{
+		smartMberManageDAO.updateAuthor(smartMberManageVO);
+	}
+
+	/**
+	 * 그룹별 할당된 시스템 메뉴 접근권한을 삭제
+	 * @param authorGroup AuthorGroup
+	 * @exception Exception
+	 */
+	@Override
+	public void deleteAuthor(SmartMberManageVO smartMberManageVO) throws Exception {
+		smartMberManageDAO.deleteAuthor(smartMberManageVO);
+	}
+	
 }

@@ -11,6 +11,8 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 
+    private String seq = "";
+    
     private String cusId = "";
     
     private String cusAutoNo = "";
@@ -120,6 +122,13 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
 		this.recordCountPerPage = recordCountPerPage;
 	}
 
+	
+	public String getSeq() {
+		return seq;
+	}
+	public void setSeq(String seq) {
+		this.seq = seq;
+	}
 	public String getCusId() {
 		return cusId;
 	}
