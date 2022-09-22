@@ -11,32 +11,40 @@
     </select>
     <insert id="InsertWebRcpt" parameterType="java.util.HashMap" >
         INSERT INTO CAR_TAKEREPAIR
-        (TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,REPAIRNOTE,POSITION,RECEIPTDATE,ESTIME,TASKSTAT,COMPTIME,NOTE,URGENT,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
-        VALUES((TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.NEXTVAL, 'FM0000')),#{servicesys},#{id},#{carnum},#{repairnote},#{position},SYSDATE,#{estime},#{taskstat},'',#{note},#{urgent},#{loginid},SYSDATE,'','')
+        (TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,REPAIRNOTE,POSITION,RECEIPTDATE,ESTIME,TASKSTAT,COMPTIME,NOTE,URGENT,TOTAL_LEADTIME,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
+        VALUES((TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.NEXTVAL, 'FM0000')),#{servicesys},#{id},#{carnum},#{repairnote},#{position},SYSDATE,#{estime},#{taskstat},'',#{note},#{urgent},#{totaltime},#{loginid},SYSDATE,'','')
 
         <selectKey keyColumn="TAKESEQ" keyProperty="takeseq" resultType="java.lang.String" order="AFTER">
             SELECT (TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.CURRVAL, 'FM0000')) FROM DUAL
         </selectKey>
     </insert>
-    <select id="SelectRcptList" resultType="java.util.HashMap">
-        SELECT TAKESEQ,
-        RECEIPTDATE,
-        AUTONUMBER,
-        REPAIRCODE,
-        FN_LEADTIME_NAME(REPAIRCODE,'NAME') REPAIR_NAME,
-        T.CUSTOMER_ID,
-        C.CUSTOMER_NAME,
-        C.CUSTOMER_AUTOKIND,
-        C.CUSTOMER_TEL,
-        FN_CODENAME(POSITION,'AUTO_ROOM') POSITION,
-        ESTIME,
-        TASKSTAT,
-        FN_CODENAME(TASKSTAT,'AUTO_PROC') TASKSTAT_NM,
-        FN_CODENAME(REPAIRMETHOD,'AUTO_ME') REPAIRMETHOD
+    <select id="SelectRcptList" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
+        SELECT 
+            TAKESEQ,
+            RECEIPTDATE,
+            AUTONUMBER,
+            REPAIRCODE,
+            REPAIR_ENUM(TAKESEQ) REPAIR_NAME,
+            T.CUSTOMER_ID,
+            C.CUSTOMER_NAME,
+            C.CUSTOMER_AUTOKIND,
+            C.CUSTOMER_TEL,
+            FN_CODENAME(POSITION,'AUTO_ROOM') POSITION,
+            ESTIME,
+            TASKSTAT,
+            FN_CODENAME(TASKSTAT,'AUTO_PROC') TASKSTAT_NM,
+            FN_CODENAME(REPAIRMETHOD,'AUTO_ME') REPAIRMETHOD
         FROM   CAR_TAKEREPAIR T
-        LEFT OUTER JOIN CAR_CUSTOMER C ON C.CUSTOMER_ID = T.CUSTOMER_ID
+            LEFT OUTER JOIN CAR_CUSTOMER C ON C.CUSTOMER_ID = T.CUSTOMER_ID
+        WHERE 1=1
+        <if test="searchcarnum != ''">
+            AND T.AUTONUMBER LIKE '%'||#{searchcarnum}||'%'
+        </if>
         ORDER BY RECEIPTDATE DESC
 
+    </select>
+    <select id="SelectRcptinfo" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT * FROM CAR_TAKEREPAIR WHERE TAKESEQ = #{seq}
     </select>
 
     <insert id="InsertLeadRepair" parameterType="java.util.HashMap" >
@@ -45,4 +53,21 @@
         VALUES (SIRA_REPAIR_SEQ(#{takeseq}),#{takeseq},#{method},#{code},#{leadtime},#{note},#{insertid},SYSDATE,'','')
 
     </insert>
+
+    <select id="selectRcptRepairInfo" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            REPAIR_SEQ,
+            TAKESEQ,
+            REPAIRMETHOD,
+            FN_CODENAME(REPAIRMETHOD,'AUTO_ME') REPAIRMETHOD_NM,
+            REPAIRCODE,
+            FN_LEADTIME_NAME(REPAIRCODE,'NAME') AS REPAIRNAME,
+            LEADTIME,
+            REPAIRANT,
+            REPAIR_NOTE,
+            INSERT_ID,
+            INSERT_DATE
+        FROM   CAR_LEAD_REPAIR
+        WHERE TAKESEQ = #{seq}
+    </select>
 </mapper>

@@ -72,6 +72,7 @@ public class SmartRcptController {
 	@RequestMapping(value="/rcpt/SmartWebRcptView.do")
 	public String SmartWebRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO ,ModelMap model,HttpServletRequest request,HttpServletResponse response) throws Exception{
 		
+		System.out.println(smartrcptVO);
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -98,7 +99,7 @@ public class SmartRcptController {
 		// Map<String, Object> map = smartrcptservice.selectCommonCodeList(smartrcptVO);
 		 
 		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime(smartrcptVO);
-		System.out.println("leadtimelist :" + leadtimelist);
+		// System.out.println("leadtimelist :" + leadtimelist);
 		//  System.out.println("leadtimelist :" +leadtimelist.get("main"));
 		int totCnt = 1;//Integer.parseInt((String) map.get("resultCnt"));
 		// List<Object> servicesysMap = smartmdmservice.SelectCode("AUTO_SYSTEM");
@@ -119,7 +120,7 @@ public class SmartRcptController {
 		model.addAttribute("leadtime", leadtimelist.get("main"));
 		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
 		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
-		model.addAttribute("rcptlist", smartrcptservice.SelectRcptList());
+		model.addAttribute("rcptlist", smartrcptservice.SelectRcptList(smartrcptVO));
 		// System.out.println(model.get("rcptlist"));
 
 		model.addAttribute("paginationInfo", paginationInfo);
@@ -270,4 +271,23 @@ public class SmartRcptController {
 		return "alert";
 	}
 
+	//접수현황 수리사항 디테일팝업화면
+	@RequestMapping(value = "/rcpt/RepaireDetailPopup.do",method = RequestMethod.GET)
+	public String RepaireDetailPopup(ModelMap model, String seq) throws Exception
+	{
+		// 미인증 사용자에 대한 보안처리 
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if(!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login")); 
+			return	"uat/uia/EgovLoginUsr"; 
+		}
+		System.out.println(seq);
+		
+		
+		model.addAttribute("rcptinfo", smartrcptservice.SelectRcptinfo(seq));
+		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
+		model.addAttribute("RepairList",smartrcptservice.selectRcptRepairInfo(seq));
+		// System.out.println(model.get("RepairList"));
+		return "rcpt/RepaireDetailPopup";
+	}
 }

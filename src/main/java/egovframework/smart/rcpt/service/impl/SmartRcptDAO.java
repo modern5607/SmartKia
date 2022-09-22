@@ -30,12 +30,20 @@ public class SmartRcptDAO extends EgovAbstractMapper {
         return resultmap;
     }
     
-    public List<Object> SelectRcptList(){
-        return selectList("SelectRcptList");
+    public List<Object> SelectRcptList(SmartRcptVO smartrcptVO){
+        return selectList("SelectRcptList",smartrcptVO);
     }
 
     public int InsertLeadRepair(Map<String, Object> leadrepairmap) {
         return insert("SmartRcptDAO.InsertLeadRepair",leadrepairmap);
+    }
+
+    public List<Object> selectRcptRepairInfo(String seq) {
+        return selectList("SmartRcptDAO.selectRcptRepairInfo",seq);
+    }
+
+    public List<Object> SelectRcptinfo(String seq) {
+        return selectList("SmartRcptDAO.SelectRcptinfo",seq);
     }
 	 
 }

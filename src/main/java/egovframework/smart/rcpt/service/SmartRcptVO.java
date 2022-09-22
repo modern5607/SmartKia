@@ -13,8 +13,15 @@ public class SmartRcptVO extends SmartLeadTimeVO implements Serializable {
 	private String name="";
 	private String carnum="";
 	private String tel="";
+	private String searchcarnum="";
 
 
+	public String getSearchcarnum() {
+		return searchcarnum;
+	}
+	public void setSearchcarnum(String searchcarnum) {
+		this.searchcarnum = searchcarnum;
+	}
 	public String getTel() {
 		return tel;
 	}

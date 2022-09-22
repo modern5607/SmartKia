@@ -195,6 +195,27 @@
         
     }
 
+    function RepairDetail(seq)
+    {
+        console.log(seq);
+        var url = "<c:url value='/rcpt/RepaireDetailPopup.do'/>?";
+        
+        // var varParam = new Object();
+        // var checkId = document.mberManageVO.mberId.value;
+        // var varParam = "checkId="+checkId;
+        
+        var $dialog = $('<div id="modalPan"></div>')
+        .html('<iframe style="border: 0px;" src="' + "<c:url value='/rcpt/RepaireDetailPopup.do?seq="+seq+"'/>" +'" width="100%" height="100%"></iframe>')
+        .dialog({
+            autoOpen: false,
+            modal: true,
+            width: 900,
+            height: 700
+        });
+        $(".ui-dialog-titlebar").hide();
+        $dialog.dialog('open');
+    }
+
     function DeleteRcpt(takeseq)
     {
         console.log(takeseq);
@@ -239,7 +260,7 @@
                                         <a href="#" class="btn btn_blue_46 w_100" onclick="fnIdCheck()" style="float:left;"><spring:message code="button.inquire"/></a>
                                     </span>
                                 </div>
-                                <form name="rcptform" id="rcptform" action="" method="post">
+                                <form name="rcptform" id="rcptform" action="<c:url value='/rcpt/SmartWebRcptView.do'/>" method="post">
                                     <input type="hidden" name="id" value="">
                                     <input type="hidden" name="taskstat" value="<c:out value='CB-receipt'/>">
                                     <input type="hidden" name="servicesys" value="<c:out value='${servicesys[0].CODE}'/>">
@@ -401,12 +422,11 @@
                                             <span class="right">
 
                                                 <label class="right">차량번호
-                                                    <input class="f_input w_200" type="text"/></label>
+                                                    <input class="f_input w_200" name="searchcarnum" id="searchcarnum" type="text" value="<c:out value='${smartrcptVO.searchcarnum}'/>"/>
+                                                </label>
                                             </span> 
                                             
-                                            <button class="btn" type="submit">
-                                                <spring:message code="button.inquire" />
-                                            </button>조회
+                                            <button class="btn" type="submit"><spring:message code="button.inquire"/><button>
                                         </span>
                                         <!-- <a href="" class="btn btn_search_w">등록</a> -->
 
@@ -455,7 +475,7 @@
                                                     <td><c:out value="${result.RECEIPTDATE}"/></td>
                                                     <td><c:out value="${result.AUTONUMBER}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_AUTOKIND}"/></td>
-                                                    <td><c:out value="${result.REPAIR_NAME}"/></td>
+                                                    <td><a href="#" class="lnk" style="text-decoration: underline;" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIR_NAME}"/></a></td>
                                                     <td><c:out value="${result.CUSTOMER_NAME}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_TEL}"/></td>
                                                     <td><c:out value="${result.POSITION}"/></td>

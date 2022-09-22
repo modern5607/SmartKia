@@ -34,6 +34,11 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 	public int InsertWebRcpt(Map<String, Object> params) throws Exception {
 		int result=0;
 		try{
+			if(params.get("position").toString().equals("") == false)
+			{
+				params.put("taskstat", "CB-standby");
+			}
+
 			Map<String, Object> resultmap = smartrcptDAO.InsertWebRcpt(params);
 			String takeseq = resultmap.get("takeseq").toString();
 			System.out.println(takeseq);
@@ -77,12 +82,22 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 		return result;
 	}
 	@Override
-	public List<Object> SelectRcptList() throws Exception {
-		return smartrcptDAO.SelectRcptList();
+	public List<Object> SelectRcptList(SmartRcptVO smartrcptVO) throws Exception {
+		return smartrcptDAO.SelectRcptList(smartrcptVO);
 	}
 
 	@Override
 	public int InsertLeadRepair(Map<String, Object> leadrepairmap) throws Exception {
 		return smartrcptDAO.InsertLeadRepair(leadrepairmap);
+	}
+
+	@Override
+	public List<Object> selectRcptRepairInfo(String seq) {
+		return smartrcptDAO.selectRcptRepairInfo(seq);
+	}
+
+	@Override
+	public List<Object> SelectRcptinfo(String seq) throws Exception {
+		return smartrcptDAO.SelectRcptinfo(seq);
 	}
 }

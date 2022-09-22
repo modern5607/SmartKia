@@ -29,15 +29,15 @@ body {min-width: 1400px;}
 .gnb {margin-top: 44px;}
 .gnb ul::after {content: ""; display: block; clear: both;}
 .gnb ul li {float: left;}
-.gnb ul li + li {margin-left: 50px;}
+.gnb ul li + li {margin-left: 100px;}
 .gnb ul li a {display: block; color: #333; font-size: 20px; font-weight: 1400;}
 .gnb ul li a.manager {color: #004986;}
 
 .all_menu {display: none; position: absolute; left: 0; top: 177px; width: 100%; min-width: 1300px; border-bottom: 1px solid #ddd; background: #fff; z-index: 99;}
 .all_menu .inner {width: 1400px; margin: 0 auto;}
 .all_menu .inner::after {content: ""; display: block; clear: both;}
-.all_menu .inner > div {float: left; width: 165px; height: 760px; padding: 34px 10px 0 0px;}
-.all_menu .inner > div:first-child {padding-left: 0;}
+.all_menu .inner > div {float: left; width: 174px; height: 760px; padding: 7px 10px 0 0px;}
+.all_menu .inner > div:first-child {padding-left: 0;margin-left: 50px;}
 .all_menu .inner > div h2 {color: #222; font-size: 20px; font-weight: 700;}
 .all_menu .inner > div h3 {color: #777; font-size: 17px; font-weight: 300;}
 .all_menu .inner > div ul li + li {margin-top: 13px;}

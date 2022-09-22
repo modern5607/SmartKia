@@ -1,16 +1,3 @@
-<%--
-  Class Name : EgovIncHeader.jsp
-  Description : 화면상단 Header(include)
-  Modification Information
-
-       수정일              수정자         수정내용
-    ----------  --------  ---------------------------
-    2011.08.31  JJY       경량환경 버전 생성
-    2021.08.12  신용호          신규 디자인 적용
-
-    author   : 실행환경개발팀 JJY
-    since    : 2011.08.31
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import ="egovframework.com.cmm.LoginVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -48,7 +35,7 @@ function fn_egov_modal_remove() {
 <div class="header">
     <div class="inner">
         <div class="left_col">
-            <h1 class="logo"><a href="<c:url value='/'/>cmm/main/mainPage.do"><img src="<c:url value='/images/logo.png'/>" alt="표준프레임워크 포털 eGovFrame 샘플 포털"></a></h1>
+            <h1 class="logo"><a href="<c:url value='/'/>cmm/main/mainPage.do"><img src="<c:url value='/images/logo.png'/>" style="width:180px;" alt="표준프레임워크 포털 eGovFrame 샘플 포털"></a></h1>
             <a class="go" href="#LINK" onclick="fn_egov_modal_create(); return false;"><img src="<c:url value='/images/ico_question.png'/>" alt="메뉴구성 설명"></a>
         </div>
 
@@ -116,12 +103,12 @@ function fn_egov_modal_remove() {
             <div class="all_menu">
                 <div class="inner">
                     <div>
-                        <h2>기준정보</h2>
+                        <!-- <h2>기준정보</h2> -->
                         <ul>
                             <li><a href="/mdm/SmartCode.do?menuNo=1010000">공통코드관리</a></li>
                             <li><a href="/mdm/SmartMberManage.do?menuNo=1000000">사용자관리</a></li>
                             <li><a href="/sec/gmt/EgovGroupList.do?menuNo=1000000">소요시간관리</a></li>
-                            <li><a href="/EgovPageLink.do?link=main/sample_menu/EgovLocation?menuNo=1000000">찾아오시는 길</a></li>
+                            <!-- <li><a href="/EgovPageLink.do?link=main/sample_menu/EgovLocation?menuNo=1000000">찾아오시는 길</a></li> -->
                             <li><a href="/mdm/SmartLeadTime.do?menuNo=1070000">표준작업관리</a></li>
                             <li><a href="/mdm/SmartBiz.do">거래처 관리</a></li>
                             <li><a href="/customer/SmartCusMberManage.do?menuNo=1000000">고객관리</a></li>
@@ -129,7 +116,7 @@ function fn_egov_modal_remove() {
                     </div>
 
                     <div>
-                        <h2>접수관리</h2>
+                        <!-- <h2>접수관리</h2> -->
                         <ul>
                             <li><a href="/rcpt/SmartWebRcptView.do">접수등록(WEB)</a></li>
                             <li><a href="/rcpt/SmartMobileRcptView.do">예약접수등록(모바일)</a></li>
@@ -138,7 +125,7 @@ function fn_egov_modal_remove() {
                     </div>
 
                     <div>
-                        <h2>키오스크</h2>
+                        <!-- <h2>키오스크</h2> -->
                         <ul>
                         	<li><a href="/kiosk/selectKiosk.do?menuNo=3000000">키오스크접수</a></li>
                             <li><a href="/kiosk/selectKioskin.do?menuNo=3000000">일반접수관리</a></li>
@@ -147,7 +134,7 @@ function fn_egov_modal_remove() {
                     </div>
                     
                     <div>
-                        <h2>현장관리</h2>
+                        <!-- <h2>현장관리</h2> -->
                         <ul>
                             <!--
                                 <li><a href="/uss/olp/qri/EgovQustnrRespondInfoList.do?menuNo=4000000">접수List조회</a></li>
@@ -163,7 +150,7 @@ function fn_egov_modal_remove() {
                     </div>
 
                     <div>
-                        <h2>고객관리</h2>
+                        <!-- <h2>고객관리</h2> -->
                         <ul>
                             <li><a href="/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">고객정보관리</a></li>
                             <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4100000">차량정보관리</a></li>
@@ -173,14 +160,14 @@ function fn_egov_modal_remove() {
                     </div>
                     
                     <div>
-                        <h2>모니터링</h2>
+                        <!-- <h2>모니터링</h2> -->
                         <ul>
                             <li><a href="/monitor/SmartMonitoringA.do?menuNo=4200000">현장접수모니터링</a></li>
                             <li><a href="/monitor/SmartMonitoring.do?menuNo=4200000">고객대기실모니터링</a></li>
                         </ul>
                     </div>
                     
-                    <div class="admin">
+                    <!-- <div class="admin">
                         <h2>포털서비스관리</h2>
                         <h3>설문관리</h3>
                         <ul>
@@ -196,7 +183,7 @@ function fn_egov_modal_remove() {
                             <li><a href="/uss/olh/faq/admin/FaqListInqire.do">FAQ관리</a></li>
                             <li><a href="/uss/olh/qna/admin/QnaListInqire.do">QnA관리</a></li>
                             <li><a href="/uss/olh/qnm/QnaAnswerListInqire.do">QnA답변관리</a></li>
-<!--                             <li><a href="/cop/com/selectTemplateInfs.do">게시판템플릿관리</a></li> -->
+                            <li><a href="/cop/com/selectTemplateInfs.do">게시판템플릿관리</a></li>
                             <li><a href="/cop/bbs/SelectBBSMasterInfs.do">게시판생성관리</a></li>
                             <li><a href="/cop/com/selectBBSUseInfs.do">게시판사용관리</a></li>
                             <li><a href="/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">공지사항관리</a></li>
@@ -221,7 +208,7 @@ function fn_egov_modal_remove() {
                             <li><a href="/sec/rgm/EgovAuthorGroupListView.do">사용자별권한관리</a></li>
                             <li><a href="/sec/rmt/EgovRoleList.do">롤관리</a></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>

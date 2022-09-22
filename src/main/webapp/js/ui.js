@@ -21,7 +21,35 @@ $(function() {
             });
         }
     }
+
+    var allMenu2 = {
+        init: function() {
+            this.$tartet = $('.all_menu');
+            this.$btn = $('.gnb ul li');
+            this.addEvent();
+            this.addEvent2();
+        },
+        addEvent: function() {
+            var objAllMenu = this.$tartet;
+            //열기
+            this.$btn.mouseenter(function(){
+                if(objAllMenu.is(':visible') == false)
+                {
+                    objAllMenu.slideDown(100);
+                    $(this).addClass('on');
+                }
+            });
+        },
+        addEvent2: function(){
+        var objAllMenu = this.$tartet;
+        this.$tartet.mouseleave(function(){
+            objAllMenu.slideUp(100);
+            $(this).removeClass('on');
+        });
+        }
+    }
     $('.allmenu').length && allMenu.init();
+    $('.allmenu').length && allMenu2.init();
 
     // Form
 
