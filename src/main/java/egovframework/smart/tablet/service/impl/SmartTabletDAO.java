@@ -52,6 +52,11 @@ public class SmartTabletDAO extends EgovAbstractMapper {
 	@SuppressWarnings("unchecked")
 	public int insertlog(Map<String, Object> params) {
 		return insert("SmartTabletDAO.insertlog",params);
+	}
+
+	public List<SmartTabletVO> detailList(SmartTabletVO vo) {
+		
+		return (List<SmartTabletVO>) list("SmartTabletDAO.detailList", vo);
 	} 
    
 }

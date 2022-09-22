@@ -303,9 +303,42 @@ public class SmartTabletController {
 		System.out.println(map.get("info"));
 		return "/tablet/ReceiveGroupPOP";
 	}
-	
+	/*
+	 * 반별진행내역 View
+	 */
 	@RequestMapping(value = "/tablet/ProgressDetail.do")
-	public String ProgressDetailView() throws Exception {
+	public String ProgressDetailView(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model,
+	@RequestParam(value="menuNo",required = false)HttpServletRequest request) throws Exception {
+		
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		searchVO.setPageUnit(propertyService.getInt("pageUnit"));
+		searchVO.setPageSize(propertyService.getInt("pageSize"));
+
+		PaginationInfo paginationInfo = new PaginationInfo();
+
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
+		paginationInfo.setPageSize(searchVO.getPageSize());
+		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		System.out.println(searchVO);
+		Map<String,Object> map = smarttabletservice.detailList(searchVO);
+
+		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
+
+		paginationInfo.setTotalRecordCount(totCnt);
+
+		model.addAttribute("resultList", map.get("resultList"));
+		model.addAttribute("resultCnt", map.get("resultCnt"));
+		model.addAttribute("paginationInfo", paginationInfo);
+
 
 		return "/tablet/ProgressDetail";
 	}
@@ -402,6 +435,15 @@ public class SmartTabletController {
 				out.println("</script>");
 			}
 		}
+	}
+
+	/*
+	 * 출고화면 View
+	 */
+	@RequestMapping(value = "/tablet/OTWorkGroupPOP.do")
+	public String RelasePOPview() throws Exception {
+
+		return "/tablet/OTWorkGroupPOP";
 	}
 }
 

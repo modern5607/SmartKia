@@ -23,8 +23,31 @@ public class SmartTabletVO extends ComDefaultVO implements Serializable {
 	public void setTaskstat(String taskstat) {
 		this.taskstat = taskstat;
 	}
+	public String getSearchteam() {
+		return searchteam;
+	}
+	public void setSearchteam(String searchteam) {
+		this.searchteam = searchteam;
+	}
+	public String getSdate() {
+		return sdate;
+	}
+	public void setSdate(String sdate) {
+		this.sdate = sdate;
+	}
+	public String getEdate() {
+		return edate;
+	}
+	public void setEdate(String edate) {
+		this.edate = edate;
+	}
 	private String searchcarnum="";
 	private String searchTel="";
+	private String searchteam="";
+	private String searchdate="";
+	private String sdate="";
+	private String edate="";
+
 
 	public String getSeq() {
 		return seq;
@@ -127,6 +150,12 @@ public class SmartTabletVO extends ComDefaultVO implements Serializable {
 	}
 	public void setRecordCountPerPage(int recordCountPerPage) {
 		this.recordCountPerPage = recordCountPerPage;
+	}
+	public String getSearchdate() {
+		return searchdate;
+	}
+	public void setSearchdate(String searchdate) {
+		this.searchdate = searchdate;
 	}
 	
 	

@@ -216,7 +216,7 @@ function TransferAutoRoom(room,remark,seq,position){
 											<tbody>
 												<c:if test="${fn:length(resultList) == 0}">
 													<tr>
-														<td colspan="8"><spring:message
+														<td colspan="12"><spring:message
 																code="common.nodata.msg" /></td>
 													</tr>
 												</c:if>

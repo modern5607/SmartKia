@@ -16,38 +16,38 @@
 <link rel="stylesheet" href="<c:url value='/'/>css/component.css"
 	type="text/css">
 <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+<!-- 캘린더 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script src="<c:url value='/'/>js/datepicker.js"></script>
+<!-- /캘린더 -->
 <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 <script src="<c:url value='/'/>js/ui.js"></script>
 <title>샘플 포털 > 사이트 소개 > 사이트 소개</title>
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
-<script type="text/javascript">
-            <!-- 거래처 등록 페이지 호출-->
-            function fn_egov_regist_Smartbiz(){
+<script type="text/javascript">          
 
-            	//document.QnaListForm.action = "<c:url value='/mdm/SmartaddBiz.do'/>";
-            	//document.QnaListForm.submit();
-            		
-            }
-            
-            function fn_egov_select_biz(){
+function releasePOP()
+{
+	var url = "<c:url value='/tablet/OTWorkGroupPOP.do'/>?";
 
-		        document.SmartBizList.action = "<c:url value='/mdm/SmartBiz.do'/>";
-		        document.SmartBizList.submit();	
-	        }
-            
-            function UpdateBiz(Custid)
-        	{
-           		document.SmartBizList.Custid.value = Custid;
-            	document.SmartBizList.action = "<c:url value='/mdm/SmartUpdateBizView.do'/>";
-            	document.SmartBizList.submit();
-        	}
-            function linkPage(pageNo){
-                document.SmartBizList.pageIndex.value = pageNo;
-                document.SmartBizList.action = "<c:url value='/mdm/SmartBiz.do'/>";
-                document.SmartBizList.submit();
-            }
-            </script>
+		var $dialog = $('<div id="modalPan"></div>').html(
+				'<iframe style="border: 0px;" src="'
+						+ url
+						+ '" width="100%" height="100%"></iframe>')
+				.dialog({
+					autoOpen : false,
+					modal : true,
+					width : 600,
+					height : 400
+				});
+		$(".ui-dialog-titlebar").hide();
+		$dialog.dialog('open');
+	
+}    
+</script>
 
 </head>
 <body>
@@ -78,8 +78,8 @@
 									</ul>
 								</div>
 								<!--// Location -->
-								<form modelAttribute="SmartMdmBizVO" name="SmartBizList"
-									id="SmartBizList" action="<c:url value='/mdm/SmartBiz.do'/>"
+								<form modelAttribute="SmartTabletVO" name="ProgressDetail"
+									id="ProgressDetail" action="<c:url value='/tablet/ProgressDetail.do'/>"
 									method="post">
 
 									<h1 class="tit_1">반별 진행 내역 조회</h1>
@@ -93,35 +93,28 @@
                                             <input type="hidden" id="groupcode" name="groupcode" value="">
                                             <input type="hidden" id="code" name="code" value="">
                                             <p class="left">
-                                                <label for="searchCode">차량번호</label>
-                                                <input class="f_input w_200" name="searchCode" id="searchCode" type="text" value="<c:out value='${comCodeVO.searchCode}'/>" />
+                                                <label for="searchcarnum">차량번호</label>
+                                                <input class="f_input w_200" name="searchcarnum" id="searchcarnum" type="text" value="<c:out value='${comCodeVO.searchcarnum}'/>" />
                                             </p>
                                             <p class="left">
-                                                <label for="searchCode">연락처</label>
-                                                <input class="f_input w_200" name="searchCode" id="searchCode" type="text" value="<c:out value='${comCodeVO.searchCode}'/>" />
+                                                <label for="searchtel">연락처</label>
+                                                <input class="f_input w_200" name="searchTel" id="searchTel" type="text" value="<c:out value='${comCodeVO.searchTel}'/>" />
                                             </p>
                                             <p class="left">
-                                                <label for="searchCodename">접수일자</label>
-                                                <input class="f_input w_200" name="searchCodename" id="searchCodename" type="text" value="<c:out value='${comCodeVO.searchCodename}'/>" />
+                                                <label for="searchdate">접수일자</label>
+                                                <input class="f_input w_150" name="sdate" id="sdate" type="text" readonly value="<c:out value='${comCodeVO.sdate}'/>" />
+                                                <label >~</label>
+                                                <input class="f_input w_150" name="edate" id="edate" type="text" readonly value="<c:out value='${comCodeVO.edate}'/>" />
                                             </p>
-                                            
-                                            <button class="btn" type="submit">
-                                                <spring:message code="button.inquire" />
-                                            </button>조회
+											<p class="left">
+                                                <label for="searchteam">작업반</label>
+                                                <input class="f_input w_200" name="searchteam" id="searchteam" type="text" value="<c:out value='${comCodeVO.searchteam}'/>" />
+                                            </p>
+                                            <p class="left">
+                                            <button class="f_input w_50" type="submit"> <spring:message code="button.inquire" /></button>조회
+											</p>
                                         </span>
 
-									</div>
-									<div class="board_list_top" style="margin-top: 20px;">
-										<!-- <div class="left_col">
-											<h1 class="txt_1">업체코드 클릭시 수정화면으로 이동됩니다.</h1>
-										</div>
-										 -->
-										<div class="right_col">
-											<a href="<c:url value='/mdm/SmartaddBiz.do'/>"
-												class="item btn btn_blue_46 w_100"><spring:message
-													code="button.create" /></a>
-											<!--　등록 -->
-										</div>
 									</div>
 									<!--// 검색조건 -->
 
@@ -129,7 +122,7 @@
 										<table>
 											<caption>게시판목록</caption>
 											<colgroup>
-												<col style="width: 50px;">
+												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
@@ -157,24 +150,23 @@
 											<tbody>
 												<c:if test="${fn:length(resultList) == 0}">
 													<tr>
-														<td colspan="8"><spring:message
+														<td colspan="10"><spring:message
 																code="common.nodata.msg" /></td>
 													</tr>
 												</c:if>
 												<c:forEach var="result" items="${resultList}"
 													varStatus="status">
 													<tr>
-														<td><c:out
-																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><c:out value="" /></td>
-														<td><c:out value="" /></td>
-														<td><c:out value="" /></td>
-														<td><c:out value="" /></td>
-														<td><c:out value="" /></td>
-														<td><c:out value="" /></td>
-														<td><c:out value="" /></td>
-														<td><c:out value="" /></td>
-														<td><c:out value="" /></td>
+														<td><c:out value="${result.RECEIPTDATE}" /></td>
+														<td><c:out value="${result.AUTONUMBER}" /></td>
+														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
+														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
+														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
+														<td><c:out value="${result.POSITION_NAME}" /></td>
+														<td><c:out value="${result.ESTIME}" /></td>
+														<td><c:out value="${result.TASKSTAT_NAME}" /></td>
+														<td><a href="#"onclick="releasePOP();" class="btn btn_blue_46 w_50" >출고</a> </td>
 													</tr>
 												</c:forEach>
 											</tbody>

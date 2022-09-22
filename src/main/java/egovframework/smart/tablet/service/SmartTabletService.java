@@ -24,6 +24,8 @@ public interface SmartTabletService {
 	public int Transfergroup(Map<String, Object> params);
 
 	public int insertlog(Map<String, Object> params)throws Exception;
+	
+	public Map<String, Object> detailList(SmartTabletVO vo);
 
 	
 	

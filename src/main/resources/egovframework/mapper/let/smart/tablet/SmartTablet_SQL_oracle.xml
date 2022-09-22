@@ -127,4 +127,45 @@
 			
 		WHERE TAKESEQ = #{seq}
 	</update>
+	
+	<select id="detailList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
+		
+    	SELECT TAKESEQ,
+       			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME,
+            	CUSTOMER_TEL, 
+       			REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
+       			FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+       			A.POSITION,
+       			B.KILRO_TOTAL,
+       			A.KILRO_NOW,
+       			ESTIME, 
+       			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
+       			A.TASKSTAT,
+       			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
+			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
+			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.TASKSTAT = 'CB-perfect'
+			
+			<if test="searchcarnum != ''">
+			AND A.AUTONUMBER LIKE '%' || #{searchcarnum} || '%'
+			</if>
+			<if test="searchTel != ''">
+			AND B.CUSTOMER_TEL LIKE '%' || #{searchTel} || '%'
+			</if>
+			<if test="sdate != '' and edate != '' ">
+			AND TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD')>= #{sdate} AND #{edate} >= TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD') 
+			</if>
+			<if test="sdate != '' and edate == '' ">
+			AND TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD')>= #{sdate} 
+			</if>
+			<if test="edate != '' and sdate == '' ">
+			AND #{edate}>= TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD') 
+			</if>
+			<if test="searchteam != ''">
+			AND A.POSITION LIKE '%' || #{searchteam} || '%'
+			</if>
+	</select>
 </mapper>
