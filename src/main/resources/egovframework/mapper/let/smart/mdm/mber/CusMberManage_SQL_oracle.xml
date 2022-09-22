@@ -156,23 +156,12 @@
     </select>
     
     
-     <select id="checkIdDplct_S" resultType="int">
+     <select id="checkCusDplct" resultType="int">
      
-         SELECT COUNT(1) usedCnt
-             FROM(
-             SELECT
-                 EMPLYR_ID             userId
-             FROM    LETTNEMPLYRINFO
-             UNION ALL
-             SELECT
-                 ENTRPRS_MBER_ID        userId
-             FROM    LETTNENTRPRSMBER
-             UNION ALL
-             SELECT
-                 MBER_ID               userId
-             FROM    LETTNGNRLMBER
-             ) A
-         WHERE userId = #{checkId}
+       	SELECT COUNT(*) cnt 
+		FROM CAR_CUSTOMER
+		WHERE CUSTOMER_AUTONO = #{autoNo}
+		AND CUSTOMER_NAME = #{cusNm}
      
     </select>
 </mapper>

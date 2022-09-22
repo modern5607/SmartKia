@@ -45,14 +45,90 @@ function fnInsert(){
 	/* if(document.checkForm.checkId.value==""){
 		alert(document.cusMberManageVO.check.value);
 		return; */
-	document.cusMberManageVO.submit();
+		
+		
+		/* document.cusMberManageVO.submit(); */
 	
 }
-<c:if test="${!empty resultMsg}">alert("<spring:message code='${resultMsg}' />");</c:if>
+/*
+ function fnchecks(){
+	$.ajax({ 
+	    url: "<c:url value='/mdm/CheckCus.do'/>",          
+	    data: { cusNm: "고객이름", autoNo: "차량번호"},  
+	    method: "POST",            
+	    dataType : "json"         
+	})
+	.done(function(json) {
+	    $("<h1>").text(json.title).appendTo("body");
+	   /*  $("<div class=\"content\">).html(json.html).appendTo("body"); 
+	})
+	.fail(function(xhr, status, errorThrown) {
+	    $("#text").html("오류가 발생하였습니다.<br>")
+	        .append("오류명: " + errorThrown + "<br>")
+	        .append("상태: " + status);
+	})
+	.always(function(xhr, status) {
+	    /* $("#text").html("요청이 완료되었습니다."); 
+	    alert("요청이 완료되었습니다.");
+	}
+} 
+*/
+function fncheck()
+{
 
-$(document).on("keyup", ".phoneNumber", function() { 
-	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
-});
+    if(document.cusMberManageVO.cusNm.value == "")
+    {
+        alert("고객이름을 입력해주세요.");
+        document.cusMberManageVO.cusNm.focus();
+        return false;
+    }
+    $.ajax({
+        type: "post",
+        url: "<c:url value='/mdm/CheckCus.do'/>",
+        data: {
+        	autoNo:document.cusMberManageVO.autoNo.value,
+            cusNm:document.cusMberManageVO.cusNm.value
+        },
+        success: function (result) {
+        	
+        	result1 = JSON.parse(result)
+        	alert(result1);
+			if(result == "0") {
+				$('#result').text('사용 가능한 아이디입니다.');
+	        } else {
+	            $('#result').text('이미 사용중인 아이디입니다.');
+	        }
+        }
+    });
+    // document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertLeadTime.do'/>";
+    // document.SmartLeadTimeVO.submit();
+}
+
+	<c:if test="${!empty resultMsg}">alert("<spring:message code='${resultMsg}' />");</c:if>
+
+	$(document).on("keyup", ".phoneNumber", function() { 
+		$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+	});
+
+function fnCheckCus(){
+    var url = "<c:url value='/mdm/SmartCheckCusView.do'/>?";
+    
+    var varParam = new Object();
+    var checkCus = document.cusMberManageVO.cusNm.value;
+    var varParam = "checkCus="+checkCus;
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px;" src="' + "<c:url value='/mdm/SmartCheckCusView.do'/>?" + varParam +'" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 600,
+        height: 450
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+}
+
 </script>
 </head>
 <body>
@@ -104,10 +180,19 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             </td>
                                             <td>
                                                 <!-- <input name="autoNo" id="autoNo" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="autoNo" id="autoNo" class="f_txt w_350" title="차량번호" maxlength="100" />
+                                                <form:input path="autoNo" id="autoNo" name="autoNo" class="f_txt w_350" title="차량번호" maxlength="100" />
                                                 <form:errors path="autoNo" cssClass="error" />    
 							                    
                                             </td>
+                                                 <%-- <td>
+                                                <span class="f_search2 w_350">
+                                                    <input id="check_view" type="text" maxlength="20" disabled="disabled" name="check_view" readonly >
+                                                	<form:input path="autoNo" type="hidden" readonly="true" maxlength="20" />
+                                                	<button type="button" class="btn" onclick="javascript:fnCheckCus(); return false;"></button>
+                                                </span>
+                                                <span class="f_txt_inner ml15">(중복 회원 검색)</span>
+                                            </td> --%>
+ 
                                         </tr>
                                         <tr>
                                             <td class="lb">
@@ -124,12 +209,20 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <label for="cusNm">고객이름</label>
                                                 <span class="req">필수</span>
                                             </td>
+                                            <%-- <td>
+                                                <span class="f_search2 w_350">
+                                                    <input id="nm_view" type="text" maxlength="20" disabled="disabled" name="nm_view" readonly >
+                                                	<form:input path="cusNm" id="cusNm" class="f_txt w_350" title="고객이름" maxlength="100" />
+                                                    <form:input path="cusNm" type="hidden" readonly="true" maxlength="20" />
+                                                </span>
+                                            </td> --%>
                                             <td>
-                                                <!-- <input name="cusNm" id="cusNm" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="cusNm" id="cusNm" class="f_txt w_350" title="고객이름" maxlength="100" />
+                                                <input name="cusNm" id="cusNm" class="f_txt" type="text" value="" maxlength="100" />
                                                 <form:errors path="cusNm" cssClass="error" />
-                                                <!-- <a href="#LINK" class="btn btn_blue_46 w_100" onclick="">중복체크</a>
-                                                <input name="check" id="check" class="f_txt w_350" title="중복체크" maxlength="100" type="hidden" value="ok"/> -->
+                                                
+                                                <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fncheck(); return false;">중복체크</a>
+                                                <input name="hiddencusNm" id="hiddencusNm" class="f_txt w_350" title="중복체크" maxlength="100" type="hidden" value="ok" />
+                                                <span class="f_txt_inner ml15">(중복 고객이름 검색)</span>
                                             </td>
                                         </tr>
                                         <tr>

@@ -1,9 +1,11 @@
 package egovframework.smart.customer.web;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.uss.umt.service.MberManageVO;
 import egovframework.let.uss.umt.service.UserDefaultVO;
@@ -11,6 +13,7 @@ import egovframework.let.utl.sim.service.EgovFileScrty;
 import egovframework.smart.customer.service.CusMberDefaultVO;
 import egovframework.smart.customer.service.CusMberManageService;
 import egovframework.smart.customer.service.CusMberManageVO;
+import egovframework.smart.mdm.service.SmartLeadTimeVO;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
@@ -18,6 +21,7 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +30,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 /**
@@ -164,7 +170,7 @@ insertMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,
 	        	return "uat/uia/EgovLoginUsr";
 	    }
 	    
-
+	    
 	 	cusMberManageService.insertMber(cusMberManageVO);
 	 	System.out.println(cusMberManageVO);
 	 	model.addAttribute("resultMsg", "success.common.insert");
@@ -217,7 +223,7 @@ public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAtt
 	  
 	  cusMberManageService.updateMber(cusMberManageVO); //Exception 없이 진행시 수정성공메시지
 	  model.addAttribute("resultMsg", "success.common.update"); return
-	  "forward:/customer/SmartCusMberManage"; } } 
+	  "forward:/customer/SmartCusMberManage"; }
 
   
 	 /**
@@ -410,53 +416,58 @@ public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAtt
 	 * "cmm/uss/umt/EgovMberPasswordUpdt"; }
 	 * 
 	 *//**
-		 * 입력한 사용자아이디의 중복확인화면 이동
-		 * 
-		 * @param model 화면모델
-		 * @return cmm/uss/umt/EgovIdDplctCnfirm
-		 * @throws Exception
-		 */
-	/*
-	 * @RequestMapping(value = "/uss/umt/EgovIdDplctCnfirmView.do") public String
-	 * checkIdDplct(ModelMap model) throws Exception {
-	 * 
-	 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-	 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-	 * model.addAttribute("message",
-	 * egovMessageSource.getMessage("fail.common.login")); return
-	 * "uat/uia/EgovLoginUsr"; }
-	 * 
-	 * model.addAttribute("checkId", ""); model.addAttribute("usedCnt", "-1");
-	 * return "cmm/uss/umt/EgovIdDplctCnfirm"; }
-	 * 
-	 *//**
-		 * 입력한 사용자아이디의 중복여부를 체크하여 사용가능여부를 확인
-		 * 
-		 * @param commandMap 파라메터전달용 commandMap
-		 * @param model      화면모델
-		 * @return cmm/uss/umt/EgovIdDplctCnfirm
-		 * @throws Exception
-		 *//*
-			 * @RequestMapping(value = "/uss/umt/cmm/EgovIdDplctCnfirm.do") public String
-			 * checkIdDplct(@RequestParam Map<String, Object> commandMap, ModelMap model)
-			 * throws Exception {
-			 * 
-			 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-			 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-			 * model.addAttribute("message",
-			 * egovMessageSource.getMessage("fail.common.login")); return
-			 * "uat/uia/EgovLoginUsr"; }
-			 * 
-			 * String checkId = (String) commandMap.get("checkId"); checkId = new
-			 * String(checkId.getBytes("ISO-8859-1"), "UTF-8");
-			 * 
-			 * if (checkId == null || checkId.equals("")) return
-			 * "forward:/uss/umt/EgovIdDplctCnfirmView.do";
-			 * 
-			 * int usedCnt = mberManageService.checkIdDplct(checkId);
-			 * model.addAttribute("usedCnt", usedCnt); model.addAttribute("checkId",
-			 * checkId);
-			 * 
-			 * return "cmm/uss/umt/EgovIdDplctCnfirm"; }
-			 */
-			
+
+//	
+//	  @RequestMapping(value = "/mdm/SmartCheckCusView.do") 
+//	  public String checkCus(ModelMap model) throws Exception {
+//	  
+//		/*
+//		 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
+//		 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
+//		 * model.addAttribute("message",
+//		 * egovMessageSource.getMessage("fail.common.login")); return
+//		 * "uat/uia/EgovLoginUsr"; }
+//		 */
+//	  
+//	  model.addAttribute("checkCus", ""); model.addAttribute("usedCnt", "-1");
+//	  return "/customer/SmartCheckCus"; }
+//	  
+//	/**
+//	 * 입력한 사용자아이디의 중복여부를 체크하여 사용가능여부를 확인
+//	 * @param commandMap 파라메터전달용 commandMap
+//	 * @param model 화면모델
+//	 * @return cmm/uss/umt/EgovIdDplctCnfirm
+//	 * @throws Exception
+//	 */
+//
+//	@RequestMapping(value = "/mdm/SmartCheckCus.do")
+//	public String checkCus(@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+//
+//		String checkCus = (String) commandMap.get("checkCus");
+//		checkCus = new String(checkCus.getBytes("ISO-8859-1"), "UTF-8");
+//	
+//		if (checkCus == null || checkCus.equals(""))
+//			return "forward:/mdm/SmartCheckCusView.do";
+//	
+//		int usedCnt = cusMberManageService.checkCusDplct(checkCus);
+//		model.addAttribute("usedCnt", usedCnt);
+//		model.addAttribute("checkCus", checkCus);
+//		return "/customer/SmartCheckCus";
+//	}
+
+
+	@RequestMapping(value = "mdm/CheckCus.do",method=RequestMethod.POST)
+	@ResponseBody
+	public String checkCus(@ModelAttribute("cusMberManageVO") String cusMberManageVO, @RequestParam("autoNo") String autoNo, @RequestParam("cusNm") String cusNm, ModelMap model, HttpServletResponse response) throws Exception {
+		Map<String,Object> msg = new HashMap<String, Object>();
+
+		System.out.println(msg);
+		System.out.println(cusNm);
+		System.out.println(autoNo);
+
+		int result = cusMberManageService.checkCusDplct(cusNm);
+		/* response.getWriter().print(result); */
+		return Integer.toString(result);
+	}
+
+}

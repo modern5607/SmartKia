@@ -96,6 +96,8 @@ public interface CusMberManageService {
 	 * @return 사용가능여부(아이디 사용회수 int)
 	 * @throws Exception
 	 */
-	public int checkIdDplct(String checkId) throws Exception;
+	public int checkCusDplct(String checkCus) throws Exception; 
+
+	public int checkCus(String checkCus) throws Exception;
 
 }

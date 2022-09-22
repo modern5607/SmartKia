@@ -154,7 +154,7 @@ function fn_egov_modal_remove() {
                         <ul>
                             <li><a href="/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">고객정보관리</a></li>
                             <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4100000">차량정보관리</a></li>
-                            <li><a href="/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">차량수리이력조회</a></li>
+                            <li><a href="/crm/SmartAddRepairCar.do?menuNo=4100000">차량수리이력조회</a></li>
                             <li><a href="/cop/com/selectTemplateInfs.do?menuNo=4100000">컴플레인관리</a></li>
                         </ul>
                     </div>

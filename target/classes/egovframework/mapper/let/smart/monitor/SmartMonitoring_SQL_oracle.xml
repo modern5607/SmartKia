@@ -24,6 +24,18 @@
 
 	<select id="selectMonitoringList" parameterType="comDefaultVO" resultType="java.util.HashMap">
 		
-		SELECT * FROM CAR_TAKEREPAIR
+		SELECT
+			AUTONUMBER			,
+			REPAIRMETHOD		,
+			REPAIRNOTE  		,
+			RECEIPTDATE			,
+			NOTE				,
+			TO_CHAR(TO_DATE( SUBSTR(ESTIME,1, REGEXP_INSTR(ESTIME,'[:]+', 14)-1 ), 'YYYY-MM-DD HH24:MI'), 'HH24:MI') AS ESTIME,
+			FN_CODENAME(TASKSTAT, 'AUTO_PROC') taskstat,
+			FN_CODENAME(POSITION, 'AUTO_ROOM') position
+		FROM CAR_TAKEREPAIR
+		WHERE  TASKSTAT IN ('CB-repaired', 'CB-standby', 'CB-receipt') 
+		OR     (TO_DATE( SUBSTR(ESTIME,1, REGEXP_INSTR(ESTIME,'[:]+', 14)-1 ), 'YYYY-MM-DD HH24:MI') > SYSDATE + 0.0011 AND TASKSTAT = 'CB-perfect')
+		ORDER BY ESTIME ASC
 	</select>
 </mapper>

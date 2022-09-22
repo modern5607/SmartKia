@@ -113,8 +113,8 @@ public class CusMberManageDAO extends EgovAbstractMapper{
      * @param checkId 중복체크대상 아이디
      * @return int 사용가능여부(아이디 사용회수 )
      */
-    public int checkIdDplct(String checkId){
-        return (Integer)selectOne("cusMberManageDAO.checkIdDplct_S", checkId);
+    public int checkCusDplct(String checkCus){
+        return (Integer)selectOne("cusMberManageDAO.checkCusDplct", checkCus);
     }
 
 }

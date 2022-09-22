@@ -24,15 +24,15 @@ public class CusMberManageVO extends CusMberDefaultVO{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String cusId;
-	private String cusNm;
-	private String autoNo;
-	private String autoKind;
-	private String cusTel;
-	private String useYN;
-	private String note;
-	private String autoInt;
-	private String totalKm;
+	private String cusId = "";
+	private String cusNm = "";
+	private String autoNo = "";
+	private String autoKind = "";
+	private String cusTel = "";
+	private String useYN = "";
+	private String note = "";
+	private String autoInt = "";
+	private String totalKm = "";
 	
 	public String getCusId() {
 		return cusId;
@@ -484,7 +484,7 @@ public class CusMberManageVO extends CusMberDefaultVO{
 	public String getTotalKm() {
 		return totalKm;
 	}
-	public void setTotalKm(String TotalKm) {
+	public void setTotalKm(String totalKm) {
 		this.totalKm = totalKm;
 	}
 	

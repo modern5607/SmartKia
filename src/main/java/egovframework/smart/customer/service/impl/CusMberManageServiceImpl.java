@@ -132,8 +132,8 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 
 
 	@Override
-	public int checkIdDplct(String checkId) {
-		return cusMberManageDAO.checkIdDplct(checkId);
+	public int checkCusDplct(String checkCus) {
+		return cusMberManageDAO.checkCusDplct(checkCus);
 	}
 
 	@Override
