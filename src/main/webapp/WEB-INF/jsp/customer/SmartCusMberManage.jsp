@@ -132,7 +132,7 @@ function fnSearch(){
 	<ul>
 		<li><a class="home" href="">Home</a></li>
 		<li><a href="">기준정보</a></li>
-		<li>고객관리</li>
+		<li>이용고객관리</li>
 	</ul>
 </div>
 <!--// Location -->
@@ -144,7 +144,7 @@ function fnSearch(){
 		name="pageIndex" type="hidden"
 		value="<c:out value='${userSearchVO.pageIndex}'/>" />
 
-	<h1 class="tit_1">고객관리</h1>
+	<h1 class="tit_1">이용고객관리</h1>
 
 <!-- 	<p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
 
@@ -181,20 +181,19 @@ function fnSearch(){
 		</span>
 	</div> --%>
 	
-	
-    <span class="item f_search">
-    <p class="left">
-    <label for="searchKeyword">고객번호</label>
-        <%-- <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusId}"/>"/>  --%>
-    <label for="searchKeyword">고객명</label>
-        <%-- <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcusNm}"/>"/> --%>
-    <label for="searchKeyword">차량번호</label>
-        <%-- <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcarNum}"/>"/> --%>
-    </p>
-    <p class="left">
-    </p>
-        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
-    </span>
+	<div class="condition" style="text-align: left; margin-top: 20px;">
+	    <span class="item f_search">
+			<p class="left">
+		    	<label for="searchKeyword">차량번호</label>
+			        <input class="f_input w_200" name="searchcarNum" id="searchcarNum" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchcarNum}"/>"/>
+			    <label for="searchKeyword">연락처</label>
+			        <input class="f_input w_200" name="searchTel" id="searchTel" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchTel}"/>"/>
+					<%--<label for="searchKeyword">차량번호</label>
+			        <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO}"/>"/>--%>	
+			</p>
+	        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
+	    </span>
+    </div>
 	<!--// 검색조건 -->
 
 
@@ -224,7 +223,9 @@ function fnSearch(){
 			<caption>회원목록</caption>
 			<colgroup>
 				<col style="width: 60px;">
-				<col style="width: 60px;">
+				<%-- <col style="width: 60px;"> --%>
+				<col style="width: 300px;">
+				<col style="width: 300px;">
 				<col style="width: 300px;">
 				<col style="width: 300px;">
 				<col style="width: 300px;">
@@ -235,15 +236,17 @@ function fnSearch(){
 			<thead>
 				<tr>
 					<th scope="col">No.</th>
-					<th scope="col"><span class="f_chk_only chkAll">
+					<!-- <th scope="col"><span class="f_chk_only chkAll">
 							<input name="checkAll" type="checkbox" title="Check All"
 							onclick="javascript:fnCheckAll();" />
-					</span></th>
+					</span></th> -->
 					<th scope="col">고객번호</th>
 					<th scope="col">차량번호</th>
 					<th scope="col">차량종류</th>
-					<th scope="col">연락처</th>
 					<th scope="col">고객이름</th>
+					<th scope="col">연락처</th>
+					<th scope="col">총주행거리</th>
+					<th scope="col">차량뒷번호</th>
 					<th scope="col">비고</th>
 				</tr>
 			</thead>
@@ -260,24 +263,25 @@ function fnSearch(){
 					varStatus="status">
 					<tr>
 						<td><c:out value="${status.count}" /></td>
-						<td><span class="f_chk_only"> <input
+						<%-- <td><span class="f_chk_only"> <input
 								name="checkField"
 								title="checkField <c:out value="${status.count}"/>"
 								type="checkbox" /> <input name="checkId" type="hidden"
 								value="<c:out value='${result.userTy}'/>:<c:out value='${result.uniqId}'/>" />
 						</span>
-						</td>
+						</td> --%>
 						<td>
-						<a
-							href="<c:url value='/customer/SmartCusMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.cusId}"/>" 
+						<a href="<c:url value='/customer/SmartCusMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.cusId}"/>" 
 							class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.cusId}"/>'); return false;">
                             <c:out value="${result.cusId}"/>								
 						</a>
 						</td>
 						<td><c:out value="${result.autoNo}" /></td>
-						<td><c:out value="${result.autoKind}" /></td>													
+						<td><c:out value="${result.autoKind}" /></td>
+						<td><c:out value="${result.cusNm}" /></td>													
 						<td><c:out value="${result.cusTel}" /></td>
-						<td><c:out value="${result.cusNm}" /></td>
+						<td><c:out value="${result.totalKm}" /></td>
+						<td><c:out value="${result.autoInt}" /></td>
 						<td><c:out value="${result.note}" /></td>
 						<%-- <td><c:forEach var="entrprsMberSttus_result"
 								items="${entrprsMberSttus_result}" varStatus="status">

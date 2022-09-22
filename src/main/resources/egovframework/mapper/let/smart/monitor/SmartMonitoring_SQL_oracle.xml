@@ -24,6 +24,19 @@
 
 	<select id="selectMonitoringList" parameterType="comDefaultVO" resultType="java.util.HashMap">
 		
-		SELECT * FROM CAR_TAKEREPAIR
+		SELECT
+			AUTONUMBER			,
+			REPAIRMETHOD		,
+			REPAIRNOTE  		,
+			RECEIPTDATE			,
+			ESTIME				,
+			NOTE				,
+			FN_CODENAME(TASKSTAT, 'AUTO_PROC') taskstat,
+			FN_CODENAME(POSITION, 'AUTO_ROOM') position
+		FROM CAR_TAKEREPAIR
+		WHERE 1 = 1
+		
+		AND TASKSTAT  != 'CB-receipt'
+		ORDER BY ESTIME ASC
 	</select>
 </mapper>

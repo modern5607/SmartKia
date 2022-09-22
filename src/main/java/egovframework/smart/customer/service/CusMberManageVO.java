@@ -31,6 +31,8 @@ public class CusMberManageVO extends CusMberDefaultVO{
 	private String cusTel;
 	private String useYN;
 	private String note;
+	private String autoInt;
+	private String totalKm;
 	
 	public String getCusId() {
 		return cusId;
@@ -472,6 +474,18 @@ public class CusMberManageVO extends CusMberDefaultVO{
 	 */
 	public void setMberEmailAdres(String mberEmailAdres) {
 		this.mberEmailAdres = mberEmailAdres;
+	}
+	public String getAutoInt() {
+		return autoInt;
+	}
+	public void setAutoInt(String autoInt) {
+		this.autoInt = autoInt;
+	}
+	public String getTotalKm() {
+		return totalKm;
+	}
+	public void setTotalKm(String TotalKm) {
+		this.totalKm = totalKm;
 	}
 	
 }

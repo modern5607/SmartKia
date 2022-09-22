@@ -108,14 +108,14 @@ public String selectCusMberList(@ModelAttribute("userSearchVO") CusMberDefaultVO
 		userSearchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		userSearchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-
+		
 		model.addAttribute("resultList", cusMberManageService.selectMberList(userSearchVO));		
 		int totCnt = cusMberManageService.selectMberListTotCnt(userSearchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
-		//System.out.println(userSearchVO);
-							 
+		System.out.println(userSearchVO);
+		System.out.println(cusMberManageService.selectMberListTotCnt(userSearchVO));		 
 		return "customer/SmartCusMberManage";
 	}
 

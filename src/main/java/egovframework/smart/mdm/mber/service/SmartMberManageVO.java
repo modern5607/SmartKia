@@ -1,7 +1,5 @@
 package egovframework.smart.mdm.mber.service;
 
-import java.io.Serializable;
-
 public class SmartMberManageVO  extends UserDefaultVO{
 
 	/**

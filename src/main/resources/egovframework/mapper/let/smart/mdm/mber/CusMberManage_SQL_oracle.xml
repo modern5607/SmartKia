@@ -19,18 +19,21 @@
         CUSTOMER_AUTOKIND     as "autoKind",
         CUSTOMER_TEL          as "cusTel",
         USE_YN                as "useYN",
-        NOTE                  as "note"
+        NOTE                  as "note",
+        AUTOINT				  as "autoInt",
+        KILRO_TOTAL			  as "totalKm"
     FROM    CAR_CUSTOMER
     WHERE 1=1
-        <!-- <if test="searchcusId != ''">
-            AND CUSTOMER_ID LIKE '%' ||#{searchcusId}|| '%'
-        </if>
-        <if test="searchcusNm != ''">
-            AND CUSTOMER_NAME LIKE '%' ||#{searchcusNm}|| '%'
-        </if>
         <if test="searchcarNum != ''">
-            AND CUSTOMER_AUTOKIND LIKE '%' ||#{searchcarNum}|| '%'
+            AND UPPER(CUSTOMER_AUTOKIND) LIKE '%' ||UPPER(#{searchcarNum})|| '%'
+        </if>
+        <if test="searchTel != ''">
+            AND REPLACE(CUSTOMER_TEL, '-', '') LIKE '%' ||#{searchTel}|| '%'
+        </if>
+        <!-- <if test="searchcusNm != ''">
+            AND CUSTOMER_NAME LIKE '%' ||#{searchcusNm}|| '%'
         </if> -->
+        
         ORDER BY 1,2 DESC) <!-- 오더바이옆에있는 숫자를 기준으로 정렬  -->
         TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
     </select>
@@ -39,15 +42,16 @@
             SELECT COUNT(1) totcnt
             FROM   CAR_CUSTOMER
             WHERE 1=1
-			<!-- <if test="searchcusId != ''">
-	            AND CUSTOMER_ID LIKE '%' ||#{searchcusId}|| '%'
+            <if test="searchcarNum != ''">
+	            AND UPPER(CUSTOMER_AUTOKIND) LIKE '%' ||UPPER(#{searchcarNum})|| '%'
 	        </if>
-	        <if test="searchcusNm != ''">
+			<if test="searchTel != ''">
+	            AND REPLACE(CUSTOMER_TEL, '-', '') LIKE '%' ||#{searchTel}|| '%'
+	        </if>
+	        <!-- <if test="searchcusNm != ''">
 	            AND CUSTOMER_NAME LIKE '%' ||#{searchcusNm}|| '%'
-	        </if>
-	        <if test="searchcarNum != ''">
-	            AND CUSTOMER_AUTOKIND LIKE '%' ||#{searchcarNum}|| '%'
 	        </if> -->
+	         
     </select>
     
     <insert id="insertMber_S">
@@ -59,14 +63,18 @@
                     CUSTOMER_AUTONO     ,
                     CUSTOMER_AUTOKIND   ,
                     CUSTOMER_TEL    	,
-                    NOTE    			)
+                    NOTE    			,
+					AUTOINT				,
+       				KILRO_TOTAL)
               VALUES(
-                    #{cusId},
+                    SIRA('CAR_CUSTOMER', 'CUSTOMER_ID'),
                     #{cusNm},
                     #{autoNo},
                     #{autoKind},
                     #{cusTel},
-                    #{note} 
+                    #{note},
+                    #{autoInt},
+                    #{totalKm}
                     )              
     </insert>
     

@@ -58,6 +58,8 @@ public class CusMberDefaultVO implements Serializable {
     /** recordCountPerPage */
     private int recordCountPerPage = 10;
 
+    private String searchcarNum = "";
+    private String searchTel = "";
 	/**
 	 * sbscrbSttus attribute 값을  리턴한다.
 	 * @return String
@@ -224,5 +226,21 @@ public class CusMberDefaultVO implements Serializable {
     public String toString() {
     	return ToStringBuilder.reflectionToString(this);
     }
+
+	public String getSearchcarNum() {
+		return searchcarNum;
+	}
+
+	public void setSearchcarNum(String searchcarNum) {
+		this.searchcarNum = searchcarNum;
+	}
+
+	public String getSearchTel() {
+		return searchTel;
+	}
+
+	public void setSearchTel(String searchTel) {
+		this.searchTel = searchTel;
+	}
 
 }

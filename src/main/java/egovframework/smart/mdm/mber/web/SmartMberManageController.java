@@ -219,12 +219,14 @@ public void updateMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO sm
 	response.setContentType("text/html; charset=euc-kr");
 	PrintWriter out = response.getWriter();
 	
+	
 	int result = smartMberManageService.updateMber(smartMberManageVO);
 	int cnt = smartMberManageService.checkAuthorYn(smartMberManageVO);
 	
 	if(smartMberManageVO.getUseYn().equals("Y") && cnt < 1) {
 		smartMberManageService.insertAuthor(smartMberManageVO);
-	} else {
+	}
+	else if(smartMberManageVO.getUseYn().equals("N") && cnt > 0) {
 		smartMberManageService.deleteAuthor(smartMberManageVO);
 	}
 	
@@ -387,7 +389,7 @@ public String updatePassword(ModelMap model, @RequestParam Map<String, Object> c
 	smartMberManageVO.setPassword(newPassword);
 	smartMberManageVO.setOldPassword(oldPassword);
 	smartMberManageVO.setUniqId(uniqId);
-
+	
 	String resultMsg = "";
 	resultVO = smartMberManageService.selectPassword(smartMberManageVO);
 	//패스워드 암호화
@@ -414,7 +416,9 @@ public String updatePassword(ModelMap model, @RequestParam Map<String, Object> c
 	}
 	model.addAttribute("userSearchVO", userSearchVO);
 	model.addAttribute("resultMsg", resultMsg);
+ 
 
+	
 	return "mdm/mber/SmartMberPasswordUpdt";
 }
 

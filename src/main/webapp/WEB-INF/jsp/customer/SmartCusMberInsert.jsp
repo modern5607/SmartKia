@@ -40,12 +40,19 @@ function fnListPage(){
     document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberManage.do'/>";
     document.cusMberManageVO.submit(); 
 }
-function fnInsert(){
-	document.cusMberManageVO.submit();
 
+function fnInsert(){
+	/* if(document.checkForm.checkId.value==""){
+		alert(document.cusMberManageVO.check.value);
+		return; */
+	document.cusMberManageVO.submit();
+	
 }
 <c:if test="${!empty resultMsg}">alert("<spring:message code='${resultMsg}' />");</c:if>
 
+$(document).on("keyup", ".phoneNumber", function() { 
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+});
 </script>
 </head>
 <body>
@@ -105,7 +112,6 @@ function fnInsert(){
                                         <tr>
                                             <td class="lb">
                                                 <label for="autoKind">차량종류</label>
-                                                <span class="req">필수</span>
                                             </td>
                                             <td>
                                                 <!-- <input name="autoKind" id="autoKind" class="f_txt" type="text" value="" maxlength="100" /> -->
@@ -122,23 +128,23 @@ function fnInsert(){
                                                 <!-- <input name="cusNm" id="cusNm" class="f_txt" type="text" value="" maxlength="100" /> -->
                                                 <form:input path="cusNm" id="cusNm" class="f_txt w_350" title="고객이름" maxlength="100" />
                                                 <form:errors path="cusNm" cssClass="error" />
+                                                <!-- <a href="#LINK" class="btn btn_blue_46 w_100" onclick="">중복체크</a>
+                                                <input name="check" id="check" class="f_txt w_350" title="중복체크" maxlength="100" type="hidden" value="ok"/> -->
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="lb">
                                                 <label for="cusTel">연락처</label>
-                                                <span class="req">필수</span>
                                             </td>
                                             <td>
                                                 <!-- <input name="cusTel" id="cusTel" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="cusTel" id="cusTel" class="f_txt w_350" title="연락처" maxlength="100" />
+                                                <form:input path="cusTel" id="cusTel" class="f_txt w_350 phoneNumber" title="연락처" maxlength="100" />
                                                 <form:errors path="cusTel" cssClass="error" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="lb">
                                                 <label for=note>비고</label>
-                                                <span class="req">필수</span>
                                             </td>
                                             <td>
                                                 <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->
@@ -146,7 +152,17 @@ function fnInsert(){
                                                 <form:errors path="note" cssClass="error" />
                                             </td>
                                         </tr>
-
+										<tr>
+                                            <td class="lb">
+                                                <label for=note>총주행거리</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->
+                                                <form:input path="totalKm" id="totalKm" class="f_txt w_350" title="비고" maxlength="100" />
+                                                <form:errors path="totalKm" cssClass="error" />
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
 

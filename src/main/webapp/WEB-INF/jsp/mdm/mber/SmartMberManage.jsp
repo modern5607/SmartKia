@@ -248,12 +248,13 @@ function fnLinkPage(pageNo){
                                                 <td><c:out value="${result.userNm}"/></td>
 		                                          	
                                                 <td><c:out value="${result.positionName}"/></td>
-                                                <td><c:out value="${result.telNo}"/></td>
+                                                <td><c:out value="${result.moblphonNo}"/></td>
                                                 <%-- <td><c:out value="${result.sbscrbDe}"/></td> --%>
                                                 
                                                 <td>
                                                 	<c:if test="${result.useyn == 'N'}"><spring:message code="button.notUsed" /></c:if>
                                                 	<c:if test="${result.useyn == 'Y'}"><spring:message code="button.use" /></c:if>
+
                                                 	<!-- <input type="radio" name="useYn" value="Y">사용
                                                 	<input type="radio" name="useYn" value="N">미사용 -->
                                                 </td>

@@ -6,7 +6,7 @@
 
 	<select id="selectCrmList" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
 		SELECT
-		TAKESEQ,
+		TAKESEQ as "seq",
 		TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI') RECEIPTDATE,
 		A.CUSTOMER_ID as "cusId",
 		A.CUSTOMER_AUTONO as "cusAutoNo",
@@ -15,6 +15,7 @@
 		A.CUSTOMER_NAME as "cusNm",
 		A.CUSTOMER_TEL as "cusTel",
 		FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
+		TO_CHAR(COMPTIME, 'YYYY-MM-DD HH24:MI:SS') COMPTIME,
 		B.NOTE as "note",
 		B.TURNOVER as "turnOver",
 		B.TURNOVERTIME as "turnOverTime",
@@ -22,6 +23,7 @@
 
 		FROM CAR_CUSTOMER A, CAR_TAKEREPAIR B
 		WHERE A.CUSTOMER_ID = B.CUSTOMER_ID
+		AND B.TASKSTAT = 'CB-perfect'
 		
 		
         <if test="searchAutoNo != ''">
@@ -34,7 +36,7 @@
             AND A.CUSTOMER_TEL LIKE '%' ||#{searchCusTel}|| '%'
         </if>
         <if test="(sdate != '' and edate != '')">
-        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI') between #{sdate} and #{edate}
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
         </if>
 		
 	</select>
@@ -43,6 +45,7 @@
 			SELECT 	COUNT(*) totcnt
 			FROM 	CAR_CUSTOMER A, CAR_TAKEREPAIR B 
 			WHERE 	A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND B.TASKSTAT = 'CB-perfect'
 			<!-- <if test="searchCondition == &quot;qestnSj&quot;">AND
 				C.CUSTOMER_ID, LIKE '%' || #{searchKeyword} || '%'
 			</if> -->
