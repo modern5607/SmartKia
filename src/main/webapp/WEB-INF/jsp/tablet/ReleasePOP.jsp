@@ -40,7 +40,7 @@
 	<!-- 아이디중복확인 팝업 -->
 	<div class="popup POP_DUPID_CONF" style="background-color: white;">
 
-		<form name="checkForm" action="<c:url value='/tablet/OTWGroupPOP.do'/>">
+		<form name="checkForm" action="<c:url value='/tablet/ReleasePOP.do'/>">
 
 			<div class="pop_inner">
 				<div class="pop_header">

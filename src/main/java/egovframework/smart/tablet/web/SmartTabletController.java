@@ -440,10 +440,10 @@ public class SmartTabletController {
 	/*
 	 * 출고화면 View
 	 */
-	@RequestMapping(value = "/tablet/OTWorkGroupPOP.do")
+	@RequestMapping(value = "/tablet/ReleasePOP.do")
 	public String RelasePOPview() throws Exception {
 
-		return "/tablet/OTWorkGroupPOP";
+		return "/tablet/ReleasePOP";
 	}
 }
 

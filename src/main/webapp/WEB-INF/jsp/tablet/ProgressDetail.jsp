@@ -31,11 +31,11 @@
 
 function releasePOP()
 {
-	var url = "<c:url value='/tablet/OTWorkGroupPOP.do'/>?";
+	var url = "<c:url value='/tablet/ReleasePOP.do'/>?";
 
 		var $dialog = $('<div id="modalPan"></div>').html(
 				'<iframe style="border: 0px;" src="'
-						+ url
+						+ "<c:url value='/tablet/ReleasePOP.do'/>?"
 						+ '" width="100%" height="100%"></iframe>')
 				.dialog({
 					autoOpen : false,
