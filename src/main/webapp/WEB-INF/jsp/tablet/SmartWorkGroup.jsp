@@ -4,6 +4,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -117,6 +118,40 @@ function TransferAutoRoom(room,remark,seq,position){
 	document.SmartList.action = "<c:url value='/tablet/Transfergroup.do'/>";
     document.SmartList.submit();
 }
+/*
+function changekilro(this){
+	//var prevkilo $("input[name=kilro]").val();
+	//var newkilro = this.value;
+	//var drivekilo = prevkilo - newkilro;
+	//$("#drivekilo").val(drivekilo);
+	
+	
+	//document.SmartList.action = "<c:url value='/tablet/ChangeKilro.do'/>";
+	//document.SmartList.submit();
+}
+*/
+$( document ).ready( function() {
+$('input[name=newkilro]').change(function(){
+	console.log($(this).val());
+	var drivcekilro_select = $(this).parent().parent().find("input[id=drivekilo]");
+	console.log(drivcekilro_select);
+	var prevkilo =$("input[name=kilro]").val();
+	var newkilro = $(this).val();
+	
+	if(prevkilo > newkilro)
+		{
+			alert("더 작을수 없음");
+			$(this).val(prevkilo);
+		
+			$(this).focus();
+			drivcekilro_select.val(0);
+			return;
+		}
+	var drivekilo = newkilro- prevkilo;
+	drivcekilro_select.val(drivekilo);
+    $("#updatenewkilro").val(drivekilo);
+});
+} );
 
 
 </script>
@@ -158,6 +193,7 @@ function TransferAutoRoom(room,remark,seq,position){
 									<input type="hidden" name="remark" id="remark" >
 									<input type="hidden" name="position" id="position" >
 									<input type="hidden" name="taskstat" id="taskstat" >
+									<input type="hidden" name="updatenewkilro" id="updatenewkilro" >
 
 									<h1 class="tit_1"> 입고처리사항</h1>
 									<!--  <p class="txt_1">작업반,예상완료시간 클릭시 이관 또는 시간변경 가능합니다.</p> -->
@@ -233,8 +269,10 @@ function TransferAutoRoom(room,remark,seq,position){
 														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
 														<td><a href="#" onclick="TransferGroup('${result.TAKESEQ}','${result.POSITION}')" class="lnk"><c:out value="${result.POSITION_NAME}" /></a>
 														<td><a href="#" onclick="OTGroup()" class="lnk"><c:out value="${result.ESTIME}" /></a>
-														<td><c:out value="${result.KILRO_TOTAL}" />km</td>
-														<td><c:out value="${result.KILRO_NOW}" />km</td>
+														<td><input class="f_txt2 w_150" type="number" name="newkilro" value="${result.KILRO_TOTAL}" id="newkilro_">km
+															<input type="hidden" name="kilro" value="<c:out value='${result.KILRO_TOTAL}'/>" />
+														</td>
+														<td><input class="f_txt2 w_150"type="text" id="drivekilo" readonly value="<c:out value='${result.KILRO_NOW}'/>"/>km</td>
 														<td><a href="#" onclick="Complete('${result.TASKSTAT}','${result.TAKESEQ}')"><c:out value="${result.TASKSTAT_NAME}" /></a>
 													</tr>
 												</c:forEach>

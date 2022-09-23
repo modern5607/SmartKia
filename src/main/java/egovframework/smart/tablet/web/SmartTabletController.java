@@ -114,10 +114,16 @@ public class SmartTabletController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		searchVO.setLoginid(loginVO.getUniqId().toString());
+		System.out.println("searchVO :"+searchVO);
+
 		// service
 		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
 		
+		System.out.println("model2 :"+model);
+		System.out.println("searchVO :"+searchVO);
 		Map<String, Object> map = smarttabletservice.selectList(searchVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
@@ -129,6 +135,7 @@ public class SmartTabletController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		
 		return "/tablet/SmartWorkGroup";
+	
 	}
 	
 	/**
@@ -444,6 +451,15 @@ public class SmartTabletController {
 	public String RelasePOPview() throws Exception {
 
 		return "/tablet/ReleasePOP";
+	}
+	
+	@RequestMapping(value = "/tablet/ChangeKilro.do")
+	public void ChangeKilro(@RequestParam HashMap<String,Object> map,SmartTabletVO vo,HttpServletResponse response) throws Exception {
+		response.setContentType("text/html; charset=euc-kr");
+		PrintWriter out = response.getWriter();
+		
+		System.out.println("vo : "+vo);
+		
 	}
 }
 

@@ -52,14 +52,10 @@
 				<div class="pop_container">
 					<div class="box_1">
 						<label for="mid">출고 담당자</label> 
-						<input id="mid" class="f_txtsmall w_100" type="text" name="checkId" value="<c:out value="${checkId}"/>" maxlength="10" />
+						<input id="mid" class="f_txt2 ml15" type="text" name="checkId" value="<c:out value="${checkId}"/>"/>
+						<label for="mid">출고 비고</label> 
+						<input id="mid" class="f_txt2 ml15" type="text" name="checkId" value="<c:out value="${checkId}"/>"/>
 					</div>
-
-					<p class="result">
-						<label for="mid">출고 담당자</label> 
-						<input id="mid" class="f_txtsmall w_100" type="text" name="checkId" value="<c:out value="${checkId}"/>" maxlength="10" />
-					</p>
-
 					<div class="btn_area al_c pt20">
 						<a href="#LINK" class="btn btn_blue_46 w_100"
 							onclick="javascript:fnCheckId(); return false;">저장</a>
