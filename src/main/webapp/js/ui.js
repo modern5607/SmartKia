@@ -27,7 +27,7 @@ $(function() {
             this.$tartet = $('.all_menu');
             this.$btn = $('.gnb ul li');
             this.addEvent();
-            this.addEvent2();
+            // this.addEvent2();
         },
         addEvent: function() {
             var objAllMenu = this.$tartet;
@@ -39,13 +39,10 @@ $(function() {
                     $(this).addClass('on');
                 }
             });
-        },
-        addEvent2: function(){
-        var objAllMenu = this.$tartet;
-        this.$tartet.mouseleave(function(){
-            objAllMenu.slideUp(100);
-            $(this).removeClass('on');
-        });
+            this.$tartet.mouseleave(function(){
+                objAllMenu.slideUp(100);
+                $(this).removeClass('on');
+            });
         }
     }
     $('.allmenu').length && allMenu.init();

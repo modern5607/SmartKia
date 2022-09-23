@@ -17,6 +17,8 @@ public interface SmartRcptService {
 
     int InsertLeadRepair(Map<String, Object> leadrepairmap)throws Exception;
 
-    List<Object> selectRcptRepairInfo(String seq);
+    List<Object> selectRcptRepairInfo(String seq)throws Exception;
+
+    int UpdateRepair(Map<String, Object> params)throws Exception;
 
 }

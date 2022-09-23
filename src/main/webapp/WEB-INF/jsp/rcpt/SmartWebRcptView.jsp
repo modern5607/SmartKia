@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -226,6 +227,11 @@
         $("#deletetakeseq").val(takeseq);
     }
 
+    function reload()
+    {
+        console.log("reload");
+        location.reload();
+    }
     
     </script>
 
@@ -460,7 +466,6 @@
                                                     <th scope="col">작업반</th>
                                                     <th scope="col">예상완료시간</th>
                                                     <th scope="col">작업상태</th>
-                                                    <th scope="col">수리종류</th>
                                                     <th scope="col">비고</th>
                                                 </tr>
                                             </thead>
@@ -472,16 +477,18 @@
                                                 </c:if>
                                                 <c:forEach var="result" items="${rcptlist}" varStatus="status">
                                                 <tr>
-                                                    <td><c:out value="${result.RECEIPTDATE}"/></td>
+                                                    <td>
+                                                        <fmt:parseDate value="${result.RECEIPTDATE}" var="dateFmt" pattern="yyyy-MM-dd HH:mm" />
+                                                        <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd HH:mm"/>
+                                                    </td>
                                                     <td><c:out value="${result.AUTONUMBER}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_AUTOKIND}"/></td>
                                                     <td><a href="#" class="lnk" style="text-decoration: underline;" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIR_NAME}"/></a></td>
                                                     <td><c:out value="${result.CUSTOMER_NAME}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_TEL}"/></td>
-                                                    <td><c:out value="${result.POSITION}"/></td>
+                                                    <td><c:out value="${result.POSITION eq null ? '미정' : result.POSITION}"/></td>
                                                     <td><c:out value="${result.ESTIME}"/></td>
                                                     <td><c:out value="${result.TASKSTAT_NM}"/></td>
-                                                    <td><c:out value="${result.REPAIRMETHOD}"/></td>
                                                     <td>
                                                         <c:if test="${result.TASKSTAT== 'CB-receipt'}">
                                                         <a href="#LINK" class="btn btn_blue_30 w_80" onclick="DeleteRcpt('<c:out value='${result.TAKESEQ}'/>'); return false;">접수취소</a>

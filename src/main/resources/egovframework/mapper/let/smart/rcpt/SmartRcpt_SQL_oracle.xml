@@ -49,8 +49,8 @@
 
     <insert id="InsertLeadRepair" parameterType="java.util.HashMap" >
         INSERT INTO CAR_LEAD_REPAIR
-        (REPAIR_SEQ,TAKESEQ,REPAIRMETHOD,REPAIRCODE,LEADTIME,REPAIR_NOTE,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
-        VALUES (SIRA_REPAIR_SEQ(#{takeseq}),#{takeseq},#{method},#{code},#{leadtime},#{note},#{insertid},SYSDATE,'','')
+        (REPAIR_SEQ,TAKESEQ,REPAIRMETHOD,REPAIRCODE,LEADTIME,REPAIRANT,REPAIR_NOTE,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
+        VALUES (TO_CHAR(SEQ_CAR_LEAD_REPAIR.NEXTVAL,'FM0000'),#{takeseq},#{method},#{code},FN_CODENAME(FN_LEADTIME_NAME(#{code},'LEAD_TIME'),'LEADTIME'),#{repairant},#{note},#{loginid},SYSDATE,'','')
 
     </insert>
 
@@ -69,5 +69,38 @@
             INSERT_DATE
         FROM   CAR_LEAD_REPAIR
         WHERE TAKESEQ = #{seq}
+        ORDER BY REPAIR_SEQ ASC
+
+    </select>
+
+    <update id="UpdateRcpt">
+        UPDATE CAR_TAKEREPAIR
+        SET
+            REPAIRNOTE = #{repairnote},
+            UPDATE_ID = #{loginid},
+            UPDATE_DATE=SYSDATE
+        WHERE TAKESEQ = #{seq}
+    </update>
+    <update id="UpdateRepair">
+        UPDATE CAR_LEAD_REPAIR
+        SET
+        REPAIRMETHOD = #{method},
+        REPAIRCODE = #{code},
+        LEADTIME = FN_CODENAME(FN_LEADTIME_NAME(#{code},'LEAD_TIME'),'LEADTIME'),
+        REPAIRANT = #{repairant},
+        REPAIR_NOTE = #{repair_note},
+        UPDATE_ID = #{loginid},
+        UPDATE_DATE = SYSDATE
+        WHERE REPAIR_SEQ = #{repairseq} AND TAKESEQ = #{takeseq}
+    </update>
+
+    <delete id="DeleteRepair" parameterType="java.util.HashMap">
+        DELETE FROM CAR_LEAD_REPAIR
+        WHERE TAKESEQ = #{takeseq} AND REPAIR_SEQ = #{repairseq}
+    </delete>
+
+    <select id="SelectRepairinfo">
+        SELECT * FROM CAR_LEAD_REPAIR WHERE TAKESEQ = #{seq} AND 
+
     </select>
 </mapper>

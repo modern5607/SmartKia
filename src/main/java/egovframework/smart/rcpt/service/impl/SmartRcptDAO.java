@@ -29,7 +29,8 @@ public class SmartRcptDAO extends EgovAbstractMapper {
         // System.out.println(map);
         return resultmap;
     }
-    
+    @SuppressWarnings("unchecked")
+
     public List<Object> SelectRcptList(SmartRcptVO smartrcptVO){
         return selectList("SelectRcptList",smartrcptVO);
     }
@@ -44,6 +45,22 @@ public class SmartRcptDAO extends EgovAbstractMapper {
 
     public List<Object> SelectRcptinfo(String seq) {
         return selectList("SmartRcptDAO.SelectRcptinfo",seq);
+    }
+
+    public List<Object> selectRepairInfo(Map<String, Object> params) {
+        return selectOne("SmartRcptDAO.SelectRepairinfo",params);
+    }
+
+    public int UpdateRcpt(Map<String, Object> params) {
+        return update("SmartRcptDAO.UpdateRcpt",params);
+    }
+
+    public int UpdateRepair(Map<String, Object> params) {
+        return update("SmartRcptDAO.UpdateRepair",params);
+    }
+
+    public int DeleteRepair(Map<String, Object> params) {
+        return delete("SmartRcptDAO.DeleteRepair",params);
     }
 	 
 }
