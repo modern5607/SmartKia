@@ -69,6 +69,155 @@ function fnCheckNotKorean(koreanStr){
     return true;
 }
 
+function AddRepair()
+    {
+    	console.log($("#repair").children("tbody").length);
+        var main = $("#leadtimemain option:selected");
+        var middle = $("#leadtimemiddle option:selected");
+        var sub = $("#leadtimesub option:selected");
+        
+        if(main.val()==""||middle.val()==""||sub.val()=="")
+        {
+            alert("수리사항을 선택해 주세요");
+            return;
+        }
+        
+        var splits = sub.text().split('/');
+        var code = sub.val();
+        var code_nm = splits[0];
+        var time_nm = splits[1];
+        var time = sub.data("time");
+        var repair = $("#repair").children("tbody");
+        console.log(repair);
+        var childCount = repair.children().length;
+        var html="";
+        html+="<tr id='repair_"+(childCount+1)+"'>";
+        // html+="<td>"+(childCount+1)+"</td>";
+        html+="<td>"+code_nm+"</td>";
+        html+="<td>";
+        html+="<label class='f_selectsmall'><select id='chk_repair_"+(childCount+1)+"' name='chk_repair' >";
+        html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
+        html+="</select></label>";
+        html+="</td>";
+        html+="<td>"+time_nm+"</td>";
+        html+="<td><input type='text' class='f_txtsmall' name='repair_note' id='repair_note'></td>";
+        html+="<td><input type='radio' name='ant_"+(childCount+1)+"' id='ant' value='Y' checked class='f_rdo '>Y <input type='radio' name='ant_"+(childCount+1)+"' id='ant' value='N' class='f_rdo '>N</td>";
+        html+="<td><input type='hidden' name='repair' data-time='"+time+"' value='"+code+"'/><input type='hidden' name='repairseq' value=''><a href='#' class='btn btn_blue_30 w_50' onclick='DeleteRepair("+(childCount+1)+")'><spring:message code='button.delete'/></a></td>";
+        html+="</tr>";
+        
+        repair.append(html);
+
+        // CalculateTime();
+
+    }
+    function DeleteRepair(i)
+    {
+        var deleteSelector = $();
+        $("tr#repair_"+i).remove();
+
+        // CalculateTime();
+    }
+
+    function SaveRepair(){
+        //수리항목 리스트화
+        var array = new Array();
+		$('input[name=repair]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairlist").val(array);
+        if($("#repairlist").val()==null||$("#repairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        //수리 리드타임 리스트화
+        var array = new Array();
+		$('input[name=repair]').each(function(index) {
+			array.push($(this).data("time"));
+			
+		});
+		$("#repairleadtime").val(array);
+
+        //수리종류 리스트화
+        var array = new Array();
+		$('select[name=chk_repair]').find("option:selected").each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#chkrepairlist").val(array);
+        if($("#chkrepairlist").val()==null||$("#chkrepairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        //수리항목 repairseq 리스트화
+        var array = new Array();
+		$('input[name=repairseq]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairseqlist").val(array);
+        //수리항목 비고 리스트화
+        var array = new Array();
+		$('input[name=repair_note]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repair_notelist").val(array);
+
+        // console.log($("#chkrepairlist").val());
+        // console.log($("#repairlist").val());
+        // console.log($("#notelist").val());
+        
+        //수리항목 비고 리스트화
+        var array = new Array();
+		$('input[id=ant]:checked').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairantlist").val(array);
+
+        
+        document.repairform.action = "<c:url value='UpdateRepair.do'/>";
+        // document.repairform.submit();
+
+        $.ajax({
+            type: "POST",
+            url: "UpdateRepair.do",
+            data: $("#repairform").serialize(),
+            success: function (result) {
+                if(result==1)
+                {
+                    alert("수정되었습니다");
+                    fn_egov_cancel_popup();
+                    parent.reload();
+                }
+                else
+                {
+                    alert("다시 시도해 주세요");
+                    fn_egov_cancel_popup();
+                }
+            },
+            
+        });
+        
+    }
+
+    var deleteArr = new Array();
+    function DeleteRepair(i,repairseq='')
+    {
+        if(repairseq != '')
+        {
+            deleteArr.push(repairseq);
+            $("#deletelist").val(deleteArr);
+        }
+        $("tr#repair_"+i).remove();
+
+    }
+
 </script>
 </head>
 <body>
@@ -76,8 +225,15 @@ function fnCheckNotKorean(koreanStr){
     <!-- 아이디중복확인 팝업 -->
     <div class="popup POP_DUPID_CONF" style="background-color: white; text-align: center;">
     
-    	<form name="SmartRcptVO" action ="<c:url value='/rcpt/checkcarinfo.do'/>">
-    
+    	<form name="repairform" id="repairform" action ="<c:url value='/rcpt/checkcarinfo.do'/>">
+        <input type="hidden" name="seq" id="seq" value="<c:out value='${rcptinfo[0].TAKESEQ}'/>">
+        <input type="hidden" name="repairlist" id="repairlist" value="">
+        <input type="hidden" name="repairleadtime" id="repairleadtime" value="">
+        <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
+        <input type="hidden" name="repairseqlist" id="repairseqlist" value="">
+        <input type="hidden" name="repair_notelist" id="repair_notelist" value="">
+        <input type="hidden" name="repairantlist" id="repairantlist" value="">
+        <input type="hidden" name="deletelist" id="deletelist">
         <div class="pop_inner" style="width:100%;">
             <div class="pop_header">
                 <h1>수리항목 리스트</h1>
@@ -114,7 +270,7 @@ function fnCheckNotKorean(koreanStr){
                 <label>
                     <a href="#" class="btn btn_blue_30 w_50" onclick="AddRepair()"><spring:message code="cop.sms.addRecptn"/></a>
                 </label>
-                <table class="board_list4" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
+                <table class="board_list4" id="repair" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
                     <colgroup>
                         <col style="width: 150px;">
                         <col style="width: 150px;">
@@ -128,6 +284,7 @@ function fnCheckNotKorean(koreanStr){
                         <th>수리시간</th>
                         <th>수리항목 비고</th>
                         <th>수리여부</th>
+                        <th>비고</th>
                     </thead>
                     <tbody>
                         <c:if test="${fn:length(RepairList) == 0}">
@@ -135,36 +292,39 @@ function fnCheckNotKorean(koreanStr){
                                 <td colspan="5"><spring:message code="common.nodata.msg" /></td>
                             </tr>
                         </c:if>
-                        <c:forEach var="i" items="${RepairList}" varStatus="status">
-                            <tr>
+                        <c:forEach var="i" items="${RepairList}" varStatus="istatus">
+                            <tr id="repair_${istatus.count}">
                                 <td><c:out value="${i.REPAIRNAME}"/></td>
                                 <td>
                                     <label class="f_selectsmall">
-                                        <select name="method" id="method">
-                                            <c:forEach var="j" items="${autome}" varStatus="status">
+                                        <select name="chk_repair" id="chk_repair_${istatus.count}">
+                                            <c:forEach var="j" items="${autome}" varStatus="jstatus">
                                                 <option value="${j.CODE}" <c:if test="${j.CODE == i.REPAIRMETHOD}">selected</c:if>><c:out value="${j.NAME}"/></option>
                                             </c:forEach>
                                         </select>
                                     </label>
                                 </td>
                                 <td><c:out value="${i.LEADTIME}"/></td>
-                                <td><input type="text" class="f_txtsmall" value="<c:out value='${i.REPAIR_NOTE}'/>"></td>
-                                <td><input type="radio" name="finish_${i.REPAIR_SEQ}" class="f_rdo ">Y <input type="radio" name="finish_${i.REPAIR_SEQ}" class="f_rdo ">N</td>
+                                <td><input type="text" class="f_txtsmall" name="repair_note" id="repair_note" value="<c:out value='${i.REPAIR_NOTE}'/>"></td>
+                                <td><input type="radio" name="ant_${istatus.count}" id="ant" value="Y" <c:if test="${i.REPAIRANT=='Y'}">checked</c:if> class="f_rdo">Y <input type="radio" name="ant_${istatus.count}" id="ant" value="N" <c:if test="${i.REPAIRANT=='N'}">checked</c:if> class="f_rdo">N</td>
+                                <td><input type='hidden' name="repair" value="<c:out value='${i.REPAIRCODE}'/>">
+                                    <input type='hidden' name="repairseq" value="<c:out value='${i.REPAIR_SEQ}'/>">
+                                    <a href='#' class='btn btn_blue_30 w_50' onclick="DeleteRepair(<c:out value='${istatus.count}'/>,'<c:out value='${i.REPAIR_SEQ}'/>')"><spring:message code='button.delete'/></a></td>
                             </tr>
 
                         </c:forEach>
                     </tbody>
                 </table>
-                <div class="btn_area al_c pt20">
+                <div class=" al_c pt20">
                     <div class="board_view2">
                         <table>
                             <colgroup>
-                                <col style="width:auto;">
+                                <col style="width:130px;">
                                 <col style="width:auto;">
                             </colgroup>
                             <tr>
                                 <td class="lb">수리 비고</td>
-                                <td><input type="text" class="f_txtsmall" placeholder="수리 비고" value="<c:out value='${rcptinfo.REPAIRNOTE}여기서부터'/>"></td>
+                                <td><input type="text" class="f_txtsmall w_500" name="repairnote" id="repairnote" placeholder="수리 비고" value="<c:out value='${rcptinfo[0].REPAIRNOTE}'/>"></td>
                             </tr>
                         </table>
                     </div>
@@ -181,3 +341,49 @@ function fnCheckNotKorean(koreanStr){
     
 </body>
 </html>
+
+<script>
+    $("#leadtimemain").change(function(){
+    var selectedvar = $(this).val();
+    //console.log(selectedvar);
+    $.ajax({
+        type: "post",
+        url: "/rcpt/SelectLeadtime.do",
+        //contentType:"application/json;charset=UTF-8",
+        //dataType:"json",
+        data: {
+        	selectedvar:selectedvar
+        },
+        success: function (resp) {
+        	var html="<option value=''>선택</option>";
+        	$.each(resp.list,function(index,item){
+        		console.log(item);
+        		html+="<option value='"+item.CODE+"'>"+item.NAME+"</option>";
+        	});
+        	$("#leadtimemiddle").html(html);
+        }
+    });
+});
+
+$("#leadtimemiddle").change(function(){
+    var selectedvar = $(this).val();
+    //console.log(selectedvar);
+    $.ajax({
+        type: "post",
+        url: "/rcpt/SelectLeadtime.do",
+        //contentType:"application/json;charset=UTF-8",
+        //dataType:"json",
+        data: {
+        	selectedvar:selectedvar
+        },
+        success: function (resp) {
+        	var html="<option value=''>선택</option>";
+        	$.each(resp.list,function(index,item){
+        		console.log(item);
+        		html+="<option value='"+item.CODE+"' data-time='"+(item.LEADTIME_NM).slice(0,2)+"' data-timenm='"+item.LEADTIME_NM+"'>"+item.NAME+" / "+item.LEADTIME_NM+"</option>";
+        	});
+        	$("#leadtimesub").html(html);
+        }
+    });
+});
+</script>

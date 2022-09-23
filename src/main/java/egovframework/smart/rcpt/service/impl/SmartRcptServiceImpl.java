@@ -65,9 +65,10 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 					leadrepairmap.put("takeseq", takeseq);
 					leadrepairmap.put("method", chkrepairlist[i]);
 					leadrepairmap.put("code", repairlist[i]);
+					leadrepairmap.put("repairant", 'Y');
 					leadrepairmap.put("leadtime", repairleadtime[i]);
 					// leadrepairmap.put("note", notelist[i]);
-					leadrepairmap.put("insertid", params.get("loginid"));
+					leadrepairmap.put("loginid", params.get("loginid"));
 					System.out.println(leadrepairmap);
 
 					result = smartrcptDAO.InsertLeadRepair(leadrepairmap);
@@ -99,5 +100,100 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 	@Override
 	public List<Object> SelectRcptinfo(String seq) throws Exception {
 		return smartrcptDAO.SelectRcptinfo(seq);
+	}
+
+	@Override
+	@Transactional
+	public int UpdateRepair(Map<String, Object> params) throws Exception {
+		int result=0;
+
+
+
+		String[] deletelist =params.get("deletelist").toString().split(",",-1);
+		
+		String[] repairlist =params.get("repairlist").toString().split(",");
+		String[] repairseqlist =params.get("repairseqlist").toString().split(",",-1);
+		String[] repair_notelist = params.get("repair_notelist").toString().split(",",-1);
+		// String[] notelist = params.get("repairnote").toString().split(",",-1);
+		String[] chkrepairlist = params.get("chkrepairlist").toString().split(",");
+		String[] repairantlist = params.get("repairantlist").toString().split(",");
+
+		try{
+		//접수 수정
+		result = smartrcptDAO.UpdateRcpt(params);
+		if(result==0)
+			throw new Exception("접수 수정 실패");
+		
+		//DELETE
+		if(deletelist.length>0)
+		{
+			System.out.println("DELETE len: "+deletelist.length);
+			for(int i=0;i<deletelist.length;i++)
+			{
+				
+				System.out.println("DELETE 내용: "+deletelist[i]);
+				if(deletelist[i]==null || deletelist[i]=="")
+					continue;
+
+				Map<String,Object> deleteParams = new HashMap<String,Object>();
+				deleteParams.put("takeseq", params.get("seq"));
+				deleteParams.put("repairseq", deletelist[i]);
+				result = smartrcptDAO.DeleteRepair(deleteParams);
+				System.out.println("DELETE : "+result);
+				if(result==0)
+					throw new Exception("수리 삭제 실패");
+			}
+		}
+
+		for(int i=0;i<repairlist.length;i++)
+		{
+			if(repairlist[i]=="" || chkrepairlist[i] == "")
+			{
+				result =0;
+				break;
+			}
+			Map<String,Object> repairParams = new HashMap<String,Object>();
+			//UPDATE
+			if(repairseqlist[i] != "")
+			{
+				
+				repairParams.put("repairseq", params.get("repairseq"));
+				repairParams.put("takeseq", params.get("seq"));
+				repairParams.put("method", chkrepairlist[i]);
+				repairParams.put("code", repairlist[i]);
+				repairParams.put("repairant", repairantlist[i]);
+				repairParams.put("repair_note", repair_notelist[i]);
+				repairParams.put("loginid", params.get("loginid"));
+				System.out.println("repairParams:"+repairParams);
+				result = smartrcptDAO.UpdateRepair(repairParams);
+				System.out.println("UPDATE : "+result);
+				if(result==0)
+					throw new Exception("수리 수정 실패");
+			}
+			//INSERT
+			else
+			{
+				repairParams.put("takeseq", params.get("seq"));
+				repairParams.put("method", chkrepairlist[i]);
+				repairParams.put("code", repairlist[i]);
+				repairParams.put("repairant", repairantlist[i]);
+				repairParams.put("note", repair_notelist[i]);
+				repairParams.put("loginid", params.get("loginid"));
+				System.out.println("repairParams:"+repairParams);
+				result = smartrcptDAO.InsertLeadRepair(repairParams);
+				System.out.println("INSERT : "+result);
+				if(result==0)
+					throw new Exception("접수 등록 실패");
+			}
+		}
+		// List<Object> selectinfo = smartrcptDAO.selectRepairInfo(params);
+
+		}
+		catch(Exception e){
+			throw e;
+		}
+		// System.out.println("selectinfo :" +selectinfo);
+
+		return result;
 	}
 }

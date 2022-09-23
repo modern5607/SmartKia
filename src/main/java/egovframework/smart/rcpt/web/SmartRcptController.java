@@ -273,7 +273,7 @@ public class SmartRcptController {
 
 	//접수현황 수리사항 디테일팝업화면
 	@RequestMapping(value = "/rcpt/RepaireDetailPopup.do",method = RequestMethod.GET)
-	public String RepaireDetailPopup(ModelMap model, String seq) throws Exception
+	public String RepaireDetailPopup(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO ,ModelMap model, String seq) throws Exception
 	{
 		// 미인증 사용자에 대한 보안처리 
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -283,11 +283,34 @@ public class SmartRcptController {
 		}
 		System.out.println(seq);
 		
-		
+		model.addAttribute("leadtime", smartmdmservice.selectLeadTime(smartrcptVO).get("main"));
 		model.addAttribute("rcptinfo", smartrcptservice.SelectRcptinfo(seq));
 		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
 		model.addAttribute("RepairList",smartrcptservice.selectRcptRepairInfo(seq));
 		// System.out.println(model.get("RepairList"));
 		return "rcpt/RepaireDetailPopup";
+	}
+
+	//접수등록
+	@RequestMapping(value = "/rcpt/UpdateRepair.do",method=RequestMethod.POST)
+	public void UpdateRepair(@RequestParam Map<String,Object> params,ModelMap model,HttpServletResponse response)throws Exception {
+		
+		// // 미인증 사용자에 대한 보안처리
+		// Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		// if (!isAuthenticated) {
+		// 	model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+		// 	return "uat/uia/EgovLoginUsr";
+		// }
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		System.out.println(params);
+
+		// //접수등록
+		int result = smartrcptservice.UpdateRepair(params);
+		System.out.println(result);
+		
+		response.getWriter().print(result);
 	}
 }
