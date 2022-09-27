@@ -11,8 +11,8 @@
     </select>
     <insert id="InsertWebRcpt" parameterType="java.util.HashMap" >
         INSERT INTO CAR_TAKEREPAIR
-        (TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,REPAIRNOTE,POSITION,RECEIPTDATE,ESTIME,TASKSTAT,COMPTIME,NOTE,URGENT,TOTAL_LEADTIME,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
-        VALUES((TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.NEXTVAL, 'FM0000')),#{servicesys},#{id},#{carnum},#{repairnote},#{position},SYSDATE,#{estime},#{taskstat},'',#{note},#{urgent},#{totaltime},#{loginid},SYSDATE,'','')
+        (TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,REPAIRNOTE,POSITION,RECEIPTDATE,TASKSTAT,COMPTIME,NOTE,URGENT,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
+        VALUES((TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.NEXTVAL, 'FM0000')),#{servicesys},#{id},#{carnum},#{repairnote},#{position},SYSDATE,#{taskstat},'',#{note},#{urgent},#{loginid},SYSDATE,'','')
 
         <selectKey keyColumn="TAKESEQ" keyProperty="takeseq" resultType="java.lang.String" order="AFTER">
             SELECT (TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.CURRVAL, 'FM0000')) FROM DUAL

@@ -423,7 +423,7 @@
                                                 <td></td>
                                                 <td></td>
                                             </tr> -->
-                                             <tr>
+                                             <!-- <tr>
                                                 <td class="lb">
                                                     <label for="bbsNm">예상 완료 시간</label>
                                                 </td>
@@ -433,10 +433,10 @@
                                                             소요시간(분단위) + 추가 소요시간(분단위)
                                                         </label> 
                                                         <input class="f_txtsmall w_100" type="number" name="timerequired" id="timerequired" readonly/> + <input class="f_txtsmall w_100" type="number" value="0" name="addtime" id="addtime"/> = <input class="f_txtsmall w_100" name="totaltime" id="totaltime" readonly/>
-                                                        <!-- <input type="text" class="f_txtsmall" name="estime" id="estime" readonly> -->
+                                                        <input type="text" class="f_txtsmall" name="estime" id="estime" readonly>
                                                 	</p>
                                                 </td>
-                                            </tr>
+                                            </tr -->
                                              <tr>
                                                 <td class="lb">
                                                     <label>기타</label>
