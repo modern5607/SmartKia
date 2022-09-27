@@ -113,17 +113,19 @@ public class SmartTabletController {
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
+		
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
+		
 		searchVO.setLoginid(loginVO.getUniqId().toString());
-		System.out.println("searchVO :"+searchVO);
+		
 
 		// service
+		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
+		System.out.println("model :"+model);
+		//System.out.println("list : "+((HashMap<String,Object>)model.get("logininfo")).get(0));
 		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
 		
-		System.out.println("model2 :"+model);
-		System.out.println("searchVO :"+searchVO);
 		Map<String, Object> map = smarttabletservice.selectList(searchVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
@@ -219,7 +221,17 @@ public class SmartTabletController {
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		/*
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		searchVO.setLoginid(loginVO.getUniqId().toString());
+		System.out.println("searchVO :"+searchVO);
 
+		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
+		System.out.println("model :"+model);
+		System.out.println("TEAM :"+model.get("logininfo").toString());
+		//searchVO.setAutoroom("loginfo",model.get("TEAM").toString());
+		 */
 
 		// service
 		Map<String, Object> map = smarttabletservice.assignmentList(searchVO);

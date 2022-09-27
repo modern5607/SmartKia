@@ -98,6 +98,11 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 		return map;
 	}
 
+	@Override
+	public List<Object> selectlogininfo(SmartTabletVO searchVO) {
+		return SmartTabletDAO.selectlogininfo(searchVO);
+	}
+
 	
 	
 }
