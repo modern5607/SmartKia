@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -16,6 +18,7 @@ import egovframework.smart.mdm.service.SmartCommonCodeVO;
 import egovframework.smart.mdm.service.SmartLeadTimeVO;
 import egovframework.smart.mdm.service.SmartMdmBizVO;
 import egovframework.smart.mdm.service.SmartMdmService;
+import egovframework.smart.rcpt.service.SmartRcptVO;
 
 @Service("SmartMdmService")
 public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements SmartMdmService{
@@ -219,4 +222,22 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 		
 		return smartDAO.selectCode(codeVO);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String,Object> selectLeadTime2() {
+
+		Map<String,Object> result = new HashMap<String,Object>();
+		
+		List<Object> tmpstatList = smartDAO.selectStatLeadtime();
+		result.put("infolist",tmpstatList);
+
+		((Map<String,Object>)tmpstatList.get(0)).put("LIST",smartDAO.selectExpeLeadtime());
+		((Map<String,Object>)tmpstatList.get(1)).put("LIST",smartDAO.selectCritLeadtime());
+		((Map<String,Object>)tmpstatList.get(2)).put("LIST",smartDAO.selectBaseLeadtime());
+
+		// System.out.println("리스트안에 Map : "+result);
+		return result;
+	}
+
 }

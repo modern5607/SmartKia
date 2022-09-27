@@ -34,11 +34,12 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 	public int InsertWebRcpt(Map<String, Object> params) throws Exception {
 		int result=0;
 		try{
+			/*
 			if(params.get("position").toString().equals("") == false)
 				params.put("taskstat", "CB-standby");
 			else
 				params.put("taskstat", "CB-receipt");
-
+*/
 			Map<String, Object> resultmap = smartrcptDAO.InsertWebRcpt(params);
 			String takeseq = resultmap.get("takeseq").toString();
 			System.out.println(takeseq);

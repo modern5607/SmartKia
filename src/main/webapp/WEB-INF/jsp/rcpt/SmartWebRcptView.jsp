@@ -53,7 +53,7 @@
         document.rcptform.carnum.value = carnum;
         document.rcptform.tel.value = tel;
     }
-
+/*
     function AddRepair()
     {
     	console.log($("#repair").children("tbody").length);
@@ -102,19 +102,15 @@
 
         CalculateTime();
     }
+*/
 
-    function CalculateTime()
+    function CalculateTime(totaltime)
     {
-        var repair = $("#repair").children("tbody").children();
-        var totalTime=0;
-        for(var i=0;i<repair.length;i++)
-        {
-        	totalTime += Number($("input[name=repair]").eq(i).data("time"));
-        }
-        // console.log(totalTime);
-        $("#timerequired").val(totalTime);
+        $("#timerequired").val(totaltime);
         updatetotaltime();
     }
+   
+
 
     function InsertWebRcpt(){
         
@@ -146,25 +142,25 @@
         }
 
         //수리항목 리스트화
-        var array = new Array();
-		$('input[name=repair]').each(function(index) {
-			array.push($(this).val());
+        // var array = new Array();
+		// $('input[name=repair]').each(function(index) {
+		// 	array.push($(this).val());
 			
-		});
-		$("#repairlist").val(array);
-        if($("#repairlist").val()==null||$("#repairlist").val()=='')
-        {
-            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
-            return;
-        }
+		// });
+		// $("#repairlist").val(array);
+        // if($("#repairlist").val()==null||$("#repairlist").val()=='')
+        // {
+        //     alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+        //     return;
+        // }
 
         //수리 리드타임 리스트화
-        var array = new Array();
-		$('input[name=repair]').each(function(index) {
-			array.push($(this).data("time"));
+        // var array = new Array();
+		// $('input[name=repair]').each(function(index) {
+		// 	array.push($(this).data("time"));
 			
-		});
-		$("#repairleadtime").val(array);
+		// });
+		// $("#repairleadtime").val(array);
 
         //수리종류 리스트화
         var array = new Array();
@@ -232,12 +228,17 @@
         console.log("reload");
         location.reload();
     }
-    
+    function init()
+    {
+        if ("<c:out value='${msg}'/>" != "") {
+			alert("<c:out value='${msg}'/>");
+		}
+    }
     </script>
 
 </head>
 
-<body>
+<body onload="init()">
     <!-- Skip navigation -->
     <a href="#contents" class="skip_navi">본문 바로가기</a>
 
@@ -328,11 +329,57 @@
                                             </tr>
                                             <tr>
                                                 <td class="lb">
-                                                    <label for="bbsNm">수리사항</label>
+                                                    <label for="bbsNm">정비사항</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td colspan="7">
-                                                    <label class="f_selectsmall">
+                                                    <div class="cont left">
+                                                        <strong>정비내용 선택</strong>
+                                                        <div class="scrollBox01">
+                                                            <ul id="rcrListUL">
+                                                                <c:forEach var="i" items="${leadtimelist.infolist}" varStatus="istatus">
+                                                                <li class="box_tit">
+                                                                    <a href="#">${i.NAME}</a>
+                                                                    <ul>
+                                                                    <c:forEach var="j" items="${i.LIST}" varStatus="jstatus">
+                                                                        <li>
+                                                                            <input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont" value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>" style="width: 0px;height: 0px;">
+                                                                            <label for="mtn_cont${istatus.count}_${jstatus.count}">${j.NAME}</label>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                    </ul>
+                                                                </li>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont left" style="width: 600px;">
+                                                        <strong>정비내용 선택사항</strong>
+                                                        <div class="scrollBox03 board_view5"style="overflow:scroll;">
+                                                            <table id="repair">
+                                                                <colgroup>
+                                                                    <col style="width:auto;">
+                                                                    <col style="width:auto;">
+                                                                    <col style="width:auto;">
+                                                                </colgroup>
+                                                                <tbody>
+
+                                                                </tbody>
+
+
+                                                            </table>
+                                                            <!-- <textarea name="" id="rcptSbc" readonly cols="30" rows="10" title="정비내용 선택사항" placeholder="정비내용선택 시 텍스트 자동 입력"></textarea> -->
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont left">
+                                                        <strong>정비 요청사항</strong>
+                                                        <div class="scrollBox03">
+                                                            <textarea name="repairnote" id="repairnote" cols="30" rows="10" placeholder="추가 요청사항"></textarea>
+
+                                                        </div>
+                                                    </div>
+                                                    <!-- <label class="f_selectsmall">
                                                         <select name="leadtimemain" id="leadtimemain">
                                                             <option value="">선택</option>
                                                             <c:forEach var="i" items="${leadtime}" varStatus="status">
@@ -354,10 +401,10 @@
                                                     <label>
                                                         <a href="#" class="btn btn_blue_30 w_50" onclick="AddRepair()"><spring:message code="cop.sms.addRecptn"/></a>
                                                     </label>
-                                                    <input name="repairnote" id="repairnote" class="f_txtsmall" placeholder="수리 비고"/>
+                                                    <input name="repairnote" id="repairnote" class="f_txtsmall" placeholder="수리 비고"/> -->
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td class="lb">
                                                     <label for="bbsNm">수리사항 목록</label>
                                                 </td>
@@ -375,7 +422,7 @@
                                                 </td>
                                                 <td></td>
                                                 <td></td>
-                                            </tr>
+                                            </tr> -->
                                              <tr>
                                                 <td class="lb">
                                                     <label for="bbsNm">예상 완료 시간</label>
@@ -386,24 +433,24 @@
                                                             소요시간(분단위) + 추가 소요시간(분단위)
                                                         </label> 
                                                         <input class="f_txtsmall w_100" type="number" name="timerequired" id="timerequired" readonly/> + <input class="f_txtsmall w_100" type="number" value="0" name="addtime" id="addtime"/> = <input class="f_txtsmall w_100" name="totaltime" id="totaltime" readonly/>
-                                                        <input type="text" class="f_txtsmall" name="estime" id="estime" readonly>
+                                                        <!-- <input type="text" class="f_txtsmall" name="estime" id="estime" readonly> -->
                                                 	</p>
                                                 </td>
                                             </tr>
                                              <tr>
                                                 <td class="lb">
-                                                    <label>작업반</label>
+                                                    <label>기타</label>
                                                 </td>
                                                 <td>
                                                     <p>
-                                                        <label class="f_selectsmall" style="vertical-align:middle;">
+                                                        <!-- <label class="f_selectsmall" style="vertical-align:middle;">
                                                             <select name="position" id="position"> 
                                                                 <option value="">미정</option>
                                                                 <c:forEach var="i" items="${autorooms}" varStatus="status">
                                                                 <option value="<c:out value='${i.CODE}'/>">${i.NAME}</option>
                                                                 </c:forEach>
                                                             </select>
-                                                        </label>
+                                                        </label> -->
                                                         <label class="v_middle">긴급여부 <input type="checkbox" name="urgent" id="urgent" value=""></label>
                                                     </p>
                                                 </td>
@@ -532,6 +579,63 @@
 </html>
 
 <script>
+$("li.box_tit a").click(function(){
+    // console.log($(this));
+    if($(this).parent().hasClass("active"))
+        $(this).parent().removeClass("active");
+    else
+        $(this).parent().addClass("active");
+});
+
+$(".box_tit ul li label").click(function(){
+    
+    setTimeout(function(){
+        var textarea=''
+        var totalleadtime=0;
+        var textlist = new Array();
+        var vallist = new Array();
+        var leadtimelist = new Array();
+
+        var repair = $("#repair").children("tbody");
+        var html='';
+		$("input:checkbox[type=checkbox]:checked").each(function(index) {
+            
+            console.log(repair);
+            // var childCount = repair.children().length;
+            html+="<tr id='repair_"+(index+1)+"'>";
+            html+="<td>"+$(this).parent().find("label").text()+"</td>";
+            html+="<td>";
+            html+="<label class='f_selectsmall'><select id='chk_repair_"+(index+1)+"' name='chk_repair' >";
+            html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
+            html+="</select></label>";
+            html+="</td>";
+            html+="<td>"+$(this).data("time")+"</td>";
+            // html+="<td><input type='text' name='note' id='note' placeholder='비고' value=''/></td>";
+            html+="<td><input type='hidden' name='repair' data-time='"+$(this).data("time")+"' value='"+$(this).val()+"'/></td>";
+            html+="</tr>";
+
+            // textarea +=$(this).parent().find("label").text()+"\n";
+            totalleadtime+=$(this).data("time");
+			// textlist.push($(this).parent().find("label").text());
+			vallist.push($(this).val());
+            leadtimelist.push($(this).data("time"));
+			
+		});
+        repair.html(html);
+
+
+        console.log(totalleadtime);
+
+		$("#rcptSbc").text(textarea);
+		$("#repairlist").val(vallist);
+		$("#repairleadtime").val(leadtimelist);
+        CalculateTime(totalleadtime);
+
+    },100)
+
+});
+
+/*
 $("#leadtimemain").change(function(){
     var selectedvar = $(this).val();
     //console.log(selectedvar);
@@ -582,7 +686,7 @@ $("#leadtimemiddle").change(function(){
 //     $("#timerequired").val(time);
 //     updatetotaltime();    
 // });
-
+*/
 $("#timerequired").on("change keyup paste", function() {
     updatetotaltime();
 });
@@ -595,10 +699,10 @@ function updatetotaltime(){
     var total = Number($("#timerequired").val()) + Number($("#addtime").val());
     var now = new Date();
     var estime = new Date(now.setMinutes(now.getMinutes() + total));
-    var converttime = estime.getFullYear()+'-'+(estime.getMonth()+1)+"-"+estime.getDate()+" "+estime.getHours()+":"+estime.getMinutes()+":"+estime.getSeconds();
-	console.log(converttime);
+    // var converttime = estime.getFullYear()+'-'+(estime.getMonth()+1)+"-"+estime.getDate()+" "+estime.getHours()+":"+estime.getMinutes()+":"+estime.getSeconds();
+	// console.log(converttime);
 	$("#totaltime").val(total);
-    $("#estime").val(converttime);
+    // $("#estime").val(converttime);
 }
 
 

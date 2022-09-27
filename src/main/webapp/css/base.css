@@ -35,8 +35,8 @@ img {border: 0; vertical-align: top;}
 hr, legend {position: absolute; left: -9999px; top: -9999px;}
 caption {text-indent: -9999px; font-size: 0;}
 li {list-style: none;}
-td ul li {list-style:disc;margin-left: 20px;padding-right: 20px;}
-td ul li:not(:last-child){margin-bottom: 5px;}
+td ul li {}
+/* td ul li:not(:last-child){margin-bottom: 5px;} */
 table {width: 100%; border-collapse: collapse;}
 a:link, a:visited, a:hover, a:active {text-decoration: none;}
 

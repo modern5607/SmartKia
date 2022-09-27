@@ -1,5 +1,6 @@
 package egovframework.smart.mdm.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,4 +105,24 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 	public List<Object> selectCode(SmartCommonCodeVO vo){
 		return selectList("SmartMdmDAO.SelectCode",vo);
 	}
+	public Object selectLeadTime2() {
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+    public List<Object> selectStatLeadtime() {
+		return selectList("SmartMdmDAO.SelectStatLeadtime");
+    }
+	@SuppressWarnings("unchecked")
+    public Object selectExpeLeadtime() {
+        return selectList("SmartMdmDAO.SelectExpeLeadtime");
+    }
+	@SuppressWarnings("unchecked")
+    public Object selectBaseLeadtime() {
+        return selectList("SmartMdmDAO.SelectBaseLeadtime");
+    }
+	@SuppressWarnings("unchecked")
+    public Object selectCritLeadtime() {
+        return selectList("SmartMdmDAO.SelectCritLeadtime");
+    }
 }

@@ -194,5 +194,22 @@
 	<select id="SelectCmmCode" parameterType="String" resultType="java.util.HashMap">
 		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = #{groupcode}
 	</select>
-	
+
+
+	<select id="SelectStatLeadtime" resultType="java.util.HashMap">
+		SELECT IDX,H_CODE,CODE,NAME FROM CAR_LEADTIME WHERE H_CODE = 'STAT' AND USE_YN='Y' ORDER BY IDX ASC
+	</select>
+	<select id="SelectExpeLeadtime" resultType="java.util.HashMap">
+		SELECT IDX,H_CODE,CODE,NAME,LEAD_NAME FROM CAR_LEADTIME WHERE H_CODE = 'EXPE' AND USE_YN='Y'
+	</select>
+
+
+	<select id="SelectBaseLeadtime" resultType="java.util.HashMap">
+		SELECT IDX,H_CODE,CODE,NAME,LEAD_NAME FROM CAR_LEADTIME WHERE H_CODE = 'BASE' AND USE_YN='Y'
+	</select>
+
+
+	<select id="SelectCritLeadtime" resultType="java.util.HashMap">
+		SELECT IDX,H_CODE,CODE,NAME,LEAD_NAME FROM CAR_LEADTIME WHERE H_CODE = 'CRIT' AND USE_YN='Y'
+	</select>
 </mapper>

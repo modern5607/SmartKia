@@ -36,6 +36,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 @Controller
@@ -70,9 +72,16 @@ public class SmartRcptController {
 	private SmartMdmService smartmdmservie;
 	
 	@RequestMapping(value="/rcpt/SmartWebRcptView.do")
-	public String SmartWebRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO ,ModelMap model,HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public String SmartWebRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO,ModelMap model,HttpServletRequest request,HttpServletResponse response) throws Exception{
 		
-		System.out.println(smartrcptVO);
+		if(request!=null)
+		{
+			Map<String,?> flashmap = RequestContextUtils.getInputFlashMap(request);
+			if(flashmap != null)
+				model.addAttribute("msg",flashmap.get("msg"));
+		}
+		
+			System.out.println("model :"+model);
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -95,17 +104,8 @@ public class SmartRcptController {
 		smartrcptVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		smartrcptVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		// model
-		// Map<String, Object> map = smartrcptservice.selectCommonCodeList(smartrcptVO);
-		 
-		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime(smartrcptVO);
-		// System.out.println("leadtimelist :" + leadtimelist);
-		//  System.out.println("leadtimelist :" +leadtimelist.get("main"));
+		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
 		int totCnt = 1;//Integer.parseInt((String) map.get("resultCnt"));
-		// List<Object> servicesysMap = smartmdmservice.SelectCode("AUTO_SYSTEM");
-		
-		//List<Object> test = smartmdmservice.SelectCode("AUTO_SYSTEM", "CB-Web");
-		//System.out.println(test);
 		
 		//디바이스 구분
 		if(device.isNormal())
@@ -117,7 +117,8 @@ public class SmartRcptController {
 		paginationInfo.setTotalRecordCount(totCnt);
 
 		model.addAttribute("smartrcptVO", smartrcptVO);
-		model.addAttribute("leadtime", leadtimelist.get("main"));
+		model.addAttribute("leadtimelist", leadtimelist);
+		// model.addAttribute("leadtime", leadtimelist.get("main"));
 		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
 		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
 		model.addAttribute("rcptlist", smartrcptservice.SelectRcptList(smartrcptVO));
@@ -238,7 +239,7 @@ public class SmartRcptController {
 
 	//접수등록
 	@RequestMapping(value = "/rcpt/InsertWebRcpt.do")
-	public String InsertWebRcpt(@RequestParam Map<String,Object> params,ModelMap model) throws Exception {
+	public String InsertWebRcpt(@RequestParam Map<String,Object> params,ModelMap model, RedirectAttributes attr) throws Exception {
 		
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 
@@ -261,14 +262,15 @@ public class SmartRcptController {
 		
 		if (result == 0) // insert실패
 		{
-			model.addAttribute("msg","수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
-			model.addAttribute("url","");
+			// model.addAttribute("msg","수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
+			attr.addFlashAttribute("msg", "수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
 		}
 		else{
-			model.addAttribute("msg","접수등록되었습니다.");
-			model.addAttribute("url","SmartWebRcptView.do");
+			// model.addAttribute("msg","접수등록되었습니다.");
+			attr.addFlashAttribute("msg", "접수 등록되었습니다.");
+
 		}
-		return "alert";
+		return "redirect:/rcpt/SmartWebRcptView.do";
 	}
 
 	//접수현황 수리사항 디테일팝업화면

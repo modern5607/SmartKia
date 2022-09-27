@@ -13,9 +13,10 @@
 
     var msg = "<c:out value='${msg}'/>";
     var url = "<c:out value='${url}'/>";
-    alert(msg);
+    
     if (url == '')
         window.history.back();
     else
         location.href = url;
+        alert(msg);
 </script>

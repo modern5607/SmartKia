@@ -1,9 +1,11 @@
 package egovframework.smart.mdm.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultVO;
+import egovframework.smart.rcpt.service.SmartRcptVO;
 
 
 public interface SmartMdmService {
@@ -43,6 +45,8 @@ public Map<String, Object> selectCommonCodeList(SmartCommonCodeVO vo) throws Exc
 	public List<Object> SelectCmmCode(String GroupCode) throws Exception;
 
 	public List<Object> SelectCode(String groupcode,String code) throws Exception;
+
+	public Map<String, Object> selectLeadTime2()throws Exception;
 
 
 }
