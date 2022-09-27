@@ -20,7 +20,7 @@ public class SmartMonitoringServiceImpl extends EgovAbstractServiceImpl implemen
 	
 	@Override
 	public Map<String, Object> selectMonitoringList(ComDefaultVO vo) throws Exception {
-		System.out.println("impl");
+		
 		List<ComDefaultVO> result = smartmonitoringDAO.selectMonitoringList(vo);
 		String cnt = Integer.toString(result.size());
 

@@ -1,5 +1,7 @@
 package egovframework.smart.monitoring.web;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
@@ -20,12 +22,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -147,6 +152,15 @@ public class SmartMonitoringController {
 		model.addAttribute("paginationInfo", paginationInfo);
 
 		return "/monitor/SmartMonitoring";
+	}
+
+	@RequestMapping(value = "/monitor/SelectSmartMonitoring.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String,Object> SelectSmartMonitoring(@ModelAttribute("searchVO") ComDefaultVO searchVO)throws Exception{
+		
+		Map<String,Object> map =new HashMap<String,Object>();
+		map.put("list", smartMonitoringService.selectMonitoringList(searchVO));
+		return map;
 	}
 
 	@RequestMapping(value = "/monitor/SmartMonitoringA.do")

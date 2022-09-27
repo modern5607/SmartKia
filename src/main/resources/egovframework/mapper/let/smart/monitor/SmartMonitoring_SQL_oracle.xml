@@ -24,19 +24,26 @@
 
 	<select id="selectMonitoringList" parameterType="comDefaultVO" resultType="java.util.HashMap">
 		
-		SELECT
-			AUTONUMBER			,
-			REPAIRMETHOD		,
-			REPAIRNOTE  		,
-			RECEIPTDATE			,
-			ESTIME				,
-			NOTE				,
-			FN_CODENAME(TASKSTAT, 'AUTO_PROC') taskstat,
-			FN_CODENAME(POSITION, 'AUTO_ROOM') position
-		FROM CAR_TAKEREPAIR
-		WHERE 1 = 1
-		
-		AND TASKSTAT  != 'CB-receipt'
-		ORDER BY ESTIME ASC
+			SELECT * FROM
+(
+SELECT TAKESEQ,
+			 		AUTONUMBER,
+       		CUSTOMER_AUTOKIND,
+       		CUSTOMER_NAME,
+       		ESTIME,	
+       		A.TASKSTAT,
+          FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+          REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
+       			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME,
+          C.ORD AS ORD
+			FROM   CAR_TAKEREPAIR A LEFT JOIN CAR_COMCODE C ON A.TASKSTAT = C.CODE, CAR_CUSTOMER B
+			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.TASKSTAT != 'CB-receipt'
+      ORDER BY ORD DESC, A.ESTIME ASC
+      ) D
+WHERE ROWNUM &lt; 11
+
+			
+			
 	</select>
 </mapper>
