@@ -117,44 +117,10 @@
                                     <input type="hidden" id="updatehcode" name="updatehcode" value="">
                                     <input type="hidden" id="updatecode" name="updatecode" value="">
                                     <input type="hidden" id="updateleadtime" name="updateleadtime" value="">
-                                    <!-- <div class="condition">
-                                        <label class="item f_select" for="sel1">
-                                            <select id="sel1" name="searchCondition" title="검색조건 선택">
-                                                <option value=''>선택하세요</option>
-                                                <option value='ETC_ANSWER_CN' <c:if
-                                                    test="${searchCondition == 'ETC_ANSWER_CN'}">selected</c:if>
-                                                    >기타답변내용</option>
-                                                <option value='RESPOND_ANSWER_CN' <c:if
-                                                    test="${searchCondition == 'RESPOND_ANSWER_CN'}">selected
-                                                    </c:if>>응답자답변내용</option>
-                                                <option value='RESPOND_NM' <c:if
-                                                    test="${searchCondition == 'RESPOND_NM'}">selected</c:if>
-                                                    >응답자명</option>
-                                            </select>
-                                        </label>
-                                        
-                                        <span class="item f_search">
-                                            
-                                            <input class="f_input w_500" name="searchKeyword" type="text"
-                                                value="<c:out value='${leadtimeVO.searchKeyword}'/>" title="검색어 입력" maxlength="35" />
-                                            <button class="btn" type="submit">
-                                                <spring:message code="button.inquire" />
-                                            </button>조회
-                                        </span>
-                                        < <a href="" class="btn btn_search_w">등록</a> >
-
-                                        < <a href="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoRegist.do'/>" class="item btn btn_blue_46 w_100">등록</a>등록 >
-                                    </div> -->
-                                    <!--// 검색조건 -->
-                                
                                     
                                     <div >
                                         <!-- 대분류 리스트 -->
-                                        <div class="w20 left" >
-                                            <!-- <div class="right_col" style="margin-top: 10px;">
-                                                <a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()"><spring:message code="button.create"/></a>
-                                                <a href="#LINK" class="btn btn_blue_46 w_100 right btnmargin" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a>
-                                            </div> -->
+                                        <!-- <div class="w20 left" >
                                             <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
                                                 <table>
                                                     <colgroup>
@@ -174,10 +140,10 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- 대분류 리스트 끝-->
                                         <!-- 중분류 리스트 -->
-                                        <div class="w30 left" style="margin-left:15px;">
+                                        <div class="w50 left" style="margin-left:15px;">
                                             <!-- <div class="right_col" style="margin-top: 10px;">
                                                 <a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()"><spring:message code="button.create"/></a>
                                                 <a href="#LINK" class="btn btn_blue_46 w_100 right btnmargin" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a>
@@ -189,7 +155,7 @@
                                                     </colgroup>
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">중분류</th>
+                                                            <th scope="col">대분류</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -198,11 +164,12 @@
                                                             <td colspan="1">데이터가 없습니다. 대분류를 선택해 주세요.</td>
                                                         </tr>
                                                         </c:if>
-                                                        <c:forEach var="result" items="${middlelist}" varStatus="status">
+                                                        <c:forEach var="result" items="${mainlist}" varStatus="status">
                                                             <tr>
-                                                                <td><a href="#" class="lnk" onclick="ClickMiddleCode('${result.CODE}')"><c:out value="${result.NAME}"/></a></td>
+                                                                <td><a href="#" class="lnk" onclick="ClickMainCode('${result.CODE}')"><c:out value="${result.NAME}"/></a></td>
                                                             </tr>
                                                         </c:forEach>
+                                                        
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -228,7 +195,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <c:if test="${leadtimeVO.main ne '' and leadtimeVO.main ne null and leadtimeVO.middle ne '' and leadtimeVO.middle ne null}">
+                                                        <c:if test="${leadtimeVO.main ne '' and leadtimeVO.main ne null}">
                                                             <tr>
                                                                 <td></td>
                                                                 <td>
@@ -251,13 +218,32 @@
 
                                                         </c:if>
                                                     	
-                                                        <c:if test="${fn:length(sublist) == 0}">
+                                                        <c:if test="${fn:length(middlelist) == 0}">
                                                         <tr>
                                                             <td colspan="4">데이터가 없습니다. 항목을 추가해 주시거나 다른 중분류를 선택해 주세요.</td>
                                                         </tr>
                                                         </c:if>
                                                         
-                                                        <c:forEach var="result" items="${sublist}" varStatus="status">
+                                                        <c:forEach var="result" items="${middlelist}" varStatus="status">
+                                                            <tr>
+                                                            	<td><c:out value="${status.count}"/></td>
+                                                                <td><c:out value="${result.NAME}"/></td>
+                                                                <td>
+                                                                    <label for="" class="f_select" style="width:80%; padding-left:10px; height:30px;">
+                                                                        <select name="leadtime<c:out value='${result.IDX}'/>" id="leadtime<c:out value='${result.IDX}'/>">
+                                                                            <option value="">선택</option>
+                                                                            <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
+                                                                            <option value="<c:out value='${leadtime.CODE}'/>" <c:if test="${result.LEAD_TIME eq leadtime.CODE}">selected</c:if>><c:out value="${leadtime.NAME}"/></option>
+                                                                            </c:forEach>
+                                                                        </select>
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="UpdateLeadTime('<c:out value='${result.H_CODE}'/>','<c:out value='${result.CODE}'/>','<c:out value='${result.IDX}'/>'); return false;"><spring:message code="button.update" /></a>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        <!-- <c:forEach var="result" items="${sublist}" varStatus="status">
                                                             <tr>
                                                             	<td><c:out value="${status.count}"/></td>
                                                                 <td><c:out value="${result.NAME}"/></td>
@@ -273,7 +259,7 @@
                                                                 </td>
                                                                 <td><a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="UpdateLeadTime('<c:out value='${result.H_CODE}'/>','<c:out value='${result.CODE}'/>','<c:out value='${result.IDX}'/>'); return false;"><spring:message code="button.update" /></a></td>
                                                             </tr>
-                                                        </c:forEach>
+                                                        </c:forEach> -->
                                                     </tbody>
                                                 </table>
                                             </div>

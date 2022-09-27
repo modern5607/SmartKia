@@ -142,17 +142,17 @@
         }
 
         //수리항목 리스트화
-        // var array = new Array();
-		// $('input[name=repair]').each(function(index) {
-		// 	array.push($(this).val());
+        var array = new Array();
+		$('input[name=repaircode]').each(function(index) {
+			array.push($(this).val());
 			
-		// });
-		// $("#repairlist").val(array);
-        // if($("#repairlist").val()==null||$("#repairlist").val()=='')
-        // {
-        //     alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
-        //     return;
-        // }
+		});
+		$("#repairlist").val(array);
+        if($("#repairlist").val()==null||$("#repairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
 
         //수리 리드타임 리스트화
         // var array = new Array();
@@ -175,7 +175,7 @@
             return;
         }
 
-        //수리항목 비고 리스트화
+        // 수리항목 비고 리스트화
         // var array = new Array();
 		// $('input[name=note]').each(function(index) {
 		// 	array.push($(this).val());
@@ -272,7 +272,7 @@
                                     <input type="hidden" name="taskstat" value="<c:out value='CB-receipt'/>">
                                     <input type="hidden" name="servicesys" value="<c:out value='${servicesys[0].CODE}'/>">
                                     <input type="hidden" name="repairlist" id="repairlist" value="">
-                                    <input type="hidden" name="repairleadtime" id="repairleadtime" value="">
+                                    <!-- <input type="hidden" name="repairleadtime" id="repairleadtime" value=""> -->
                                     <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
                                     <!-- <input type="hidden" name="notelist" id="notelist" value=""> -->
                                     <input type="hidden" name="deletetakeseq" id="deletetakeseq" value="">
@@ -343,7 +343,7 @@
                                                                     <ul>
                                                                     <c:forEach var="j" items="${i.LIST}" varStatus="jstatus">
                                                                         <li>
-                                                                            <input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont" value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>" style="width: 0px;height: 0px;">
+                                                                            <input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont" value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>" data-idx="${istatus.index}${jstatus.index}" style="width: 0px;height: 0px;">
                                                                             <label for="mtn_cont${istatus.count}_${jstatus.count}">${j.NAME}</label>
                                                                         </li>
                                                                     </c:forEach>
@@ -353,12 +353,12 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="cont left" style="width: 600px;">
+                                                    <div class="cont left" style="width: 500px;">
                                                         <strong>정비내용 선택사항</strong>
                                                         <div class="scrollBox03 board_view5"style="overflow:scroll;">
                                                             <table id="repair">
                                                                 <colgroup>
-                                                                    <col style="width:auto;">
+                                                                    <col style="width:220px;">
                                                                     <col style="width:auto;">
                                                                     <col style="width:auto;">
                                                                 </colgroup>
@@ -588,50 +588,44 @@ $("li.box_tit a").click(function(){
 });
 
 $(".box_tit ul li label").click(function(){
-    
+    var $this = $(this);
     setTimeout(function(){
+        var checkbox =$this.parent().find("input");
+        console.log(checkbox);
+        var checkbox_val = checkbox.val();
+        var checkbox_idx = checkbox.data("idx");
+        var repairtext = $this.text();
         var textarea=''
         var totalleadtime=0;
         var textlist = new Array();
         var vallist = new Array();
+        var notelist = new Array();
         var leadtimelist = new Array();
+        var repairhtml = $("#repair").children("tbody");
+        
 
-        var repair = $("#repair").children("tbody");
-        var html='';
-		$("input:checkbox[type=checkbox]:checked").each(function(index) {
-            
-            console.log(repair);
+        if(checkbox.is(":checked")==false)
+        {
+            $("#repair_"+checkbox_idx).remove();
+        }
+        else
+        {
+            var html='';
             // var childCount = repair.children().length;
-            html+="<tr id='repair_"+(index+1)+"'>";
-            html+="<td>"+$(this).parent().find("label").text()+"</td>";
+            html+="<tr id='repair_"+(checkbox_idx)+"'>";
+            html+="<td>"+repairtext+"</td>";
             html+="<td>";
-            html+="<label class='f_selectsmall'><select id='chk_repair_"+(index+1)+"' name='chk_repair' >";
+            html+="<label class='f_selectsmall'><select id='chk_repair_"+checkbox_idx+"' name='chk_repair' >";
             html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
             html+="</select></label>";
             html+="</td>";
-            html+="<td>"+$(this).data("time")+"</td>";
-            // html+="<td><input type='text' name='note' id='note' placeholder='비고' value=''/></td>";
-            html+="<td><input type='hidden' name='repair' data-time='"+$(this).data("time")+"' value='"+$(this).val()+"'/></td>";
+            // html+="<td>"+$(this).data("time")+"</td>";
+            // html+="<td><input type='text' class='f_txtsmall' name='note' id='note' placeholder='비고' value=''/></td>";
+            html+="<input type='hidden' name='repaircode' id='repaircode' value='"+checkbox_val+"'/>";
             html+="</tr>";
-
-            // textarea +=$(this).parent().find("label").text()+"\n";
-            totalleadtime+=$(this).data("time");
-			// textlist.push($(this).parent().find("label").text());
-			vallist.push($(this).val());
-            leadtimelist.push($(this).data("time"));
-			
-		});
-        repair.html(html);
-
-
-        console.log(totalleadtime);
-
-		$("#rcptSbc").text(textarea);
-		$("#repairlist").val(vallist);
-		$("#repairleadtime").val(leadtimelist);
-        CalculateTime(totalleadtime);
-
-    },100)
+            repairhtml.append(html);
+        }
+    },200)
 
 });
 

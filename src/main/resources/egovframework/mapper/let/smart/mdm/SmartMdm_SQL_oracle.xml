@@ -101,7 +101,7 @@
 		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = 'LEADTIME'
 	</select>
 	<select id="selectLeadMain" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
-		SELECT * FROM CAR_LEADTIME WHERE H_CODE = 'MAIN'
+		SELECT * FROM CAR_LEADTIME WHERE H_CODE = 'STAT'
 	</select>
 	<select id="selectLeadMiddle" parameterType="egovframework.smart.mdm.service.SmartLeadTimeVO" resultType="java.util.HashMap">
 		SELECT * FROM CAR_LEADTIME WHERE H_CODE = #{main}

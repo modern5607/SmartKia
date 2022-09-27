@@ -49,8 +49,8 @@
 
     <insert id="InsertLeadRepair" parameterType="java.util.HashMap" >
         INSERT INTO CAR_LEAD_REPAIR
-        (REPAIR_SEQ,TAKESEQ,REPAIRMETHOD,REPAIRCODE,LEADTIME,REPAIRANT,REPAIR_NOTE,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
-        VALUES (TO_CHAR(SEQ_CAR_LEAD_REPAIR.NEXTVAL,'FM0000'),#{takeseq},#{method},#{code},FN_CODENAME(FN_LEADTIME_NAME(#{code},'LEAD_TIME'),'LEADTIME'),#{repairant},#{note},#{loginid},SYSDATE,'','')
+        (REPAIR_SEQ,TAKESEQ,REPAIRMETHOD,REPAIRCODE,REPAIR_NOTE,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
+        VALUES (TO_CHAR(SEQ_CAR_LEAD_REPAIR.NEXTVAL,'FM0000'),#{takeseq},#{method},#{code},#{note},#{loginid},SYSDATE,'','')
 
     </insert>
 
@@ -87,7 +87,6 @@
         REPAIRMETHOD = #{method},
         REPAIRCODE = #{code},
         LEADTIME = FN_CODENAME(FN_LEADTIME_NAME(#{code},'LEAD_TIME'),'LEADTIME'),
-        REPAIRANT = #{repairant},
         REPAIR_NOTE = #{repair_note},
         UPDATE_ID = #{loginid},
         UPDATE_DATE = SYSDATE

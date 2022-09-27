@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -23,31 +25,7 @@
 
 <script type="text/javascript" src="<c:url value='/js/showModalDialogCallee.js'/>" ></script>
 <script type="text/javaScript" language="javascript">
-$(document).ready(function () {
-	console.log("asdf");
-    $("#checkcarnum").focus();
-});
-function fnCheckId(){
     
-    if(document.SmartRcptVO.checkcarnum.value==""){
-        alert("차량번호를 입력해 주세요");
-        document.SmartRcptVO.focus();
-        return;
-    }
-    if(fnCheckNotKorean(document.SmartRcptVO.checkcarnum.value)){
-        document.SmartRcptVO.submit();
-    }else{
-        alert("한글은 사용할 수 없습니다.");
-        return;
-    }
-}
-
-function fnReturnId(id,carnum,name,kind,tel){
-    
-    parent.returnValue(id,carnum,name,kind,tel);
-    fn_egov_cancel_popup();
-}
-
 
 /* ********************************************************
  * 취소처리
@@ -57,66 +35,54 @@ function fn_egov_cancel_popup() {
 	parent.fn_egov_modal_remove();
 }
 
-function fnCheckNotKorean(koreanStr){                  
-    for(var i=0;i<koreanStr.length;i++){
-        var koreanChar = koreanStr.charCodeAt(i);
-        if( !( 0xAC00 <= koreanChar && koreanChar <= 0xD7A3 ) && !( 0x3131 <= koreanChar && koreanChar <= 0x318E ) ) { 
-        }else{
-            //hangul finding....
-            return false;
-        }
-    }
-    return true;
-}
-
-function AddRepair()
-    {
-    	console.log($("#repair").children("tbody").length);
-        var main = $("#leadtimemain option:selected");
-        var middle = $("#leadtimemiddle option:selected");
-        var sub = $("#leadtimesub option:selected");
+// function AddRepair()
+//     {
+//     	console.log($("#repair").children("tbody").length);
+//         var main = $("#leadtimemain option:selected");
+//         var middle = $("#leadtimemiddle option:selected");
+//         var sub = $("#leadtimesub option:selected");
         
-        if(main.val()==""||middle.val()==""||sub.val()=="")
-        {
-            alert("수리사항을 선택해 주세요");
-            return;
-        }
+//         if(main.val()==""||middle.val()==""||sub.val()=="")
+//         {
+//             alert("수리사항을 선택해 주세요");
+//             return;
+//         }
         
-        var splits = sub.text().split('/');
-        var code = sub.val();
-        var code_nm = splits[0];
-        var time_nm = splits[1];
-        var time = sub.data("time");
-        var repair = $("#repair").children("tbody");
-        console.log(repair);
-        var childCount = repair.children().length;
-        var html="";
-        html+="<tr id='repair_"+(childCount+1)+"'>";
-        // html+="<td>"+(childCount+1)+"</td>";
-        html+="<td>"+code_nm+"</td>";
-        html+="<td>";
-        html+="<label class='f_selectsmall'><select id='chk_repair_"+(childCount+1)+"' name='chk_repair' >";
-        html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
-        html+="</select></label>";
-        html+="</td>";
-        html+="<td>"+time_nm+"</td>";
-        html+="<td><input type='text' class='f_txtsmall' name='repair_note' id='repair_note'></td>";
-        html+="<td><input type='radio' name='ant_"+(childCount+1)+"' id='ant' value='Y' checked class='f_rdo '>Y <input type='radio' name='ant_"+(childCount+1)+"' id='ant' value='N' class='f_rdo '>N</td>";
-        html+="<td><input type='hidden' name='repair' data-time='"+time+"' value='"+code+"'/><input type='hidden' name='repairseq' value=''><a href='#' class='btn btn_blue_30 w_50' onclick='DeleteRepair("+(childCount+1)+")'><spring:message code='button.delete'/></a></td>";
-        html+="</tr>";
+//         var splits = sub.text().split('/');
+//         var code = sub.val();
+//         var code_nm = splits[0];
+//         var time_nm = splits[1];
+//         var time = sub.data("time");
+//         var repair = $("#repair").children("tbody");
+//         console.log(repair);
+//         var childCount = repair.children().length;
+//         var html="";
+//         html+="<tr id='repair_"+(childCount+1)+"'>";
+//         // html+="<td>"+(childCount+1)+"</td>";
+//         html+="<td>"+code_nm+"</td>";
+//         html+="<td>";
+//         html+="<label class='f_selectsmall'><select id='chk_repair_"+(childCount+1)+"' name='chk_repair' >";
+//         html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
+//         html+="</select></label>";
+//         html+="</td>";
+//         html+="<td>"+time_nm+"</td>";
+//         html+="<td><input type='text' class='f_txtsmall' name='repair_note' id='repair_note'></td>";
+//         html+="<td><input type='radio' name='ant_"+(childCount+1)+"' id='ant' value='Y' checked class='f_rdo '>Y <input type='radio' name='ant_"+(childCount+1)+"' id='ant' value='N' class='f_rdo '>N</td>";
+//         html+="<td><input type='hidden' name='repair' data-time='"+time+"' value='"+code+"'/><input type='hidden' name='repairseq' value=''><a href='#' class='btn btn_blue_30 w_50' onclick='DeleteRepair("+(childCount+1)+")'><spring:message code='button.delete'/></a></td>";
+//         html+="</tr>";
         
-        repair.append(html);
+//         repair.append(html);
 
-        // CalculateTime();
+//         // CalculateTime();
 
-    }
-    function DeleteRepair(i)
-    {
-        var deleteSelector = $();
-        $("tr#repair_"+i).remove();
+//     }
+    // function DeleteRepair(i)
+    // {
+    //     var deleteSelector = $();
+    //     $("tr#repair_"+i).remove();
 
-        // CalculateTime();
-    }
+    //     // CalculateTime();
+    // }
 
     function SaveRepair(){
         //수리항목 리스트화
@@ -132,13 +98,13 @@ function AddRepair()
             return;
         }
 
-        //수리 리드타임 리스트화
-        var array = new Array();
-		$('input[name=repair]').each(function(index) {
-			array.push($(this).data("time"));
+        // //수리 리드타임 리스트화
+        // var array = new Array();
+		// $('input[name=repair]').each(function(index) {
+		// 	array.push($(this).data("time"));
 			
-		});
-		$("#repairleadtime").val(array);
+		// });
+		// $("#repairleadtime").val(array);
 
         //수리종류 리스트화
         var array = new Array();
@@ -207,14 +173,14 @@ function AddRepair()
     }
 
     var deleteArr = new Array();
-    function DeleteRepair(i,repairseq='')
+    function DeleteRepair(repairseq='')
     {
         if(repairseq != '')
         {
             deleteArr.push(repairseq);
             $("#deletelist").val(deleteArr);
         }
-        $("tr#repair_"+i).remove();
+        // $("tr#repair_"+i).remove();
 
     }
 
@@ -248,7 +214,7 @@ function AddRepair()
                     
                     <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
                 </div> -->
-                <label class="f_selectsmall">
+                <!-- <label class="f_selectsmall">
                     <select name="leadtimemain" id="leadtimemain">
                         <option value="">선택</option>
                         <c:forEach var="i" items="${leadtime}" varStatus="status">
@@ -266,11 +232,69 @@ function AddRepair()
                     <select name="leadtimesub" id="leadtimesub">
                     </select>
 
-                </label>
-                <label>
-                    <a href="#" class="btn btn_blue_30 w_50" onclick="AddRepair()"><spring:message code="cop.sms.addRecptn"/></a>
-                </label>
-                <table class="board_list4" id="repair" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
+                </label> -->
+                <div class="cont left text_left">
+                    <strong>정비내용 선택</strong>
+                    <div class="scrollBox01">
+                        <ul id="rcrListUL">
+                            <c:forEach var="i" items="${leadtimelist.infolist}" varStatus="istatus">
+                            <li class="box_tit">
+                                <a href="#">${i.NAME}</a>
+                                <ul>
+                                <c:forEach var="j" items="${i.LIST}" varStatus="jstatus">
+                                    <li>
+                                        <input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont" value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>" data-idx="${istatus.index}${jstatus.index}" 
+                                        <c:forEach var="k" items="${RepairList}" varStatus="kstatus">${(k.REPAIRCODE eq j.CODE)?"checked":""}</c:forEach>
+                                        style="width: 0px;height: 0px;">
+                                        <label for="mtn_cont${istatus.count}_${jstatus.count}">${j.NAME}</label>
+                                    </li>
+                                </c:forEach>
+                                </ul>
+                            </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cont left text_left" style="width: 500px;">
+                    <strong>정비내용 선택사항</strong>
+                    <div class="scrollBox03 board_view5"style="overflow:scroll;">
+                        <table id="repair">
+                            <colgroup>
+                                <col style="width:220px;">
+                                <col style="width:auto;">
+                                <col style="width:auto;">
+                            </colgroup>
+                            <tbody>
+                            <c:forEach var="i" items="${RepairList}" varStatus="istatus">
+                                <tr>
+                                    <td><c:out value="${i.REPAIRNAME}"/></td>
+                                    <td>
+                                        <label class="f_selectsmall">
+                                            <select name="chk_repair" id="chk_repair_${istatus.count}">
+                                                <c:forEach var="j" items="${autome}" varStatus="jstatus">
+                                                    <option value="${j.CODE}" <c:if test="${j.CODE == i.REPAIRMETHOD}">selected</c:if>><c:out value="${j.NAME}"/></option>
+                                                </c:forEach>
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <input type='hidden' name="repair" value="<c:out value='${i.REPAIRCODE}'/>">
+                                    <input type='hidden' name="repairseq" value="<c:out value='${i.REPAIR_SEQ}'/>">
+                                </tr>
+
+                            </c:forEach>
+                            </tbody>
+
+
+                        </table>
+                        <!-- <textarea name="" id="rcptSbc" readonly cols="30" rows="10" title="정비내용 선택사항" placeholder="정비내용선택 시 텍스트 자동 입력"></textarea> -->
+
+                    </div>
+                </div>
+
+                <!-- <label>
+                    <a href="#" class="btn btn_blue_30 w_50" onclick="AddRepair()"><spring:message code="cop.sms.addRecptn"/></a> >
+                </label> -->
+                <!-- <table class="board_list4" id="repair" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
                     <colgroup>
                         <col style="width: 150px;">
                         <col style="width: 150px;">
@@ -314,23 +338,24 @@ function AddRepair()
 
                         </c:forEach>
                     </tbody>
-                </table>
-                <div class=" al_c pt20">
-                    <div class="board_view2">
-                        <table>
-                            <colgroup>
-                                <col style="width:130px;">
-                                <col style="width:auto;">
-                            </colgroup>
-                            <tr>
-                                <td class="lb">수리 비고</td>
-                                <td><input type="text" class="f_txtsmall w_500" name="repairnote" id="repairnote" placeholder="수리 비고" value="<c:out value='${rcptinfo[0].REPAIRNOTE}'/>"></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <a href="#" class="btn btn_blue_46 w_100" onclick="SaveRepair()" style="margin-top: 10px;">저장</a>
+                </table> -->
+                <div class="board_view2" style="border-top:none" >
+                    <table>
+                        <colgroup>
+                            <col style="width:130px;">
+                            <col style="width:auto;">
+                        </colgroup>
+                        <tr>
+                            <td class="lb">수리 비고</td>
+                            <td><input type="text" class="f_txtsmall w_500" name="repairnote" id="repairnote" placeholder="수리 비고" value="<c:out value='${rcptinfo[0].REPAIRNOTE}'/>"></td>
+                        </tr>
+                    </table>
                 </div>
+
+                <a href="#" class="btn btn_blue_46 w_100" onclick="SaveRepair()" style="margin-top: 10px;">저장</a>
+                <!-- <div class=" al_c pt20">
+                    
+                </div> -->
             </div>
         </div>
         
@@ -343,47 +368,65 @@ function AddRepair()
 </html>
 
 <script>
-    $("#leadtimemain").change(function(){
-    var selectedvar = $(this).val();
-    //console.log(selectedvar);
-    $.ajax({
-        type: "post",
-        url: "/rcpt/SelectLeadtime.do",
-        //contentType:"application/json;charset=UTF-8",
-        //dataType:"json",
-        data: {
-        	selectedvar:selectedvar
-        },
-        success: function (resp) {
-        	var html="<option value=''>선택</option>";
-        	$.each(resp.list,function(index,item){
-        		console.log(item);
-        		html+="<option value='"+item.CODE+"'>"+item.NAME+"</option>";
-        	});
-        	$("#leadtimemiddle").html(html);
-        }
-    });
+    $("li.box_tit a").click(function(){
+    // console.log($(this));
+    if($(this).parent().hasClass("active"))
+        $(this).parent().removeClass("active");
+    else
+        $(this).parent().addClass("active");
 });
 
-$("#leadtimemiddle").change(function(){
-    var selectedvar = $(this).val();
-    //console.log(selectedvar);
-    $.ajax({
-        type: "post",
-        url: "/rcpt/SelectLeadtime.do",
-        //contentType:"application/json;charset=UTF-8",
-        //dataType:"json",
-        data: {
-        	selectedvar:selectedvar
-        },
-        success: function (resp) {
-        	var html="<option value=''>선택</option>";
-        	$.each(resp.list,function(index,item){
-        		console.log(item);
-        		html+="<option value='"+item.CODE+"' data-time='"+(item.LEADTIME_NM).slice(0,2)+"' data-timenm='"+item.LEADTIME_NM+"'>"+item.NAME+" / "+item.LEADTIME_NM+"</option>";
-        	});
-        	$("#leadtimesub").html(html);
+$(".box_tit ul li label").click(function(){
+    var $this = $(this);
+    setTimeout(function(){
+        var checkbox =$this.parent().find("input");
+        // console.log(checkbox);
+        var checkbox_val = checkbox.val();
+        var checkbox_idx = checkbox.data("idx");
+        var repairtext = $this.text();
+        var textarea=''
+        var totalleadtime=0;
+        var textlist = new Array();
+        var vallist = new Array();
+        var notelist = new Array();
+        var leadtimelist = new Array();
+        var repairhtml = $("#repair").children("tbody");
+        
+
+        if(checkbox.is(":checked")==false)
+        {
+            var repairvallist = $("input[name=repair]");
+            repairvallist.each(function(){
+                console.log("checkbox_val:"+checkbox.val()+" / "+ $(this).val());
+                var repairseq = $(this).parent().find("input[name=repairseq]");
+                if($(this).val() == checkbox.val())
+                {
+                    // console.log("SEQ :"+$(this).parent().find("input[name=repairseq]").val());
+                    $(this).parent().remove();
+                    if(repairseq.val()!="")
+                            DeleteRepair(repairseq.val());
+                }
+                
+            });
         }
-    });
+        else
+        {
+            var html='';
+            // var childCount = repair.children().length;
+            html+="<tr id='repair_"+(checkbox_idx)+"'>";
+            html+="<td>"+repairtext+"</td>";
+            html+="<td>";
+            html+="<label class='f_selectsmall'><select id='chk_repair_"+checkbox_idx+"' name='chk_repair' >";
+            html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
+            html+="</select></label>";
+            html+="</td>";
+            // html+="<td>"+$(this).data("time")+"</td>";
+            // html+="<td><input type='text' class='f_txtsmall' name='note' id='note' placeholder='비고' value=''/></td>";
+            html+="<input type='hidden' name='repair' id='repair' value='"+checkbox_val+"'/>";
+            html+="</tr>";
+            repairhtml.append(html);
+        }
+    },200)
+
 });
 </script>

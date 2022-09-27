@@ -284,7 +284,10 @@ public class SmartRcptController {
 			return	"uat/uia/EgovLoginUsr"; 
 		}
 		System.out.println(seq);
+		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
+
 		
+		model.addAttribute("leadtimelist", leadtimelist);
 		model.addAttribute("leadtime", smartmdmservice.selectLeadTime(smartrcptVO).get("main"));
 		model.addAttribute("rcptinfo", smartrcptservice.SelectRcptinfo(seq));
 		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
@@ -293,7 +296,7 @@ public class SmartRcptController {
 		return "rcpt/RepaireDetailPopup";
 	}
 
-	//접수등록
+	//접수 수정
 	@RequestMapping(value = "/rcpt/UpdateRepair.do",method=RequestMethod.POST)
 	public void UpdateRepair(@RequestParam Map<String,Object> params,ModelMap model,HttpServletResponse response)throws Exception {
 		

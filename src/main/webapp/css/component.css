@@ -25,9 +25,10 @@
 /* Board */
     /* Condition */
     .cen { text-align: center;}
+    .text_left{text-align: left;}
     .w20{width: 19%;}
     .w30{width: 29%;}
-    .w50{width: 50%;}
+    .w50{width: 49%;}
     .left{float: left;}
     .right{float: right;}
     .btnmargin{margin-left: 10px;}
