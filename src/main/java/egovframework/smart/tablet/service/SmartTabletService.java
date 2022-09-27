@@ -27,6 +27,8 @@ public interface SmartTabletService {
 	
 	public Map<String, Object> detailList(SmartTabletVO vo);
 
+	public List<Object> selectlogininfo(SmartTabletVO searchVO);
+
 	
 	
 }

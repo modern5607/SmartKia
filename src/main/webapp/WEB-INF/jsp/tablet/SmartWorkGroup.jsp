@@ -204,8 +204,11 @@ $('input[name=newkilro]').change(function(){
 										<div class="right_col">
                                             <label class="f_select w_200" for="autoroom">
 														<select name="autoroom" id="autoroom">
+														<option value="all">전체</option>
 															<c:forEach var="i" items="${autorooms}" varStatus="status">
-                                                               <option value="<c:out value='${i.CODE}'/>" <c:if test='${i.CODE == searchVO.autoroom}'>selected</c:if>  >${i.NAME}</option>
+																<!-- option value="<c:out value='${i.CODE}'/>" ${logininfo[0].TEAM == i.CODE ? 'selected' : ''} >${i.NAME}</option-->
+																<!-- 무조건  이딴거 해결하기-->
+                                                               <option value="<c:out value='${i.CODE}'/>" ${searchVO.autoroom ==i.CODE ? 'selected' : ((logininfo[0].TEAM == i.CODE && searchVO.autoroom =='') ? 'selected' : '')} >${i.NAME}</option> 
                                                              </c:forEach>
 														</select>
 											</label>

@@ -132,7 +132,6 @@
 													class="f_input w_200" name="searchname" id="searchname"
 													type="text" value="<c:out value='${searchVO.searchname}'/>" />
 											</p>
-
 											<button class="btn" type="submit">
 												<spring:message code="button.inquire" />
 											</button>조회
@@ -144,8 +143,8 @@
 											<h1 class="txt_1">업체코드 클릭시 수정화면으로 이동됩니다.</h1>
 										</div> -->
 										<div class="right_col">
-											<a href="#" onclick="ReceiveGroup()"
-												class="item btn btn_blue_46 w_100">배정</a>
+											<a href="#" onclick="ReceiveGroup()" class="item btn btn_blue_46 w_100">배정</a>
+												
 										</div>
 									</div>
 									<!--// 검색조건 -->

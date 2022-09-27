@@ -25,6 +25,7 @@ public class SmartTabletVO extends ComDefaultVO implements Serializable {
 	private String edate = "";
 	private String newkilro ="";
 	private String loginid = "";
+	
 
 	public String getTaskstat() {
 		return taskstat;
@@ -218,5 +219,6 @@ public class SmartTabletVO extends ComDefaultVO implements Serializable {
 	public void setLoginid(String loginid) {
 		this.loginid = loginid;
 	}
+
 
 }

@@ -58,14 +58,15 @@
 				<div class="pop_container">
 					<div class="box_1">
 						<label for="" >목적지 작업반</label> 
-                        <label class="f_select w_300" for="autoroom" style="margin-top:-10px;">
-                            <select name="autoroom" id="autoroom">
+						<input type="text" readonly name="autoroom" value="<c:out value='${logininfo.TEAM}'/>">
+                        <!-- label class="f_select w_300" for="autoroom" style="margin-top:-10px;">
+                            < select name="autoroom" id="autoroom">
 								<option value="">선택</option>
 								<c:forEach var="info" items="${positions}" varStatus="status">
 									<option value="<c:out value='${info.CODE}'/>"><c:out value="${info.NAME}" /></option>
 								</c:forEach>
-                            </select>
-                        </label>
+                            </select >
+                        </label-->
                         <label for="">입고 비고</label> 
                         <input id="remark" class="f_select w_300" type="text" name="remark" value="" maxlength="50" style="margin-left: 30px; margin-top: 5px;"/>
 					</div>
