@@ -264,7 +264,8 @@
                                 <!--// Location -->
                                 <div class="condition" style="height: 64px;padding: 10px; margin-bottom:5px;">
                                     <span class="item">
-                                        <a href="#" class="btn btn_blue_46 w_100" onclick="fnIdCheck()" style="float:left;"><spring:message code="button.inquire"/></a>
+                                        <a href="#" class="btn btn_blue_46 w_100" onclick="fnIdCheck()" style="float:left;">차량조회</a>
+                                        <a href="#" class="btn btn_blue_46 w_100 btnmargin" onclick="InsertWebRcpt()" style="float: left;">등록</a>
                                     </span>
                                 </div>
                                 <form name="rcptform" id="rcptform" action="<c:url value='/rcpt/SmartWebRcptView.do'/>" method="post">
@@ -294,27 +295,28 @@
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="name" id="name" class="f_txtsmall" readonly />
-                                                </td>
-                                                <td class="lb">
-                                                    <label for="carkind">차종</label>
-                                                </td>
-                                                <td>
-                                                    <input name="carkind" id="carkind" class="f_txtsmall" readonly/>
+                                                    <input name="name" id="name" class="f_txtsmall" />
                                                 </td>
                                                 <td class="lb">
                                                     <label for="carnum">차량번호</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="carnum" id="carnum" class="f_txtsmall" readonly/>
+                                                    <input name="carnum" id="carnum" class="f_txtsmall"/>
                                                 </td>
+                                                <td class="lb">
+                                                    <label for="carkind">차종</label>
+                                                </td>
+                                                <td>
+                                                    <input name="carkind" id="carkind" class="f_txtsmall"/>
+                                                </td>
+                                                
                                                 <td class="lb">
                                                     <label for="tel">고객연락처</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="tel" id="tel" class="f_txtsmall" readonly/>
+                                                    <input name="tel" id="tel" class="f_txtsmall"/>
                                                 </td>
                                                 <!-- <td class="lb">
                                                     <label for="chk_repair">수리종류</label>
@@ -458,10 +460,10 @@
                                                     <label>비고</label>
                                                 </td>
                                                 <td colspan="3">
-                                                    <input name="note" id="note" class="f_txtsmall w_500" placeholder="접수 비고"/>
+                                                    <input name="note" id="note" class="f_txtsmall w_600" placeholder="접수 비고"/>
                                                 </td>
                                                 <td colspan="2">
-                                                    <a href="#" class="btn btn_blue_46 w_100 btnmargin" onclick="InsertWebRcpt()" style="float: right;"><spring:message code="button.create"/></a>
+                                                    
                                                 </td>
                                             </tr>
                                         </table>

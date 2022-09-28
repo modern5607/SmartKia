@@ -312,7 +312,7 @@ public class SmartRcptController {
 		params.put("loginid", id);
 		System.out.println(params);
 
-		// //접수등록
+		//접수수정
 		int result = smartrcptservice.UpdateRepair(params);
 		System.out.println(result);
 		
