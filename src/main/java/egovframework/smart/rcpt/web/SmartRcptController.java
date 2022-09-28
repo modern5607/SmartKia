@@ -6,6 +6,9 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.com.service.EgovTemplateManageService;
+import egovframework.smart.customer.service.CusMberDefaultVO;
+import egovframework.smart.customer.service.CusMberManageService;
+import egovframework.smart.customer.service.CusMberManageVO;
 import egovframework.smart.mdm.service.SmartMdmService;
 import egovframework.smart.rcpt.service.SmartRcptService;
 import egovframework.smart.rcpt.service.SmartRcptVO;
@@ -58,6 +61,9 @@ public class SmartRcptController {
 
 	@Resource(name = "SmartRcptService")
 	private SmartRcptService smartrcptservice;
+	
+	@Resource(name = "cusMberManageService")
+	private CusMberManageService cusMberManageService;
 
 	@Autowired
 	private DefaultBeanValidator beanValidator;
@@ -253,11 +259,26 @@ public class SmartRcptController {
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
 		params.put("loginid", id);
-		
-		System.out.println(params);
 
+		System.out.println("params:"+params);
+		int result=0;
+		//고객 조회
+		HashMap<String,Object> customerInfo = smartrcptservice.selectMberList(params);
+		//System.out.println("customerInfo len :"+customerInfo.size());
+		//System.out.println("customerInfo :"+customerInfo);
+		if(params.get("id").toString().equals(""))
+			params.put("id",customerInfo.get("CUSTOMER_ID"));
+
+		//새 고객이면 고객 등록
+		if(customerInfo == null)
+		{
+			System.out.println("새 고객입니다 등록하겠습니다.");
+			result = smartrcptservice.InsertMber(params);
+			System.out.println("고객 등록 결과 :"+result);
+			// HashMap<String,Object> custominfo = smartrcptservice.selectMberList(params);
+		}
 		//접수등록
-		int result = smartrcptservice.InsertWebRcpt(params);
+		result = smartrcptservice.InsertWebRcpt(params);
 		
 		
 		if (result == 0) // insert실패
@@ -311,10 +332,10 @@ public class SmartRcptController {
 		String id = loginVO.getUniqId();
 		params.put("loginid", id);
 		System.out.println(params);
-
+		
 		//접수수정
 		int result = smartrcptservice.UpdateRepair(params);
-		System.out.println(result);
+		System.out.println("최종 결과:"+result);
 		
 		response.getWriter().print(result);
 	}

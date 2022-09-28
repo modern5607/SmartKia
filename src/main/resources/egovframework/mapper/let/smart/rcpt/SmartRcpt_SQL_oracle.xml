@@ -102,4 +102,17 @@
         SELECT * FROM CAR_LEAD_REPAIR WHERE TAKESEQ = #{seq} AND 
 
     </select>
+
+    <insert id="InsertMber" parameterType="egovframework.smart.customer.service.CusMberManageVO">
+        INSERT
+        INTO   CAR_CUSTOMER
+        (CUSTOMER_ID ,CUSTOMER_NAME ,CUSTOMER_AUTONO ,CUSTOMER_AUTOKIND ,CUSTOMER_TEL)
+        VALUES
+        (SIRA('CAR_CUSTOMER', 'CUSTOMER_ID'),#{cusNm},#{autoNo},#{autoKind},#{cusTel})
+    </insert>
+
+    <select id="SelectMber" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT * FROM CAR_CUSTOMER WHERE CUSTOMER_NAME =#{name} AND CUSTOMER_AUTONO = #{carnum}
+
+    </select>
 </mapper>
