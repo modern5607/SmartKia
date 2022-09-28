@@ -25,6 +25,7 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 
 	@Resource(name = "cusMberManageService")
 	private CusMberManageService cusMberManageService;
+	
 
 	@Override
 	public List<?> selectCarInfo(SmartRcptVO vo) throws Exception{
@@ -36,19 +37,27 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 		return smartrcptDAO.SelectMiddleLeadTime(s);
 	}
 
+	
+	@Override
+	@Transactional
+	public int InsertMber(Map<String, Object> params) {
+		int result=0;
+		CusMberManageVO mbervo = new CusMberManageVO();
+		mbervo.setCusNm(params.get("name").toString());
+		mbervo.setAutoNo(params.get("carnum").toString());
+		mbervo.setAutoKind(params.get("carkind").toString());
+		mbervo.setCusTel(params.get("tel").toString());
+		//고객 등록
+		result = smartrcptDAO.insertMber(mbervo);
+		return result;
+	}
+
 	@Override
 	@Transactional
 	public int InsertWebRcpt(Map<String, Object> params) throws Exception {
 		int result=0;
+
 		try{
-			/*고객정보 조회후 없으면 고객 등록후 진행*/
-			CusMberDefaultVO customerVO = new CusMberDefaultVO();
-			customerVO.setSearchname(params.get("name").toString());
-			customerVO.setSearchcarNum(params.get("carnum").toString());
-			List<CusMberManageVO> customerInfo = cusMberManageService.selectMberList(customerVO);
-
-
-
 			Map<String, Object> resultmap = smartrcptDAO.InsertWebRcpt(params);
 			String takeseq = resultmap.get("takeseq").toString();
 			System.out.println(takeseq);
@@ -214,4 +223,10 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 
 		return result;
 	}
+
+	@Override
+	public HashMap<String,Object> selectMberList(Map<String, Object> params) throws Exception {
+		return smartrcptDAO.selectMberList(params);
+	}
+
 }

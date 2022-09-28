@@ -1,9 +1,11 @@
 package egovframework.smart.rcpt.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultVO;
+import egovframework.smart.customer.service.CusMberManageVO;
 
 
 public interface SmartRcptService {
@@ -20,5 +22,9 @@ public interface SmartRcptService {
     List<Object> selectRcptRepairInfo(String seq)throws Exception;
 
     int UpdateRepair(Map<String, Object> params)throws Exception;
+
+    int InsertMber(Map<String, Object> params)throws Exception;
+
+    HashMap<String,Object> selectMberList(Map<String, Object> params)throws Exception;
 
 }

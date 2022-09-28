@@ -8,6 +8,7 @@ import java.util.Map;
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
+import egovframework.smart.customer.service.CusMberManageVO;
 import egovframework.smart.rcpt.service.SmartRcptVO;
 
 
@@ -61,6 +62,14 @@ public class SmartRcptDAO extends EgovAbstractMapper {
 
     public int DeleteRepair(Map<String, Object> params) {
         return delete("SmartRcptDAO.DeleteRepair",params);
+    }
+
+    public int insertMber(CusMberManageVO mbervo) {
+        return insert("SmartRcptDAO.InsertMber",mbervo);
+    }
+
+    public HashMap<String,Object> selectMberList(Map<String, Object> params) {
+        return selectOne("SmartRcptDAO.SelectMber",params);
     }
 	 
 }

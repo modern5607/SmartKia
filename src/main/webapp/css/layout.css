@@ -33,7 +33,7 @@ body {min-width: 1400px;}
 .gnb ul li a {display: block; color: #333; font-size: 20px; font-weight: 1400;}
 .gnb ul li a.manager {color: #004986;}
 
-.all_menu {display: none; position: absolute; left: 0; top: 177px; height:270px; width: 100%; min-width: 1300px; border-bottom: 1px solid #ddd; background: #fff; z-index: 99;}
+.all_menu {display: none; position: absolute; left: 0; top: 160px; height:270px; width: 100%; min-width: 1300px; border-bottom: 1px solid #ddd; background: #fff; z-index: 99;}
 .all_menu .inner {width: 1400px; margin: 0 auto;}
 .all_menu .inner::after {content: ""; display: block; clear: both;}
 .all_menu .inner > div {float: left; width: 174px; padding: 7px 10px 0 0px;}
@@ -68,7 +68,7 @@ body {min-width: 1400px;}
 .util_menu .allmenu.on {background: url(../images/ico_allmenu_close.png) no-repeat;}
 
 
-.container {min-height: calc(100vh - 360px); margin-top: 160px;}
+.container {min-height: calc(100vh - 360px); margin-top: 180px;}
 .content {min-height: 700px; padding-bottom: 100px;}
 
 .sub_layout {border-top: 1px solid #cccccc;}
