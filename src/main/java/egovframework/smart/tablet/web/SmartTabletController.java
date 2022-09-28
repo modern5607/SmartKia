@@ -26,6 +26,7 @@ import egovframework.smart.mdm.service.SmartCommonCodeVO;
 import egovframework.smart.mdm.service.SmartLeadTimeVO;
 import egovframework.smart.mdm.service.SmartMdmBizVO;
 import egovframework.smart.mdm.service.SmartMdmService;
+import egovframework.smart.rcpt.service.SmartRcptService;
 import egovframework.smart.tablet.service.SmartTabletService;
 import egovframework.smart.tablet.service.SmartTabletVO;
 
@@ -74,6 +75,9 @@ public class SmartTabletController {
 	
 	@Resource(name = "SmartTabletService")
 	private SmartTabletService smarttabletservice;
+	
+	@Resource(name = "SmartRcptService")
+	private SmartRcptService smartrcptservice;
 	
 	@Autowired
 	private DefaultBeanValidator beanValidator;
@@ -199,24 +203,39 @@ public class SmartTabletController {
 	}
 	
 	
-	
+	/*
+	 * 작업반 배정 상세 View
+	 * */
 	@RequestMapping(value = "/tablet/ReceiveGroupPOP.do",method = RequestMethod.GET)
 	public String ReceivePopView(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model ,String seq) throws Exception {
 
-		System.out.println("seq :"+seq);
-		/*SmartCommonCodeVO vo =new SmartCommonCodeVO();
-		vo.setGroupcode("AUTO_ROOM");
 		
-		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
-		model.addAttribute("positions",map.get("info"));
-		System.out.println(map.get("info"));*/
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();		
+		searchVO.setLoginid(loginVO.getUniqId().toString());
+		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
+		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
+		System.out.println("searchVO : "+searchVO);
 		model.addAttribute("carlist",smarttabletservice.selectcarlist(seq));
 		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
 		model.addAttribute("leadtimelist", leadtimelist);
-		System.out.println("model :"+model);
+		model.addAttribute("RepairList",smartrcptservice.selectRcptRepairInfo(seq));
+		
 		
 		return "/tablet/ReceiveGroupPOP";
 	}
+	
+	/*
+	 * 작업반 배정 업데이트
+	 * */
+	@RequestMapping(value = "/tablet/SaveReceive.do")
+	public String SaveReceive(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
+		
+		System.out.println("params : "+params);
+		System.out.println("vo : "+vo);
+		System.out.println("model : "+model);
+		return "alert";
+	}
+	
 	/*
 	 * 반별진행내역 View
 	 */
