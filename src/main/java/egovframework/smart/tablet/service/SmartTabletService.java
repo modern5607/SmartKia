@@ -13,7 +13,7 @@ public interface SmartTabletService {
 	
 	public Map<String, Object> assignmentList(SmartTabletVO vo) throws Exception;
 	
-	public int updateAssign(SmartTabletVO vo)throws Exception;
+	
 
 	public Map<String,Object> checkstatus(Map<String, Object> params);
 
@@ -30,6 +30,8 @@ public interface SmartTabletService {
 	public List<Object> selectlogininfo(SmartTabletVO searchVO);
 
 	public List<Object> selectcarlist(String seq);
+
+	public int UpdateAssign(Map<String, Object> params)throws Exception;
 
 
 

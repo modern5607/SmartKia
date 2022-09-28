@@ -4,7 +4,6 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -23,6 +22,7 @@
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
 <script type="text/javascript">
+
 
 function Complete(taskstat,seq)
 {	
@@ -77,18 +77,16 @@ $('input[name=newkilro]').change(function(){
 });
 } );
  
- 
 </script>
-<!-- NOT USE CODE 
-언제 다시 쓸지 모름....
 
 
+<head>
 </head>
 <body>
 	<!-- Skip navigation -->
 	<a href="#contents" class="skip_navi">본문 바로가기</a>
 
-	<div class="wrap" position:fixed;>
+	<div class="wrap">
 		<!-- header start -->
 		<c:import url="/sym/mms/EgovHeader.do" />
 		<!-- //header end -->
@@ -120,10 +118,9 @@ $('input[name=newkilro]').change(function(){
 									<input type="hidden" name="remark" id="remark" >
 									<input type="hidden" name="position" id="position" >
 									<input type="hidden" name="taskstat" id="taskstat" >
-									<input type="hidden" name="updatenewkilro" id="updatenewkilro" >
 
-									<h1 class="tit_1"> 입고처리사항</h1>
-									<!--  <p class="txt_1">작업반,예상완료시간 클릭시 이관 또는 시간변경 가능합니다.</p> -->
+									<!--<h1 class="tit_1"> 입고처리사항</h1>
+									  <p class="txt_1">작업반,예상완료시간 클릭시 이관 또는 시간변경 가능합니다.</p> -->
 									<div class="board_list_top" style="margin-top: 20px;">
 										<div class="left_col">
 										<!-- <h1 class="txt_1">A반 입고처리 사항.</h1> -->
@@ -133,13 +130,11 @@ $('input[name=newkilro]').change(function(){
 														<select name="autoroom" id="autoroom">
 														<option value="all">전체</option>
 															<c:forEach var="i" items="${autorooms}" varStatus="status">
-																<!-- option value="<c:out value='${i.CODE}'/>" ${logininfo[0].TEAM == i.CODE ? 'selected' : ''} >${i.NAME}</option-->
-																<!-- 무조건  이딴거 해결하기-->
                                                                <option value="<c:out value='${i.CODE}'/>" ${searchVO.autoroom ==i.CODE ? 'selected' : ((logininfo[0].TEAM == i.CODE && searchVO.autoroom =='') ? 'selected' : '')} >${i.NAME}</option> 
                                                              </c:forEach>
 														</select>
 											</label>
-											<!--  <a href="#"onclick="ReceiveView(); return false;" class="btn btn_blue_46 w_150" >입고처리</a--> 
+											<!-- a href="#"onclick="ReceiveView(); return false;" class="btn btn_blue_46 w_150" >입고처리</a> --> 
 											<a href="#" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
 											<!--　등록 -->
 										</div>
@@ -151,6 +146,7 @@ $('input[name=newkilro]').change(function(){
 											<caption>게시판목록</caption>
 											<colgroup>
 												<col style="width: 50px;">
+												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
@@ -177,6 +173,7 @@ $('input[name=newkilro]').change(function(){
 													<th scope="col">총주행거리</th>
 													<th scope="col">운행거리</th>
 													<th scope="col">작업상태</th>
+													<th scope="col">비고</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -203,7 +200,8 @@ $('input[name=newkilro]').change(function(){
 															<input type="hidden" name="kilro" value="<c:out value='${result.KILRO_TOTAL}'/>" />
 														</td>
 														<td><input class="f_txt2 w_150"type="text" id="drivekilo" readonly value="<c:out value='${result.KILRO_NOW}'/>"/>km</td>
-														<td><a href="#" onclick="Complete('${result.TASKSTAT}','${result.TAKESEQ}')"><c:out value="${result.TASKSTAT_NAME}" /></a>
+														<td><a href="#" style="text-decoration: underline;" onclick="Complete('${result.TASKSTAT}','${result.TAKESEQ}')"><c:out value="${result.TASKSTAT_NAME}" /></a>
+														<td><a href="#LINK" class="btn btn_blue_30 w_100" onclick="ReceiveCansel('<c:out value="${result.TAKESEQ}" />'); return false;">입고취소</a></td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -233,6 +231,3 @@ $('input[name=newkilro]').change(function(){
 	</div>
 </body>
 </html>
-
-
-

@@ -66,6 +66,10 @@ public class SmartTabletDAO extends EgovAbstractMapper {
 
 	public List<Object> selectcarlist(String seq) {
 		return selectList("SmartTabletDAO.selectcarlist", seq);
+	}
+
+	public int UpdateAssign(Map<String, Object> params) {
+		return update("SmartTabletDAO.UpdateAssign",params);
 	} 
    
 }

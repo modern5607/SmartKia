@@ -67,16 +67,6 @@
 		</if>
 	</select>
 	
-	<update id="UpdateAssign" parameterType="egovframework.smart.tablet.service.SmartTabletVO">
-		UPDATE CAR_TAKEREPAIR
-		SET
-			POSITION = #{autoroom},
-			NOTE = #{remark},
-			TASKSTAT = 'CB-standby'
-			
-			WHERE TAKESEQ = #{seq}
-	
-	</update>
 	
 		<select id="checkstatus" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		
@@ -181,9 +171,18 @@
 	</select>
 	
 	<select id="selectcarlist" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
-	SELECT AUTONUMBER,CUSTOMER_NAME,CUSTOMER_AUTOKIND,CUSTOMER_TEL,B.KILRO_TOTAL
+	SELECT TAKESEQ,AUTONUMBER,CUSTOMER_NAME,CUSTOMER_AUTOKIND,CUSTOMER_TEL,B.KILRO_TOTAL
 		FROM CAR_TAKEREPAIR A , CAR_CUSTOMER B
 		WHERE A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.TAKESEQ = #{seq}
 	</select>
+<update id="UpdateAssign" parameterType="java.util.HashMap">
+		UPDATE CAR_TAKEREPAIR
+		SET    ESTIME   = TO_CHAR(SYSDATE + #{estime}/1440,'yyyy-mm-dd hh24:mi:ss'),
+			POSITION = #{autoroom},
+			TASKSTAT = 'CB-repaired',
+			UPDATE_ID = #{loginid},
+			UPDATE_DATE = SYSDATE
+		WHERE  TAKESEQ  = #{seq}
+	</update>
 </mapper>

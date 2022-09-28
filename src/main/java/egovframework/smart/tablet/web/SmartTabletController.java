@@ -144,7 +144,98 @@ public class SmartTabletController {
 	
 	}
 	
+	/**
+	 * 입고처리 View
+	 */
+	@RequestMapping(value = "/tablet/ReceiveWorkgroup.do")
+	public String ReceiveWorkgroup(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model,
+			@RequestParam(value = "menuNo", required = false) String menuNo,
+			HttpServletRequest request) throws Exception {
 		
+		// 선택된 메뉴정보를 세션으로 등록한다.
+		if (menuNo != null && !menuNo.equals("")) {
+			request.getSession().setAttribute("menuNo", menuNo);
+		}
+
+		// 0. Spring Security 사용자권한 처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		// paging
+		searchVO.setPageUnit(propertyService.getInt("pageUnit"));
+		searchVO.setPageSize(propertyService.getInt("pageSize"));
+
+		PaginationInfo paginationInfo = new PaginationInfo();
+
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
+		paginationInfo.setPageSize(searchVO.getPageSize());
+		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		
+		System.out.println(searchVO);
+		
+		// service
+		Map<String, Object> map = smarttabletservice.receiveList(searchVO);
+		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
+
+		paginationInfo.setTotalRecordCount(totCnt);
+
+		model.addAttribute("resultList", map.get("resultList"));
+		model.addAttribute("resultCnt", map.get("resultCnt"));
+		model.addAttribute("paginationInfo", paginationInfo);
+		
+		return "/tablet/SmartAssignGroup";
+	}
+	
+	
+	/*
+	 * 작업반 배정 상세 View
+	 * */
+	@RequestMapping(value = "/tablet/ReceiveGroupPOP.do",method = RequestMethod.GET)
+	public String ReceivePopView(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model ,String seq) throws Exception {
+
+		
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();		
+		searchVO.setLoginid(loginVO.getUniqId().toString());
+		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
+		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
+		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
+
+		System.out.println("searchVO : "+searchVO);
+		model.addAttribute("carlist",smarttabletservice.selectcarlist(seq));
+		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
+		model.addAttribute("leadtimelist", leadtimelist);
+		model.addAttribute("RepairList",smartrcptservice.selectRcptRepairInfo(seq));
+		
+		
+		return "/tablet/ReceiveGroupPOP";
+	}
+	
+	/*
+	 * 작업반 배정 업데이트
+	 * */
+	@RequestMapping(value = "/tablet/SaveReceive.do",method=RequestMethod.POST)
+	public void SaveReceive(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model,HttpServletResponse response) throws Exception {
+		
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		System.out.println(params);
+
+		//접수수정
+		int result = smarttabletservice.UpdateAssign(params);
+		System.out.println(result);
+		
+		response.getWriter().print(result);
+		
+	}
+	
 	/**
 	 * 작업반 배정 View
 	 */
@@ -177,17 +268,7 @@ public class SmartTabletController {
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		/*
-		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		String id = loginVO.getUniqId();
-		searchVO.setLoginid(loginVO.getUniqId().toString());
-		System.out.println("searchVO :"+searchVO);
 
-		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
-		System.out.println("model :"+model);
-		System.out.println("TEAM :"+model.get("logininfo").toString());
-		//searchVO.setAutoroom("loginfo",model.get("TEAM").toString());
-		 */
 
 		// service
 		Map<String, Object> map = smarttabletservice.assignmentList(searchVO);
@@ -202,40 +283,181 @@ public class SmartTabletController {
 		return "/tablet/SmartAssignGroup";
 	}
 	
-	
-	/*
-	 * 작업반 배정 상세 View
-	 * */
-	@RequestMapping(value = "/tablet/ReceiveGroupPOP.do",method = RequestMethod.GET)
-	public String ReceivePopView(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model ,String seq) throws Exception {
+	/**
+	 * 작업반 배정 Update
+	 
+	@RequestMapping(value = "/tablet/UpdateStatus.do")
+	public String UpdateStatus(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
+		
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
 
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
 		
-		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();		
-		searchVO.setLoginid(loginVO.getUniqId().toString());
-		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
-		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
-		System.out.println("searchVO : "+searchVO);
-		model.addAttribute("carlist",smarttabletservice.selectcarlist(seq));
-		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
-		model.addAttribute("leadtimelist", leadtimelist);
-		model.addAttribute("RepairList",smartrcptservice.selectRcptRepairInfo(seq));
+		System.out.println("params :"+params);
+		System.out.println("vo :"+vo);
+
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap = smarttabletservice.checkstatus(params);
+		System.out.println("result :"+resultMap);
+		
+		int result=0;
+		if(resultMap.get("TASKSTAT").toString().equals(params.get("taskstat").toString()))
+		{
+			System.out.println("둘이 같음");
+			if(params.get("taskstat").toString().equals("CB-standby")) {
+				params.put("update_taskstat", "CB-repaired");
+			}
+			else if(params.get("taskstat").toString().equals("CB-repaired")) {
+				params.put("update_taskstat", "CB-perfect");
+			}
+			result = smarttabletservice.updatestatus(params);
+		}
+		
+		 if (result == 0) // insert실패
+		 {
+		 	model.addAttribute("msg","접수상태를 확인하여 주세요.");
+		 	model.addAttribute("url","");
+		 } else {
+		 	model.addAttribute("msg","상태변경이 완료되었습니다.");
+		 	model.addAttribute("url","SmartWorkGroup.do");
+		 }
+		return "alert";
+	}
+	*/
+	/*
+	 * 입고 취소 view
+	 * */
+	@RequestMapping(value = "/tablet/ReceiveCancelPOP.do",method = RequestMethod.GET)
+	public String ReceiveCancelview(@RequestParam String seq,ModelMap model) throws Exception {
 		
 		
-		return "/tablet/ReceiveGroupPOP";
+		model.addAttribute("seq",seq);
+		return "/tablet/ReceiveCancelPOP";
 	}
 	
-	/*
-	 * 작업반 배정 업데이트
-	 * */
-	@RequestMapping(value = "/tablet/SaveReceive.do")
-	public String SaveReceive(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
+	@RequestMapping(value = "/tablet/ReceiveCancel.do")
+	public String ReceiveCancel(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
 		
-		System.out.println("params : "+params);
-		System.out.println("vo : "+vo);
-		System.out.println("model : "+model);
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		
+		System.out.println("params :"+params);
+		/*
+		int result = smarttabletservice.insertlog(params);
+		System.out.println("result : "+ result);
+		if(result==0) //log insert 실패 
+		{
+			model.addAttribute("msg","로그 입력 실패.");
+		 	model.addAttribute("url","");
+		}
+		else {
+			int result1 = smarttabletservice.Transfergroup(params);
+				if(result1 ==0) //업데이트 실패 
+				{
+					model.addAttribute("msg","작업반을 확인하여주세요.");
+				 	model.addAttribute("url","");
+				}
+				else {
+					model.addAttribute("msg","작업반이 이관되었습니다.");
+				 	model.addAttribute("url","SmartWorkGroup.do");
+				}
+		}
+		*/
 		return "alert";
 	}
 	
+	/*
+	 * 출고화면 View
+	 */
+	@RequestMapping(value = "/tablet/TransferWorkGroupPOP.do",method = RequestMethod.GET)
+	public String TransferView(@RequestParam String seq,String position,ModelMap model) throws Exception {
+		
+		SmartCommonCodeVO vo =new SmartCommonCodeVO();
+		vo.setGroupcode("AUTO_ROOM");
+		
+		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
+		model.addAttribute("positions",map.get("info"));
+		model.addAttribute("seq",seq);
+		model.addAttribute("position",position);
+		System.out.println(map.get("info"));
+		System.out.println(model);
+		return "/tablet/TransferWorkGroupPOP";
+	}
+	/**
+	 * 이관 처리 Update
+	 */
+	@RequestMapping(value = "/tablet/Transfergroup.do")
+	public String Transfergroup(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
+		
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		
+		System.out.println("params :"+params);
+		int result = smarttabletservice.insertlog(params);
+		System.out.println("result : "+ result);
+		if(result==0) //log insert 실패 
+		{
+			model.addAttribute("msg","로그 입력 실패.");
+		 	model.addAttribute("url","");
+		}
+		else {
+			int result1 = smarttabletservice.Transfergroup(params);
+				if(result1 ==0) //업데이트 실패 
+				{
+					model.addAttribute("msg","작업반을 확인하여주세요.");
+				 	model.addAttribute("url","");
+				}
+				else {
+					model.addAttribute("msg","작업반이 이관되었습니다.");
+				 	model.addAttribute("url","SmartWorkGroup.do");
+				}
+		}
+		
+		return "alert";
+	}
+	
+	/*
+	@RequestMapping(value = "/tablet/OTWorkGroupPOP.do")
+	public String OTGroupView() throws Exception {
+
+		return "/tablet/OTWorkGroupPOP";
+	}
+	
+	@RequestMapping(value = "/tablet/ReceiveGroupPOP.do")
+	public String ReceivePopView(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model) throws Exception {
+
+		SmartCommonCodeVO vo =new SmartCommonCodeVO();
+		vo.setGroupcode("AUTO_ROOM");
+		
+		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
+		model.addAttribute("positions",map.get("info"));
+		System.out.println(map.get("info"));
+		return "/tablet/ReceiveGroupPOP";
+	}
+	*/
 	/*
 	 * 반별진행내역 View
 	 */
@@ -289,7 +511,7 @@ public class SmartTabletController {
 	
 	/**
 	 * 작업반 배정 Update
-	 */
+	 
 	@RequestMapping(value = "/tablet/UpdateStatus.do")
 	public String UpdateStatus(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
 		
@@ -334,137 +556,11 @@ public class SmartTabletController {
 		 }
 		return "alert";
 	}
-	/*
-	 * 출고화면 View
-	 */
-	@RequestMapping(value = "/tablet/ReleasePOP.do")
-	public String RelasePOPview() throws Exception {
-
-		return "/tablet/ReleasePOP";
-	}
+	*/
 	
-	@RequestMapping(value = "/tablet/ChangeKilro.do")
-	public void ChangeKilro(@RequestParam HashMap<String,Object> map,SmartTabletVO vo,HttpServletResponse response) throws Exception {
-		response.setContentType("text/html; charset=euc-kr");
-		PrintWriter out = response.getWriter();
-		
-		System.out.println("vo : "+vo);
-		
-	}
-	
-	/* 
-	 * 언젠간 쓰겠지....
-	이관 처리 view
+	/**
+	 * 작업반 배정 Update
 	 
-	@RequestMapping(value = "/tablet/TransferWorkGroupPOP.do",method = RequestMethod.GET)
-	public String TransferView(@RequestParam String seq,String position,ModelMap model) throws Exception {
-		
-		SmartCommonCodeVO vo =new SmartCommonCodeVO();
-		vo.setGroupcode("AUTO_ROOM");
-		
-		Map<String,Object> map = smartmdmservice.SelectCommonCode(vo);
-		model.addAttribute("positions",map.get("info"));
-		model.addAttribute("seq",seq);
-		model.addAttribute("position",position);
-		System.out.println(map.get("info"));
-		System.out.println(model);
-		return "/tablet/TransferWorkGroupPOP";
-	}
-	
-	 이관 처리 Update
-	
-	@RequestMapping(value = "/tablet/Transfergroup.do")
-	public String Transfergroup(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
-		
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
-
-		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		String id = loginVO.getUniqId();
-		params.put("loginid", id);
-		
-		System.out.println("params :"+params);
-		int result = smarttabletservice.insertlog(params);
-		System.out.println("result : "+ result);
-		if(result==0) //log insert 실패 
-		{
-			model.addAttribute("msg","로그 입력 실패.");
-		 	model.addAttribute("url","");
-		}
-		else {
-			int result1 = smarttabletservice.Transfergroup(params);
-				if(result1 ==0) //업데이트 실패 
-				{
-					model.addAttribute("msg","작업반을 확인하여주세요.");
-				 	model.addAttribute("url","");
-				}
-				else {
-					model.addAttribute("msg","작업반이 이관되었습니다.");
-				 	model.addAttribute("url","SmartWorkGroup.do");
-				}
-		}
-		
-		return "alert";
-	}
-	
-	시간변경 팝업
-	@RequestMapping(value = "/tablet/OTWorkGroupPOP.do")
-	public String OTGroupView() throws Exception {
-
-		return "/tablet/OTWorkGroupPOP";
-	}
-	
-	입고처리
-	@RequestMapping(value = "/tablet/ReceiveWorkgroup.do")
-	public String ReceiveWorkgroup(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model,
-			@RequestParam(value = "menuNo", required = false) String menuNo,
-			HttpServletRequest request) throws Exception {
-		
-		// 선택된 메뉴정보를 세션으로 등록한다.
-		if (menuNo != null && !menuNo.equals("")) {
-			request.getSession().setAttribute("menuNo", menuNo);
-		}
-
-		// 0. Spring Security 사용자권한 처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
-
-		// paging
-		searchVO.setPageUnit(propertyService.getInt("pageUnit"));
-		searchVO.setPageSize(propertyService.getInt("pageSize"));
-
-		PaginationInfo paginationInfo = new PaginationInfo();
-
-		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
-		paginationInfo.setPageSize(searchVO.getPageSize());
-		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-		
-		System.out.println(searchVO);
-		
-		// service
-		Map<String, Object> map = smarttabletservice.receiveList(searchVO);
-		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
-
-		paginationInfo.setTotalRecordCount(totCnt);
-
-		model.addAttribute("resultList", map.get("resultList"));
-		model.addAttribute("resultCnt", map.get("resultCnt"));
-		model.addAttribute("paginationInfo", paginationInfo);
-		
-		return "/tablet/ReceiveWorkgroup";
-	}
-	작업반 배정 업데이트
 	@RequestMapping(value = "/tablet/UpdateAssignGroup.do")
 	public void UpdateAssignGroup(@RequestParam HashMap<String,Object> map,SmartTabletVO vo,HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
@@ -496,6 +592,14 @@ public class SmartTabletController {
 			}
 		}
 	}
+*/
+	/*
+	 * 출고화면 View
 	 */
+	@RequestMapping(value = "/tablet/ReleasePOP.do")
+	public String RelasePOPview() throws Exception {
+
+		return "/tablet/ReleasePOP";
+	}
 }
 

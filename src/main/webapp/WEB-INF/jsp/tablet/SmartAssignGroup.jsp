@@ -44,6 +44,11 @@
 			$dialog.dialog('open');
 
 	}
+	
+	function reload(){
+		
+		document.SmartList.submit();
+	}
 
 	function linkPage(pageNo) {
 		document.SmartBizList.pageIndex.value = pageNo;

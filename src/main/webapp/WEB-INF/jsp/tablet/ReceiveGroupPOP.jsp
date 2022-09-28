@@ -36,9 +36,107 @@
 	}
 	
 	function SaveReceive(){
+
+        if($("#estime").val() == "")
+        {
+            alert("소요시간을 입력해 주세요");
+            $("#estime").focus();
+            return;
+        }
+
+        if($("#autoroom option:selected").val() == "all")
+        {
+            alert("배정하실 작업반을 선택해 주세요");
+            // $("#estime").focus();
+            return;
+        }
+
+        //수리항목 리스트화
+        var array = new Array();
+		$('input[name=repair]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairlist").val(array);
+        if($("#repairlist").val()==null||$("#repairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        //수리종류 리스트화
+        var array = new Array();
+		$('select[name=chk_repair]').find("option:selected").each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#chkrepairlist").val(array);
+        if($("#chkrepairlist").val()==null||$("#chkrepairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        //수리항목 repairseq 리스트화
+        var array = new Array();
+		$('input[name=repairseq]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairseqlist").val(array);
+
+        // console.log($("#chkrepairlist").val());
+        // console.log($("#repairlist").val());
+        // console.log($("#notelist").val());
+        
+
+
+
 		 document.SmartTabletVo.action = "<c:url value='/tablet/SaveReceive.do'/>";
-		 document.SmartTabletVo.submit();
+		 //document.SmartTabletVo.submit();
+		 
+		 $.ajax({
+	            type: "POST",
+	            url: "SaveReceive.do",
+	            data: $("#SmartTabletVo").serialize(),
+	            success: function (result) {
+	                if(result==1)
+	                {
+	                    alert("배정이 완료되었습니다.");
+	                    parent.reload();
+	                    fn_egov_cancel_popup();
+	                    
+	                }
+	                    
+	                else
+	                {
+	                    alert("다시 시도해 주세요");
+	                    fn_egov_cancel_popup();
+	                }
+	            },
+	            
+	        });
 	}
+
+    var deleteArr = new Array();
+    function DeleteRepair(repairseq='')
+    {
+        if(repairseq != '')
+        {
+            deleteArr.push(repairseq);
+            $("#deletelist").val(deleteArr);
+        }
+        // $("tr#repair_"+i).remove();
+
+    }
+    
+    function maxLengthCheck(estime){
+    	if(estime.value.length>estime.maxLength){
+    		alert("소요시간(분)최대길이는 3자리입니다.");
+    		estime.value="";
+    		return;
+    	}
+    }
 </script>
 </head>
 <body>
@@ -47,9 +145,12 @@
 	<div class="popup POP_DUPID_CONF"
 		style="background-color: white; text-align: center;">
 
-		<form name="SmartTabletVo"
-			action="<c:url value='/tablet/Receivegroup.do'/>">
-
+		<form name="SmartTabletVo" id="SmartTabletVo" action="<c:url value='/tablet/Receivegroup.do'/>" method="post" >
+            <input type="hidden" name="seq" id="seq" value="<c:out value='${carlist[0].TAKESEQ}'/>">
+            <input type="hidden" name="repairlist" id="repairlist" value="">
+            <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
+            <input type="hidden" name="repairseqlist" id="repairseqlist" value="">
+            <input type="hidden" name="deletelist" id="deletelist">
 			<div class="pop_inner" style="width: 100%;">
 				<div class="pop_header">
 					<h1>차량 상세 내역</h1>
@@ -155,7 +256,7 @@
                         </colgroup>
                         <tr>
                             <td class="lb">예상 소요시간</td>
-                            <td><input type="number" class="f_txtsmall w_200" name="repairnote" id="repairnote" placeholder="작업시간(분)" value="<c:out value='${rcptinfo[0].REPAIRNOTE}'/>"></td>
+                            <td><input type="number" maxlength="3" oninput="maxLengthCheck(this)" class="f_txtsmall w_200" name="estime" id="estime" placeholder="작업시간(분)"></td>
                             <td class="lb">작업반</td>
                         	   <td>
                         	   	<label class="f_select w_200" for="autoroom">
