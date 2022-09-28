@@ -23,43 +23,6 @@
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
 <script type="text/javascript">
-function TransferGroup(seq,position)
-{
-	var url = "<c:url value='/tablet/TransferWorkGroupPOP.do?seq="+seq+"&position="+position+"'/>?";
-
-		var $dialog = $('<div id="modalPan"></div>').html(
-				'<iframe style="border: 0px;" src="'
-						+ "<c:url value='/tablet/TransferWorkGroupPOP.do?seq="+seq+"&position="+position+"'/>"
-						+ '" width="100%" height="100%"></iframe>')
-				.dialog({
-					autoOpen : false,
-					modal : true,
-					width : 600,
-					height : 400
-				});
-		$(".ui-dialog-titlebar").hide();
-		$dialog.dialog('open');
-
-}
-
-function OTGroup()
-{
-	var url = "<c:url value='/tablet/OTWorkGroupPOP.do'/>?";
-
-		var $dialog = $('<div id="modalPan"></div>').html(
-				'<iframe style="border: 0px;" src="'
-						+ "<c:url value='/tablet/OTWorkGroupPOP.do'/>?"
-						+ '" width="100%" height="100%"></iframe>')
-				.dialog({
-					autoOpen : false,
-					modal : true,
-					width : 600,
-					height : 400
-				});
-		$(".ui-dialog-titlebar").hide();
-		$dialog.dialog('open');
-	
-}
 
 function Complete(taskstat,seq)
 {	
@@ -84,52 +47,13 @@ function Complete(taskstat,seq)
 	}
 }
 
-function UpdateStatus(seq,taskstat) {
-
-	console.log(seq,taskstat);
-	document.SmartList.seq.value = seq
-	document.SmartList.taskstat.value = taskstat
-	
-	document.SmartList.action = "<c:url value='/tablet/UpdateStatus.do'/>";
-	document.SmartList.submit();
-}
-
 function fnCheckId(){
 	
     document.SmartList.submit();
     return;
 }
 
-function ReceiveView(){
-	var autoroom = $('#autoroom').val();
-	console.log(autoroom);
-	
-	document.SmartList.action = "<c:url value='/tablet/ReceiveWorkgroup.do?'/>";
-    document.SmartList.submit();
-    
-}
-function TransferAutoRoom(room,remark,seq,position){
-	
-	document.SmartList.room.value=room;
-	document.SmartList.remark.value=remark;
-	document.SmartList.seq.value=seq;
-	document.SmartList.position.value=position;
-	
-	document.SmartList.action = "<c:url value='/tablet/Transfergroup.do'/>";
-    document.SmartList.submit();
-}
-/*
-function changekilro(this){
-	//var prevkilo $("input[name=kilro]").val();
-	//var newkilro = this.value;
-	//var drivekilo = prevkilo - newkilro;
-	//$("#drivekilo").val(drivekilo);
-	
-	
-	//document.SmartList.action = "<c:url value='/tablet/ChangeKilro.do'/>";
-	//document.SmartList.submit();
-}
-*/
+
 $( document ).ready( function() {
 $('input[name=newkilro]').change(function(){
 	console.log($(this).val());
@@ -152,16 +76,19 @@ $('input[name=newkilro]').change(function(){
     $("#updatenewkilro").val(drivekilo);
 });
 } );
-
-
+ 
+ 
 </script>
+<!-- NOT USE CODE 
+언제 다시 쓸지 모름....
+
 
 </head>
 <body>
 	<!-- Skip navigation -->
 	<a href="#contents" class="skip_navi">본문 바로가기</a>
 
-	<div class="wrap">
+	<div class="wrap" position:fixed;>
 		<!-- header start -->
 		<c:import url="/sym/mms/EgovHeader.do" />
 		<!-- //header end -->
@@ -212,7 +139,7 @@ $('input[name=newkilro]').change(function(){
                                                              </c:forEach>
 														</select>
 											</label>
-											<a href="#"onclick="ReceiveView(); return false;" class="btn btn_blue_46 w_150" >입고처리</a> 
+											<!--  <a href="#"onclick="ReceiveView(); return false;" class="btn btn_blue_46 w_150" >입고처리</a--> 
 											<a href="#" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
 											<!--　등록 -->
 										</div>
@@ -270,8 +197,8 @@ $('input[name=newkilro]').change(function(){
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
 														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
-														<td><a href="#" onclick="TransferGroup('${result.TAKESEQ}','${result.POSITION}')" class="lnk"><c:out value="${result.POSITION_NAME}" /></a>
-														<td><a href="#" onclick="OTGroup()" class="lnk"><c:out value="${result.ESTIME}" /></a>
+														<td><c:out value="${result.POSITION_NAME}" /></td>
+														<td><c:out value="${result.ESTIME}" /></td>
 														<td><input class="f_txt2 w_150" type="number" name="newkilro" value="${result.KILRO_TOTAL}" id="newkilro_">km
 															<input type="hidden" name="kilro" value="<c:out value='${result.KILRO_TOTAL}'/>" />
 														</td>
@@ -306,3 +233,6 @@ $('input[name=newkilro]').change(function(){
 	</div>
 </body>
 </html>
+
+
+

@@ -29,6 +29,10 @@ public interface SmartTabletService {
 
 	public List<Object> selectlogininfo(SmartTabletVO searchVO);
 
+	public List<Object> selectcarlist(String seq);
+
+
+
 	
 	
 }

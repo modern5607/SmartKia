@@ -103,6 +103,13 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 		return SmartTabletDAO.selectlogininfo(searchVO);
 	}
 
+	@Override
+	public List<Object> selectcarlist(String seq) {
+		return SmartTabletDAO.selectcarlist(seq);
+	}
+
+	
+
 	
 	
 }

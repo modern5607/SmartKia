@@ -62,6 +62,10 @@ public class SmartTabletDAO extends EgovAbstractMapper {
 	public List<Object> selectlogininfo(SmartTabletVO searchVO) {
 	
 		return selectList("SmartTabletDAO.selectlogininfo", searchVO);
+	}
+
+	public List<Object> selectcarlist(String seq) {
+		return selectList("SmartTabletDAO.selectcarlist", seq);
 	} 
    
 }

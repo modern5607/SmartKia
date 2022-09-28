@@ -179,4 +179,11 @@
 	SELECT MBER_ID, MBER_NM,TEAM,USE_YN FROM LETTNGNRLMBER 
 		WHERE ESNTL_ID = #{loginid}
 	</select>
+	
+	<select id="selectcarlist" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
+	SELECT AUTONUMBER,CUSTOMER_NAME,CUSTOMER_AUTOKIND,CUSTOMER_TEL,B.KILRO_TOTAL
+		FROM CAR_TAKEREPAIR A , CAR_CUSTOMER B
+		WHERE A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.TAKESEQ = #{seq}
+	</select>
 </mapper>

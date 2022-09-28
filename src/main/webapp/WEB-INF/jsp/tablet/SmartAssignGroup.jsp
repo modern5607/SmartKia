@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
 <link rel="stylesheet" href="<c:url value='/'/>css/component.css"
 	type="text/css">
+﻿
+
 <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
 <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 <script src="<c:url value='/'/>js/ui.js"></script>
@@ -22,26 +24,25 @@
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
 <script type="text/javascript">
-	function ReceiveGroup() {
-		if ($('input:checkbox[name=check]').is(":checked") == true) {
+	function ReceiveGroup(seq) {
+		
+		console.log(seq);
 
 			var url = "<c:url value='/tablet/ReceiveGroupPOP.do'/>?";
 
 			var $dialog = $('<div id="modalPan"></div>').html(
 					'<iframe style="border: 0px;" src="'
-							+ "<c:url value='/tablet/ReceiveGroupPOP.do'/>?"
+							+ "<c:url value='/tablet/ReceiveGroupPOP.do?seq="+seq+"'/>"
 							+ '" width="100%" height="100%"></iframe>').dialog(
 					{
 						autoOpen : false,
 						modal : true,
-						width : 600,
-						height : 400
+						width : 900,
+						height : 700
 					});
 			$(".ui-dialog-titlebar").hide();
 			$dialog.dialog('open');
-		} else {
-			alert("배정을 체크하여 주세요.");
-		}
+
 	}
 
 	function linkPage(pageNo) {
@@ -138,22 +139,22 @@
 										</span>
 
 									</div>
-									<div class="board_list_top" style="margin-top: 20px;">
-										<!-- <div class="left_col">
+									<!--<div class="board_list_top" style="margin-top: 20px;">
+										 <div class="left_col">
 											<h1 class="txt_1">업체코드 클릭시 수정화면으로 이동됩니다.</h1>
-										</div> -->
+										</div> 
 										<div class="right_col">
 											<a href="#" onclick="ReceiveGroup()" class="item btn btn_blue_46 w_100">배정</a>
 												
 										</div>
 									</div>
+									-->
 									<!--// 검색조건 -->
 
 									<div class="board_list">
 										<table>
 											<caption>게시판목록</caption>
 											<colgroup>
-												<col style="width: 20px;">
 												<col style="width: 20px;">
 												<col style="width: 50px;">
 												<col style="width: 50px;">
@@ -165,15 +166,14 @@
 											</colgroup>
 											<thead>
 												<tr>
-													<th scope="col">배정</th>
 													<th scope="col">번호</th>
-													<th scope="col">접수일자</th>
+													<th scope="col">접수번호</th>
 													<th scope="col">차량번호</th>
 													<th scope="col">차량종류</th>
 													<th scope="col">고객명</th>
 													<th scope="col">연락처</th>
 													<th scope="col">수리내용</th>
-													<th scope="col">소요시간</th>
+													<th scope="col">배정</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -186,21 +186,14 @@
 												<c:forEach var="result" items="${resultList}"
 													varStatus="status">
 													<tr>
-														<td><span class="f_chk_only"> <input
-																type="checkbox" name="check"
-																data-seq="<c:out value='${result.TAKESEQ}'/>"> <input
-																type="hidden" name="checkId"
-																value="<c:out value='${result.TAKESEQ}'/>" />
-														</span></td>
-														<td><c:out
-																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><c:out value="${result.RECEIPTDATE}" /></td>
+														<td><c:out value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
+														<td><c:out value="${result.TAKESEQ}" /></td>
 														<td><c:out value="${result.AUTONUMBER}" /></td>
 														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
 														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
-														<td><c:out value="${result.TOTAL_LEADTIME}" />분</td>
+														<td><a href="#LINK" class="btn btn_blue_30 w_50" onclick="ReceiveGroup('<c:out value="${result.TAKESEQ}" />'); return false;">상세</a></td>
 													</tr>
 												</c:forEach>
 											</tbody>
