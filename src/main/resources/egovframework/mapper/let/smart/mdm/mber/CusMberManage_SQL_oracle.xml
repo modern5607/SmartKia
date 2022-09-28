@@ -24,6 +24,9 @@
         KILRO_TOTAL			  as "totalKm"
     FROM    CAR_CUSTOMER
     WHERE 1=1
+        <if test="searchname != ''">
+            AND UPPER(CUSTOMER_NAME) LIKE '%' ||UPPER(#{searchname})|| '%'
+        </if>
         <if test="searchcarNum != ''">
             AND UPPER(CUSTOMER_AUTOKIND) LIKE '%' ||UPPER(#{searchcarNum})|| '%'
         </if>

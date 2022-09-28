@@ -32,7 +32,7 @@ function fn_egov_modal_remove() {
 </script>
 
 <!-- Header -->
-<div class="header">
+<div class="header stickytop"  style="top: 0px;">
     <div class="inner">
         <div class="left_col">
             <h1 class="logo"><a href="<c:url value='/'/>cmm/main/mainPage.do"><img src="<c:url value='/images/logo.png'/>" style="width:180px;" alt="표준프레임워크 포털 eGovFrame 샘플 포털"></a></h1>

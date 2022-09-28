@@ -99,13 +99,15 @@ function fnCheckNotKorean(koreanStr){
                             <col style="width: 150px;">
                             <col style="width: 200px;">
                             <col style="width: 200px;">
-                            <col style="width: auto;">
+                            <col style="width: 200px;">
+                            <col style="width: 100px;">
                         </colgroup>
                         <thead>
                             <th>차량번호</th>
                             <th>성함</th>
                             <th>차종</th>
                             <th>연락처</th>
+                            <th>누적주행거리</th>
                             <th>선택</th>
                         </thead>
                         <tbody>
@@ -120,6 +122,7 @@ function fnCheckNotKorean(koreanStr){
                                     <td><c:out value="${list.CUSTOMER_NAME}"/></td>
                                     <td><c:out value="${list.CUSTOMER_AUTOKIND}"/></td>
                                     <td><c:out value="${list.CUSTOMER_TEL}"/></td>
+                                    <td><c:out value="${(list.KILRO_TOTAL!=0 && list.KILRO_TOTAL!= null)?(list.KILRO_TOTAL+='km'):''}"/></td>
                                     <td><a href="#LINK" class="btn btn_blue_30 w_50" onclick="javascript:fnReturnId('${list.CUSTOMER_ID}','${list.CUSTOMER_AUTONO}','${list.CUSTOMER_NAME}','${list.CUSTOMER_AUTOKIND}','${list.CUSTOMER_TEL}'); return false;"><spring:message code="button.use" /></a></td>
                                 </tr>
     

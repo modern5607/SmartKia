@@ -26,7 +26,7 @@ body {min-width: 1400px;}
 .header .top_menu .t span::before {content: ""; display: inline-block; width: 21px; height: 24px; margin-right: 8px; background: url(../images/ico_person.png) no-repeat center; vertical-align: top;}
 .header .top_menu .d {margin-left: 14px; color: #888;}
 
-.gnb {margin-top: 44px;}
+.gnb {margin-top: 15px;}
 .gnb ul::after {content: ""; display: block; clear: both;}
 .gnb ul li {float: left;}
 .gnb ul li + li {margin-left: 100px;}
@@ -68,7 +68,7 @@ body {min-width: 1400px;}
 .util_menu .allmenu.on {background: url(../images/ico_allmenu_close.png) no-repeat;}
 
 
-.container {min-height: calc(100vh - 360px);}
+.container {min-height: calc(100vh - 360px); margin-top: 160px;}
 .content {min-height: 700px; padding-bottom: 100px;}
 
 .sub_layout {border-top: 1px solid #cccccc;}
@@ -112,7 +112,7 @@ body {min-width: 1400px;}
 
 
 /* location */
-.location {height: 70px; padding-top: 42px; text-align: right;}
+.location {height: 40px; padding-top: 10px; text-align: right;}
 .location ul, .location ul li {display: inline-block; vertical-align: top;}
 .location ul li {position: relative; color: #666; font-size: 14px;}
 .location ul li + li::before {content: ""; display: inline-block; width: 4px; height: 7px; margin: 0 9px 0 3px; line-height: 18px; background: url(../images/ico_arrow_r_gray_4x7.png) no-repeat; vertical-align: 2px;}
@@ -186,3 +186,15 @@ body {min-width: 1400px;}
 
 .smart_monitoring .sub_in {width: 1920px;}
 .smart_monitoring .layout .content_wrap {padding-left: 0;}
+
+/* 상단 고정 css */
+.stickytop {
+    background: hsla(0,0%,100%,.95);
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    height: 160px;
+    left: 0;
+    position: fixed;
+    top: -100px;
+    width: 100%;
+    z-index: 98;
+}

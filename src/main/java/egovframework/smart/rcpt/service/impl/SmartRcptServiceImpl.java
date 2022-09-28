@@ -1,5 +1,6 @@
 package egovframework.smart.rcpt.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,9 @@ import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import egovframework.smart.customer.service.CusMberDefaultVO;
+import egovframework.smart.customer.service.CusMberManageService;
+import egovframework.smart.customer.service.CusMberManageVO;
 import egovframework.smart.rcpt.service.SmartRcptService;
 import egovframework.smart.rcpt.service.SmartRcptVO;
 
@@ -18,6 +22,9 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 
 	@Resource(name = "SmartRcptDAO")
 	private SmartRcptDAO smartrcptDAO;
+
+	@Resource(name = "cusMberManageService")
+	private CusMberManageService cusMberManageService;
 
 	@Override
 	public List<?> selectCarInfo(SmartRcptVO vo) throws Exception{
@@ -34,12 +41,14 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 	public int InsertWebRcpt(Map<String, Object> params) throws Exception {
 		int result=0;
 		try{
-			/*
-			if(params.get("position").toString().equals("") == false)
-				params.put("taskstat", "CB-standby");
-			else
-				params.put("taskstat", "CB-receipt");
-*/
+			/*고객정보 조회후 없으면 고객 등록후 진행*/
+			CusMberDefaultVO customerVO = new CusMberDefaultVO();
+			customerVO.setSearchname(params.get("name").toString());
+			customerVO.setSearchcarNum(params.get("carnum").toString());
+			List<CusMberManageVO> customerInfo = cusMberManageService.selectMberList(customerVO);
+
+
+
 			Map<String, Object> resultmap = smartrcptDAO.InsertWebRcpt(params);
 			String takeseq = resultmap.get("takeseq").toString();
 			System.out.println(takeseq);

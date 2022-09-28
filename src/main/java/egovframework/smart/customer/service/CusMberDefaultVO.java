@@ -58,6 +58,7 @@ public class CusMberDefaultVO implements Serializable {
     /** recordCountPerPage */
     private int recordCountPerPage = 10;
 
+    private String searchname = "";
     private String searchcarNum = "";
     private String searchTel = "";
 	/**
@@ -241,6 +242,14 @@ public class CusMberDefaultVO implements Serializable {
 
 	public void setSearchTel(String searchTel) {
 		this.searchTel = searchTel;
+	}
+
+	public String getSearchname() {
+		return searchname;
+	}
+
+	public void setSearchname(String searchname) {
+		this.searchname = searchname;
 	}
 
 }
