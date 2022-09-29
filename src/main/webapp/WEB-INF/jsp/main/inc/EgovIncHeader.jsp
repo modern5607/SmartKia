@@ -4,6 +4,7 @@
 
 	<script src="<c:url value='/'/>js/jquery.js"></script>
 	<script src="<c:url value='/'/>js/jqueryui.js"></script>
+    <link rel="favicon" href="./images/favicon.ico">
 	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
 
 <script type="text/javaScript" language="javascript">
