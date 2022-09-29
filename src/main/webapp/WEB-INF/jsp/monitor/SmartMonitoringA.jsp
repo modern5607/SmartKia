@@ -78,7 +78,7 @@
 	                                                <td><c:out value="${result.AUTONUMBER}"/></td>
 	                                                <td><c:out value="${result.REPAIRNOTE}"/></td>
 	                                                <td><c:out value="${result.ESTIME}"/></td>
-	                                                <td><c:out value="${result.NOTE}"/></td>
+	                                                <td><c:out value="${result.TASKSTAT}"/></td>
 	                                                
 	                                                
 	                                            </tr>

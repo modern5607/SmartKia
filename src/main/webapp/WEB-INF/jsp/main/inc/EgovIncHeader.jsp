@@ -111,7 +111,7 @@ function fn_egov_modal_remove() {
                             <!-- <li><a href="/EgovPageLink.do?link=main/sample_menu/EgovLocation?menuNo=1000000">찾아오시는 길</a></li> -->
                             <li><a href="/mdm/SmartLeadTime.do?menuNo=1070000">표준작업관리</a></li>
                             <li><a href="/mdm/SmartBiz.do">거래처 관리</a></li>
-                            <li><a href="/customer/SmartCusMberManage.do?menuNo=1000000">고객관리</a></li>
+                            <li><a href="/customer/SmartCusMberManage.do?menuNo=1000000">이용고객관리</a></li>
                         </ul>
                     </div>
 
@@ -154,7 +154,7 @@ function fn_egov_modal_remove() {
                         <ul>
                             <li><a href="/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">고객정보관리</a></li>
                             <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4100000">차량정보관리</a></li>
-                            <li><a href="/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">차량수리이력조회</a></li>
+                            <li><a href="/crm/SmartAddRepairCar.do?menuNo=4100000">차량수리이력조회</a></li>
                             <li><a href="/cop/com/selectTemplateInfs.do?menuNo=4100000">컴플레인관리</a></li>
                         </ul>
                     </div>

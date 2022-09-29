@@ -40,19 +40,133 @@ function fnListPage(){
     document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberManage.do'/>";
     document.cusMberManageVO.submit(); 
 }
-
+function showModalDialogCallback(retVal) {
+	if(retVal) {
+        document.cusMberManageVO.autoKind.value = retVal;
+        document.cusMberManageVO.check_view.value = retVal;
+    }
+	fn_egov_modal_remove();
+}
+/* function fnAutoCheck(){
+    var url = "<c:url value='/mdm/SmartAutoDplctCnfirmView.do'/>?";
+    
+    var varParam = new Object();
+    var checkAuto = document.cusMberManageVO.autoNo.value;
+    var varParam = "checkAuto="+checkAuto;
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px;" src="' + "<c:url value='/mdm/SmartAutoDplctCnfirmView.do'/>?" + varParam +'" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 600,
+        height: 450
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+} */
 function fnInsert(){
 	/* if(document.checkForm.checkId.value==""){
 		alert(document.cusMberManageVO.check.value);
 		return; */
-	document.cusMberManageVO.submit();
-	
-}
-<c:if test="${!empty resultMsg}">alert("<spring:message code='${resultMsg}' />");</c:if>
+		
+		//고객명 입력 여부
+		if($("input[name=cusNm]").val()=="")
+        {
+            alert("고객명을 입력해주세요");
+            $("input[name=cusNm]").focus();
+            return;
+        }
+        if($("input[name=autoNo]").val()=="")
+        {
+            alert("차량번호를 입력해 주세요");
+            $("input[name=autoNo]").focus();
+            return;
+        }
+        if($("input[name=cusTel]").val()=="")
+        {
+            alert("연락처를 입력해 주세요");
+            $("input[name=cusTel]").focus();
+            return;
+        }
+		 document.cusMberManageVO.submit(); 
 
-$(document).on("keyup", ".phoneNumber", function() { 
-	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
-});
+}
+
+function fncheck()
+{
+
+    if(document.cusMberManageVO.cusNm.value == "")
+    {
+        alert("고객이름을 입력해주세요.");
+        document.cusMberManageVO.cusNm.focus();
+        return false;
+    }
+    $.ajax({
+        type: "post",
+        url: "<c:url value='/mdm/CheckCus.do'/>",
+        data: {
+        	autoNo:document.cusMberManageVO.autoNo.value,
+            cusNm:document.cusMberManageVO.cusNm.value
+        },
+        success: function (result) {
+        	
+        	result = JSON.parse(result)
+        	alert(result);
+			if(result == 0) {
+				alert('사용 가능한 아이디입니다.');
+	        } else {
+	        	alert('이미 사용중인 아이디입니다.');
+	        }
+        }
+    });
+    // document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertLeadTime.do'/>";
+    // document.SmartLeadTimeVO.submit();
+}
+
+	<c:if test="${!empty resultMsg}">alert("<spring:message code='${resultMsg}' />");</c:if>
+
+	$(document).on("keyup", ".phoneNumber", function() { 
+		$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+	});
+
+function fnCheckCus(){
+    var url = "<c:url value='/mdm/SmartCheckCusView.do'/>?";
+    
+    var varParam = new Object();
+    var checkCus = document.cusMberManageVO.cusNm.value;
+    var varParam = "checkCus="+checkCus;
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px;" src="' + "<c:url value='/mdm/SmartCheckCusView.do'/>?" + varParam +'" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 600,
+        height: 450
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+}
+function fnKindCheck(){
+    var url = "<c:url value='/mdm/searchKindPopupView.do'/>?";
+    
+    // var varParam = new Object();
+    // var checkKind = document.CusMberManageVO.autoKind.value;
+    // var varParam = "checkKind="+checkKind;
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px;" src="' + "<c:url value='/mdm/searchKindPopupView.do'/>?" +'" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 600,
+        height: 400
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+}
+
 </script>
 </head>
 <body>
@@ -81,7 +195,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
                                         <li><a href="">기준정보</a></li>
-                                        <li>고객관리</li>
+                                        <li>이용고객관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
@@ -89,7 +203,7 @@ $(document).on("keyup", ".phoneNumber", function() {
 								<form:form modelAttribute="cusMberManageVO" name="cusMberManageVO" action="${pageContext.request.contextPath}/customer/SmartCusMberInsert.do" method="post" >
 
 
-                                <h1 class="tit_1" style="padding-bottom:20px">고객관리</h1>
+                                <h1 class="tit_1" style="padding-bottom:20px">이용고객 등록페이지</h1>
 
                                 <div class="board_view2">
                                     <table summary="고객 등록 정보">
@@ -97,26 +211,38 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             <col style="width: 190px;">
                                             <col style="width: auto;">
                                         </colgroup>
+                                        
                                         <tr>
                                             <td class="lb">
                                                 <label for="autoNo">차량번호</label>
                                                 <span class="req">필수</span>
                                             </td>
-                                            <td>
-                                                <!-- <input name="autoNo" id="autoNo" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="autoNo" id="autoNo" class="f_txt w_350" title="차량번호" maxlength="100" />
+	                                        <td>
+                                                <form:input path="autoNo" id="autoNo" name="autoNo" class="f_txt w_350" title="차량번호" maxlength="100" />
                                                 <form:errors path="autoNo" cssClass="error" />    
 							                    
                                             </td>
+                                            <%-- <td>
+                                                <span class="f_search2 w_350">
+                                                    <input id="check_view" type="text" maxlength="20" disabled="disabled" name="check_view" readonly >
+                                                	<form:input path="autoNo" type="hidden" readonly="true" maxlength="20" />
+                                                	<button type="button" class="btn" onclick="javascript:fnAutoCheck(); return false;"></button>
+                                                </span>
+                                                <span class="f_txt_inner ml15">(중복 회원 검색)</span>
+                                            </td> --%>
+ 
                                         </tr>
                                         <tr>
                                             <td class="lb">
                                                 <label for="autoKind">차량종류</label>
                                             </td>
                                             <td>
-                                                <!-- <input name="autoKind" id="autoKind" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="autoKind" id="autoKind" class="f_txt w_350" title="차량종류" maxlength="100" />
-                                                <form:errors path="autoKind" cssClass="error" />
+                                                <span class="f_search2 w_350">
+                                                    <input id="check_view" type="text" maxlength="20" disabled="disabled" name="check_view" readonly >
+                                                	<form:input path="autoKind" type="hidden" readonly="true" maxlength="20" />
+                                                	<button type="button" class="btn" onclick="fnKindCheck()"></button>
+                                                </span>
+                                                <span class="f_txt_inner ml15">(차종 검색)</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -124,22 +250,35 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <label for="cusNm">고객이름</label>
                                                 <span class="req">필수</span>
                                             </td>
-                                            <td>
-                                                <!-- <input name="cusNm" id="cusNm" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="cusNm" id="cusNm" class="f_txt w_350" title="고객이름" maxlength="100" />
-                                                <form:errors path="cusNm" cssClass="error" />
-                                                <!-- <a href="#LINK" class="btn btn_blue_46 w_100" onclick="">중복체크</a>
-                                                <input name="check" id="check" class="f_txt w_350" title="중복체크" maxlength="100" type="hidden" value="ok"/> -->
-                                            </td>
+                                             <td>
+                                                <form:input path="cusNm" id="cusNm" name="cusNm" class="f_txt w_350" title="고객이름" maxlength="100" />
+                                            </td> 
+                                            <!-- <td>
+                                                <input name="cusNm" id="cusNm" class="f_txt" type="text" value="" maxlength="100" />
+                                                <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fncheck(); return false;">중복체크</a>
+                                                <input name="hiddencusNm" id="hiddencusNm" class="f_txt w_350" title="중복체크" maxlength="100" type="hidden" value="ok" />
+                                                <span class="f_txt_inner ml15">(중복 고객이름 검색)</span>
+                                            </td> -->
                                         </tr>
                                         <tr>
                                             <td class="lb">
                                                 <label for="cusTel">연락처</label>
+                                                <span class="req">필수</span>
                                             </td>
                                             <td>
                                                 <!-- <input name="cusTel" id="cusTel" class="f_txt" type="text" value="" maxlength="100" /> -->
                                                 <form:input path="cusTel" id="cusTel" class="f_txt w_350 phoneNumber" title="연락처" maxlength="100" />
                                                 <form:errors path="cusTel" cssClass="error" />
+                                            </td>
+                                        </tr>
+										<tr>
+                                            <td class="lb">
+                                                <label for=note>총주행거리</label>
+                                            </td>
+                                            <td>
+                                                <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->
+                                                <form:input path="totalKm" id="totalKm" class="f_txt w_350" title="비고" maxlength="100" />
+                                                <form:errors path="totalKm" cssClass="error" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -152,24 +291,13 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <form:errors path="note" cssClass="error" />
                                             </td>
                                         </tr>
-										<tr>
-                                            <td class="lb">
-                                                <label for=note>총주행거리</label>
-                                                <span class="req">필수</span>
-                                            </td>
-                                            <td>
-                                                <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="totalKm" id="totalKm" class="f_txt w_350" title="비고" maxlength="100" />
-                                                <form:errors path="totalKm" cssClass="error" />
-                                            </td>
-                                        </tr>
                                     </table>
                                 </div>
 
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.CusMberManageVO.reset();"><spring:message code="button.reset" /></a><!-- 취소 -->
+                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.cusMberManageVO.reset();"><spring:message code="button.reset" /></a><!-- 취소 -->
                                     </div>
                                     <div class="right_col btn1">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnInsert(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->

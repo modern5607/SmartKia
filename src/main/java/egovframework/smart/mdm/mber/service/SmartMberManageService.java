@@ -1,6 +1,9 @@
 package egovframework.smart.mdm.mber.service;
 
 import java.util.List;
+import java.util.Map;
+
+import egovframework.smart.mdm.service.SmartCommonCodeVO;
 
 
 
@@ -107,7 +110,6 @@ public interface SmartMberManageService {
 	public void insertAuthor(SmartMberManageVO smartMberManageVO) throws Exception;
 	
 	public int checkAuthorYn(SmartMberManageVO smartMberManageVO) throws Exception;
-
 
 
 }

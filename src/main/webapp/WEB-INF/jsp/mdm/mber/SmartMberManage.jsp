@@ -112,12 +112,17 @@ function fnLinkPage(pageNo){
     document.listForm.action = "<c:url value='/mdm/SmartMberManage.do'/>";
     document.listForm.submit();
 }
-
+function init()
+{
+	if ("<c:out value='${msg}'/>" != "") {
+		alert("<c:out value='${msg}'/>")
+	}
+}
 //-->
 
 </script>
 </head>
-<body>
+<body onload="init()">
 
     <!-- Skip navigation -->
     <a href="#contents" class="skip_navi">본문 바로가기</a>
@@ -206,9 +211,9 @@ function fnLinkPage(pageNo){
                                             <col style="width: 60px;">
                                             <col style="width: 100px;">
                                             <col style="width: 100px;">
+                                            <col style="width: 60px;">
                                             <col style="width: 100px;">
-                                            <col style="width: 100px;">
-                                            <col style="width: 80px;">
+                                            <col style="width: 60px;">
                                             <%-- <col style="width: 20px;"> --%>
                                         </colgroup>
                                         <thead>
@@ -237,8 +242,8 @@ function fnLinkPage(pageNo){
                                         	
                                         	<c:forEach items="${resultList}" var="result"  varStatus="status">
                                             <tr>
-                                            <%-- <td><c:out value="${(userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count}"/></td> --%>
-                                            <td><c:out value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}"/></td>
+                                            <td><c:out value="${(userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count}"/></td>
+                                            <%-- <td><c:out value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}"/></td> --%>
                                                 
                                                 <td>
                                                 	<a href="<c:url value='/mdm/mber/SmartMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>" class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">

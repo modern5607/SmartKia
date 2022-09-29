@@ -90,22 +90,16 @@ function fnListPage(){
 }
 
 function fnInsert(){
+		if (password.value.length < 8 || password.value.length > 20 ){
+			alert("<spring:message code="errors.passchk" />");
+    		return;
+		}
 		if(document.smartMberManageVO.password.value != document.smartMberManageVO.password2.value){
     		alert("<spring:message code="fail.user.passwordUpdate2" />");
     		return;
 		}
 		document.smartMberManageVO.submit();
 	}
-function fnInserts1(){
-	if(validateSmartMberManageVO(document.smartMberManageVO)){
-		if(document.smartMberManageVO.password.value != document.smartMberManageVO.password2.value){
-            alert("<spring:message code="fail.user.passwordUpdate2" />");
-            return;
-        } else {
-        	document.smartMberManageVO.submit();
-		}
-    }
-}
 
 /* 전화번호 하이폰 자동생성 */
 $(document).on("keyup", ".phoneNumber", function() { 
@@ -145,7 +139,8 @@ $(document).on("keyup", ".phoneNumber", function() {
                                 <!--// Location -->
 
 								<form:form modelAttribute="smartMberManageVO" name="smartMberManageVO" action="${pageContext.request.contextPath}/mdm/SmartMberInsert.do" method="post" >
-
+                                 
+                                <h1 class="tit_1" style="padding-bottom:20px">사용자 등록페이지</h1>
 
                                 <div class="board_view2">
                                     <table summary="일반회원 등록정보">
@@ -160,7 +155,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             </td>
                                             <td>
                                                 <span class="f_search2 w_350">
-                                                    <input id="id_view" type="text" maxlength="20" disabled="disabled" name="id_view" readonly >
+                                                    <input id="id_view" type="text" maxlength="20" name="id_view" readonly >
                                                     <form:input path="mberId" type="hidden" readonly="true" maxlength="20" />
                                                     <button type="button" class="btn" onclick="javascript:fnIdCheck(); return false;"></button>
                                                 </span>
