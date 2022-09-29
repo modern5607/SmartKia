@@ -94,9 +94,9 @@ function fnUpdate(){
 						        <!-- 우편번호검색 -->
 						        <input type="hidden" name="url" value="<c:url value='/sym/ccm/zip/EgovCcmZipSearchPopup.do'/>" />
 
-                                <h1 class="tit_1">사용자관리</h1>
+								<h1 class="tit_1" style="padding-bottom:20px">사용자 암호변경페이지</h1>
 
-                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
+                                <!-- <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p> -->
 
                                 <div class="board_view2">
                                     <table summary="SUMMARY">

@@ -40,39 +40,59 @@ function fnListPage(){
     document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberManage.do'/>";
     document.cusMberManageVO.submit(); 
 }
-
+function showModalDialogCallback(retVal) {
+	if(retVal) {
+        document.cusMberManageVO.autoKind.value = retVal;
+        document.cusMberManageVO.check_view.value = retVal;
+    }
+	fn_egov_modal_remove();
+}
+/* function fnAutoCheck(){
+    var url = "<c:url value='/mdm/SmartAutoDplctCnfirmView.do'/>?";
+    
+    var varParam = new Object();
+    var checkAuto = document.cusMberManageVO.autoNo.value;
+    var varParam = "checkAuto="+checkAuto;
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px;" src="' + "<c:url value='/mdm/SmartAutoDplctCnfirmView.do'/>?" + varParam +'" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 600,
+        height: 450
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+} */
 function fnInsert(){
 	/* if(document.checkForm.checkId.value==""){
 		alert(document.cusMberManageVO.check.value);
 		return; */
 		
-		
-		/* document.cusMberManageVO.submit(); */
-	
+		//고객명 입력 여부
+		if($("input[name=cusNm]").val()=="")
+        {
+            alert("고객명을 입력해주세요");
+            $("input[name=cusNm]").focus();
+            return;
+        }
+        if($("input[name=autoNo]").val()=="")
+        {
+            alert("차량번호를 입력해 주세요");
+            $("input[name=autoNo]").focus();
+            return;
+        }
+        if($("input[name=cusTel]").val()=="")
+        {
+            alert("연락처를 입력해 주세요");
+            $("input[name=cusTel]").focus();
+            return;
+        }
+		 document.cusMberManageVO.submit(); 
+
 }
-/*
- function fnchecks(){
-	$.ajax({ 
-	    url: "<c:url value='/mdm/CheckCus.do'/>",          
-	    data: { cusNm: "고객이름", autoNo: "차량번호"},  
-	    method: "POST",            
-	    dataType : "json"         
-	})
-	.done(function(json) {
-	    $("<h1>").text(json.title).appendTo("body");
-	   /*  $("<div class=\"content\">).html(json.html).appendTo("body"); 
-	})
-	.fail(function(xhr, status, errorThrown) {
-	    $("#text").html("오류가 발생하였습니다.<br>")
-	        .append("오류명: " + errorThrown + "<br>")
-	        .append("상태: " + status);
-	})
-	.always(function(xhr, status) {
-	    /* $("#text").html("요청이 완료되었습니다."); 
-	    alert("요청이 완료되었습니다.");
-	}
-} 
-*/
+
 function fncheck()
 {
 
@@ -91,12 +111,12 @@ function fncheck()
         },
         success: function (result) {
         	
-        	result1 = JSON.parse(result)
-        	alert(result1);
-			if(result == "0") {
-				$('#result').text('사용 가능한 아이디입니다.');
+        	result = JSON.parse(result)
+        	alert(result);
+			if(result == 0) {
+				alert('사용 가능한 아이디입니다.');
 	        } else {
-	            $('#result').text('이미 사용중인 아이디입니다.');
+	        	alert('이미 사용중인 아이디입니다.');
 	        }
         }
     });
@@ -124,6 +144,24 @@ function fnCheckCus(){
         modal: true,
         width: 600,
         height: 450
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+}
+function fnKindCheck(){
+    var url = "<c:url value='/mdm/searchKindPopupView.do'/>?";
+    
+    // var varParam = new Object();
+    // var checkKind = document.CusMberManageVO.autoKind.value;
+    // var varParam = "checkKind="+checkKind;
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px;" src="' + "<c:url value='/mdm/searchKindPopupView.do'/>?" +'" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 600,
+        height: 400
 	});
     $(".ui-dialog-titlebar").hide();
 	$dialog.dialog('open');
@@ -157,7 +195,7 @@ function fnCheckCus(){
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
                                         <li><a href="">기준정보</a></li>
-                                        <li>고객관리</li>
+                                        <li>이용고객관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
@@ -165,7 +203,7 @@ function fnCheckCus(){
 								<form:form modelAttribute="cusMberManageVO" name="cusMberManageVO" action="${pageContext.request.contextPath}/customer/SmartCusMberInsert.do" method="post" >
 
 
-                                <h1 class="tit_1" style="padding-bottom:20px">고객관리</h1>
+                                <h1 class="tit_1" style="padding-bottom:20px">이용고객 등록페이지</h1>
 
                                 <div class="board_view2">
                                     <table summary="고객 등록 정보">
@@ -173,22 +211,22 @@ function fnCheckCus(){
                                             <col style="width: 190px;">
                                             <col style="width: auto;">
                                         </colgroup>
+                                        
                                         <tr>
                                             <td class="lb">
                                                 <label for="autoNo">차량번호</label>
                                                 <span class="req">필수</span>
                                             </td>
-                                            <td>
-                                                <!-- <input name="autoNo" id="autoNo" class="f_txt" type="text" value="" maxlength="100" /> -->
+	                                        <td>
                                                 <form:input path="autoNo" id="autoNo" name="autoNo" class="f_txt w_350" title="차량번호" maxlength="100" />
                                                 <form:errors path="autoNo" cssClass="error" />    
 							                    
                                             </td>
-                                                 <%-- <td>
+                                            <%-- <td>
                                                 <span class="f_search2 w_350">
                                                     <input id="check_view" type="text" maxlength="20" disabled="disabled" name="check_view" readonly >
                                                 	<form:input path="autoNo" type="hidden" readonly="true" maxlength="20" />
-                                                	<button type="button" class="btn" onclick="javascript:fnCheckCus(); return false;"></button>
+                                                	<button type="button" class="btn" onclick="javascript:fnAutoCheck(); return false;"></button>
                                                 </span>
                                                 <span class="f_txt_inner ml15">(중복 회원 검색)</span>
                                             </td> --%>
@@ -199,9 +237,12 @@ function fnCheckCus(){
                                                 <label for="autoKind">차량종류</label>
                                             </td>
                                             <td>
-                                                <!-- <input name="autoKind" id="autoKind" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="autoKind" id="autoKind" class="f_txt w_350" title="차량종류" maxlength="100" />
-                                                <form:errors path="autoKind" cssClass="error" />
+                                                <span class="f_search2 w_350">
+                                                    <input id="check_view" type="text" maxlength="20" disabled="disabled" name="check_view" readonly >
+                                                	<form:input path="autoKind" type="hidden" readonly="true" maxlength="20" />
+                                                	<button type="button" class="btn" onclick="fnKindCheck()"></button>
+                                                </span>
+                                                <span class="f_txt_inner ml15">(차종 검색)</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -209,30 +250,35 @@ function fnCheckCus(){
                                                 <label for="cusNm">고객이름</label>
                                                 <span class="req">필수</span>
                                             </td>
-                                            <%-- <td>
-                                                <span class="f_search2 w_350">
-                                                    <input id="nm_view" type="text" maxlength="20" disabled="disabled" name="nm_view" readonly >
-                                                	<form:input path="cusNm" id="cusNm" class="f_txt w_350" title="고객이름" maxlength="100" />
-                                                    <form:input path="cusNm" type="hidden" readonly="true" maxlength="20" />
-                                                </span>
-                                            </td> --%>
-                                            <td>
+                                             <td>
+                                                <form:input path="cusNm" id="cusNm" name="cusNm" class="f_txt w_350" title="고객이름" maxlength="100" />
+                                            </td> 
+                                            <!-- <td>
                                                 <input name="cusNm" id="cusNm" class="f_txt" type="text" value="" maxlength="100" />
-                                                <form:errors path="cusNm" cssClass="error" />
-                                                
                                                 <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fncheck(); return false;">중복체크</a>
                                                 <input name="hiddencusNm" id="hiddencusNm" class="f_txt w_350" title="중복체크" maxlength="100" type="hidden" value="ok" />
                                                 <span class="f_txt_inner ml15">(중복 고객이름 검색)</span>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                         <tr>
                                             <td class="lb">
                                                 <label for="cusTel">연락처</label>
+                                                <span class="req">필수</span>
                                             </td>
                                             <td>
                                                 <!-- <input name="cusTel" id="cusTel" class="f_txt" type="text" value="" maxlength="100" /> -->
                                                 <form:input path="cusTel" id="cusTel" class="f_txt w_350 phoneNumber" title="연락처" maxlength="100" />
                                                 <form:errors path="cusTel" cssClass="error" />
+                                            </td>
+                                        </tr>
+										<tr>
+                                            <td class="lb">
+                                                <label for=note>총주행거리</label>
+                                            </td>
+                                            <td>
+                                                <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->
+                                                <form:input path="totalKm" id="totalKm" class="f_txt w_350" title="비고" maxlength="100" />
+                                                <form:errors path="totalKm" cssClass="error" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -243,17 +289,6 @@ function fnCheckCus(){
                                                 <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->
                                                 <form:input path="note" id="note" class="f_txt w_350" title="비고" maxlength="100" />
                                                 <form:errors path="note" cssClass="error" />
-                                            </td>
-                                        </tr>
-										<tr>
-                                            <td class="lb">
-                                                <label for=note>총주행거리</label>
-                                                <span class="req">필수</span>
-                                            </td>
-                                            <td>
-                                                <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="totalKm" id="totalKm" class="f_txt w_350" title="비고" maxlength="100" />
-                                                <form:errors path="totalKm" cssClass="error" />
                                             </td>
                                         </tr>
                                     </table>

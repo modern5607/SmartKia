@@ -4,6 +4,8 @@ import java.util.List;
 
 import egovframework.smart.customer.service.CusMberDefaultVO;
 import egovframework.smart.customer.service.CusMberManageVO;
+import egovframework.smart.mdm.mber.service.SmartMberManageVO;
+import egovframework.smart.mdm.service.SmartCommonCodeVO;
 
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
@@ -78,8 +80,8 @@ public class CusMberManageDAO extends EgovAbstractMapper{
      * 화면에 조회된일반회원의 기본정보를 수정하여 항목의 정합성을 체크하고 수정된 데이터를 데이터베이스에 반영
      * @param mberManageVO 일반회원수정정보
      */
-    public void updateMber(CusMberManageVO cusMberManageVO){
-        update("cusMberManageDAO.updateMber_S",cusMberManageVO);
+    public int updateMber(CusMberManageVO cusMberManageVO){
+    	return update("cusMberManageDAO.updateMber_S",cusMberManageVO);
     }
 
     /**
@@ -116,5 +118,10 @@ public class CusMberManageDAO extends EgovAbstractMapper{
     public int checkCusDplct(String checkCus){
         return (Integer)selectOne("cusMberManageDAO.checkCusDplct", checkCus);
     }
+
+	public List<Object> IsexistMber(CusMberManageVO vo) {
+		return selectList("cusMberManageDAO.IsexistMber", vo);
+	}
+
 
 }

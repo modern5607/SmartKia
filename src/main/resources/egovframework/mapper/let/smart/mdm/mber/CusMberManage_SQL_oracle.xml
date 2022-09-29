@@ -10,13 +10,14 @@
         <result property="infoProvdAgeCn" column="INFO_PROVD_AGRE_CN"/>
     </resultMap>
     
-    <select id="selectMberList" parameterType="egovframework.smart.customer.service.CusMberManageVO" resultType="egovMap">
+    <select id="selectMberList" parameterType="egovframework.smart.customer.service.CusMberDefaultVO" resultType="egovMap">
   	SELECT * FROM ( SELECT rownum rn, TB.* FROM (
   	SELECT  
         CUSTOMER_ID           as "cusId",
         CUSTOMER_NAME         as "cusNm",
         CUSTOMER_AUTONO       as "autoNo",
         CUSTOMER_AUTOKIND     as "autoKind",
+       	FN_CODENAME(CUSTOMER_AUTOKIND, 'KIND') kind,
         CUSTOMER_TEL          as "cusTel",
         USE_YN                as "useYN",
         NOTE                  as "note",
@@ -24,8 +25,9 @@
         KILRO_TOTAL			  as "totalKm"
     FROM    CAR_CUSTOMER
     WHERE 1=1
+    
         <if test="searchcarNum != ''">
-            AND UPPER(CUSTOMER_AUTOKIND) LIKE '%' ||UPPER(#{searchcarNum})|| '%'
+            AND UPPER(CUSTOMER_AUTONO) LIKE '%' ||UPPER(#{searchcarNum})|| '%'
         </if>
         <if test="searchTel != ''">
             AND REPLACE(CUSTOMER_TEL, '-', '') LIKE '%' ||#{searchTel}|| '%'
@@ -34,7 +36,7 @@
             AND CUSTOMER_NAME LIKE '%' ||#{searchcusNm}|| '%'
         </if> -->
         
-        ORDER BY 1,2 DESC) <!-- 오더바이옆에있는 숫자를 기준으로 정렬  -->
+        ORDER BY CUSTOMER_ID DESC) <!-- 오더바이옆에있는 숫자를 기준으로 정렬  -->
         TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
     </select>
     
@@ -43,7 +45,7 @@
             FROM   CAR_CUSTOMER
             WHERE 1=1
             <if test="searchcarNum != ''">
-	            AND UPPER(CUSTOMER_AUTOKIND) LIKE '%' ||UPPER(#{searchcarNum})|| '%'
+	            AND UPPER(CUSTOMER_AUTONO) LIKE '%' ||UPPER(#{searchcarNum})|| '%'
 	        </if>
 			<if test="searchTel != ''">
 	            AND REPLACE(CUSTOMER_TEL, '-', '') LIKE '%' ||#{searchTel}|| '%'
@@ -54,7 +56,7 @@
 	         
     </select>
     
-    <insert id="insertMber_S">
+    <insert id="insertMber_S" parameterType="java.lang.String">
         
             INSERT INTO CAR_CUSTOMER 
                 (   
@@ -73,9 +75,9 @@
                     #{autoKind},
                     #{cusTel},
                     #{note},
-                    #{autoInt},
+                    SUBSTR(#{autoNo},-4),
                     #{totalKm}
-                    )              
+                    )       
     </insert>
     
     <delete id="deleteMber_S">
@@ -86,41 +88,28 @@
     </delete>
     
     <select id="selectMber_S" resultType="egovframework.smart.customer.service.CusMberManageVO">
-        
-            SELECT
-                ESNTL_ID          uniqId,
-                'USR01'          userTy,
-                MBER_ID          mberId,
-                MBER_NM          mberNm,
-                PASSWORD         password,
-                PASSWORD_HINT    passwordHint,
-                PASSWORD_CNSR    passwordCnsr,
-                IHIDNUM          ihidnum,
-                SEXDSTN_CODE     sexdstnCode,
-                ZIP              zip,
-                ADRES            adres,
-                TELNO          telNo,
-                MBER_STTUS       mberSttus,
-                DETAIL_ADRES     detailAdres,
-                END_TELNO        endTelno,
-                MBTLNUM      moblphonNo,
-                GROUP_ID         groupId,
-                MBER_FXNUM       mberFxnum,
-                MBER_EMAIL_ADRES mberEmailAdres,
-                MIDDLE_TELNO     middleTelno,
-                SBSCRB_DE        sbscrbDe
-            FROM LETTNGNRLMBER
-            WHERE ESNTL_ID=#{uniqId}
-        
+	        SELECT  
+	        CUSTOMER_ID           cusId,
+	        CUSTOMER_NAME         cusNm,
+	        CUSTOMER_AUTONO       autoNo,
+	        CUSTOMER_AUTOKIND     autoKind,
+	        CUSTOMER_TEL          cusTel,
+	        USE_YN                useYN,
+	        NOTE                  note,
+	        AUTOINT				  autoInt,
+	        KILRO_TOTAL			  totalKm
+	    FROM    CAR_CUSTOMER
+	    WHERE CUSTOMER_ID=#{cusId}
     </select>
     
     <update id="updateMber_S">
         
             UPDATE CAR_CUSTOMER 
-            SET CUSTOMER_AUTONO         = #{autoNo},
+            SET
                 CUSTOMER_AUTOKIND       = #{autoKind},
                 CUSTOMER_NAME    		= #{cusNm},
                 CUSTOMER_TEL    		= #{cusTel},
+	        	KILRO_TOTAL			  	= #{totalKm},
                 NOTE     				= #{note}
             WHERE CUSTOMER_ID=#{cusId}
         
@@ -155,7 +144,16 @@
         
     </select>
     
-    
+    <select id="checkAutoDplct" resultType="int">
+ 
+		SELECT COUNT(1) usedCnt
+	         FROM(
+	         SELECT
+	             CUSTOMER_AUTONO               autoNo
+	         FROM    CAR_CUSTOMER
+	         ) A
+	     WHERE autoNo = #{autoNo}
+     </select> 
      <select id="checkCusDplct" resultType="int">
      
        	SELECT COUNT(*) cnt 
@@ -163,5 +161,10 @@
 		WHERE CUSTOMER_AUTONO = #{autoNo}
 		AND CUSTOMER_NAME = #{cusNm}
      
+    </select>
+    
+    <select id="IsexistMber" parameterType="egovframework.smart.customer.service.CusMberManageVO" resultType="java.util.HashMap">
+    	SELECT * FROM CAR_CUSTOMER
+    	WHERE CUSTOMER_NAME = #{cusNm} AND CUSTOMER_AUTONO = #{autoNo}
     </select>
 </mapper>

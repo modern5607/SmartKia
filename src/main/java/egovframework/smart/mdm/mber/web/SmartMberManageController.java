@@ -9,6 +9,7 @@ import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.smart.mdm.mber.service.SmartMberManageService;
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
@@ -37,7 +38,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import com.ibm.icu.impl.ICUService.Key;
 
 /**
  * 일반회원관련 요청을  비지니스 클래스로 전달하고 처리된결과를  해당   웹 화면으로 전달하는  Controller를 정의한다
@@ -102,6 +107,12 @@ public class SmartMberManageController {
 			request.getSession().setAttribute("menuNo", menuNo);
 		}
 		
+		if (request != null) 
+		{
+			Map<String,?> flashmap = RequestContextUtils.getInputFlashMap(request);
+			if(flashmap != null)
+				model.addAttribute("msg",flashmap.get("msg"));
+		}
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
     	if(!isAuthenticated) {
@@ -166,27 +177,28 @@ public class SmartMberManageController {
 
 	
 
-@RequestMapping(value = "/mdm/SmartMberInsert.do") public void
-	insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO
-	  smartMberManageVO, BindingResult bindingResult, ModelMap model,
-	  HttpServletResponse response) throws Exception {
+@RequestMapping(value = "/mdm/SmartMberInsert.do") 
+public String insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, BindingResult bindingResult, ModelMap model,
+	  HttpServletResponse response, RedirectAttributes attr) throws Exception {
 	  response.setContentType("text/html; charset=euc-kr");
 	  PrintWriter out = response.getWriter();
 	  
 	  int result = smartMberManageService.insertMber(smartMberManageVO); smartMberManageVO.setAuthorCode("ROLE_ADMIN"); smartMberManageVO.setUserTy("USR01");
 	  
-	  if (result == 0) // insert실패
+
+		if (result == 0) // insert실패
 		{
-			out.println("<script>");
-			out.println("alert('등록에 실패하였습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
+				attr.addFlashAttribute("msg","등록에 실패하였습니다.");
 		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			out.println("location.href='/mdm/SmartMberManage.do'");
-			out.println("</script>");
+				attr.addFlashAttribute("msg","성공적으로 등록 되었습니다.");
 		}
+//		if (result == 0) // insert실패
+//		{
+//				attr.addFlashAttribute(attributeName: "msg",attributeValue: "등록에 실패하였습니다.");
+//		} else {
+//				attr.addFlashAttribute(attributeName: "msg",attributeValue: "성공적으로 등록 되었습니다.");
+//		}
+		return "redirect:/mdm/SmartMberManage.do";
 	}
 
 
@@ -209,16 +221,21 @@ public String updateMberView(@RequestParam("selectedId") String mberId, @ModelAt
 	model.addAttribute("smartMberManageVO", smartMberManageVO);
 	model.addAttribute("userSearchVO", userSearchVO);
 	model.addAttribute("team",map.get("info"));
-
+	System.out.println(smartMberManageVO);
+//	System.out.println(userSearchVO);
+//	System.out.println("team :"+map.get("info"));
 	return "mdm/mber/SmartMberSelectUpdt";
 }
 
 
 @RequestMapping("/mdm/SmartMberSelectUpdt.do")
-public void updateMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, BindingResult bindingResult, ModelMap model,HttpServletResponse response) throws Exception {
+public String updateMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO smartMberManageVO, BindingResult bindingResult, ModelMap model,HttpServletResponse response, RedirectAttributes attr) throws Exception {
 	response.setContentType("text/html; charset=euc-kr");
 	PrintWriter out = response.getWriter();
 	
+
+	smartMberManageVO.setUniqId(smartMberManageVO.getUniqId());
+	System.out.println(smartMberManageVO);
 	
 	int result = smartMberManageService.updateMber(smartMberManageVO);
 	int cnt = smartMberManageService.checkAuthorYn(smartMberManageVO);
@@ -230,23 +247,17 @@ public void updateMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO sm
 		smartMberManageService.deleteAuthor(smartMberManageVO);
 	}
 	
-	System.out.println(smartMberManageVO);
 
 	System.out.println(smartMberManageVO.getUseYn());
 	System.out.println(cnt);
-	if (result == 0) //실패
-	{
-		out.println("<script>");
-		out.println("alert('이미 존재하는 사용자입니다.')");
-		out.println("history.back()");
-		out.println("</script>");
-	} else {
-		out.println("<script>");
-		out.println("alert('성공적으로 수정되었습니다.')");
-		out.println("location.href='/mdm/SmartMberManage.do'");
-		out.println("</script>");
+	  if (result == 0) // insert실패
+		{
+			attr.addFlashAttribute("msg","등록에 실패하였습니다.");
+		} else {
+			attr.addFlashAttribute("msg","성공적으로 등록 되었습니다.");
+		}
+	  return "redirect:/mdm/SmartMberManage.do";
 	}
-}
 /**
  * 일반회원정보삭제후 목록조회 화면으로 이동한다.
  * @param checkedIdForDel 삭제대상 아이디 정보
@@ -416,7 +427,6 @@ public String updatePassword(ModelMap model, @RequestParam Map<String, Object> c
 	}
 	model.addAttribute("userSearchVO", userSearchVO);
 	model.addAttribute("resultMsg", resultMsg);
- 
 
 	
 	return "mdm/mber/SmartMberPasswordUpdt";
@@ -444,9 +454,12 @@ public String updatePasswordView(ModelMap model, @RequestParam Map<String, Objec
 
 	String userTyForPassword = (String) commandMap.get("userTyForPassword");
 	smartMberManageVO.setUserTy(userTyForPassword);
-
 	model.addAttribute("userSearchVO", userSearchVO);
 	model.addAttribute("smartMberManageVO", smartMberManageVO);
+
+	System.out.println(smartMberManageVO);
+	System.out.println(userTyForPassword);
+
 	return "mdm/mber/SmartMberPasswordUpdt";
 }
 

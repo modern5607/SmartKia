@@ -1,16 +1,3 @@
-<%--
-  Class Name : SmartCusMberManage.jsp
-  Description : 사용자관리(조회,삭제) JSP
-  Modification Information
- 
-      수정일         수정자                   수정내용
-    -------    --------    ---------------------------
-     2009.03.02  JJY          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
- 
-    author   : 공통서비스 개발팀 JJY
-    since    : 2009.03.02
---%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
@@ -105,10 +92,15 @@ function fnSearch(){
 }
 <c:if test="${!empty resultMsg}">alert("<spring:message code="${resultMsg}" />");</c:if>
 
+function init()
+{
+	if ("<c:out value='${msg}'/>" != "") {
+		alert("<c:out value='${msg}'/>");
+	}
+}
 </script>
 </head>
-<body>
-
+<body onload="init()">
 	<!-- Skip navigation -->
 	<a href="#contents" class="skip_navi">본문 바로가기</a>
 
@@ -137,7 +129,7 @@ function fnSearch(){
 </div>
 <!--// Location -->
 
-<form name="listForm" action="/customer/SmartCusMberManage.do"
+<form id="listForm" name="listForm" action="/customer/SmartCusMberManage.do"
 	method="post">
 	<input name="selectedId" type="hidden" /> <input
 		name="checkedIdForDel" type="hidden" /> <input
@@ -146,40 +138,6 @@ function fnSearch(){
 
 	<h1 class="tit_1">이용고객관리</h1>
 
-<!-- 	<p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
-
-	<h2 class="tit_2">사용자관리</h2>
-
-	<h3 class="tit_3">고객관리</h3> -->
-
-	<!-- 검색조건 -->
-<%-- 	<div class="condition">
-		<label class="item f_select" for="sbscrbSttus">
-		 <select name="sbscrbSttus" id="sbscrbSttus" title="조회조건1">
-				<option value="0"
-					<c:if test="${empty userSearchVO.sbscrbSttus || userSearchVO.sbscrbSttus == '0'}">selected="selected"</c:if>>상태(전체)</option>
-				<option value="A"
-					<c:if test="${userSearchVO.sbscrbSttus == 'A'}">selected="selected"</c:if>>가입신청</option>
-				<option value="D"
-					<c:if test="${userSearchVO.sbscrbSttus == 'D'}">selected="selected"</c:if>>삭제</option>
-				<option value="P"
-					<c:if test="${userSearchVO.sbscrbSttus == 'P'}">selected="selected"</c:if>>승인</option>
-		</select> 
-		</label>
-		
-		<label class="item f_select" for="searchCondition"> 
-		<select name="searchCondition" id="searchCondition" title="조회조건1">
-			<option value="0" <c:if test="${userSearchVO.searchCondition == '0'}">selected="selected"</c:if> >차량번호</option>
-            <option value="1" <c:if test="${empty userSearchVO.searchCondition || userSearchVO.searchCondition == '1'}">selected="selected"</c:if> >연락처</option>
-					
-		</select>
-		</label> <span class="item f_search"> <input name="searchKeyword" id="searchKeyword" class="f_input w_500" title="검색" type="text" value="<c:out value="${userSearchVO.searchKeyword}"/>" />
-			<button class="btn" type="submit"
-				onclick="fnSearch(); return false;">
-				<spring:message code="button.search" />
-			</button> <!-- 조회 -->
-		</span>
-	</div> --%>
 	
 	<div class="condition" style="text-align: left; margin-top: 20px;">
 	    <span class="item f_search">
@@ -224,14 +182,14 @@ function fnSearch(){
 			<colgroup>
 				<col style="width: 60px;">
 				<%-- <col style="width: 60px;"> --%>
-				<col style="width: 300px;">
-				<col style="width: 300px;">
-				<col style="width: 300px;">
-				<col style="width: 300px;">
-				<col style="width: 300px;">
-				<col style="width: 300px;">
-				<col style="width: 300px;">
-				<col style="width: 300px;">
+				<col style="width: 100px;">
+				<col style="width: 80px;">
+				<col style="width: 80px;">
+				<col style="width: 80px;">
+				<col style="width: 100px;">
+				<col style="width: 100px;">
+				<%-- <col style="width: 100px;"> --%>
+				<col style="width: 80px;">
 			</colgroup>
 			<thead>
 				<tr>
@@ -246,7 +204,7 @@ function fnSearch(){
 					<th scope="col">고객이름</th>
 					<th scope="col">연락처</th>
 					<th scope="col">총주행거리</th>
-					<th scope="col">차량뒷번호</th>
+					<!-- <th scope="col">차량뒷번호</th> -->
 					<th scope="col">비고</th>
 				</tr>
 			</thead>
@@ -262,34 +220,17 @@ function fnSearch(){
 				<c:forEach var="result" items="${resultList}"
 					varStatus="status">
 					<tr>
-						<td><c:out value="${status.count}" /></td>
-						<%-- <td><span class="f_chk_only"> <input
-								name="checkField"
-								title="checkField <c:out value="${status.count}"/>"
-								type="checkbox" /> <input name="checkId" type="hidden"
-								value="<c:out value='${result.userTy}'/>:<c:out value='${result.uniqId}'/>" />
-						</span>
-						</td> --%>
-						<td>
-						<a href="<c:url value='/customer/SmartCusMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.cusId}"/>" 
-							class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.cusId}"/>'); return false;">
-                            <c:out value="${result.cusId}"/>								
-						</a>
-						</td>
-						<td><c:out value="${result.autoNo}" /></td>
+						<td><c:out value="${(userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count}"/></td>
+						<%-- <td><c:out value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}"/></td> --%>
+						<td><c:out value="${result.cusId}" /></td>
+						<td><a href="#" onclick="fnSelectUser('<c:out value="${result.cusId}"/>')" class="lnk"><c:out value="${result.autoNo}" /></a>
+                       	</td>
 						<td><c:out value="${result.autoKind}" /></td>
 						<td><c:out value="${result.cusNm}" /></td>													
 						<td><c:out value="${result.cusTel}" /></td>
 						<td><c:out value="${result.totalKm}" /></td>
-						<td><c:out value="${result.autoInt}" /></td>
+						<%-- <td><c:out value="${result.autoInt}" /></td> --%>
 						<td><c:out value="${result.note}" /></td>
-						<%-- <td><c:forEach var="entrprsMberSttus_result"
-								items="${entrprsMberSttus_result}" varStatus="status">
-								<c:if
-									test="${result.sttus == entrprsMberSttus_result.code}">
-									<c:out value="${entrprsMberSttus_result.codeNm}" />
-								</c:if>
-							</c:forEach></td> --%>
 					</tr>
 				</c:forEach>
 

@@ -49,13 +49,13 @@ function fnDeleteMber(checkedIds) {
         document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberDelete.do'/>";
         document.smartMberManageVO.submit(); 
     }
-}
+}*/
 function fnPasswordMove(){
     document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberPasswordUpdtView.do'/>";
     document.smartMberManageVO.submit();
 }
 
-*/
+
 function fnUpdates(){
 	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberSelectUpdt.do'/>";
 	if(validateSmartMberManageVO(document.smartMberManageVO)){
@@ -63,6 +63,7 @@ function fnUpdates(){
     }
     
 }
+
 function fnUpdate(){
 	document.smartMberManageVO.action = "<c:url value='/mdm/SmartMberSelectUpdt.do'/>";
         document.smartMberManageVO.submit();
@@ -113,7 +114,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="smartMberManageVO" name="smartMberManageVO"  method="post" >
+								<form name="smartMberManageVO"  method="post" >
 								
 								<!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
 					            <input name="checkedIdForDel" type="hidden" />
@@ -125,11 +126,12 @@ $(document).on("keyup", ".phoneNumber", function() {
 					            <!-- 우편번호검색 -->
 					            <input type="hidden" name="zip_url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
 					            <!-- 사용자유형정보 : password 수정화면으로 이동시 타겟 유형정보 확인용, 만약검색조건으로 유형이 포함될경우 혼란을 피하기위해 userTy명칭을 쓰지 않음-->
+					            <input type="hidden" name="uniqId" value="<c:out value='${smartMberManageVO.uniqId}'/>" />
 					            <input type="hidden" name="userTyForPassword" value="<c:out value='${smartMberManageVO.userTy}'/>" />
 
-                                <!-- <h1 class="tit_1">사용자관리</h1>
+                                 <h1 class="tit_1" style="padding-bottom:20px">사용자 정보수정페이지</h1>
 
-                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
+                                <!-- <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
 
 								<h2 class="tit_2">사용자관리</h2>
 
@@ -147,9 +149,8 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <form:input readonly="true" path="mberId" id="mberId" class="f_txt f_select w_350" size="20" maxlength="20"  disabled="disabled"/>
-                                                <form:errors path="mberId" cssClass="error" />
-                                                <form:hidden path="uniqId" />
+                                                <input readonly name="mberId" id="mberId" value="<c:out value='${smartMberManageVO.mberId}'/>" class="f_txt f_select w_350" size="20" maxlength="20" />
+                                                
                                             </td>
                                         </tr>
                                         <tr>
@@ -158,8 +159,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <form:input path="mberNm" id="mberNm" class="f_txt w_350" maxlength="60" />
-                                                <form:errors path="mberNm" cssClass="error" />
+                                                <input name="mberNm" id="mberNm" class="f_txt w_350" maxlength="60" value="<c:out value='${smartMberManageVO.mberNm}'/>"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -172,7 +172,7 @@ $(document).on("keyup", ".phoneNumber", function() {
 		                                          <select id="team" name="team">
 		                                          	<option value=''>없음</option>
 		                                          	<c:forEach var="team" items="${team}" varStatus="status">
-		                                          		<option value="<c:out value='${team.CODE}'/>"><c:out value='${team.NAME}'/> </option>
+		                                          		<option value="<c:out value='${team.CODE}'/>" <c:if test="${team.CODE ==  smartMberManageVO.team}">selected</c:if> ><c:out value='${team.NAME}'/> </option>
 		                                          	</c:forEach>
 		                                          </select>
 	                                          	</label>
@@ -183,17 +183,15 @@ $(document).on("keyup", ".phoneNumber", function() {
                                             	<label for="useYn">사용여부</label>
                                                 <span class="req">필수</span>
                                             </td>
-                                            <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
-                                                <label for="rdo1" class="mr30 <c:if test="${SmartMbermanageVO.useYn == 'Y'}"> on</c:if>">
-                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" <c:if test="${SmartMberManageVO.useYn == 'Y'}"> checked="checked"</c:if>>
+                                            <td class="rdoSet">
+                                                <label for="rdo1" class="mr30 <c:if test="${map.USE_YN eq 'Y'}"> on</c:if>">
+                                                    <input type="radio" id="rdo1" name="useYn" class="radio2" value="Y" <c:if test="${smartMberManageVO.useYn == 'Y'}"> checked="checked"</c:if>>
                                                     사용
                                                 </label>
-                                                <label for="rdo2" class="<c:if test="${SmartMbermanageVO.useYn == 'N'}"> on</c:if>">
-                                                    <input type="radio" id="rdo2" name="useYn" class="radio2" value="N" <c:if test="${SmartMberManageVO.useYn == 'N'}"> checked="checked"</c:if>>
+                                                <label for="rdo2" class="<c:if test="${map.USE_YN eq 'N'}"> on</c:if>">
+                                                    <input type="radio" id="rdo2" name="useYn" class="radio2" value="N" <c:if test="${smartMberManageVO.useYn == 'N'}"> checked="checked"</c:if>>
                                                     미사용
                                                 </label>
-                                                
-                                                <br/><form:errors path="useYn" />
                                             </td>
                                         </tr> 
                                         <tr>
@@ -201,8 +199,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <label for="telNo">전화번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="telNo" id="telNo" class="f_txt w_350 phoneNumber" maxlength="15" />
-                                                <form:errors path="telNo" cssClass="error" />
+                                                <input name="telNo" id="telNo" class="f_txt w_350 phoneNumber" maxlength="15" value="<c:out value='${smartMberManageVO.telNo}'/>" />
                                             </td>
                                         </tr>
                                         <%-- <tr>
@@ -219,8 +216,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <label for="moblphonNo">핸드폰번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="moblphonNo" id="moblphonNo" class="f_txt w_350 phoneNumber" title="핸드폰번호" maxlength="15" />
-                                                <form:errors path="moblphonNo" cssClass="error" />
+                                                <input name="moblphonNo" id="moblphonNo" class="f_txt w_350 phoneNumber" title="핸드폰번호" maxlength="15" value="<c:out value='${smartMberManageVO.moblphonNo}'/>"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -228,8 +224,7 @@ $(document).on("keyup", ".phoneNumber", function() {
                                                 <label for="mberEmailAdres">이메일주소</label>
                                             </td>
                                             <td>
-                                                <form:input path="mberEmailAdres" id="mberEmailAdres" class="f_txt w_350" maxlength="50" />
-                                                <form:errors path="mberEmailAdres" cssClass="error" />
+                                                <input name="mberEmailAdres" id="mberEmailAdres" class="f_txt w_350" maxlength="50" value="<c:out value='${smartMberManageVO.mberEmailAdres}'/>"/>
                                             </td>
                                         </tr>
                                        
@@ -252,8 +247,8 @@ $(document).on("keyup", ".phoneNumber", function() {
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
                                 
-                                <form:hidden path="password" />
-                                </form:form>
+                                <input type="hidden" name="password" />
+                                </form>
                                 
                                 <!--// 게시판 -->
                             </div>

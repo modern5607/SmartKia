@@ -1,5 +1,6 @@
 package egovframework.smart.customer.web;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,10 @@ import egovframework.let.utl.sim.service.EgovFileScrty;
 import egovframework.smart.customer.service.CusMberDefaultVO;
 import egovframework.smart.customer.service.CusMberManageService;
 import egovframework.smart.customer.service.CusMberManageVO;
+import egovframework.smart.mdm.mber.service.SmartMberManageVO;
+import egovframework.smart.mdm.service.SmartCommonCodeVO;
 import egovframework.smart.mdm.service.SmartLeadTimeVO;
+import egovframework.smart.mdm.service.SmartMdmService;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
@@ -33,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 /**
@@ -54,6 +60,10 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
  */
 @Controller
 public class SmartCusMberManageController {
+
+	
+	@Resource(name = "SmartMdmService")
+	private SmartMdmService smartmdmservice;
 
 	/** mberManageService */
 	@Resource(name = "cusMberManageService")
@@ -92,7 +102,13 @@ public String selectCusMberList(@ModelAttribute("userSearchVO") CusMberDefaultVO
 		if (menuNo != null && !menuNo.equals("")) {
 			request.getSession().setAttribute("menuNo", menuNo);
 		}
-		
+		//등록,수정시 메세지
+		if (request != null) 
+		{
+			Map<String,?> flashmap = RequestContextUtils.getInputFlashMap(request);
+			if(flashmap != null)
+				model.addAttribute("msg",flashmap.get("msg"));
+		}
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
     	if(!isAuthenticated) {
@@ -150,71 +166,97 @@ public String insertMberView(@ModelAttribute("userSearchVO") CusMberDefaultVO us
 		return "customer/SmartCusMberInsert";
 	}
 
-	/**
-	 * 일반회원등록처리후 목록화면으로 이동한다.
-	 * 
-	 * @param mberManageVO  일반회원등록정보
-	 * @param bindingResult 입력값검증용 bindingResult
-	 * @param model         화면모델
-	 * @return forward:/uss/umt/mber/EgovMberManage.do
-	 * @throws Exception
-	 */
-	
+
 @RequestMapping("/customer/SmartCusMberInsert.do") public String 
 insertMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,
-	  BindingResult bindingResult, Model model) throws Exception {
+	  BindingResult bindingResult, Model model, RedirectAttributes attr) throws Exception {
 	  
+	System.out.println("cusMberManageVO :" +cusMberManageVO);
+	
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-	    if(!isAuthenticated) {model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-	        	return "uat/uia/EgovLoginUsr";
+	    if(!isAuthenticated) {
+	    	model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+	        return "uat/uia/EgovLoginUsr";
 	    }
 	    
-	    
-	 	cusMberManageService.insertMber(cusMberManageVO);
-	 	System.out.println(cusMberManageVO);
-	 	model.addAttribute("resultMsg", "success.common.insert");
-	  return "forward:/customer/SmartCusMberManage.do"; }
+
+	 int result = cusMberManageService.insertMber(cusMberManageVO);
+	 //System.out.println(cusMberManageVO);
+//	 if(result==1)
+//	 {
+//		 model.addAttribute("resultMsg", "success.common.insert");
+//		 
+//	 }
+//	 else
+//	 {
+//		 model.addAttribute("resultMsg", "fail.common.insert");
+//	 }
+	if (result == 0) // insert실패
+	{
+			attr.addFlashAttribute("msg","등록에 실패하였습니다.");
+	} else {
+			attr.addFlashAttribute("msg","성공적으로 등록 되었습니다.");
+	}
+return "redirect:/customer/SmartCusMberManage.do";
+}
 	  
-	 /**
-		 * 일반회원정보 수정을 위해 일반회원정보를 상세조회한다.
-		 * 
-		 * @param mberId       상세조회대상 일반회원아이디
-		 * @param userSearchVO 검색조건
-		 * @param model        화면모델
-		 * @return cmm/uss/umt/EgovMberSelectUpdt
-		 * @throws Exception
-		 */
 	
 @RequestMapping("/customer/SmartCusMberSelectUpdtView.do") 
-public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAttribute("searchVO") CusMberDefaultVO userSearchVO, Model model)
+public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAttribute("userSearchVO") CusMberDefaultVO userSearchVO, Model model)
 	  throws Exception {
-	  // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-		  Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		  if(!isAuthenticated) {model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-		        	return "uat/uia/EgovLoginUsr";
-		  }
-	  
-	  CusMberManageVO cusmberManageVO = cusMberManageService.selectMber(cusId);
-	  model.addAttribute("cusMberManageVO", cusmberManageVO);
-	  model.addAttribute("userSearchVO", userSearchVO);
-	  
-	  return "/customer/SmartCusMberSelectUpdt"; }
-	  
-	 /**
-		 * 일반회원정보 수정후 목록조회 화면으로 이동한다.
-		 * 
-		 * @param mberManageVO  일반회원수정정보
-		 * @param bindingResult 입력값검증용 bindingResult
-		 * @param model         화면모델
-		 * @return forward:/uss/umt/mber/EgovMberManage.do
-		 * @throws Exception
-		 */
 	
+	// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if(!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+	    	return "uat/uia/EgovLoginUsr";
+		}
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+
+		CusMberManageVO cusMberManageVO = cusMberManageService.selectMber(cusId);
+		model.addAttribute("cusMberManageVO", cusMberManageVO);
+		model.addAttribute("team",map.get("info"));
+		System.out.println(userSearchVO);
+		System.out.println(cusMberManageVO);
+//		System.out.println(cusId);
+		return "/customer/SmartCusMberSelectUpdt";
+	  }
+
+//@RequestMapping("/customer/SmartCusMberSelectUpdtView.do")
+//public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAttribute("cusMberDefaultVO") CusMberDefaultVO cusMberDefaultVO, Model model) throws Exception {
+//
+//	// 미인증 사용자에 대한 보안처리
+//	Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+//	if(!isAuthenticated) {
+//		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+//    	return "uat/uia/EgovLoginUsr";
+//	}
+//
+//
+//	CusMberManageVO selectMber = cusMberManageService.selectMber(cusId);
+//	model.addAttribute("cusMberManageVO", selectMber);
+//	model.addAttribute("cusMberDefaultVO", cusMberDefaultVO);
+////	model.addAttribute("team",map.get("info"));
+//	System.out.println(selectMber);
+//	System.out.println(cusMberDefaultVO);
+////	System.out.println("team :"+map.get("info"));
+//	return "/customer/SmartCusMberSelectUpdt"; 
+//}
+//	
 	  @RequestMapping("/customer/SmartCusMberSelectUpdt.do") public String
 	  updateMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,
-	  BindingResult bindingResult, Model model) throws Exception {
-	  
+	  BindingResult bindingResult, Model model,HttpServletResponse response, RedirectAttributes attr, @RequestParam Map<String, Object> commandMap) throws Exception {
+		  response.setContentType("text/html; charset=euc-kr");
+			PrintWriter out = response.getWriter();
+			String oldCusNm = (String) commandMap.get("oldCusNm");
+			String newCusNm = (String) commandMap.get("newCusNm");
+			
+			cusMberManageVO.setCusNm(newCusNm);
+			cusMberManageVO.setOldCusNm(oldCusNm);
+			System.out.println(cusMberManageVO);
+		int result = cusMberManageService.updateMber(cusMberManageVO);
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if(!isAuthenticated) {model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
@@ -222,252 +264,49 @@ public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAtt
 		}
 	  
 	  cusMberManageService.updateMber(cusMberManageVO); //Exception 없이 진행시 수정성공메시지
-	  model.addAttribute("resultMsg", "success.common.update"); return
-	  "forward:/customer/SmartCusMberManage"; }
+	  model.addAttribute("resultMsg", "success.common.update");
+	  if (result == 0) // insert실패
+		{
+			attr.addFlashAttribute("msg","등록에 실패하였습니다.");
+		} else {
+			attr.addFlashAttribute("msg","성공적으로 등록 되었습니다.");
+		}
+	  return "redirect:/customer/SmartCusMberManage.do";
+	  }
 
-  
-	 /**
-		 * 일반회원정보삭제후 목록조회 화면으로 이동한다.
-		 * 
-		 * @param checkedIdForDel 삭제대상 아이디 정보
-		 * @param userSearchVO    검색조건정보
-		 * @param model           화면모델
-		 * @return forward:/uss/umt/mber/EgovMberManage.do
-		 * @throws Exception
-		 */
-	/*
-	 * @RequestMapping("/uss/umt/mber/EgovMberDelete.do") public String
-	 * deleteMber(@RequestParam("checkedIdForDel") String
-	 * checkedIdForDel, @ModelAttribute("searchVO") UserDefaultVO userSearchVO,
-	 * Model model) throws Exception {
-	 * 
-	 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-	 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-	 * model.addAttribute("message",
-	 * egovMessageSource.getMessage("fail.common.login")); return
-	 * "uat/uia/EgovLoginUsr"; }
-	 * 
-	 * mberManageService.deleteMber(checkedIdForDel); //Exception 없이 진행시 삭제성공메시지
-	 * model.addAttribute("resultMsg", "success.common.delete"); return
-	 * "forward:/uss/umt/mber/EgovMberManage.do"; }
-	 * 
-	 *//**
-		 * 일반회원가입신청 등록화면으로 이동한다.
-		 * 
-		 * @param userSearchVO 검색조건
-		 * @param mberManageVO 일반회원가입신청정보
-		 * @param commandMap   파라메터전달용 commandMap
-		 * @param model        화면모델
-		 * @return cmm/uss/umt/EgovMberSbscrb
-		 * @throws Exception
-		 */
-	/*
-	 * @RequestMapping("/uss/umt/cmm/EgovMberSbscrbView.do") public String
-	 * sbscrbMberView(@ModelAttribute("userSearchVO") UserDefaultVO
-	 * userSearchVO, @ModelAttribute("mberManageVO") MberManageVO mberManageVO,
-	 * 
-	 * @RequestParam Map<String, Object> commandMap, Model model) throws Exception {
-	 * 
-	 * // 미인증 사용자에 대한 보안처리
-	 * 
-	 * Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-	 * if(!isAuthenticated) { model.addAttribute("message",
-	 * egovMessageSource.getMessage("fail.common.login")); return
-	 * "uat/uia/EgovLoginUsr"; }
-	 * 
-	 * ComDefaultCodeVO vo = new ComDefaultCodeVO();
-	 * 
-	 * //패스워드힌트목록을 코드정보로부터 조회 vo.setCodeId("COM022");
-	 * model.addAttribute("passwordHint_result",
-	 * cmmUseService.selectCmmCodeDetail(vo));
-	 * 
-	 * //성별구분코드를 코드정보로부터 조회 vo.setCodeId("COM014");
-	 * model.addAttribute("sexdstnCode_result",
-	 * cmmUseService.selectCmmCodeDetail(vo));
-	 * 
-	 * if (!"".equals(commandMap.get("realname"))) { model.addAttribute("mberNm",
-	 * commandMap.get("realname")); //실명인증된 이름 - 주민번호 인증
-	 * model.addAttribute("ihidnum", commandMap.get("ihidnum")); //실명인증된 주민등록번호 -
-	 * 주민번호 인증 } if (!"".equals(commandMap.get("realName"))) {
-	 * model.addAttribute("mberNm", commandMap.get("realName")); //실명인증된 이름 - ipin인증
-	 * }
-	 * 
-	 * mberManageVO.setGroupId("DEFAULT"); mberManageVO.setMberSttus("DEFAULT");
-	 * 
-	 * return "cmm/uss/umt/EgovMberSbscrb"; }
-	 * 
-	 *//**
-		 * 일반회원가입신청등록처리후로그인화면으로 이동한다.
-		 * 
-		 * @param mberManageVO 일반회원가입신청정보
-		 * @return forward:/uat/uia/egovLoginUsr.do
-		 * @throws Exception
-		 */
-	/*
-	 * @RequestMapping("/uss/umt/cmm/EgovMberSbscrb.do") public String
-	 * sbscrbMber(@ModelAttribute("mberManageVO") MberManageVO mberManageVO) throws
-	 * Exception {
-	 * 
-	 * //가입상태 초기화 mberManageVO.setMberSttus("A"); //그룹정보 초기화
-	 * mberManageVO.setGroupId("GROUP_00000000000000"); //기본그룹 //일반회원가입신청 등록시
-	 * 일반회원등록기능을 사용하여 등록한다. mberManageService.insertMber(mberManageVO); return
-	 * "forward:/uat/uia/egovLoginUsr.do"; }
-	 * 
-	 *//**
-		 * 일반회원 약관확인
-		 * 
-		 * @param model 화면모델
-		 * @return cmm/uss/umt/EgovStplatCnfirm
-		 * @throws Exception
-		 */
-	/*
-	 * @RequestMapping("/uss/umt/cmm/EgovStplatCnfirmMber.do") public String
-	 * sbscrbEntrprsMber(Model model) throws Exception {
-	 * 
-	 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-	 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-	 * model.addAttribute("message",
-	 * egovMessageSource.getMessage("fail.common.login")); return
-	 * "uat/uia/EgovLoginUsr"; }
-	 * 
-	 * //일반회원용 약관 아이디 설정 String stplatId = "STPLAT_0000000000001"; //회원가입유형 설정-일반회원
-	 * String sbscrbTy = "USR01"; //약관정보 조회 model.addAttribute("stplatList",
-	 * mberManageService.selectStplat(stplatId)); model.addAttribute("sbscrbTy",
-	 * sbscrbTy); //회원가입유형 포함
-	 * 
-	 * return "cmm/uss/umt/EgovStplatCnfirm"; }
-	 * 
-	 *//**
-		 * @param model        화면모델
-		 * @param commandMap   파라메터전달용 commandMap
-		 * @param userSearchVO 검색조건
-		 * @param mberManageVO 일반회원수정정보(비밀번호)
-		 * @return cmm/uss/umt/EgovMberPasswordUpdt
-		 * @throws Exception
-		 */
-	/*
-	 * @RequestMapping(value = "/uss/umt/mber/EgovMberPasswordUpdt.do") public
-	 * String updatePassword(ModelMap model, @RequestParam Map<String, Object>
-	 * commandMap, @ModelAttribute("searchVO") UserDefaultVO userSearchVO,
-	 * 
-	 * @ModelAttribute("mberManageVO") MberManageVO mberManageVO) throws Exception {
-	 * 
-	 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-	 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-	 * model.addAttribute("message",
-	 * egovMessageSource.getMessage("fail.common.login")); return
-	 * "uat/uia/EgovLoginUsr"; }
-	 * 
-	 * String oldPassword = (String) commandMap.get("oldPassword"); String
-	 * newPassword = (String) commandMap.get("newPassword"); String newPassword2 =
-	 * (String) commandMap.get("newPassword2"); String uniqId = (String)
-	 * commandMap.get("uniqId");
-	 * 
-	 * boolean isCorrectPassword = false; MberManageVO resultVO = new
-	 * MberManageVO(); mberManageVO.setPassword(newPassword);
-	 * mberManageVO.setOldPassword(oldPassword); mberManageVO.setUniqId(uniqId);
-	 * 
-	 * String resultMsg = ""; resultVO =
-	 * mberManageService.selectPassword(mberManageVO); //패스워드 암호화 String encryptPass
-	 * = EgovFileScrty.encryptPassword(oldPassword, mberManageVO.getMberId()); if
-	 * (encryptPass.equals(resultVO.getPassword())) { if
-	 * (newPassword.equals(newPassword2)) { isCorrectPassword = true; } else {
-	 * isCorrectPassword = false; resultMsg = "fail.user.passwordUpdate2"; } } else
-	 * { isCorrectPassword = false; resultMsg = "fail.user.passwordUpdate1"; }
-	 * 
-	 * if (isCorrectPassword) {
-	 * mberManageVO.setPassword(EgovFileScrty.encryptPassword(newPassword,
-	 * mberManageVO.getMberId())); mberManageService.updatePassword(mberManageVO);
-	 * model.addAttribute("mberManageVO", mberManageVO); resultMsg =
-	 * "success.common.update"; } else { model.addAttribute("mberManageVO",
-	 * mberManageVO); } model.addAttribute("userSearchVO", userSearchVO);
-	 * model.addAttribute("resultMsg", resultMsg);
-	 * 
-	 * return "cmm/uss/umt/EgovMberPasswordUpdt"; }
-	 * 
-	 *//**
-		 * 일반회원 암호 수정 화면 이동
-		 * 
-		 * @param model        화면모델
-		 * @param commandMap   파라메터전달용 commandMap
-		 * @param userSearchVO 검색조건
-		 * @param mberManageVO 일반회원수정정보(비밀번호)
-		 * @return cmm/uss/umt/EgovMberPasswordUpdt
-		 * @throws Exception
-		 */
-	/*
-	 * @RequestMapping(value = "/uss/umt/mber/EgovMberPasswordUpdtView.do") public
-	 * String updatePasswordView(ModelMap model, @RequestParam Map<String, Object>
-	 * commandMap, @ModelAttribute("searchVO") UserDefaultVO userSearchVO,
-	 * 
-	 * @ModelAttribute("mberManageVO") MberManageVO mberManageVO) throws Exception {
-	 * 
-	 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-	 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-	 * model.addAttribute("message",
-	 * egovMessageSource.getMessage("fail.common.login")); return
-	 * "uat/uia/EgovLoginUsr"; }
-	 * 
-	 * String userTyForPassword = (String) commandMap.get("userTyForPassword");
-	 * mberManageVO.setUserTy(userTyForPassword);
-	 * 
-	 * model.addAttribute("userSearchVO", userSearchVO);
-	 * model.addAttribute("mberManageVO", mberManageVO); return
-	 * "cmm/uss/umt/EgovMberPasswordUpdt"; }
-	 * 
-	 *//**
 
-//	
-//	  @RequestMapping(value = "/mdm/SmartCheckCusView.do") 
-//	  public String checkCus(ModelMap model) throws Exception {
-//	  
-//		/*
-//		 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
-//		 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
-//		 * model.addAttribute("message",
-//		 * egovMessageSource.getMessage("fail.common.login")); return
-//		 * "uat/uia/EgovLoginUsr"; }
-//		 */
-//	  
-//	  model.addAttribute("checkCus", ""); model.addAttribute("usedCnt", "-1");
-//	  return "/customer/SmartCheckCus"; }
-//	  
-//	/**
-//	 * 입력한 사용자아이디의 중복여부를 체크하여 사용가능여부를 확인
-//	 * @param commandMap 파라메터전달용 commandMap
-//	 * @param model 화면모델
-//	 * @return cmm/uss/umt/EgovIdDplctCnfirm
-//	 * @throws Exception
-//	 */
+
+//	@RequestMapping(value = "mdm/CheckCus.do",method=RequestMethod.POST)
+//	@ResponseBody
+//	public String checkCus(@ModelAttribute("cusMberManageVO") String cusMberManageVO, @RequestParam("autoNo") String autoNo, @RequestParam("cusNm") String cusNm, ModelMap model, HttpServletResponse response) throws Exception {
+//		Map<String,Object> msg = new HashMap<String, Object>();
 //
-//	@RequestMapping(value = "/mdm/SmartCheckCus.do")
-//	public String checkCus(@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+//		System.out.println(msg);
+//		System.out.println(cusNm);
+//		System.out.println(autoNo);
 //
-//		String checkCus = (String) commandMap.get("checkCus");
-//		checkCus = new String(checkCus.getBytes("ISO-8859-1"), "UTF-8");
-//	
-//		if (checkCus == null || checkCus.equals(""))
-//			return "forward:/mdm/SmartCheckCusView.do";
-//	
-//		int usedCnt = cusMberManageService.checkCusDplct(checkCus);
-//		model.addAttribute("usedCnt", usedCnt);
-//		model.addAttribute("checkCus", checkCus);
-//		return "/customer/SmartCheckCus";
+//		int result = cusMberManageService.checkCusDplct(cusNm);
+//		/* response.getWriter().print(result); */
+//		return Integer.toString(result);
 //	}
+@RequestMapping(value = "/mdm/searchKindPopupView.do")
+public String searchKindPopupView(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,ModelMap model) throws Exception {
+	/*
+	 * // 미인증 사용자에 대한 보안처리 Boolean isAuthenticated =
+	 * EgovUserDetailsHelper.isAuthenticated(); if(!isAuthenticated) {
+	 * model.addAttribute("message",
+	 * egovMessageSource.getMessage("fail.common.login")); return
+	 * "uat/uia/EgovLoginUsr"; }
+	 */
+	SmartCommonCodeVO vo = new SmartCommonCodeVO();
+	vo.setGroupcode("KIND");
+	Map<String,Object> map =  smartmdmservice.SelectCommonCode(vo);
+	model.addAttribute("kind",map.get("info"));
 
+	System.out.println("map : "+map.get("info"));
 
-	@RequestMapping(value = "mdm/CheckCus.do",method=RequestMethod.POST)
-	@ResponseBody
-	public String checkCus(@ModelAttribute("cusMberManageVO") String cusMberManageVO, @RequestParam("autoNo") String autoNo, @RequestParam("cusNm") String cusNm, ModelMap model, HttpServletResponse response) throws Exception {
-		Map<String,Object> msg = new HashMap<String, Object>();
-
-		System.out.println(msg);
-		System.out.println(cusNm);
-		System.out.println(autoNo);
-
-		int result = cusMberManageService.checkCusDplct(cusNm);
-		/* response.getWriter().print(result); */
-		return Integer.toString(result);
-	}
-
+	System.out.println(vo);
+	System.out.println(cusMberManageVO);
+	return "customer/searchKindPopupView";
+}
 }

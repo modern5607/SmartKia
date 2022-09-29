@@ -1,10 +1,13 @@
 package egovframework.smart.mdm.mber.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import egovframework.smart.mdm.mber.service.SmartMberManageService;
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
 import egovframework.smart.mdm.mber.service.UserDefaultVO;
+import egovframework.smart.mdm.service.SmartCommonCodeVO;
 import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 
@@ -163,5 +166,5 @@ public class SmartMberManageServiceImpl extends EgovAbstractServiceImpl implemen
 	public void deleteAuthor(SmartMberManageVO smartMberManageVO) throws Exception {
 		smartMberManageDAO.deleteAuthor(smartMberManageVO);
 	}
-	
+
 }

@@ -7,6 +7,8 @@ import egovframework.smart.customer.service.CusMberManageService;
 import java.util.HashMap;
 import java.util.Map;
 import egovframework.smart.customer.service.CusMberManageVO;
+import egovframework.smart.mdm.mber.service.SmartMberManageVO;
+import egovframework.smart.mdm.service.SmartCommonCodeVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -49,21 +51,31 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 	@Override
 	public int insertMber(CusMberManageVO cusMberManageVO) throws Exception  {
 		
+		int result=0;
+		List<Object> checkresult = cusMberManageDAO.IsexistMber(cusMberManageVO);
+		if(checkresult.size() > 0)
+		{
+			//중복
+			result= 0;//실패
+		}
+		else //중복 안됨(성공)
+		{
+			String cusId = idgenService.getNextStringId();
+			cusMberManageVO.setCusId(cusId);
+			
+			result = cusMberManageDAO.insertMber(cusMberManageVO);
+		}
 		//String year = getBoard_sdate().replace("-", "").substring(0, 6);
-		String cusId = idgenService.getNextStringId();
-		cusMberManageVO.setCusId(cusId);
 		
-		int result = cusMberManageDAO.insertMber(cusMberManageVO);
 		return result;
 	}
-
+	
 	@Override
 	public CusMberManageVO selectMber(String cusId) {
 		CusMberManageVO cusMberManageVO = cusMberManageDAO.selectMber(cusId);
 		return cusMberManageVO;
 	}
-
-
+	
 	/*
 	  @Override public List<CusMberManageVO> selectMberList(CusMberDefaultVO  userSearchVO) { 
 		  return cusMberManageDAO.selectMberList(userSearchVO);
@@ -87,11 +99,26 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 
 
 	@Override
-	public void updateMber(CusMberManageVO cusMberManageVO) throws Exception {
-		//패스워드 암호화
-		String pass = EgovFileScrty.encryptPassword(cusMberManageVO.getPassword(), cusMberManageVO.getMberId());
-		cusMberManageVO.setPassword(pass);
-		cusMberManageDAO.updateMber(cusMberManageVO);
+	public int updateMber(CusMberManageVO cusMberManageVO) throws Exception {
+		
+		int result=0;
+		List<Object> checkresult = cusMberManageDAO.IsexistMber(cusMberManageVO);
+		if(cusMberManageVO.getCusNm().equals(cusMberManageVO.getOldCusNm())) 
+		{
+			result = cusMberManageDAO.updateMber(cusMberManageVO);
+		} 
+		else 
+		{
+			if(checkresult.size() > 0)
+			result= 0;//실패
+		
+			else //중복 안됨(성공)
+			{
+			result = cusMberManageDAO.updateMber(cusMberManageVO);
+			}
+		}
+		
+		return result;
 	}
 
 

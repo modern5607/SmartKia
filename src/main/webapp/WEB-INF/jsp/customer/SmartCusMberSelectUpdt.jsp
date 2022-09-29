@@ -43,28 +43,76 @@ function fnListPage(){
     document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberManage.do'/>";
     document.cusMberManageVO.submit();
 }
-/* function fnDeleteMber(checkedIds) {
+function fnDeleteMber(checkedIds) {
     if(confirm('<spring:message code="common.delete.msg" />')) {
         document.cusMberManageVO.checkedIdForDel.value=checkedIds;
         document.cusMberManageVO.action = "<c:url value='/uss/umt/mber/EgovMberDelete.do'/>";
         document.cusMberManageVO.submit(); 
     }
-} */
-function fnUpdate(){
-	document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberSelectUpdt.do'/>";
-    if(validateMberManageVO(document.cusMberManageVO)){
-        document.cusMberManageVO.submit();
-    }
 }
 
+
+function showModalDialogCallback(retVal) {
+	if(retVal) {
+        document.cusMberManageVO.autoKind.value = retVal;
+        document.cusMberManageVO.check_view.value = retVal;
+    }
+	fn_egov_modal_remove();
 }
+function fnUpdate(){
+	
+		
+		//고객명 입력 여부
+		if($("input[name=newCusNm]").val()=="")
+        {
+            alert("고객명을 입력해주세요");
+            $("input[name=newCusNm]").focus();
+            return;
+        }
+        if($("input[name=autoNo]").val()=="")
+        {
+            alert("차량번호를 입력해 주세요");
+            $("input[name=autoNo]").focus();
+            return;
+        }
+        if($("input[name=cusTel]").val()=="")
+        {
+            alert("연락처를 입력해 주세요");
+            $("input[name=cusTel]").focus();
+            return;
+        }
+		 document.cusMberManageVO.submit(); 
+
+}
+/* function fnUpdate(){
+	document.cusMberManageVO.action = "<c:url value='/customer/SmartCusMberSelectUpdt.do'/>";
+    document.cusMberManageVO.submit();
+    
+} */
 /**********************************************************
  * 모달 종료 버튼
  ******************************************************** */
 function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
-
+function fnKindCheck(){
+    var url = "<c:url value='/mdm/searchKindPopupView.do'/>?";
+    
+    // var varParam = new Object();
+    // var checkKind = document.CusMberManageVO.autoKind.value;
+    // var varParam = "checkKind="+checkKind;
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px;" src="' + "<c:url value='/mdm/searchKindPopupView.do'/>?" +'" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 600,
+        height: 400
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+}
 </script>
 </head>
 <body>
@@ -93,25 +141,15 @@ function fn_egov_modal_remove() {
                                         <li><a class="home" href="">Home</a></li>
                                         <li><a href="">포털시스템관리</a></li>
                                         <li><a href="">사용자관리</a></li>
-                                        <li>고객관리</li>
+                                        <li>이용고객관리</li>
                                     </ul>
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="cusMberManageVO" name="cusMberManageVO" method="post" >
+								<form name="cusMberManageVO" method="post" action="${pageContext.request.contextPath}/customer/SmartCusMberSelectUpdt.do">
 
-                                <h1 class="tit_1">포털시스템관리</h1>
-
-                                <p class="txt_1">포털시스템의 사용자 및 권한에 대한 제반사항을 관리합니다.</p>
-
-                                <h2 class="tit_2">사용자관리</h2>
-
-                                <h3 class="tit_3">회원관리</h3>
-
-                                <h1 class="tit_1">사용자관리</h1>
-
-                                <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
-
+ 								<h1 class="tit_1" style="padding-bottom:20px">이용고객정보 수정페이지</h1>
+ 								
                                 <div class="board_view2">
                                     <table summary="고객 등록 정보">
                                         <colgroup>
@@ -124,20 +162,24 @@ function fn_egov_modal_remove() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <!-- <input name="autoNo" id="autoNo" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="autoNo" id="autoNo" class="f_txt w_350" title="차량번호" maxlength="100" />
-                                                <form:errors path="autoNo" cssClass="error" />              
+                                            	<span class="f_search2">
+                                                	<input type="text" readonly name="autoNo" id="autoNo" class="f_txt w_350" title="차량번호" maxlength="100" value="<c:out value='${cusMberManageVO.autoNo}'/>"/>
+                                                	<input type="hidden" name="cusId" value="<c:out value='${cusMberManageVO.cusId}'/>" />
+												</span>
                                             </td>
+                                            
                                         </tr>
                                         <tr>
                                             <td class="lb">
                                                 <label for="autoKind">차량종류</label>
-                                                <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <!-- <input name="autoKind" id="autoKind" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="autoKind" id="autoKind" class="f_txt w_350" title="차량종류" maxlength="100" />
-                                                <form:errors path="autoKind" cssClass="error" />
+                                                <span class="f_search2 w_350">
+                                                    <input id="check_view" type="text" maxlength="20" disabled="disabled" name="check_view" readonly value="<c:out value='${cusMberManageVO.autoKind}'/>">
+                                                	<input name="autoKind" type="hidden" readonly="true" maxlength="20" value="<c:out value='${cusMberManageVO.autoKind}'/>"/>
+                                                	<button type="button" class="btn" onclick="fnKindCheck()"></button>
+                                                </span>
+                                                <span class="f_txt_inner ml15">(차종 검색)</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -146,9 +188,8 @@ function fn_egov_modal_remove() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <!-- <input name="cusNm" id="cusNm" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="cusNm" id="cusNm" class="f_txt w_350" title="고객이름" maxlength="100" />
-                                                <form:errors path="cusNm" cssClass="error" />
+                                                <input name="newCusNm" id="newCusNm" class="f_txt w_350" title="고객이름" maxlength="100" value="<c:out value='${cusMberManageVO.cusNm}'/>"/>
+                                                <input type="hidden" name="oldCusNm" value="<c:out value='${cusMberManageVO.cusNm}'/>" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -157,20 +198,23 @@ function fn_egov_modal_remove() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <!-- <input name="cusTel" id="cusTel" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="cusTel" id="cusTel" class="f_txt w_350" title="연락처" maxlength="100" />
-                                                <form:errors path="cusTel" cssClass="error" />
+                                                <input name="cusTel" id="cusTel" class="f_txt w_350" title="연락처" maxlength="100" value="<c:out value='${cusMberManageVO.cusTel}'/>"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for=note>총주행거리</label>
+                                            </td>
+                                            <td>
+                                                <input name="totalKm" id="totalKm" class="f_txt w_350" title="총주행거리" maxlength="100" value="<c:out value='${cusMberManageVO.totalKm}'/>"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="lb">
                                                 <label for=note>비고</label>
-                                                <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->
-                                                <form:input path="note" id="note" class="f_txt w_350" title="비고" maxlength="100" />
-                                                <form:errors path="note" cssClass="error" />
+                                                <input name="note" id="note" class="f_txt w_350" title="비고" maxlength="100" value="<c:out value='${cusMberManageVO.note}'/>"/>
                                             </td>
                                         </tr>
 
@@ -183,13 +227,13 @@ function fn_egov_modal_remove() {
                                         <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.CusMberManageVO.reset();"><spring:message code="button.reset" /></a><!-- 취소 -->
                                     </div>
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnInsert(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnUpdate(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
                                         <a href="<c:url value='/customer/SmartCusMberManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
                                 
-                                </form:form>
+                                </form>
                                 
                             </div>
                         </div>

@@ -119,7 +119,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
     <select id="selectMber_S" resultType="egovframework.smart.mdm.mber.service.SmartMberManageVO">
         
             SELECT
-                ESNTL_ID          uniqId,
+                ESNTL_ID         uniqId,
                 'USR01'          userTy,
                 MBER_ID          mberId,
                 MBER_NM          mberNm,
@@ -131,6 +131,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
                 MBER_FXNUM       mberFxnum,
                 MBER_EMAIL_ADRES mberEmailAdres,
                 TEAM			 team,
+                USE_YN			 useYn,
                 SBSCRB_DE        sbscrbDe
             FROM LETTNGNRLMBER
             WHERE ESNTL_ID=#{uniqId}
@@ -140,11 +141,11 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
     <update id="updateMber_S">
         
             UPDATE LETTNGNRLMBER 
-            SET MBER_ID          = #{mberId},
+            SET 
                 MBER_NM          = #{mberNm},
                 IHIDNUM          = #{ihidnum},
                 TELNO            = #{telNo},
-                USE_YN			 =#{useYn},
+                USE_YN			 = #{useYn},
                 <!-- MBER_STTUS       = #{mberSttus}, -->
                 MBER_STTUS       = 'P',
                 MBTLNUM      	 = #{moblphonNo},
