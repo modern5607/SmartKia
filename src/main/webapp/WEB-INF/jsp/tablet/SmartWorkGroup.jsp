@@ -24,73 +24,64 @@
 <script type="text/javascript">
 
 
-function Complete(taskstat,seq)
+function Complete(seq)
 {	
-	
-	if (taskstat == "CB-perfect" ){
-		alert("완료처리된 항목입니다.");
-		return;
-	}
-	else{
 		var $dialog = $('<div id="modalPan"></div>').html(
 				'<iframe style="border: 0px;" src="'
-						+ "<c:url value='/tablet/CompletePOP.do?taskstat="+taskstat+"&seq="+seq+"'/>"
+						+ "<c:url value='/tablet/CompletePOP.do?seq="+seq+"'/>"
 						+ '" width="100%" height="100%"></iframe>')
 				.dialog({
 					autoOpen : false,
 					modal : true,
-					width : 600,
-					height : 400
+					width : 900,
+					height : 700
 				});
 			$(".ui-dialog-titlebar").hide();
 			$dialog.dialog('open');
-	}
+	
 }
 
+function reload(){
+	location.reload();
+}
+
+function ReceiveCansel(seq){
+	
+	var $dialog = $('<div id="modalPan"></div>').html(
+			'<iframe style="border: 0px;" src="'
+					+ "<c:url value='/tablet/ReceiveCancelPOP.do?seq="+seq+"'/>"
+					+ '" width="100%" height="100%"></iframe>')
+			.dialog({
+				autoOpen : false,
+				modal : true,
+				width : 600,
+				height : 400
+			});
+		$(".ui-dialog-titlebar").hide();
+		$dialog.dialog('open');
+}
+function CancelReceive(seq){
+	document.SmartList.seq.value = seq;
+	
+	document.SmartList.action = "<c:url value='/tablet/ReceiveCancel.do'/>";
+	document.SmartList.submit();
+}
 function fnCheckId(){
 	
     document.SmartList.submit();
     return;
 }
-
-
-$( document ).ready( function() {
-$('input[name=newkilro]').change(function(){
-	console.log($(this).val());
-	var drivcekilro_select = $(this).parent().parent().find("input[id=drivekilo]");
-	console.log(drivcekilro_select);
-	var prevkilo =$("input[name=kilro]").val();
-	var newkilro = $(this).val();
-	
-	if(prevkilo > newkilro)
-		{
-			alert("더 작을수 없음");
-			$(this).val(prevkilo);
-		
-			$(this).focus();
-			drivcekilro_select.val(0);
-			return;
-		}
-	var drivekilo = newkilro- prevkilo;
-	drivcekilro_select.val(drivekilo);
-    $("#updatenewkilro").val(drivekilo);
-});
-} );
- 
 </script>
-
 
 <head>
 </head>
 <body>
 	<!-- Skip navigation -->
 	<a href="#contents" class="skip_navi">본문 바로가기</a>
-
 	<div class="wrap">
 		<!-- header start -->
 		<c:import url="/sym/mms/EgovHeader.do" />
 		<!-- //header end -->
-
 		<div class="container">
 			<div class="sub_layout">
 				<div class="sub_in">
@@ -98,7 +89,6 @@ $('input[name=newkilro]').change(function(){
 						<!-- Left menu -->
 						<!-- <c:import url="/sym/mms/EgovMenuLeft.do" /> -->
 						<!--// Left menu -->
-
 						<div class="content_wrap">
 							<div id="contents" class="content">
 								<!-- Location -->
@@ -118,36 +108,28 @@ $('input[name=newkilro]').change(function(){
 									<input type="hidden" name="remark" id="remark" >
 									<input type="hidden" name="position" id="position" >
 									<input type="hidden" name="taskstat" id="taskstat" >
-
-									<!--<h1 class="tit_1"> 입고처리사항</h1>
-									  <p class="txt_1">작업반,예상완료시간 클릭시 이관 또는 시간변경 가능합니다.</p> -->
 									<div class="board_list_top" style="margin-top: 20px;">
 										<div class="left_col">
 										<!-- <h1 class="txt_1">A반 입고처리 사항.</h1> -->
 										</div>
 										<div class="right_col">
                                             <label class="f_select w_200" for="autoroom">
-														<select name="autoroom" id="autoroom">
+													<select name="autoroom" id="autoroom">
 														<option value="all">전체</option>
-															<c:forEach var="i" items="${autorooms}" varStatus="status">
-                                                               <option value="<c:out value='${i.CODE}'/>" ${searchVO.autoroom ==i.CODE ? 'selected' : ((logininfo[0].TEAM == i.CODE && searchVO.autoroom =='') ? 'selected' : '')} >${i.NAME}</option> 
-                                                             </c:forEach>
-														</select>
+														<c:forEach var="i" items="${autorooms}" varStatus="status">
+                                                            <option value="<c:out value='${i.CODE}'/>" ${searchVO.autoroom ==i.CODE ? 'selected' : ((logininfo[0].TEAM == i.CODE && searchVO.autoroom =='') ? 'selected' : '')} >${i.NAME}</option> 
+                                                        </c:forEach>
+													</select>
 											</label>
-											<!-- a href="#"onclick="ReceiveView(); return false;" class="btn btn_blue_46 w_150" >입고처리</a> --> 
 											<a href="#" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
-											<!--　등록 -->
 										</div>
 									</div>
 									<!--// 검색조건 -->
-
 									<div class="board_list">
 										<table>
 											<caption>게시판목록</caption>
 											<colgroup>
 												<col style="width: 50px;">
-												<col style="width: 100px;">
-												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
@@ -170,8 +152,6 @@ $('input[name=newkilro]').change(function(){
 													<th scope="col">수리내용</th>
 													<th scope="col">작업반</th>
 													<th scope="col">예상완료시간</th>
-													<th scope="col">총주행거리</th>
-													<th scope="col">운행거리</th>
 													<th scope="col">작업상태</th>
 													<th scope="col">비고</th>
 												</tr>
@@ -179,7 +159,7 @@ $('input[name=newkilro]').change(function(){
 											<tbody>
 												<c:if test="${fn:length(resultList) == 0}">
 													<tr>
-														<td colspan="12"><spring:message
+														<td colspan="10"><spring:message
 																code="common.nodata.msg" /></td>
 													</tr>
 												</c:if>
@@ -195,12 +175,8 @@ $('input[name=newkilro]').change(function(){
 														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
 														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
 														<td><c:out value="${result.POSITION_NAME}" /></td>
-														<td><c:out value="${result.ESTIME}" /></td>
-														<td><input class="f_txt2 w_150" type="number" name="newkilro" value="${result.KILRO_TOTAL}" id="newkilro_">km
-															<input type="hidden" name="kilro" value="<c:out value='${result.KILRO_TOTAL}'/>" />
-														</td>
-														<td><input class="f_txt2 w_150"type="text" id="drivekilo" readonly value="<c:out value='${result.KILRO_NOW}'/>"/>km</td>
-														<td><a href="#" style="text-decoration: underline;" onclick="Complete('${result.TASKSTAT}','${result.TAKESEQ}')"><c:out value="${result.TASKSTAT_NAME}" /></a>
+														<td><c:out value="${result.ESTIME1}" /></td>
+														<td><a href="#" style="text-decoration: underline;" onclick="Complete('${result.TAKESEQ}')"><c:out value="${result.TASKSTAT_NAME}" /></a>
 														<td><a href="#LINK" class="btn btn_blue_30 w_100" onclick="ReceiveCansel('<c:out value="${result.TAKESEQ}" />'); return false;">입고취소</a></td>
 													</tr>
 												</c:forEach>
@@ -224,7 +200,6 @@ $('input[name=newkilro]').change(function(){
 				</div>
 			</div>
 		</div>
-
 		<!-- footer 시작 -->
 		<c:import url="/sym/mms/EgovFooter.do" />
 		<!-- //footer 끝 -->

@@ -20,33 +20,23 @@
 <link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
 
 <script type="text/javascript"
-	src="<c:url value='/js/showModalDialogCallee.js'/>"></script>
+src="<c:url value='/js/showModalDialogCallee.js'/>"></script>
 <script type="text/javaScript" language="javascript">
-	
+
 function ReceiveCancel() {
 	var seq = $("#seq").val();
 	parent.CancelReceive(seq);
 	fn_egov_cancel_popup();
 }
+function fn_egov_cancel_popup() {
+	parent.fn_egov_modal_remove();
+}
 
-	/* ********************************************************
-	 * 취소처리
-	 ******************************************************** */
-	function fn_egov_cancel_popup() {
-
-		parent.fn_egov_modal_remove();
-	}
-
-	
 </script>
 </head>
 <body>
-
-	<!-- 아이디중복확인 팝업 -->
 	<div class="popup POP_DUPID_CONF" style="background-color: white;">
-
 		<form name="checkForm" action="<c:url value='/tablet/ReceiveCancel.do'/>">
-
 			<div class="pop_inner">
 				<div class="pop_header">
 					<h1>입고 취소</h1>
@@ -54,11 +44,8 @@ function ReceiveCancel() {
 						onclick="fn_egov_cancel_popup(); return false;">닫기</button>
 					<input type="hidden" name="seq" id="seq" value ="${seq}" >
 				</div>
-
 				<div class="pop_container">
-					<p class="result">
-					  접수번호 <c:out value="${seq}" /> 의 입고를 취소하시겠습니까?
-					</p>
+					<p class="result"> 접수번호 <c:out value="${seq}" /> 의 입고를 취소하시겠습니까?</p>
 					<div class="btn_area al_c pt20">
 						<a href="#LINK" class="btn btn_blue_46 w_100"
 							onclick="ReceiveCancel(); return false;">예</a>
@@ -67,11 +54,7 @@ function ReceiveCancel() {
 					</div>
 				</div>
 			</div>
-
 		</form>
-
 	</div>
-	<!--// 아이디중복확인 팝업 -->
-
 </body>
 </html>

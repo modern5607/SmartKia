@@ -16,6 +16,7 @@
        			B.KILRO_TOTAL,
        			A.KILRO_NOW,
        			ESTIME, 
+       			TO_CHAR(TO_DATE(A.ESTIME,'YYYY-MM-DD HH24:MI:SS'),'HH24:MI') AS ESTIME1,
        			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
        			A.TASKSTAT,
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
@@ -68,14 +69,6 @@
 	</select>
 	
 	
-		<select id="checkstatus" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		
-    	SELECT TAKESEQ,
-			TASKSTAT
-      FROM CAR_TAKEREPAIR 
-      WHERE TAKESEQ = #{seq} AND TASKSTAT = #{taskstat}
-	</select>
-	
 	<update id="updatestatus" parameterType="java.util.HashMap">
 		UPDATE CAR_TAKEREPAIR
 		SET
@@ -109,21 +102,6 @@
 			</if>
 			
 	</select>
-	<insert id="insertlog" parameterType="java.util.HashMap">
-		INSERT INTO CAR_TRANSFERPROC
-        (SEQ,TASKSEQ,TRANS_EVENT,TRANS_DATE,SOURCE_POSITION,TARGET_POSITION,NOTE)
-        VALUES ( SIRA('CAR_TRANSFERPROC', 'SEQ'),#{seq},'Income',SYSDATE,#{position},#{room},#{remark})    
-	</insert>
-	
-	<update id="Transfergroup" parameterType="java.util.HashMap">
-		UPDATE CAR_TAKEREPAIR
-		SET
-			POSITION = #{room},
-			NOTE = #{remark}
-			
-		WHERE TAKESEQ = #{seq}
-	</update>
-	
 	<select id="detailList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
 		
     	SELECT TAKESEQ,
@@ -137,7 +115,7 @@
        			A.POSITION,
        			B.KILRO_TOTAL,
        			A.KILRO_NOW,
-       			ESTIME, 
+       			TO_CHAR(TO_DATE(A.ESTIME,'YYYY-MM-DD HH24:MI:SS'),'HH24:MI') AS ESTIME,
        			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
        			A.TASKSTAT,
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
@@ -160,8 +138,8 @@
 			<if test="edate != '' and sdate == '' ">
 			AND #{edate}>= TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD') 
 			</if>
-			<if test="searchteam != ''">
-			AND A.POSITION LIKE '%' || #{searchteam} || '%'
+			<if test="autoroom != 'all'">
+			AND A.POSITION = #{autoroom} 
 			</if>
 	</select>
 	
@@ -184,5 +162,25 @@
 			UPDATE_ID = #{loginid},
 			UPDATE_DATE = SYSDATE
 		WHERE  TAKESEQ  = #{seq}
+	</update>
+	
+	<update id="cancelreceive" parameterType="java.util.HashMap">
+		UPDATE CAR_TAKEREPAIR
+			SET
+				TASKSTAT='CB-receipt'
+				,POSITION=NULL
+				,ESTIME=NULL
+			WHERE TAKESEQ =  #{seq}
+	</update>
+
+	<update id="RepairComplete" parameterType="java.util.HashMap">
+		UPDATE CAR_TAKEREPAIR
+			SET
+				TASKSTAT = 'CB-perfect',
+				REPAIRNOTE = #{remark},
+				KILRO_NOW = #{newkilro},
+				UPDATE_ID = #{loginid},
+				UPDATE_DATE = SYSDATE
+			WHERE TAKESEQ = #{seq}
 	</update>
 </mapper>
