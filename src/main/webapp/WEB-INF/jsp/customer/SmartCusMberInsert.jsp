@@ -297,7 +297,7 @@ function fnKindCheck(){
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.CusMberManageVO.reset();"><spring:message code="button.reset" /></a><!-- 취소 -->
+                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.cusMberManageVO.reset();"><spring:message code="button.reset" /></a><!-- 취소 -->
                                     </div>
                                     <div class="right_col btn1">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnInsert(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->

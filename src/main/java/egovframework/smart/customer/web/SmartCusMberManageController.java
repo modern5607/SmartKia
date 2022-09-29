@@ -136,8 +136,8 @@ public String selectCusMberList(@ModelAttribute("userSearchVO") CusMberDefaultVO
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
-		System.out.println(userSearchVO);
-		System.out.println(cusMberManageService.selectMberListTotCnt(userSearchVO));		 
+//		System.out.println(userSearchVO);
+//		System.out.println(cusMberManageService.selectMberListTotCnt(userSearchVO));		 
 		return "customer/SmartCusMberManage";
 	}
 
@@ -218,8 +218,8 @@ public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAtt
 		CusMberManageVO cusMberManageVO = cusMberManageService.selectMber(cusId);
 		model.addAttribute("cusMberManageVO", cusMberManageVO);
 		model.addAttribute("team",map.get("info"));
-		System.out.println(userSearchVO);
-		System.out.println(cusMberManageVO);
+//		System.out.println(userSearchVO);
+//		System.out.println(cusMberManageVO);
 //		System.out.println(cusId);
 		return "/customer/SmartCusMberSelectUpdt";
 	  }
@@ -303,10 +303,10 @@ public String searchKindPopupView(@ModelAttribute("cusMberManageVO") CusMberMana
 	Map<String,Object> map =  smartmdmservice.SelectCommonCode(vo);
 	model.addAttribute("kind",map.get("info"));
 
-	System.out.println("map : "+map.get("info"));
+//	System.out.println("map : "+map.get("info"));
 
-	System.out.println(vo);
-	System.out.println(cusMberManageVO);
+//	System.out.println(vo);
+//	System.out.println(cusMberManageVO);
 	return "customer/searchKindPopupView";
 }
 }

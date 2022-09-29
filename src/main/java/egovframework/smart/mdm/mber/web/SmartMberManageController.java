@@ -143,9 +143,9 @@ public class SmartMberManageController {
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
 		vo.setCodeId("COM013");
 		model.addAttribute("entrprsMberSttus_result", cmmUseService.selectCmmCodeDetail(vo));
-		System.out.println(userSearchVO);
+//		System.out.println(userSearchVO);
 
-    	System.out.println(smartMberManageService.selectMberList(userSearchVO));
+//    	System.out.println(smartMberManageService.selectMberList(userSearchVO));
 		
 		return "/mdm/mber/SmartMberManage";
 	}
@@ -165,13 +165,13 @@ public class SmartMberManageController {
     	
     	SmartCommonCodeVO vo = new SmartCommonCodeVO();
     	vo.setGroupcode("AUTO_ROOM");
-    	System.out.println(vo);
+//    	System.out.println(vo);
     	Map<String,Object> map =  smartmdmservice.SelectCommonCode(vo);
 
     	model.addAttribute("team",map.get("info"));
-    	System.out.println("map : "+map.get("info"));
+//    	System.out.println("map : "+map.get("info"));
 
-    	System.out.println(smartMberManageVO);
+//    	System.out.println(smartMberManageVO);
 		return "mdm/mber/SmartMberInsert";
 	}
 
@@ -214,14 +214,14 @@ public String updateMberView(@RequestParam("selectedId") String mberId, @ModelAt
 
 	SmartCommonCodeVO vo = new SmartCommonCodeVO();
 	vo.setGroupcode("AUTO_ROOM");
-	System.out.println(vo);
+//	System.out.println(vo);
 	Map<String,Object> map =  smartmdmservice.SelectCommonCode(vo);
 	
 	SmartMberManageVO smartMberManageVO = smartMberManageService.selectMber(mberId);
 	model.addAttribute("smartMberManageVO", smartMberManageVO);
 	model.addAttribute("userSearchVO", userSearchVO);
 	model.addAttribute("team",map.get("info"));
-	System.out.println(smartMberManageVO);
+//	System.out.println(smartMberManageVO);
 //	System.out.println(userSearchVO);
 //	System.out.println("team :"+map.get("info"));
 	return "mdm/mber/SmartMberSelectUpdt";
@@ -248,8 +248,8 @@ public String updateMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO 
 	}
 	
 
-	System.out.println(smartMberManageVO.getUseYn());
-	System.out.println(cnt);
+//	System.out.println(smartMberManageVO.getUseYn());
+//	System.out.println(cnt);
 	  if (result == 0) // insert실패
 		{
 			attr.addFlashAttribute("msg","등록에 실패하였습니다.");
@@ -457,8 +457,8 @@ public String updatePasswordView(ModelMap model, @RequestParam Map<String, Objec
 	model.addAttribute("userSearchVO", userSearchVO);
 	model.addAttribute("smartMberManageVO", smartMberManageVO);
 
-	System.out.println(smartMberManageVO);
-	System.out.println(userTyForPassword);
+//	System.out.println(smartMberManageVO);
+//	System.out.println(userTyForPassword);
 
 	return "mdm/mber/SmartMberPasswordUpdt";
 }
