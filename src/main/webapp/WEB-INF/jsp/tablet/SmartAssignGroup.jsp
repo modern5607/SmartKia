@@ -46,35 +46,12 @@
 	}
 	
 	function reload(){
-		
-		document.SmartList.submit();
+		location.reload();
 	}
 
 	function linkPage(pageNo) {
-		document.SmartBizList.pageIndex.value = pageNo;
-		document.SmartBizList.action = "<c:url value='/mdm/SmartBiz.do'/>";
-		document.SmartBizList.submit();
-	}
-
-	function ReceiveAutoRoom(autoroom, remark) {
-		console.log(autoroom, remark);
-		document.SmartList.autoroom.value = autoroom;
-		document.SmartList.remark.value = remark;
-		UpdateAssign();
-
-	}
-
-	//작업반배정 프로세스 실행
-	function UpdateAssign() {
-		var array = new Array();
-		$('input:checkbox[name=check]').each(function(index) {
-			if ($(this).is(":checked") == true) {
-				array.push($(this).data("seq"));
-			}
-		});
-		$("#checkboxs").val(array);
-
-		document.SmartList.action = "<c:url value='/tablet/UpdateAssignGroup.do'/>";
+		document.SmartList.pageIndex.value = pageNo;
+		document.SmartList.action = "<c:url value='/tablet/SmartAssignGroup.do'/>";
 		document.SmartList.submit();
 	}
 </script>
@@ -96,7 +73,6 @@
 						<!-- Left menu -->
 						<!-- <c:import url="/sym/mms/EgovMenuLeft.do" /> -->
 						<!--// Left menu -->
-
 						<div class="content_wrap">
 							<div id="contents" class="content">
 								<!-- Location -->
@@ -115,13 +91,8 @@
 									<input type="hidden" name="checkboxs" id="checkboxs"> <input
 										type="hidden" name="autoroom" id="autoroom"> <input
 										type="hidden" name="remark" id="remark">
-									<h1 class="tit_1">작업반배정</h1>
-
-									<!-- <p class="txt_1">거래처 관리 TEST 화면입니다.</p> -->
-
 									<!-- 검색조건 -->
 									<div class="condition" style="margin-top: 20px;">
-
 										<span class="item f_search">
 											<p class="left">
 												<label for="searchcarnum">차량번호</label> <input
@@ -142,20 +113,7 @@
 												<spring:message code="button.inquire" />
 											</button>조회
 										</span>
-
 									</div>
-									<!--<div class="board_list_top" style="margin-top: 20px;">
-										 <div class="left_col">
-											<h1 class="txt_1">업체코드 클릭시 수정화면으로 이동됩니다.</h1>
-										</div> 
-										<div class="right_col">
-											<a href="#" onclick="ReceiveGroup()" class="item btn btn_blue_46 w_100">배정</a>
-												
-										</div>
-									</div>
-									-->
-									<!--// 검색조건 -->
-
 									<div class="board_list">
 										<table>
 											<caption>게시판목록</caption>
@@ -205,14 +163,12 @@
 										</table>
 									</div>
 								</form>
-
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<!-- footer 시작 -->
 		<c:import url="/sym/mms/EgovFooter.do" />
 		<!-- //footer 끝 -->

@@ -12,19 +12,9 @@ public interface SmartTabletService {
 	public Map<String, Object> selectList(SmartTabletVO vo) throws Exception;
 	
 	public Map<String, Object> assignmentList(SmartTabletVO vo) throws Exception;
-	
-	
-
-	public Map<String,Object> checkstatus(Map<String, Object> params);
 
 	public int updatestatus(Map<String, Object> params);
 
-	public Map<String, Object> receiveList(SmartTabletVO searchVO);
-
-	public int Transfergroup(Map<String, Object> params);
-
-	public int insertlog(Map<String, Object> params)throws Exception;
-	
 	public Map<String, Object> detailList(SmartTabletVO vo);
 
 	public List<Object> selectlogininfo(SmartTabletVO searchVO);
@@ -32,6 +22,10 @@ public interface SmartTabletService {
 	public List<Object> selectcarlist(String seq);
 
 	public int UpdateAssign(Map<String, Object> params)throws Exception;
+
+	public int cancelreceive(Map<String, Object> params)throws Exception;
+
+    public int RepairComplete(Map<String, Object> params)throws Exception;
 
 
 

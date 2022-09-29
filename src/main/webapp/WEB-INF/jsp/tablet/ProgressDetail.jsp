@@ -78,41 +78,39 @@ function releasePOP()
 									</ul>
 								</div>
 								<!--// Location -->
-								<form modelAttribute="SmartTabletVO" name="ProgressDetail"
-									id="ProgressDetail" action="<c:url value='/tablet/ProgressDetail.do'/>"
-									method="post">
-
+								<form modelAttribute="SmartTabletVO" name="ProgressDetail" id="ProgressDetail" action="<c:url value='/tablet/ProgressDetail.do'/>" method="post">
+									<input type="hidden" id="groupcode" name="groupcode" value="">
+									<input type="hidden" id="code" name="code" value="">
 									<h1 class="tit_1">반별 진행 내역 조회</h1>
-
 									<!-- <p class="txt_1">거래처 관리 TEST 화면입니다.</p> -->
-
 									<!-- 검색조건 -->
 									<div class="condition" style="margin-top: 20px;">
-
 										<span class="item f_search">
-                                            <input type="hidden" id="groupcode" name="groupcode" value="">
-                                            <input type="hidden" id="code" name="code" value="">
-                                            <p class="left">
-                                                <label for="searchcarnum">차량번호</label>
-                                                <input class="f_input w_200" name="searchcarnum" id="searchcarnum" type="text" value="<c:out value='${comCodeVO.searchcarnum}'/>" />
-                                            </p>
                                             <p class="left">
                                                 <label for="searchtel">연락처</label>
-                                                <input class="f_input w_200" name="searchTel" id="searchTel" type="text" value="<c:out value='${comCodeVO.searchTel}'/>" />
+                                                <input class="f_input w_200" name="searchTel" id="searchTel" type="text" value="<c:out value='${searchVO.searchTel}'/>" />
                                             </p>
                                             <p class="left">
                                                 <label for="searchdate">접수일자</label>
-                                                <input class="f_input w_150" name="sdate" id="sdate" type="text" readonly value="<c:out value='${comCodeVO.sdate}'/>" />
+                                                <input class="f_input w_150" name="sdate" id="sdate" type="text" readonly value="<c:out value='${searchVO.sdate}'/>" />
                                                 <label >~</label>
-                                                <input class="f_input w_150" name="edate" id="edate" type="text" readonly value="<c:out value='${comCodeVO.edate}'/>" />
+                                                <input class="f_input w_150" name="edate" id="edate" type="text" readonly value="<c:out value='${searchVO.edate}'/>" />
                                             </p>
 											<p class="left">
-                                                <label for="searchteam">작업반</label>
-                                                <input class="f_input w_200" name="searchteam" id="searchteam" type="text" value="<c:out value='${comCodeVO.searchteam}'/>" />
+                                                <label>작업반</label>
+                                                <label class="f_select w_200" for="autoroom" style="vertical-align: unset;">
+													<select name="autoroom" id="autoroom">
+														<option value="all">전체</option>
+														<c:forEach var="i" items="${autorooms}" varStatus="status">
+                                                            <option value="<c:out value='${i.CODE}'/>"><c:out value="${i.NAME}" /></option>
+                                                        </c:forEach>
+													</select>
+											</label>
+											<p class="left">
+                                                <label for="searchcarnum">차량번호</label>
+                                                <input class="f_input w_200" name="searchcarnum" id="searchcarnum" type="text" value="<c:out value='${comCodeVO.searchcarnum}'/>" />
                                             </p>
-                                            <p class="left">
-                                            <button class="f_input w_50" type="submit"> <spring:message code="button.inquire" /></button>조회
-											</p>
+											<button class="btn" type="submit"> <spring:message code="button.inquire" /></button>
                                         </span>
 
 									</div>
@@ -122,26 +120,26 @@ function releasePOP()
 										<table>
 											<caption>게시판목록</caption>
 											<colgroup>
-												<col style="width: 100px;">
-												<col style="width: 100px;">
-												<col style="width: 100px;">
-												<col style="width: 100px;">
-												<col style="width: 100px;">
-												<col style="width: 100px;">
-												<col style="width: 100px;">
-												<col style="width: 100px;">
-												<col style="width: 100px;">
+												<col style="width: 70px;">
+												<col style="width: 50px;">
+												<col style="width: 50px;">
+												<col style="width: 50px;">
+												<col style="width: 50px;">
+												<col style="width: 50px;">
+												<col style="width: 50px;">
+												<col style="width: 50px;">
+												<col style="width: 50px;">
 												<col style="width: 100px;">
 											</colgroup>
 											<thead>
 												<tr>
-													<th scope="col">접수일자</th>
+													<th scope="col">접수번호</th>
 													<th scope="col">차량번호</th>
 													<th scope="col">차량종류</th>
 													<th scope="col">고객명</th>
 													<th scope="col">연락처</th>
 													<th scope="col">수리내용</th>
-													<th scope="col">작업장(반)</th>
+													<th scope="col">작업반</th>
 													<th scope="col">예상완료시간</th>
 													<th scope="col">작업상태</th>
 													<th scope="col">출고처리</th>
@@ -157,7 +155,7 @@ function releasePOP()
 												<c:forEach var="result" items="${resultList}"
 													varStatus="status">
 													<tr>
-														<td><c:out value="${result.RECEIPTDATE}" /></td>
+														<td><c:out value="${result.TAKESEQ}" /></td>
 														<td><c:out value="${result.AUTONUMBER}" /></td>
 														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
