@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import egovframework.smart.customer.service.CusMberDefaultVO;
 import egovframework.smart.customer.service.CusMberManageService;
 import egovframework.smart.customer.service.CusMberManageVO;
+import egovframework.smart.rcpt.service.ReservationVO;
 import egovframework.smart.rcpt.service.SmartRcptService;
 import egovframework.smart.rcpt.service.SmartRcptVO;
 
@@ -227,6 +228,18 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 	@Override
 	public HashMap<String,Object> selectMberList(Map<String, Object> params) throws Exception {
 		return smartrcptDAO.selectMberList(params);
+	}
+
+	@Override
+	public Map<String, Object> searchReservation(ReservationVO searchVO) {
+		
+		List<ReservationVO> result = smartrcptDAO.searchReservation(searchVO);
+		String cnt = Integer.toString(result.size());
+
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("resultList", result);
+		map.put("resultCnt", cnt);
+		return map;
 	}
 
 }

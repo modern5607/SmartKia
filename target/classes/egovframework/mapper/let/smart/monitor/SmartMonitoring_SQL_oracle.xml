@@ -24,26 +24,63 @@
 
 	<select id="selectMonitoringList" parameterType="comDefaultVO" resultType="java.util.HashMap">
 		
-			SELECT * FROM
-(
-SELECT TAKESEQ,
-			 		AUTONUMBER,
-       		CUSTOMER_AUTOKIND,
-       		CUSTOMER_NAME,
-       		ESTIME,	
-       		A.TASKSTAT,
-          FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
-          REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
+			SELECT *
+			 FROM
+			 	(SELECT TAKESEQ,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME,
+       			A.TASKSTAT,
+          		FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+          		REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME,
-          C.ORD AS ORD
+          		C.ORD AS ORD
 			FROM   CAR_TAKEREPAIR A LEFT JOIN CAR_COMCODE C ON A.TASKSTAT = C.CODE, CAR_CUSTOMER B
-			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
-			AND A.TASKSTAT != 'CB-receipt'
-      ORDER BY ORD DESC, A.ESTIME ASC
-      ) D
-WHERE ROWNUM &lt; 11
+				WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+				AND A.TASKSTAT != 'CB-receipt'
+      			ORDER BY ORD DESC, A.ESTIME ASC ) D
+					WHERE ROWNUM &lt; 11
+	</select>
 
-			
-			
+	<select id="SceneMonitoring" parameterType="java.lang.String" resultType="java.util.HashMap">
+		
+			SELECT *
+			 FROM
+			 	(SELECT TAKESEQ,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME,
+       			A.TASKSTAT,
+            	TO_CHAR(TO_DATE(A.ESTIME,'YYYY-MM-DD HH24:MI:SS'),'HH24:MI') AS ESTIME,
+          		FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+          		REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
+       			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME,
+          		C.ORD AS ORD
+					FROM   CAR_TAKEREPAIR A LEFT JOIN CAR_COMCODE C ON A.TASKSTAT = C.CODE, CAR_CUSTOMER B
+					WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+					AND A.TASKSTAT ='CB-repaired'
+					AND A.POSITION = #{Team}
+      				ORDER BY ORD DESC, A.ESTIME ASC ) D
+			WHERE ROWNUM &lt; 6
+	</select>
+
+	<select id="GuestMonitoring" parameterType="comDefaultVO" resultType="java.util.HashMap">
+		
+			SELECT *
+			 FROM
+			 	(SELECT TAKESEQ,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME,
+       			A.TASKSTAT,
+          		FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+          		REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
+       			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME,
+          		C.ORD AS ORD
+			FROM   CAR_TAKEREPAIR A LEFT JOIN CAR_COMCODE C ON A.TASKSTAT = C.CODE, CAR_CUSTOMER B
+				WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+				AND A.TASKSTAT != 'CB-receipt'
+      			ORDER BY ORD DESC, A.ESTIME ASC ) D
+					WHERE ROWNUM &lt; 11
 	</select>
 </mapper>

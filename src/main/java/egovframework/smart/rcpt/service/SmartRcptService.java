@@ -6,6 +6,7 @@ import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.smart.customer.service.CusMberManageVO;
+import egovframework.smart.rcpt.service.ReservationVO;
 
 
 public interface SmartRcptService {
@@ -26,5 +27,7 @@ public interface SmartRcptService {
     int InsertMber(Map<String, Object> params)throws Exception;
 
     HashMap<String,Object> selectMberList(Map<String, Object> params)throws Exception;
+
+    Map<String, Object> searchReservation(ReservationVO searchVO);
 
 }

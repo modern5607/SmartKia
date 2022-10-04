@@ -22,38 +22,10 @@
 <script src="<c:url value='/'/>js/ui.js"></script>
 <title>샘플 포털 > 사이트 소개 > 사이트 소개</title>
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
+<script src="<c:url value='/'/>js/datepicker.js"></script>
 
 <script type="text/javascript">
-	function ReceiveGroup(seq) {
-		
-		console.log(seq);
-
-			var url = "<c:url value='/tablet/ReceiveGroupPOP.do'/>?";
-
-			var $dialog = $('<div id="modalPan"></div>').html(
-					'<iframe style="border: 0px;" src="'
-							+ "<c:url value='/tablet/ReceiveGroupPOP.do?seq="+seq+"'/>"
-							+ '" width="100%" height="100%"></iframe>').dialog(
-					{
-						autoOpen : false,
-						modal : true,
-						width : 900,
-						height : 700
-					});
-			$(".ui-dialog-titlebar").hide();
-			$dialog.dialog('open');
-
-	}
 	
-	function reload(){
-		location.reload();
-	}
-
-	function linkPage(pageNo) {
-		document.SmartList.pageIndex.value = pageNo;
-		document.SmartList.action = "<c:url value='/tablet/SmartAssignGroup.do'/>";
-		document.SmartList.submit();
-	}
 </script>
 
 </head>
@@ -65,6 +37,7 @@
 		<!-- header start -->
 		<c:import url="/sym/mms/EgovHeader.do" />
 		<!-- //header end -->
+
 		<div class="container">
 			<div class="sub_layout">
 				<div class="sub_in">
@@ -78,46 +51,42 @@
 								<div class="location">
 									<ul>
 										<li><a class="home" href="">Home</a></li>
-										<li><a href="">현장관리</a></li>
-										<li><a href="">작업반배정</a></li>
+										<li><a href="">접수관리</a></li>
+										<li><a href="">고객예약현황</a></li>
 									</ul>
 								</div>
 								<!--// Location -->
-								<form modelAttribute="SmartTabletVO" name="SmartList"
+								<form modelAttribute="ReservationVO" name="SmartList"
 									id="SmartList"
-									action="<c:url value='/tablet/SmartAssignGroup.do'/>"
+									action="<c:url value='/rcpt/ReservationstatusView.do'/>"
 									method="post">
-									<input type="hidden" name="checkboxs" id="checkboxs"> <input
-										type="hidden" name="autoroom" id="autoroom"> <input
-										type="hidden" name="remark" id="remark">
 									<!-- 검색조건 -->
 									<div class="condition" style="margin-top: 20px;">
 										<span class="item f_search">
 											<p class="left">
-												<label for="searchcarnum">차량번호</label> <input
-													class="f_input w_200" name="searchcarnum" id="searchcarnum"
-													type="text"
-													value="<c:out value='${searchVO.searchcarnum}'/>" />
+												<label for="sdate">예약날짜 :</label> 
+													<input class="f_input w_150" name="sdate" id="sdate" readonly="readonly" type="text"value="<c:out value='${searchVO.sdate}'/>" />
+												<label for="edate"> ~ </label> 
+													<input class="f_input w_150" name="edate" id="edate" readonly="readonly" type="text"value="<c:out value='${searchVO.edate}'/>" /> 
 											</p>
 											<p class="left">
-												<label for="searchTel">연락처</label> <input
-													class="f_input w_200" name="searchTel" id="searchTel"
-													type="text" value="<c:out value='${searchVO.searchTel}'/>" />
-											<p class="left">
-												<label for="searchname">고객명</label> <input
-													class="f_input w_200" name="searchname" id="searchname"
-													type="text" value="<c:out value='${searchVO.searchname}'/>" />
+												<label for="searchcarnum">차량번호</label> 
+													<input class="f_input w_200" name="carnum" id="carnum" type="text" value="<c:out value='${searchVO.carnum}'/>" />
 											</p>
-											<button class="btn" type="submit">
-												<spring:message code="button.inquire" />
-											</button>조회
+											<p class="left">
+												<label for="searchTel">연락처</label> 
+													<input class="f_input w_200" name="tel" id="tel" type="text" value="<c:out value='${searchVO.tel}'/>" />
+											<p class="left">
+												<label for="searchname">고객명</label> 
+													<input class="f_input w_200" name="custnm" id="custnm" type="text" value="<c:out value='${searchVO.custnm}'/>" />
+											</p>
+											<button class="btn" type="submit"><spring:message code="button.inquire" /></button>조회
 										</span>
 									</div>
 									<div class="board_list">
 										<table style="table-layout: fixed;">
 											<caption>게시판목록</caption>
 											<colgroup>
-												<col style="width: 20px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
@@ -128,34 +97,32 @@
 											</colgroup>
 											<thead>
 												<tr>
-													<th scope="col">번호</th>
-													<th scope="col">접수번호</th>
+													<th scope="col">예약일자</th>
 													<th scope="col">차량번호</th>
 													<th scope="col">차량종류</th>
+													<th scope="col">수리내용</th>
 													<th scope="col">고객명</th>
 													<th scope="col">연락처</th>
-													<th scope="col">수리내용</th>
-													<th scope="col">배정</th>
+													<th scope="col">비고</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:if test="${fn:length(resultList) == 0}">
 													<tr>
-														<td colspan="8"><spring:message
+														<td colspan="7"><spring:message
 																code="common.nodata.msg" /></td>
 													</tr>
 												</c:if>
 												<c:forEach var="result" items="${resultList}"
 													varStatus="status">
 													<tr>
-														<td><c:out value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><c:out value="${result.TAKESEQ}" /></td>
+														<td><c:out value="${result.PLANDATE}" /></td>
 														<td><c:out value="${result.AUTONUMBER}" /></td>
 														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
-														<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
-														<td><a href="#LINK" class="btn btn_blue_30 w_50" onclick="ReceiveGroup('<c:out value="${result.TAKESEQ}" />'); return false;">상세</a></td>
+														<td>비고</td>
 													</tr>
 												</c:forEach>
 											</tbody>

@@ -115,4 +115,17 @@
         SELECT * FROM CAR_CUSTOMER WHERE CUSTOMER_NAME =#{name} AND CUSTOMER_AUTONO = #{carnum}
 
     </select>
+
+    <select id="searchReservation" parameterType="egovframework.smart.rcpt.service.ReservationVO" resultType="java.util.HashMap">
+	SELECT TAKESEQ,
+       			TO_CHAR(PLANDATE, 'YYYY-MM-DD HH24:MI')  PLANDATE,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME,
+            	CUSTOMER_TEL, 
+       			REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME
+			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
+			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.TASKSTAT = 'CB-reserve'
+    </select>
 </mapper>

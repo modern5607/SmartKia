@@ -3,7 +3,7 @@
 body {min-width: 1400px;}
 
 .header > .inner {position: relative; width: 1400px; height: 180px; margin: 0 auto; padding: 0 50px;}
-.header .left_col {padding-top: 40px; font-size: 0;}
+.header .left_col {padding-top: 10px; font-size: 0;}
 .header .logo {display: inline-block;}
 .header .logo img {display: block;}
 .header .go {display: inline-block; margin-left: 12px; vertical-align: 0px;}
@@ -19,7 +19,7 @@ body {min-width: 1400px;}
 .total_search .list li a {display: block; color: #888; font-size: 14px;}
 .total_search .list li a strong {color: #222;}
 
-.header .top_menu {position: absolute; right: 50px; top: 17px;}
+.header .top_menu {position: absolute; right: 100px; top: 80px;}
 .header .top_menu > span {display: inline-block; height: 24px; font-weight: 300; line-height: 24px; vertical-align: top;}
 .header .top_menu .t {color: #666;}
 .header .top_menu .t span {color: #0465be; font-weight: 700;}
@@ -33,7 +33,7 @@ body {min-width: 1400px;}
 .gnb ul li a {display: block; color: #333; font-size: 20px; font-weight: 1400;}
 .gnb ul li a.manager {color: #004986;}
 
-.all_menu {display: none; position: absolute; left: 0; top: 160px; height:270px; width: 100%; min-width: 1300px; border-bottom: 1px solid #ddd; background: #fff; z-index: 99;}
+.all_menu {display: none; position: absolute; left: 0; top: 120px; height:270px; width: 100%; min-width: 1300px; border-bottom: 1px solid #ddd; background: #fff; z-index: 99;}
 .all_menu .inner {width: 1400px; margin: 0 auto;}
 .all_menu .inner::after {content: ""; display: block; clear: both;}
 .all_menu .inner > div {float: left; width: 174px; padding: 7px 10px 0 0px;}
@@ -55,20 +55,20 @@ body {min-width: 1400px;}
 .all_menu .inner > div.admin ul li + li {margin-top: 6px;}
 .all_menu .inner > div.admin ul li a {font-size: 16px;}
 
-.util_menu {position: absolute; right: 50px; top: 90px;}
+.util_menu {position: absolute; right: 60px; top: 80px;}
 .util_menu ul {font-size: 0; text-align: right;}
 .util_menu ul li {display: inline-block; vertical-align: top;}
 .util_menu ul li + li {margin-left: 17px;}
-.util_menu ul li a {display: block; width: 60px; height: 60px;}
-.util_menu .login {background: url(../images/ico_login.png) no-repeat;}
-.util_menu .logout {background: url(../images/ico_logout.png) no-repeat;}
+.util_menu ul li a {display: block; width: 30px; height: 30px;}
+.util_menu .login {background: url(../images/ico_login.png) no-repeat; background-size: cover;}
+.util_menu .logout {background: url(../images/ico_logout.png) no-repeat; background-size: cover;}
 .util_menu .mail {position: relative; background: url(../images/ico_mail.png) no-repeat;}
 .util_menu .mail span {display: block; position: absolute; right: -6px; top: -6px; width: 26px; height: 26px; border-radius: 50%; color: #fff; font-size: 16px; line-height: 26px; text-align: center; background: #eb6877;}
 .util_menu .allmenu {background: url(../images/ico_allmenu.png) no-repeat;}
 .util_menu .allmenu.on {background: url(../images/ico_allmenu_close.png) no-repeat;}
 
 
-.container {min-height: calc(100vh - 360px); margin-top: 180px;}
+.container {min-height: calc(100vh - 360px); margin-top: 120px;}
 .content {min-height: 700px; padding-bottom: 100px;}
 
 .sub_layout {border-top: 1px solid #cccccc;}
@@ -124,10 +124,10 @@ body {min-width: 1400px;}
 
 
 
-.footer {border-top: 1px solid #d7d7d7;}
+.footer {border-top: 1px solid #000000;; background: black;}
 .footer .inner {position: relative; width: 1400px; height: 179px; margin: 0 auto; padding: 0 50px;}
 .footer .inner::after {content: ""; display: block; clear: both;}
-.footer h1 {float: left; padding-top: 49px;}
+.footer h1 {float: left; padding-top: 70px;}
 .footer h1 a {display: block;}
 .footer .mid {float: left; margin-left: 50px; padding-top: 42px;}
 .footer .mid {color: #888; font-size: 16px;}
@@ -193,7 +193,7 @@ body {min-width: 1400px;}
 .stickytop {
     background: hsla(0,0%,100%,.95);
     border-bottom: 1px solid rgba(0,0,0,.06);
-    height: 160px;
+    height: 120px;
     left: 0;
     position: fixed;
     top: -100px;

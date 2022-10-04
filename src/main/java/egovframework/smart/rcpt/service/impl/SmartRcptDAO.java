@@ -9,6 +9,7 @@ import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.smart.customer.service.CusMberManageVO;
+import egovframework.smart.rcpt.service.ReservationVO;
 import egovframework.smart.rcpt.service.SmartRcptVO;
 
 
@@ -70,6 +71,10 @@ public class SmartRcptDAO extends EgovAbstractMapper {
 
     public HashMap<String,Object> selectMberList(Map<String, Object> params) {
         return selectOne("SmartRcptDAO.SelectMber",params);
+    }
+
+    public List<ReservationVO> searchReservation(ReservationVO searchVO) {
+        return selectList("SmartRcptDAO.searchReservation",searchVO);
     }
 	 
 }

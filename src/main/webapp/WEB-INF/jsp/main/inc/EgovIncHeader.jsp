@@ -68,7 +68,6 @@ function fn_egov_modal_remove() {
 		<c:set var="loginName" value="<%= loginVO.getName()%>"/>
 	    <div class="top_menu">
             <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;">${loginName}님</span>, 로그인하셨습니다.</span>
-            <span class="d">2021-06-30 12:45</span>
         </div>
 <% } %>
 
@@ -94,8 +93,10 @@ function fn_egov_modal_remove() {
 				<c:if test="${loginName != ''}">
                 <!-- case: 로그인했을경우 -->
 	                <li><a href="<c:url value='/'/>uat/uia/actionLogout.do" class="logout" title="로그아웃">로그아웃</a></li>
+                    <!--
 	                <li><a href="" class="mail" title="메일">메일<span>3</span>건</a></li>
 	                <li><a href="" class="allmenu" title="전체메뉴">전체메뉴</a></li>
+                    -->
 				</c:if>
             </ul>
         </div>
@@ -122,6 +123,7 @@ function fn_egov_modal_remove() {
                             <li><a href="/rcpt/SmartWebRcptView.do">접수등록(WEB)</a></li>
                             <li><a href="/rcpt/SmartMobileRcptView.do">예약접수등록(모바일)</a></li>
                             <li><a href="https://www.figma.com/proto/qseOBDwGeOJQJUCemliAL5/%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC%ED%99%94%EB%A9%B4?page-id=0%3A1&node-id=13%3A23&viewport=246%2C546%2C0.33&scaling=scale-down&starting-point-node-id=2%3A2">키오스크 등록</a></li>
+                            <li><a href="/rcpt/ReservationstatusView.do">고객예약현황</a></li>
                         </ul>
                     </div>
 

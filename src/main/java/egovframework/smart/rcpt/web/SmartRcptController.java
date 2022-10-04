@@ -12,6 +12,7 @@ import egovframework.smart.customer.service.CusMberManageVO;
 import egovframework.smart.mdm.service.SmartMdmService;
 import egovframework.smart.rcpt.service.SmartRcptService;
 import egovframework.smart.rcpt.service.SmartRcptVO;
+import egovframework.smart.rcpt.service.ReservationVO;
 
 import org.apache.commons.validator.Var;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -338,5 +339,48 @@ public class SmartRcptController {
 		System.out.println("최종 결과:"+result);
 		
 		response.getWriter().print(result);
+	}
+
+	@RequestMapping(value = "/rcpt/ReservationstatusView.do")
+	public String ReservationstatusView(@ModelAttribute("ReservationVO") ReservationVO searchVO, ModelMap model,
+			@RequestParam(value = "menuNo", required = false) String menuNo,
+			HttpServletRequest request) throws Exception {
+		
+		// 선택된 메뉴정보를 세션으로 등록한다.
+		if (menuNo != null && !menuNo.equals("")) {
+			request.getSession().setAttribute("menuNo", menuNo);
+		}
+
+		// 0. Spring Security 사용자권한 처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		// paging
+		searchVO.setPageUnit(propertyService.getInt("pageUnit"));
+		searchVO.setPageSize(propertyService.getInt("pageSize"));
+
+		PaginationInfo paginationInfo = new PaginationInfo();
+
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
+		paginationInfo.setPageSize(searchVO.getPageSize());
+		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		// service
+		Map<String, Object> map = smartrcptservice.searchReservation(searchVO);
+		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
+
+		paginationInfo.setTotalRecordCount(totCnt);
+
+		model.addAttribute("resultList", map.get("resultList"));
+		model.addAttribute("resultCnt", map.get("resultCnt"));
+		model.addAttribute("paginationInfo", paginationInfo);
+		
+		return "/rcpt/ReservationstatusView";
 	}
 }
