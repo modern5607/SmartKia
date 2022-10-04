@@ -15,6 +15,9 @@ import egovframework.let.cop.com.service.TemplateInfVO;
 import egovframework.let.uss.ion.bnr.service.Banner;
 import egovframework.let.uss.ion.bnr.service.BannerVO;
 import egovframework.let.uss.ion.bnr.service.EgovBannerService;
+import egovframework.smart.kiosk.service.SmartKioskService;
+import egovframework.smart.rcpt.service.SmartRcptService;
+import egovframework.smart.rcpt.service.SmartRcptVO;
 
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -23,60 +26,41 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
-/**
- * 배너에 대한 controller 클래스를 정의한다.
- * 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.
- * 배너의 조회기능은 목록조회, 상세조회로 구분된다.
- * @author 공통서비스개발팀 lee.m.j
- * @since 2009.08.03
- * @version 1.0
- * @see
- *
- * <pre>
- * << 개정이력(Modification Information) >>
- *
- *   수정일      수정자           수정내용
- *  -------    --------    ---------------------------
- *   2009.08.03  lee.m.j        최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
- *
- * </pre>
- */
 @Controller
 public class SmartKioskController {
 	
 	@Resource(name = "EgovTemplateManageService")
 	private EgovTemplateManageService tmplatService;
-	
-	@Resource(name = "EgovCmmUseService")
-	private EgovCmmUseService cmmUseService;
 
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertyService;
+
+	@Resource(name = "SmartRcptService")
+	private SmartRcptService smartrcptservice;
+
+	@Resource(name = "SmartKioskService")
+	private SmartKioskService smartkioskservice;
 
 	@Autowired
 	private DefaultBeanValidator beanValidator;
 	
-	/**
-	 * MyPage에 배너정보를 제공하기 위해 목록을 조회한다.
-	 * @param bannerVO - 배너 VO
-	 * @return String - 리턴 URL
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/kiosk/selectKiosk.do")
+	@RequestMapping(value = "/kiosk/SmartKiosk.do")
 	public String selectKiosk(ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo,
 			HttpServletRequest request
@@ -89,8 +73,36 @@ public class SmartKioskController {
 		//bannerVO.setBannerList(egovBannerService.selectBannerList(bannerVO));
 		//model.addAttribute("bannerList", bannerVO.getBannerList());
 
-		return "/kiosk/SmartKiosk";
+		return "/kiosk/KioskView";
 	}
+
+	@RequestMapping(value = "/kiosk/SelectCarInfo.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> SelectCarInfo(@RequestParam("carnum") String carnum, HttpServletResponse response) throws Exception {
+		// System.out.println(params.get("selectedvar"));
+		SmartRcptVO smartrcotVO =new SmartRcptVO();
+		smartrcotVO.setCheckcarnum(carnum);
+		List<Object> list = smartrcptservice.selectCarInfo(smartrcotVO);
+		// List<Object> list = smartrcptservice.SelectMiddleLeadTime(params.get("selectedvar").toString());
+		System.out.println(list);
+		// Map<String,Object> map =new HashMap<String,Object>();
+		// map.put("list", list);
+		return list;
+		//response.getWriter().print(map);
+	}
+
+	@RequestMapping(value = "/kiosk/SelectCarRepairInfo.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> SelectCarRepairInfo(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
+		System.out.println("id :"+id);
+		// SmartRcptVO smartrcotVO =new SmartRcptVO();
+		// smartrcotVO.setCheckcarnum(carnum);
+		List<Object> list = smartkioskservice.selectCarRepairInfo(id);
+		// System.out.println(list);
+		return list;
+	}
+
+
 	
 	@RequestMapping("/kiosk/selectKioskin.do")
 	public String selectKioskin(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, ModelMap model,
