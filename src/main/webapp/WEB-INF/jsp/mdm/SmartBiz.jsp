@@ -81,14 +81,7 @@
 								<form modelAttribute="SmartMdmBizVO" name="SmartBizList"
 									id="SmartBizList" action="<c:url value='/mdm/SmartBiz.do'/>"
 									method="post">
-
-									<h1 class="tit_1">거래처 관리</h1>
-
-									<!-- <p class="txt_1">거래처 관리 TEST 화면입니다.</p> -->
-
-									<!-- 검색조건 -->
 									<div class="condition" style="margin-top: 20px;">
-
 										<label class="item f_select" for="sel1"> <select
 											id="sel1" name="searchCondition" title="검색조건 선택">
 												<option value='CUST_ID'
@@ -98,32 +91,22 @@
 												<option value='ITEM'
 													<c:if test="${searchVO.searchCondition == ITEM}">selected='selected' </c:if>>주거래품목</option>
 										</select>
-										</label> <span class="item f_search"> <input type="hidden"
-											id="Custid" name="Custid" value=""> <input
-											class="f_input w_500" name="searchKeyword" type="text"
-											value='<c:out value="${searchVO.searchKeyword}" />'
-											title="검색어 입력" maxlength="35" />
-											<button class="btn" type="submit"
-												onclick="fn_egov_select_biz(); return false;">
-												<spring:message code="button.inquire" />
-											</button>
+										</label> 
+										<span class="item f_search"> 
+											<input type="hidden" id="Custid" name="Custid" value=""> 
+											<input class="f_input w_500" name="searchKeyword" type="text" value='<c:out value="${searchVO.searchKeyword}" />'title="검색어 입력" maxlength="35" />
+											<button class="btn" type="submit" onclick="fn_egov_select_biz(); return false;"><spring:message code="button.inquire" /></button>
 											<!-- 조회 -->
 										</span>
-
 									</div>
 									<div class="board_list_top" style="margin-top: 20px;">
 										<div class="left_col">
-											<h1 class="txt_1">업체코드 클릭시 수정화면으로 이동됩니다.</h1>
 										</div>
 										<div class="right_col">
-											<a href="<c:url value='/mdm/SmartaddBiz.do'/>"
-												class="item btn btn_blue_46 w_100"><spring:message
-													code="button.create" /></a>
-											<!--　등록 -->
+											<a href="<c:url value='/mdm/SmartaddBiz.do'/>" class="item btn btn_blue_46 w_100"><spring:message code="button.create" /></a>
 										</div>
 									</div>
 									<!--// 검색조건 -->
-
 									<div class="board_list">
 										<table>
 											<caption>게시판목록</caption>
@@ -161,11 +144,8 @@
 												<c:forEach var="result" items="${resultList}"
 													varStatus="status">
 													<tr>
-														<td><c:out
-																value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
-														<td><a href="#"
-															onclick="UpdateBiz('<c:out value='${result.CUST_ID}'/>')"
-															class="lnk"><c:out value="${result.CUST_ID}" /></a>
+														<td><c:out value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
+														<td><a href="#" style="text-decoration: underline;" onclick="UpdateBiz('<c:out value='${result.CUST_ID}'/>')" class="lnk"><c:out value="${result.CUST_ID}" /></a>
 														<td><c:out value="${result.CUST_NM}" /></td>
 														<td><c:out value="${result.ADDRESS}" /></td>
 														<td><c:out value="${result.CEO}" /></td>

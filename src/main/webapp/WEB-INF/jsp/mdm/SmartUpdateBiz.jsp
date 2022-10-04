@@ -32,17 +32,13 @@
 	xhtml="true" cdata="false" />
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <script type="text/javaScript" language="javascript">
-	/* ********************************************************
-	 * 초기화
-	 ******************************************************** */
+	
+	
 	function fn_egov_initl_qnacn() {
 
 		// 첫 입력란에 포커스..
 		SmartBizU.Custnm.focus();
 	}
-	/* ********************************************************
-	 * 목록 으로 가기
-	 ******************************************************** */
 	function fn_egov_inqire_qnalist() {
 		SmartBizU.action = "<c:url value='/mdm/SmartBiz.do'/>";
 		SmartBizU.submit();

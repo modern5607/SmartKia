@@ -27,8 +27,5 @@ public interface SmartTabletService {
 
     public int RepairComplete(Map<String, Object> params)throws Exception;
 
-
-
-	
-	
+    public int ReleaseRepair(Map<String, Object> params)throws Exception;
 }

@@ -20,11 +20,21 @@ public class SmartTabletVO extends ComDefaultVO implements Serializable {
 	private String searchcarnum = "";
 	private String searchTel = "";
 	private String searchteam = "";
-	private String searchdate = "";
+
+    public String getMembernm() {
+        return membernm;
+    }
+
+    public void setMembernm(String membernm) {
+        this.membernm = membernm;
+    }
+
+    private String searchdate = "";
 	private String sdate = "";
 	private String edate = "";
 	private String newkilro ="";
 	private String loginid = "";
+	private String membernm="";
 	
 
 	public String getTaskstat() {

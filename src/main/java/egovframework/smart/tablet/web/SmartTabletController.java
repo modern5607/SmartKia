@@ -355,12 +355,44 @@ public class SmartTabletController {
 		return "/tablet/ProgressDetail";
 	}
 	/*
-	 * 출고화면 View
+	 * 출고처리 View
 	 */
-	@RequestMapping(value = "/tablet/ReleasePOP.do")
-	public String RelasePOPview() throws Exception {
+	@RequestMapping(value = "/tablet/ReleasePOP.do",method = RequestMethod.GET)
+	public String ReleasePOPview(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, String seq,ModelMap model) throws Exception {
+		
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();		
+		searchVO.setLoginid(loginVO.getUniqId().toString());
+		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
+		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
+		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
+
+		System.out.println("searchVO : "+searchVO);
+		System.out.println("model : "+ model);
+		model.addAttribute("carlist",smarttabletservice.selectcarlist(seq));
+		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
+		model.addAttribute("leadtimelist", leadtimelist);
+		model.addAttribute("RepairList",smartrcptservice.selectRcptRepairInfo(seq));
 
 		return "/tablet/ReleasePOP";
 	}
-}
 
+	/*
+	 * 출고처리 UPDATRE
+	 * */
+	@RequestMapping(value = "/tablet/ReleaseRepair.do",method=RequestMethod.POST)
+	public void ReleaseRepair(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model,HttpServletResponse response) throws Exception {
+		
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		System.out.println(params);
+
+		//출고완료
+		
+		int result = smarttabletservice.ReleaseRepair(params);
+		System.out.println(result);
+		
+		response.getWriter().print(result);
+	
+	}
+}

@@ -22,5 +22,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class SmartMonitoringVO implements Serializable {
 
+    
 
 }

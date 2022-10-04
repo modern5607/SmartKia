@@ -22,7 +22,7 @@
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
-			AND A.TASKSTAT != 'CB-receipt'
+			AND A.TASKSTAT = 'CB-repaired'
 			<choose>
 				<when test="autoroom ==''">
 					AND A.POSITION = (SELECT TEAM FROM LETTNGNRLMBER WHERE ESNTL_ID = #{loginid})
@@ -115,13 +115,14 @@
        			A.POSITION,
        			B.KILRO_TOTAL,
        			A.KILRO_NOW,
-       			TO_CHAR(TO_DATE(A.ESTIME,'YYYY-MM-DD HH24:MI:SS'),'HH24:MI') AS ESTIME,
+       			ETIME,
        			FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
        			A.TASKSTAT,
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.TASKSTAT = 'CB-perfect'
+			AND A.TURNOVER = 'N'
 			
 			<if test="searchcarnum != ''">
 			AND A.AUTONUMBER LIKE '%' || #{searchcarnum} || '%'
@@ -129,16 +130,7 @@
 			<if test="searchTel != ''">
 			AND B.CUSTOMER_TEL LIKE '%' || #{searchTel} || '%'
 			</if>
-			<if test="sdate != '' and edate != '' ">
-			AND TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD')>= #{sdate} AND #{edate} >= TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD') 
-			</if>
-			<if test="sdate != '' and edate == '' ">
-			AND TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD')>= #{sdate} 
-			</if>
-			<if test="edate != '' and sdate == '' ">
-			AND #{edate}>= TO_CHAR(A.RECEIPTDATE,'YYYY-MM-DD') 
-			</if>
-			<if test="autoroom != 'all'">
+			<if test="autoroom != ''">
 			AND A.POSITION = #{autoroom} 
 			</if>
 	</select>
@@ -149,7 +141,7 @@
 	</select>
 	
 	<select id="selectcarlist" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
-	SELECT TAKESEQ,AUTONUMBER,CUSTOMER_NAME,CUSTOMER_AUTOKIND,CUSTOMER_TEL,B.KILRO_TOTAL
+	SELECT TAKESEQ,AUTONUMBER,CUSTOMER_NAME,CUSTOMER_AUTOKIND,CUSTOMER_TEL,B.KILRO_TOTAL,B.CUSTOMER_ID
 		FROM CAR_TAKEREPAIR A , CAR_CUSTOMER B
 		WHERE A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.TAKESEQ = #{seq}
@@ -178,9 +170,30 @@
 			SET
 				TASKSTAT = 'CB-perfect',
 				REPAIRNOTE = #{remark},
-				KILRO_NOW = #{newkilro},
+				ETIME = TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI'),
 				UPDATE_ID = #{loginid},
 				UPDATE_DATE = SYSDATE
 			WHERE TAKESEQ = #{seq}
 	</update>
+
+	
+	<update id="updatekilro" parameterType="java.util.HashMap">
+		UPDATE CAR_CUSTOMER
+			SET
+				KILRO_TOTAL = #{newkilro},
+				UPDATE_ID = #{loginid},
+				UPDATE_DATE = SYSDATE
+			WHERE CUSTOMER_ID = #{customerid}
+	</update>
+
+	<update id="ReleaseRepair" parameterType="java.util.HashMap">
+		UPDATE CAR_TAKEREPAIR
+			SET
+				TURNOVER = 'Y',
+  				TURNOVERTIME = SYSDATE,
+  				TURNOVER_NOTE= #{remark},
+  				TURNOVER_ID= #{loginid}
+  			WHERE TAKESEQ = #{seq}
+	</update>
+
 </mapper>

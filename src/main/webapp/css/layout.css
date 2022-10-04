@@ -187,6 +187,8 @@ body {min-width: 1400px;}
 .smart_monitoring .sub_in {width: 1920px;}
 .smart_monitoring .layout .content_wrap {padding-left: 0;}
 
+.monitoring .content {min-height: 0px; padding-bottom: 10px;}
+
 /* 상단 고정 css */
 .stickytop {
     background: hsla(0,0%,100%,.95);

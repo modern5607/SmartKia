@@ -72,131 +72,34 @@ public class SmartMonitoringController {
 	protected EgovPropertyService propertiesService;
 
 	/**
-	 * 개별 배포시 메인메뉴를 조회한다.
-	 * 
-	 * @param model
-	 * @return "/uss/sam/cpy/"
-	 * @throws Exception
+	 *  현장 작업 현황View
 	 */
-//	@RequestMapping(value = "/uss/olp/EgovMain.do")
-//	public String EgovMain(ModelMap model) throws Exception {
-//		return "/uss/olp/qtm/EgovMain";
-//	}
-//
-//	/**
-//	 * 메뉴를 조회한다.
-//	 * @param model
-//	 * @return	"/uss/sam/cpy/EgovLeft"
-//	 * @throws Exception
-//	 */
-//	@RequestMapping(value = "/uss/olp/EgovLeft.do")
-//	public String EgovLeft(ModelMap model) throws Exception {
-//		return "/uss/olp/qtm/EgovLeft";
-//	}
+	@RequestMapping(value = "/monitor/SceneMonitoring.do")
+	public String SceneMonitoring(ModelMap model,HttpServletRequest request) throws Exception 
+	{
+		// service
+
+		model.addAttribute("TeamA", smartMonitoringService.SceneMonitoring("CB-A"));
+		model.addAttribute("TeamB", smartMonitoringService.SceneMonitoring("CB-B"));
+		model.addAttribute("TeamC", smartMonitoringService.SceneMonitoring("CB-C"));
+		
+		System.out.println(model);
+		
+		return "/monitor/SceneMonitoring";
+	}
 
 	/**
-	 * 설문템플릿 목록을 조회한다.
-	 * 
-	 * @param searchVO
-	 * @param commandMap
-	 * @param qustnrTmplatManageVO
-	 * @param model
-	 * @return "/uss/olp/qtm/EgovQustnrTmplatManageList"
-	 * @throws Exception
+	 *  고객 접수현황
 	 */
-	@RequestMapping(value = "/monitor/SmartMonitoring.do")
-	public String SmartMonitoring(@ModelAttribute("searchVO") ComDefaultVO searchVO,
-			@RequestParam Map<String, Object> commandMap,
-			@RequestParam(value = "menuNo", required = false) String menuNo, HttpServletRequest request,
-			SmartMonitoringVO smartMonitoringVO, ModelMap model) throws Exception {
-		// 선택된 메뉴정보를 세션으로 등록한다.
-		if (menuNo != null && !menuNo.equals("")) {
-			request.getSession().setAttribute("menuNo", menuNo);
-		}
-
-		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
-
-		if (sCmd.equals("del")) {
-			// egovQustnrTmplatManageService.deleteQustnrTmplatManage(qustnrTmplatManageVO);
-		}
-
-		/** EgovPropertyService.sample */
-		searchVO.setPageUnit(propertiesService.getInt("pageUnit"));
-		searchVO.setPageSize(propertiesService.getInt("pageSize"));
-
-		/** pageing */
-		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
-		paginationInfo.setPageSize(searchVO.getPageSize());
-
-		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-		// model.addAttribute("resultList",
-		// SmartMonitoringService.SmartMonitoring(SmartMonitoringVO));
-
-//		model.addAttribute("searchKeyword", commandMap.get("searchKeyword") == null ? "" : (String) commandMap.get("searchKeyword"));
-//		model.addAttribute("searchCondition", commandMap.get("searchCondition") == null ? "" : (String) commandMap.get("searchCondition"));
-
-		// int totCnt =
-		// egovQustnrTmplatManageService.selectQustnrTmplatManageListCnt(searchVO);
-		Map<String, Object> map = smartMonitoringService.selectMonitoringList(searchVO);
-		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
-
-		paginationInfo.setTotalRecordCount(0);
-
-		model.addAttribute("resultList", map.get("resultList"));
-		model.addAttribute("resultCnt", map.get("resultCnt"));
-		model.addAttribute("paginationInfo", paginationInfo);
-
-		return "/monitor/SmartMonitoring";
+	@RequestMapping(value = "/monitor/GuestMonitoring.do")
+	public String GuestMonitoring(ModelMap model,HttpServletRequest request) throws Exception 
+	{
+		// service
+		
+		model.addAttribute("Guest", smartMonitoringService.GuestMonitoring());
+		
+		return "/monitor/GuestMonitoring";
 	}
 
-	@RequestMapping(value = "/monitor/SelectSmartMonitoring.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Map<String,Object> SelectSmartMonitoring(@ModelAttribute("searchVO") ComDefaultVO searchVO)throws Exception{
-		
-		Map<String,Object> map =new HashMap<String,Object>();
-		map.put("list", smartMonitoringService.selectMonitoringList(searchVO));
-		return map;
-	}
 
-	@RequestMapping(value = "/monitor/SmartMonitoringA.do")
-	public String SmartMonitoringA(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
-			@RequestParam(value = "menuNo", required = false) String menuNo,
-			HttpServletRequest request,
-			SmartMonitoringVO smartMonitoringVO, ModelMap model) throws Exception {
-		// 선택된 메뉴정보를 세션으로 등록한다.
-		if (menuNo != null && !menuNo.equals("")) {
-			request.getSession().setAttribute("menuNo", menuNo);
-		}		
-		
-		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
-
-		if (sCmd.equals("del")) {
-			//egovQustnrTmplatManageService.deleteQustnrTmplatManage(qustnrTmplatManageVO);
-		}
-
-		/** EgovPropertyService.sample */
-		searchVO.setPageUnit(propertiesService.getInt("pageUnit"));
-		searchVO.setPageSize(propertiesService.getInt("pageSize"));
-
-
-		//model.addAttribute("resultList", egovQustnrTmplatManageService.selectQustnrTmplatManageList(searchVO));
-
-		//model.addAttribute("searchKeyword", commandMap.get("searchKeyword") == null ? "" : (String) commandMap.get("searchKeyword"));
-		//model.addAttribute("searchCondition", commandMap.get("searchCondition") == null ? "" : (String) commandMap.get("searchCondition"));
-		
-		Map<String, Object> map = smartMonitoringService.selectMonitoringList(searchVO);
-		int totCnt = Integer.parseInt((String)map.get("resultCnt"));
-
-		
-		model.addAttribute("resultList", map.get("resultList"));
-		model.addAttribute("resultCnt", map.get("resultCnt"));
-		//int totCnt = egovQustnrTmplatManageService.selectQustnrTmplatManageListCnt(searchVO);
-
-		return "/monitor/SmartMonitoringA";
-	}
 }

@@ -185,7 +185,8 @@
 									<td><c:out value="${list.CUSTOMER_NAME}" /></td>
 									<td><c:out value="${list.CUSTOMER_TEL}" /></td>
 									<td><c:out value="${list.KILRO_TOTAL}" />km
-										<input type="hidden" name="kilro" value="<c:out value='${list.KILRO_TOTAL}'/>" />	
+										<input type="hidden" name="kilro" value="<c:out value='${list.KILRO_TOTAL}'/>" />
+                                        <input type="hidden" name="customerid" value="<c:out value='${list.CUSTOMER_ID}'/>" />	
 									</td>
 								</tr>
 							</c:forEach>

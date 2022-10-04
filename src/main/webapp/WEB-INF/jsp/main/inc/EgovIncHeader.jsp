@@ -163,8 +163,8 @@ function fn_egov_modal_remove() {
                     <div>
                         <!-- <h2>모니터링</h2> -->
                         <ul>
-                            <li><a href="/monitor/SmartMonitoringA.do?menuNo=4200000">현장접수모니터링</a></li>
-                            <li><a href="/monitor/SmartMonitoring.do?menuNo=4200000">고객대기실모니터링</a></li>
+                            <li><a href="/monitor/SceneMonitoring.do">현장접수모니터링</a></li>
+                            <li><a href="/monitor/GuestMonitoring.do">고객대기실모니터링</a></li>
                         </ul>
                     </div>
                     

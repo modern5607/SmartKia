@@ -59,5 +59,13 @@ public class SmartTabletDAO extends EgovAbstractMapper {
     public int RepairComplete(Map<String, Object> params) {
         return update("SmartTabletDAO.RepairComplete",params);
     }
+
+    public int updatekilro(Map<String, Object> params) {
+		return update("SmartTabletDAO.updatekilro",params);
+    }
+
+    public int ReleaseRepair(Map<String, Object> params) {
+        return update("SmartTabletDAO.ReleaseRepair",params);
+    }
    
 }

@@ -115,17 +115,17 @@
 										</span>
 									</div>
 									<div class="board_list">
-										<table>
+										<table style="table-layout: fixed;">
 											<caption>게시판목록</caption>
 											<colgroup>
 												<col style="width: 20px;">
-												<col style="width: 50px;">
-												<col style="width: 50px;">
-												<col style="width: 50px;">
-												<col style="width: 50px;">
-												<col style="width: 50px;">
-												<col style="width: 50px;">
-												<col style="width: 50px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
+												<col style="width: 100px;">
 											</colgroup>
 											<thead>
 												<tr>
@@ -142,7 +142,7 @@
 											<tbody>
 												<c:if test="${fn:length(resultList) == 0}">
 													<tr>
-														<td colspan="9"><spring:message
+														<td colspan="8"><spring:message
 																code="common.nodata.msg" /></td>
 													</tr>
 												</c:if>
@@ -155,7 +155,7 @@
 														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
-														<td><c:out value="${result.REPAIRCODE_NAME}" /></td>
+														<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
 														<td><a href="#LINK" class="btn btn_blue_30 w_50" onclick="ReceiveGroup('<c:out value="${result.TAKESEQ}" />'); return false;">상세</a></td>
 													</tr>
 												</c:forEach>
