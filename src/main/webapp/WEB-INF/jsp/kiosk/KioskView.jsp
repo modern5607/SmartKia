@@ -45,8 +45,8 @@
 .section input[id="slide03"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-200%);}
 .section input[id="slide04"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-300%);}
 .section input[id="slide05"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-400%);}
-.section input[id="slide06"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-400%);}
-.section input[id="slide07"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-400%);}
+.section input[id="slide06"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-500%);}
+.section input[id="slide07"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-600%);}
 
 </style>
 	<body>
@@ -70,7 +70,16 @@
 			<input type="radio" name="slide" id="slide05">
 			<input type="radio" name="slide" id="slide06">
 			<input type="radio" name="slide" id="slide07">
-	
+			<form name="kioskform" id="kioskform" action="<c:url value='/kiosk/InsertKioskRcpt.do'/>" method="post">
+				<input type="hidden" name="customerid">
+				<input type="hidden" name="carnum">
+				<input type="hidden" name="name">
+				<input type="hidden" name="kind">
+				<input type="hidden" name="tel">
+				<input type="hidden" name="repairlist" id="repairlist">
+				<input type="hidden" name="chkrepairlist" id="chkrepairlist">
+				
+			</form>
 			<div class="slidewrap">
 				<ul class="slidelist">
 					<!-- 메인화면 01 -->
@@ -83,7 +92,7 @@
 							</div>
 							<div class="bt">
 								<!-- <label for="slide02"></label> -->
-								<a href="#" onclick="nextBtn('slide02')" class="btn btn1 r_btn">일반 접수</a>
+								<a href="#" onclick="moveTo('slide02')" class="btn btn1 r_btn">일반 접수</a>
 								<a href="#" class="btn r_btn">예약 접수</a>
 							</div>
 						</div>
@@ -124,7 +133,7 @@
 								<div class="s_title">
 									<h1> 차량을 선택해주세요.</h1>
 								</div>
-								<input type="button" onclick="prevBtn('slide02');" value="이전" class="c_button back_num">
+								<input type="button" onclick="moveTo('slide02');" value="이전" class="c_button back_num">
 							</div>
 							<div id="s_content">
 								<table>
@@ -149,7 +158,12 @@
 					<!-- 차량정보,수리내역보기,수리부분선택 04-->
 					<li>
 						<div class="content">
-
+							<div id="s_header">
+								<div class="s_title">
+									<h1> 차량을 선택해주세요.</h1>
+								</div>
+								<input type="button" onclick="moveTo('slide03');" value="이전" class="c_button back_num">
+							</div>
 							<div id="left">
 								<div class="car_img">
 									<img src="../images/seltos.png">
@@ -169,7 +183,7 @@
 									<div class="fix_history">
 										<a href="#"  class="btn fix_bt">수리내역보기</a>
 							
-										<a href="../receive_fix/index.html" class="btn fix_bt">수리부분선택</a>
+										<a href="#" onclick="moveTo('slide06');" class="btn fix_bt">수리부분선택</a>
 									</div>
 								</div>
 							</div>
@@ -180,6 +194,13 @@
 					<!-- 수리내역보기 05-->
 					<li>
 						<div class="content">
+
+							<div id="s_header">
+								<div class="s_title">
+									<h1>수리내역</h1>
+								</div>
+								<input type="button" onclick="moveTo('slide04');" value="이전" class="c_button back_num">
+							</div>
 							<div id="ul">
 							</div>
 
@@ -188,27 +209,102 @@
 					</li>
 					<!-- 정비사항 선택 (팝업) 06-->
 					<li>
-
-
+						<div class="content">
+							<div id="s_header">
+								<div class="s_title">
+									<h1>정비내용을 선택해 주세요</h1>
+								</div>
+								<input type="button" onclick="moveTo('slide04');" value="이전" class="c_button back_num">
+							</div>
+							<strong>정비내용 선택</strong>
+							<div class="cont left">
+								<div class="scrollBox01">
+									<ul id="rcrListUL">
+										<c:forEach var="i" items="${leadtimelist.infolist}" varStatus="istatus">
+										<li class="box_tit">
+											<a href="#">${i.NAME}</a>
+											<ul>
+											<c:forEach var="j" items="${i.LIST}" varStatus="jstatus">
+												<li>
+													<input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont" value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>" data-idx="${istatus.index}${jstatus.index}" style="width: 0px;height: 0px;">
+													<label for="mtn_cont${istatus.count}_${jstatus.count}">${j.NAME}</label>
+												</li>
+											</c:forEach>
+											</ul>
+										</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+							<div class="cont left" style="width: 300px;">
+								<strong>정비내용 선택사항</strong>
+								<div class="scrollBox03 board_view5"style="overflow:scroll;">
+									<table id="repair">
+										<colgroup>
+											<col style="width:220px;">
+											<col style="width:auto;">
+											<!-- <col style="width:auto;"> -->
+										</colgroup>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+								<a href="#" onclick="InsertWebRcpt();" class="rcptBtn btn">접수신청</a>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</body>
+	<div id="popup_wrap" class="">
+		<div id="pop_up">
+			<div id="pop_up_header">
+				<div class="pop_up_line">
+					<a href=""></a>
+				</div>
+				<div class="pop_up_inner">
+					<a href="" class="pop_up_logo">
+						<img src="../images/logo_members.png">
+					</a>
+				</div>
+	
+			</div>
+			<div id="pop_up_content" class="success" style="display: none;" >
+				<div class="e2">
+					<h1>접수가 완료되었습니다.</h1>
+				</div>
+				<div class="e3">
+					<p>고객 대기실 접수 모니터링을 통해 <br>접수 현황을 확인해 보실 수 있습니다.</p>
+				</div>
+			</div>
+			<div id="pop_up_content" class="fail" style="display: none;">
+				<div class="e2">
+					<h1>접수가 실패하였습니다</h1>
+				</div>
+				<div class="e3">
+					<p>데스크에 문의해 주세요</p>
+				</div>
+			</div>
+			<div id="pop_up_footer">
+				<div class="to_desk">
+					<a href="#" onclick="clickconfirm();" class="btn">확인</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </html>
 
 
 <script>
-function nextBtn(aa)
+function moveTo(num)
 {
-	// console.log($("input[id="+aa+"]"));
-	$("input[id="+aa+"]").prop("checked",true);
-}
-
-function prevBtn(aa)
-{
-	// console.log($("input[id="+aa+"]"));
-	$("input[id="+aa+"]").prop("checked",true);
+	//정비사항 화면
+	if(num == "slide06")
+	{
+		$("li.box_tit a").parent().removeClass("active");
+	}
+	$("input[id="+num+"]").prop("checked",true);
 }
 var carnum="";
 function clicknum(num)
@@ -265,27 +361,34 @@ function clicksearch()
 					html+="<td>"+item.CUSTOMER_TEL+"</td>";
 					html+="<td>"+item.CUSTOMER_AUTOKIND+"</td>";
 					html+="<td>"+item.CUSTOMER_NAME+"</td>";
-					html+="<td><a href='#' class='c_button' onclick=\"clickCar('"+item.CUSTOMER_AUTONO+"','"+item.CUSTOMER_NAME+"','"+item.CUSTOMER_AUTOKIND+"','"+item.CUSTOMER_ID+"');\">선택</a></td>";
+					html+="<td><a href='#' class='c_button' onclick=\"clickCar('"+item.CUSTOMER_AUTONO+"','"+item.CUSTOMER_NAME+"','"+item.CUSTOMER_AUTOKIND+"','"+item.CUSTOMER_TEL+"','"+item.CUSTOMER_ID+"');\">선택</a></td>";
 					html+="</tr>";
 				});
 			}
 			cartbody.html(html);
 			
-			nextBtn('slide03');
+			moveTo('slide03');
         }
     });
 }
 
-function clickCar(carnum,name,kind,id){
+function clickCar(carnum,name,kind,tel,id){
 	console.log(carnum);
 	console.log(name);
 	console.log(kind);
+	console.log(tel);
 	$(".car_info").children("li:eq(0)").children("label:eq(1)").text(carnum);
 	$(".car_info").children("li:eq(1)").children("label:eq(1)").text(name);
 	$(".car_info").children("li:eq(2)").children("label:eq(1)").text(kind);
 	$(".fix_history").children("a:eq(0)").attr("onclick","clickRepair('"+id+"');")
 
-	nextBtn('slide04');
+	$("input[name=customerid]").val(id);
+	$("input[name=carnum]").val(carnum);
+	$("input[name=name]").val(name);
+	$("input[name=kind]").val(kind);
+	$("input[name=tel]").val(tel);
+
+	moveTo('slide04');
 }
 
 function clickRepair(id)
@@ -314,6 +417,7 @@ function clickRepair(id)
 					// var receipt_stamp = item.RECEIPTDATE;
 					// var receiptdate = new Date(receipt_stamp);
 					html+="<ul>"+item.RECEIPTDATE;
+					html+="<label> 더보기+ </label>";
 					html+="<li>";
 					html+="<table>";
 					$.each(item.DETAIL, function (jndex, jtem) { 
@@ -331,11 +435,109 @@ function clickRepair(id)
 				
 				
 				repair_selector.html(html);
-				nextBtn("slide05");
+				moveTo("slide05");
 			}
 			// var cartbody = $("#s_content table tbody");
 			
         }
     });
+}
+
+$("li.box_tit a").click(function(){
+    // console.log($(this));
+    if($(this).parent().hasClass("active"))
+        $(this).parent().removeClass("active");
+    else
+        $(this).parent().addClass("active");
+});
+
+$(".box_tit ul li label").click(function(){
+    var $this = $(this);
+	$this.css("pointer-events","none");
+    setTimeout(function(){
+        var checkbox =$this.parent().find("input");
+        // console.log(checkbox);
+        var checkbox_val = checkbox.val();
+        var checkbox_idx = checkbox.data("idx");
+        var repairtext = $this.text();       
+        var repairhtml = $("#repair").children("tbody");       
+
+        if(checkbox.is(":checked")==false)
+        {
+            $("[id=repair_"+checkbox_idx+"]").remove();
+			
+        }
+        else
+        {
+            var html='';
+            html+="<tr id='repair_"+(checkbox_idx)+"'>";
+            html+="<td>"+repairtext+"</td>";
+            // html+="<td>";
+            // html+="<label class='f_selectsmall'><select id='chk_repair_"+checkbox_idx+"' name='chk_repair' >";
+            // html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
+            // html+="</select></label>";
+            // html+="</td>";
+            html+="<input type='hidden' name='repaircode' id='repaircode' value='"+checkbox_val+"'/>";
+            html+="</tr>";
+            repairhtml.append(html);
+			
+        }
+		
+		$this.css("pointer-events","auto");
+
+    },200)
+});
+
+function InsertWebRcpt()
+{
+	//수리항목 리스트화
+
+	var chkrepairarray = new Array();
+	var array = new Array();
+	$('input[name=repaircode]').each(function(index) {
+		array.push($(this).val());
+		chkrepairarray.push("CB-general");
+	});
+	$("#repairlist").val(array);
+	$("#chkrepairlist").val(chkrepairarray);
+	if($("#repairlist").val()==null||$("#repairlist").val()=='')
+	{
+		alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+		return;
+	}
+	var form = $("#kioskform")[0];
+	var formdata = new FormData(form);
+	
+	$.ajax({
+        type: "post",
+        url: "/kiosk/InsertKioskRcpt.do",
+		processData:false,
+		contentType:false,
+        data: formdata,
+        success: function (resp) {
+			
+			console.log(resp);
+			if(resp=="success")
+			{
+				$("#popup_wrap").css("display","block");
+				$(".success").css("display","block");
+			}
+			else if(resp == "fail")
+			{
+				$("#popup_wrap").css("display","block");
+				$(".fail").css("display","block");
+			}
+		}
+    });
+}
+
+function clickconfirm()
+{
+	clickdel();
+	
+	$("#popup_wrap").css("display","none");
+	$(".success").css("display","none")
+	$(".fail").css("display","none")
+	moveTo("slide01");
 }
 </script>

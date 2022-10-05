@@ -1,5 +1,6 @@
 package egovframework.smart.kiosk.web;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import egovframework.let.uss.ion.bnr.service.Banner;
 import egovframework.let.uss.ion.bnr.service.BannerVO;
 import egovframework.let.uss.ion.bnr.service.EgovBannerService;
 import egovframework.smart.kiosk.service.SmartKioskService;
+import egovframework.smart.mdm.service.SmartMdmService;
 import egovframework.smart.rcpt.service.SmartRcptService;
 import egovframework.smart.rcpt.service.SmartRcptVO;
 
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,6 +45,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 @Controller
@@ -51,6 +55,12 @@ public class SmartKioskController {
 	private EgovTemplateManageService tmplatService;
 
 
+	@Resource(name = "egovMessageSource")
+	EgovMessageSource egovMessageSource;
+	
+	@Resource(name = "SmartMdmService")
+	private SmartMdmService smartmdmservice;
+	
 	@Resource(name = "SmartRcptService")
 	private SmartRcptService smartrcptservice;
 
@@ -70,8 +80,9 @@ public class SmartKioskController {
 			request.getSession().setAttribute("menuNo", menuNo);
 		}
 
-		//bannerVO.setBannerList(egovBannerService.selectBannerList(bannerVO));
-		//model.addAttribute("bannerList", bannerVO.getBannerList());
+		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
+		model.addAttribute("leadtimelist", leadtimelist);
+
 
 		return "/kiosk/KioskView";
 	}
@@ -103,7 +114,43 @@ public class SmartKioskController {
 	}
 
 
+	//키오스크 접수등록
+	@RequestMapping(value = "/kiosk/InsertKioskRcpt.do",method = RequestMethod.POST)
+	@ResponseBody
+	public String InsertKioskRcpt(@RequestParam Map<String,Object> params,ModelMap model, RedirectAttributes attr) throws Exception {
+		
+		params.put("loginid", "KioskTest");
+		params.put("id", params.get("customerid").toString());
+		params.put("servicesys", "CB-Kiosk");
+
+		System.out.println("params:"+params);
+		int result=0;
+		//고객 조회
+		HashMap<String,Object> customerInfo = smartrcptservice.selectMberList(params);
+		//System.out.println("customerInfo len :"+customerInfo.size());
+		//System.out.println("customerInfo :"+customerInfo);
+		if(params.get("id").toString().equals(""))
+			params.put("id",customerInfo.get("CUSTOMER_ID"));
+
+		//새 고객이면 고객 등록
+		if(customerInfo == null)
+		{
+			System.out.println("새 고객입니다 등록하겠습니다.");
+			result = smartrcptservice.InsertMber(params);
+			System.out.println("고객 등록 결과 :"+result);
+			// HashMap<String,Object> custominfo = smartrcptservice.selectMberList(params);
+		}
+		//접수등록
+		result = smartrcptservice.InsertWebRcpt(params);
+		if(result==0)
+			return "fail";
+		else
+			return "success";
+	}
 	
+
+
+	/*/
 	@RequestMapping("/kiosk/selectKioskin.do")
 	public String selectKioskin(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, ModelMap model,
 		@RequestParam(value = "menuNo", required = false) String menuNo,
@@ -145,4 +192,5 @@ public class SmartKioskController {
 		
 		return "/kiosk/SmartStandardInsurance";
 	}
+	*/
 }
