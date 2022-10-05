@@ -93,10 +93,10 @@ function fn_egov_modal_remove() {
 				<c:if test="${loginName != ''}">
                 <!-- case: 로그인했을경우 -->
 	                <li><a href="<c:url value='/'/>uat/uia/actionLogout.do" class="logout" title="로그아웃">로그아웃</a></li>
-                    <!--
-	                <li><a href="" class="mail" title="메일">메일<span>3</span>건</a></li>
-	                <li><a href="" class="allmenu" title="전체메뉴">전체메뉴</a></li>
-                    -->
+                    
+	                <!-- <li><a href="" class="mail" title="메일">메일<span>3</span>건</a></li> -->
+	                 <li><a href="" class="allmenu" title="전체메뉴">전체메뉴</a></li>
+                    
 				</c:if>
             </ul>
         </div>

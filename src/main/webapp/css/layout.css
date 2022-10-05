@@ -55,7 +55,7 @@ body {min-width: 1400px;}
 .all_menu .inner > div.admin ul li + li {margin-top: 6px;}
 .all_menu .inner > div.admin ul li a {font-size: 16px;}
 
-.util_menu {position: absolute; right: 60px; top: 80px;}
+.util_menu {position: absolute; right: 15px; top: 80px;}
 .util_menu ul {font-size: 0; text-align: right;}
 .util_menu ul li {display: inline-block; vertical-align: top;}
 .util_menu ul li + li {margin-left: 17px;}
@@ -64,8 +64,8 @@ body {min-width: 1400px;}
 .util_menu .logout {background: url(../images/ico_logout.png) no-repeat; background-size: cover;}
 .util_menu .mail {position: relative; background: url(../images/ico_mail.png) no-repeat;}
 .util_menu .mail span {display: block; position: absolute; right: -6px; top: -6px; width: 26px; height: 26px; border-radius: 50%; color: #fff; font-size: 16px; line-height: 26px; text-align: center; background: #eb6877;}
-.util_menu .allmenu {background: url(../images/ico_allmenu.png) no-repeat;}
-.util_menu .allmenu.on {background: url(../images/ico_allmenu_close.png) no-repeat;}
+/* .util_menu .allmenu {background: url(../images/ico_allmenu.png) no-repeat;}
+.util_menu .allmenu.on {background: url(../images/ico_allmenu_close.png) no-repeat;} */
 
 
 .container {min-height: calc(100vh - 360px); margin-top: 120px;}

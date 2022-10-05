@@ -33,7 +33,7 @@ function Complete(seq)
 				.dialog({
 					autoOpen : false,
 					modal : true,
-					width : 1000,
+					width : 910,
 					height : 700
 				});
 			$(".ui-dialog-titlebar").hide();

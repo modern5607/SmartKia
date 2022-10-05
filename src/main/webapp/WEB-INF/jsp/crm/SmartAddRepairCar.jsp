@@ -48,7 +48,7 @@ function fnSearch() {
 				<div class="sub_in">
 					<div class="layout">
 						<div class="content_wrap">
-							<div id="contents" style="margin-bottom:10px">
+							<div id="contents">
 								<!-- Location -->
 								<div class="location">
 									<ul>
@@ -59,11 +59,10 @@ function fnSearch() {
 								</div>
 								<!--// Location -->
 								<form name="smartCrmVO" action="/crm/SmartAddRepairCar.do" method="post">
-									<input name="selectedId" type="hidden" /> <input
-										name="checkedIdForDel" type="hidden" /> <input
-										name="pageIndex" type="hidden"
-										value="<c:out value='${userSearchVO.pageIndex}'/>" />
-									<div class="condition" style="text-align: left; margin-top: 20px;">
+									<input name="selectedId" type="hidden" /> 
+									<input name="checkedIdForDel" type="hidden" /> 
+									<input name="pageIndex" type="hidden" value="<c:out value='${userSearchVO.pageIndex}'/>" />
+									<div class="condition">
 										<span class="item f_search">
 											<p class="left">
 												<label for="searchAutoNo">차량번호 :</label> 
