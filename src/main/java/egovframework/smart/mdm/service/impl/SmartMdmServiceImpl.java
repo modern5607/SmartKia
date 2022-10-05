@@ -69,7 +69,7 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 
 	@Override
 	public int InsertCommonCode(SmartCommonCodeVO vo) throws Exception {
-		List<SmartCommonCodeVO> info = smartDAO.selectCommonCode(vo);
+		List<Object> info = smartDAO.selectCode(vo);
 		// System.out.println("VO : "+vo);
 		int result=0;
 		System.out.println("info : "+info);

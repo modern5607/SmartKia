@@ -591,6 +591,8 @@ $("li.box_tit a").click(function(){
 
 $(".box_tit ul li label").click(function(){
     var $this = $(this);
+    
+	$this.css("pointer-events","none");
     setTimeout(function(){
         var checkbox =$this.parent().find("input");
         console.log(checkbox);
@@ -627,6 +629,8 @@ $(".box_tit ul li label").click(function(){
             html+="</tr>";
             repairhtml.append(html);
         }
+        
+	$this.css("pointer-events","auto");
     },200)
 
 });

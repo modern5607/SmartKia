@@ -109,7 +109,6 @@ function fn_egov_modal_remove() {
                         <ul>
                             <li><a href="/mdm/SmartCode.do?menuNo=1010000">공통코드관리</a></li>
                             <li><a href="/mdm/SmartMberManage.do?menuNo=1000000">사용자관리</a></li>
-                            <li><a href="/sec/gmt/EgovGroupList.do?menuNo=1000000">소요시간관리</a></li>
                             <!-- <li><a href="/EgovPageLink.do?link=main/sample_menu/EgovLocation?menuNo=1000000">찾아오시는 길</a></li> -->
                             <li><a href="/mdm/SmartLeadTime.do?menuNo=1070000">표준작업관리</a></li>
                             <li><a href="/mdm/SmartBiz.do">거래처 관리</a></li>

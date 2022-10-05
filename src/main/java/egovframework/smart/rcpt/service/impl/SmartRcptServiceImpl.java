@@ -29,7 +29,7 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 	
 
 	@Override
-	public List<?> selectCarInfo(SmartRcptVO vo) throws Exception{
+	public List<Object> selectCarInfo(SmartRcptVO vo) throws Exception{
 		return smartrcptDAO.selectCarInfo(vo);
 	}
 

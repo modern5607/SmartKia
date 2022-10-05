@@ -16,7 +16,7 @@ import egovframework.smart.rcpt.service.SmartRcptVO;
 @Repository("SmartRcptDAO")
 public class SmartRcptDAO extends EgovAbstractMapper {
 
-    public List<?> selectCarInfo(SmartRcptVO vo) {
+    public List<Object> selectCarInfo(SmartRcptVO vo) {
         return selectList("SmartRcptDAO.selectCarInfo",vo);
     }
 

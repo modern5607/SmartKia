@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="SmartKioskDAO">
+
+	<select id="selectCarRepairInfo" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT TAKESEQ,CUSTOMER_ID,AUTONUMBER,REPAIRCODE,REPAIRNOTE,TO_CHAR(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS') RECEIPTDATE,NOTE,URGENT,KILRO_NOW,ETIME,TOTAL_LEADTIME,TO_CHAR(INSERT_DATE,'YYYY-MM-DD HH24:MI:SS') INSERT_DATE FROM CAR_TAKEREPAIR WHERE CUSTOMER_ID = #{id}
+	</select>
+	<select id="selectCarRepairDetailInfo" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT REPAIRMETHOD,FN_CODENAME(REPAIRMETHOD,'AUTO_ME') METHODNAME,REPAIR_NOTE,INSERT_DATE,FN_LEADTIME_NAME(REPAIRCODE,'NAME') REPAIRNAME FROM CAR_LEAD_REPAIR WHERE TAKESEQ = #{takeseq}
+	</select>
+</mapper>

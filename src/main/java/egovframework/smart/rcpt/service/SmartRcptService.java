@@ -11,7 +11,7 @@ import egovframework.smart.rcpt.service.ReservationVO;
 
 public interface SmartRcptService {
 
-    List<?> selectCarInfo(SmartRcptVO vo) throws Exception;
+    List<Object> selectCarInfo(SmartRcptVO vo) throws Exception;
 
     List<Object> SelectMiddleLeadTime(String s)throws Exception;
     int InsertWebRcpt(Map<String,Object> map)throws Exception;
