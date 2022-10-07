@@ -14,8 +14,14 @@
 .loginbox .btn_a {padding: 30px 0 0 177px;}
 .loginbox .btn_a .btn {width: 160px; height: 50px; margin-right: 12px; border-radius: 8px; color: #fff; font-size: 18px; font-weight: 500; text-align: center; line-height: 50px; background: #169bd5;}
 
-.p_main .visual {width: 1920px; height: 800;}
-.p_main .visual p {height: 700px; background: url(../images/kiamain.jpg) no-repeat;}
+.p_main .visual {position: relative;
+    margin: 0 auto;
+    max-width: 1920px;
+    height: 850px;
+    overflow: hidden;
+    background: black;
+}
+.p_main .visual p {height: 700px; background: url(../images/kiamain.png) no-repeat;}
 .p_main .visual p span {display: block;}
 .p_main .visual p .t1 {font-size: 35px; text-align: center; padding-top: 620px; color: aliceblue; font-weight: bold;}
 

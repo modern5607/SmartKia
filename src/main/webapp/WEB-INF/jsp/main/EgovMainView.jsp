@@ -43,9 +43,12 @@
         <div class="container">
             <div class="p_main">
                 <div class="visual">
-                    <p>
-                        <span class="t1">KIA AUTO Q 옥암점에 오신걸 환영합니다.</span>
-                    </p>
+                    <center>
+                        <p>
+                            <span class="t1">KIA AUTO Q 옥암점에 오신걸 환영합니다.</span>
+                        </p>
+                    </center>
+                    
                 </div>    
             </div>
         </div>

@@ -68,7 +68,7 @@ body {min-width: 1400px;}
 .util_menu .allmenu.on {background: url(../images/ico_allmenu_close.png) no-repeat;} */
 
 
-.container {min-height: calc(100vh - 360px); margin-top: 120px;}
+.container {min-height: calc(100vh - 180px); margin-top: 120px;}
 .content {min-height: 700px; padding-bottom: 100px;}
 
 .sub_layout {border-top: 1px solid #cccccc;}
@@ -125,7 +125,7 @@ body {min-width: 1400px;}
 
 
 .footer {border-top: 1px solid #000000;; background: black;}
-.footer .inner {position: relative; width: 1400px; height: 179px; margin: 0 auto; padding: 0 50px;}
+.footer .inner { width: 1400px; height: 179px; margin: 0 auto; padding: 0 50px;}
 .footer .inner::after {content: ""; display: block; clear: both;}
 .footer h1 {float: left; padding-top: 70px;}
 .footer h1 a {display: block;}

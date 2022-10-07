@@ -63,7 +63,7 @@
         <div class="container">
             <div class="sub_layout">
                 <div class="sub_in">
-                    <div class="layout">
+                    <div class="layout" style="margin-bottom: 40px;">
                         <!-- Left menu -->
                         <!-- <c:import url="/sym/mms/EgovMenuLeft.do" /> -->
                         <!--// Left menu -->
