@@ -61,7 +61,7 @@
 					AND A.TASKSTAT ='CB-repaired'
 					AND A.POSITION = #{Team}
       				ORDER BY ORD DESC, A.ESTIME ASC ) D
-			WHERE ROWNUM &lt; 6
+			WHERE ROWNUM &lt; 4
 	</select>
 
 	<select id="GuestMonitoring" parameterType="comDefaultVO" resultType="java.util.HashMap">
@@ -82,5 +82,22 @@
 				AND A.TASKSTAT != 'CB-receipt'
       			ORDER BY ORD DESC, A.ESTIME ASC ) D
 					WHERE ROWNUM &lt; 11
+	</select>
+
+	<select id="CompleteMonitoring" parameterType="comDefaultVO" resultType="java.util.HashMap">
+			SELECT TAKESEQ,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME,
+       			A.TASKSTAT,
+            	TO_CHAR(TO_DATE(A.ESTIME,'YYYY-MM-DD HH24:MI:SS'),'HH24:MI') AS ESTIME,
+              	A.ESTIME AS etime,
+          		FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+          		REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
+       			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
+					FROM   CAR_TAKEREPAIR A ,CAR_CUSTOMER B
+					WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+					AND A.TASKSTAT ='CB-perfect'
+      			ORDER BY A.ESTIME ASC
 	</select>
 </mapper>

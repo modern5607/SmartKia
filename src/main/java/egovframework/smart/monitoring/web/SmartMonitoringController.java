@@ -1,5 +1,6 @@
 package egovframework.smart.monitoring.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +99,23 @@ public class SmartMonitoringController {
 		
 		model.addAttribute("Guest", smartMonitoringService.GuestMonitoring());
 		
+		model.addAttribute("TeamA", smartMonitoringService.SceneMonitoring("CB-A"));
+		model.addAttribute("TeamB", smartMonitoringService.SceneMonitoring("CB-B"));
+		model.addAttribute("TeamC", smartMonitoringService.SceneMonitoring("CB-C"));
+
+		model.addAttribute("Complete", smartMonitoringService.CompleteMonitoring());
+
 		return "/monitor/GuestMonitoring";
+	}
+
+	@RequestMapping(value = "/monitor/ajaxMonitoring.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> ajaxMonitoring(HttpServletResponse response) throws Exception
+	{	
+		List<Object> list = smartMonitoringService.GetMonitoringData();
+		System.out.println(list);
+
+		return list;
 	}
 
 

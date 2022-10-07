@@ -12,6 +12,10 @@ public interface SmartMonitoringService {
     public List<Object> SceneMonitoring(String Team)throws Exception;
 
     public List<Object> GuestMonitoring()throws Exception;
+
+    public List<Object> CompleteMonitoring()throws Exception;
+
+    public List<Object> GetMonitoringData()throws Exception;
 	
 
 }

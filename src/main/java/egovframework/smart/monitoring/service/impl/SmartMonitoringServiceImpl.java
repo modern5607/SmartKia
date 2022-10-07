@@ -1,5 +1,6 @@
 package egovframework.smart.monitoring.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,27 @@ public class SmartMonitoringServiceImpl extends EgovAbstractServiceImpl implemen
 	public List<Object> GuestMonitoring() throws Exception {
 		List<Object> result = smartmonitoringDAO.GuestMonitoring();
 		return result;
+	}
+
+	@Override
+	public List<Object> CompleteMonitoring() throws Exception {
+		List<Object> result = smartmonitoringDAO.CompleteMonitoring();
+		return result;
+	}
+
+	@Override
+	public List<Object> GetMonitoringData() throws Exception {
+		
+		List<Object> list = new ArrayList<Object>();
+
+
+		list.add(smartmonitoringDAO.GuestMonitoring());
+		list.add(smartmonitoringDAO.SceneMonitoring("CB-A"));
+		list.add(smartmonitoringDAO.SceneMonitoring("CB-B"));
+		list.add(smartmonitoringDAO.SceneMonitoring("CB-C"));
+		list.add(smartmonitoringDAO.CompleteMonitoring());
+
+		return list;
 	}
 
 }

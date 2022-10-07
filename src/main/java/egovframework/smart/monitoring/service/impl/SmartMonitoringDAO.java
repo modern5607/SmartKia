@@ -24,4 +24,8 @@ public class SmartMonitoringDAO extends EgovAbstractMapper {
     public List<Object> GuestMonitoring() {
         return selectList("SmartMonitoringDAO.GuestMonitoring");
     }
+
+    public List<Object> CompleteMonitoring() {
+        return selectList("SmartMonitoringDAO.CompleteMonitoring");
+    }
 }

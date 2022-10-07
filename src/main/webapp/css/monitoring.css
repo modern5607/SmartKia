@@ -2,14 +2,21 @@
 
 .teamtables .header {height: 70px; background: linear-gradient(1deg, #c7c0c0, #0000000a);}
 
-.teamtables .header h1 {width: 80%;}
-.teamtables .header .logo {width: 20%;}
+.teamtables .header h1 {width: 70%;}
+.teamtables .header .logo {width: 30%;}
 .teamtables .header .logo img {width:150px ;}
 .team_left{float: left;    margin-top: 15px; padding-left: 80px;}
+.board_list tbody{background: linear-gradient(0deg, #bfbfbf, #16131329);}
 
-.sub_in{width: 100%;
+
+.sub_in{
+    width: 50%;
+    min-height: 63.6vh;
     margin: 0;
-    padding: 0px 0px;}
+    box-sizing: border-box;
+    padding: 0px 0px;
+    border: solid black 5px;
+}
 .tit_1{    color: #010101d2;
     font-size: 48px;
     font-weight: 600;
@@ -18,14 +25,17 @@
 .board_list th{padding: 7px 0; background: black; color:white; font-weight: bold; font-size: 32px;}
 .container {margin-top: 0px;}
 
-.board_list td{padding: 10px 0 10px 0;
+.board_list td{
+    padding: 10px 0 10px 0;
     border-bottom: 2px solid #dde2e5;
+    height: 59.5px;
     color: #060606;
     text-align: center;
     font-weight: bold;
-    font-size: 20px;}
+    font-size: 26px;
+}
 
 .content {
-    min-height: 700px;
+    min-height: 600px;
     padding-bottom: 0;
 }
