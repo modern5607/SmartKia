@@ -107,7 +107,7 @@ public class SmartMonitoringController {
 
 		return "/monitor/GuestMonitoring";
 	}
-
+/*
 	@RequestMapping(value = "/monitor/ajaxMonitoring.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Object> ajaxMonitoring(HttpServletResponse response) throws Exception
@@ -117,6 +117,6 @@ public class SmartMonitoringController {
 
 		return list;
 	}
-
+ */
 
 }

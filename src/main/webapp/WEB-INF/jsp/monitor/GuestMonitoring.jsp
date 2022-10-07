@@ -82,7 +82,7 @@ div.marquee>div.marquee-text {
 									<tr>
 										<th scope="col">차량번호</th>
 										<th scope="col">차종</th>
-										<th scope="col">성함</th>
+										<th scope="col">고객명</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -233,7 +233,7 @@ div.marquee>div.marquee-text {
 	</div>
 </div>
 	<div class='marquee'>
-		<div class='marquee-text' style="font-size:40px;">현장 상황에 따라 수리진행이 변동될수 있습니다.</div>
+		<div class='marquee-text' style="font-size:40px;">현장 상황에 따라 수리진행이 변동될수 있습니다. 수리가 완료된 차량은 데스크에서 출고처리 바랍니다.</div>
 	</div>
 	</div>
 </body>
