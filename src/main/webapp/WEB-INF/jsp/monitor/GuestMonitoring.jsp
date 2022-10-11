@@ -58,178 +58,180 @@ div.marquee>div.marquee-text {
 </script>
 </head>
 <body>
-<body>
 
 	<div class="container">
 		<div id ="test">
-		<div class="monitoring content">
-			<div class="sub_in" style="float: left;">
-				<div class="layout">
-					<div class="teamtables">
-						<div class="top_line"></div>
-						<div class="header">
-							<h1 class="tit_1 team_left"> 접수</h1>
-							<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
-						</div>
-						<div class="board_list">
-							<table id="guesttable">
-								<colgroup>
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 35%;">
-								</colgroup>
-								<thead>
-									<tr>
-										<th scope="col">차량번호</th>
-										<th scope="col">차종</th>
-										<th scope="col">고객명</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach begin="0" end="8" varStatus="status">
+			<div class="monitoring content">
+				<div class="sub_in" style="float: left;">
+					<div class="layout">
+						<div class="teamtables">
+							<div class="top_line"></div>
+							<div class="header">
+								<h1 class="tit_1 team_left">접수 현황</h1>
+								<div class="logo team_left"></div>
+							</div>
+							<div class="board_list">
+								<table id="guesttable">
+									<colgroup>
+										<col style="width: 25%;">
+										<col style="width: 25%;">
+										<col style="width: 25%;">
+										<col style="width: 25%;">
+									</colgroup>
+									<thead>
 										<tr>
-											<td><c:out value="${Guest[status.index].AUTONUMBER}" /></td>
-											<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
-											<td><c:out value="${Guest[status.index].CUSTOMER_NAME}" /></td>
+											<th scope="col">접수번호</th>
+											<th scope="col">차량번호</th>
+											<th scope="col">차종</th>
+											<th scope="col">고객명</th>
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<c:forEach begin="0" end="8" varStatus="status">
+											<tr>
+												<td><c:out value="${Guest[status.index].TAKESEQ}" /></td>
+												<td><c:out value="${Guest[status.index].AUTONUMBER}" /></td>
+												<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
+												<td><c:out value="${Guest[status.index].NAME}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="sub_in" style="float:right;">
+					<div class="layout">
+						<div class="teamtables">
+							<div class="top_line"></div>
+							<div class="header">
+								<h1 class="tit_1 team_left">작업 현황</h1>
+								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
+							</div>
+							<div class="board_list">
+								<table id="atable" >
+									<colgroup>
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+									</colgroup>
+									<thead>
+										<tr>
+											<th scope="col">차량번호</th>
+											<th scope="col">고객명</th>
+											<th scope="col">예상완료시간</th>
+											<th scope="col">작업반</th>
+											<th scope="col">상태</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach begin="0" end="2" varStatus="status">
+											<tr>
+												<td><c:out value="${TeamA[status.index].AUTONUMBER}" /></td>
+												<td><c:out value="${TeamA[status.index].NAME}" /></td>
+												<td><c:out value="${TeamA[status.index].ESTIME}" /></td>
+												<td><c:out value="${TeamA[status.index].POSITION_NAME}" /></td>
+												<td style="color:red;"><c:out value="${TeamA[status.index].TASKSTAT_NAME}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="teamtables">
+							<div class="board_list"style="border-top: none;">
+								<table id="btable">
+									<colgroup>
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+									</colgroup>
+									<tbody>
+										<c:forEach begin="0" end="2" var="result"
+											varStatus="status">
+											<tr>
+												<td><c:out value="${TeamB[status.index].AUTONUMBER}" /></td>
+												<td><c:out value="${TeamB[status.index].NAME}" /></td>
+												<td><c:out value="${TeamB[status.index].ESTIME}" /></td>
+												<td><c:out value="${TeamB[status.index].POSITION_NAME}" /></td>
+												<td style="color:red;"><c:out value="${TeamB[status.index].TASKSTAT_NAME}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="teamtables">
+							<div class="board_list" style="border-top: none;">
+								<table id="ctable">
+									<colgroup>
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+									</colgroup>
+									<tbody>
+										<c:forEach begin="0" end="2" var="result"
+											varStatus="status">
+											<tr>
+												<td><c:out value="${TeamC[status.index].AUTONUMBER}" /></td>
+												<td><c:out value="${TeamC[status.index].NAME}" /></td>
+												<td><c:out value="${TeamC[status.index].ESTIME}" /></td>
+												<td><c:out value="${TeamC[status.index].POSITION_NAME}" /></td>
+												<td style="color:red;"><c:out value="${TeamC[status.index].TASKSTAT_NAME}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="sub_in" style="float:right;">
-				<div class="layout">
-					<div class="teamtables">
-						<div class="top_line"></div>
-						<div class="header">
-							<h1 class="tit_1 team_left">작업 현황</h1>
-							<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
-						</div>
-						<div class="board_list">
-							<table id="atable" >
-								<colgroup>
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-								</colgroup>
-								<thead>
-									<tr>
-										<th scope="col">차량번호</th>
-										<th scope="col">고객명</th>
-										<th scope="col">예상완료시간</th>
-										<th scope="col">창구</th>
-										<th scope="col">상태</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach begin="0" end="2" varStatus="status">
-										<tr>
-											<td><c:out value="${TeamA[status.index].AUTONUMBER}" /></td>
-											<td><c:out value="${TeamA[status.index].CUSTOMER_NAME}" /></td>
-											<td><c:out value="${TeamA[status.index].ESTIME}" /></td>
-											<td><c:out value="${TeamA[status.index].POSITION_NAME}" /></td>
-											<td style="color:red;"><c:out value="${TeamA[status.index].TASKSTAT_NAME}" /></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+		<div>
+			<div class="layout">
+				<div class="teamtables">
+					<div class="top_line"></div>
+					<div class="header">
+						<h1 class="tit_1 team_left" style="width: 80%;">작업 완료</h1>
+						<div class="logo team_left" style="width: 20%;"><img src="../images/kia_logo.png" style="width:200px;"></div>
 					</div>
-					<div class="teamtables">
-						<div class="board_list"style="border-top: none;">
-							<table id="btable">
-								<colgroup>
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-								</colgroup>
-								<tbody>
-									<c:forEach begin="0" end="2" var="result"
-										varStatus="status">
-										<tr>
-											<td><c:out value="${TeamB[status.index].AUTONUMBER}" /></td>
-											<td><c:out value="${TeamB[status.index].CUSTOMER_NAME}" /></td>
-											<td><c:out value="${TeamB[status.index].ESTIME}" /></td>
-											<td><c:out value="${TeamB[status.index].POSITION_NAME}" /></td>
-											<td style="color:red;"><c:out value="${TeamB[status.index].TASKSTAT_NAME}" /></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="teamtables">
-						<div class="board_list" style="border-top: none;">
-							<table id="ctable">
-								<colgroup>
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-									<col style="width: 20%;">
-								</colgroup>
-								<tbody>
-									<c:forEach begin="0" end="2" var="result"
-										varStatus="status">
-										<tr>
-											<td><c:out value="${TeamC[status.index].AUTONUMBER}" /></td>
-											<td><c:out value="${TeamC[status.index].CUSTOMER_NAME}" /></td>
-											<td><c:out value="${TeamC[status.index].ESTIME}" /></td>
-											<td><c:out value="${TeamC[status.index].POSITION_NAME}" /></td>
-											<td style="color:red;"><c:out value="${TeamC[status.index].TASKSTAT_NAME}" /></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	<div>
-		<div class="layout">
-			<div class="teamtables">
-				<div class="top_line"></div>
-				<div class="header">
-					<h1 class="tit_1 team_left" style="width: 80%;">완료</h1>
-					<div class="logo team_left" style="width: 20%;"><img src="../images/kia_logo.png" style="width:200px;"></div>
-				</div>
-				<div class="board_list">
-					<table id="comtable">
-						<colgroup>
-							<col style="width: 20%;">
-							<col style="width: 20%;">
-							<col style="width: 20%;">
-							<col style="width: 20%;">
-						</colgroup>
-						<thead>
-							<tr>
-								<th scope="col">차량번호</th>
-								<th scope="col">차량</th>
-								<th scope="col">고객명</th>
-								<th scope="col">창구</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach begin="0" end="2" varStatus="status">
+					<div class="board_list">
+						<table id="comtable">
+							<colgroup>
+								<col style="width: 20%;">
+								<col style="width: 20%;">
+								<col style="width: 20%;">
+								<col style="width: 20%;">
+							</colgroup>
+							<thead>
 								<tr>
-									<td><c:out value="${Complete[status.index].AUTONUMBER}" /></td>
-									<td><c:out value="${Complete[status.index].CUSTOMER_AUTOKIND}" /></td>
-									<td><c:out value="${Complete[status.index].CUSTOMER_NAME}" /></td>
-									<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td>
+									<th scope="col">차량번호</th>
+									<th scope="col">차종</th>
+									<th scope="col">고객명</th>
+									<th scope="col">작업반</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach begin="0" end="2" varStatus="status">
+									<tr>
+										<td><c:out value="${Complete[status.index].AUTONUMBER}" /></td>
+										<td><c:out value="${Complete[status.index].CUSTOMER_AUTOKIND}" /></td>
+										<td><c:out value="${Complete[status.index].NAME}" /></td>
+										<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
-		</div>		
+			</div>		
 	</div>
 </div>
 	<div class='marquee'>
@@ -239,5 +241,5 @@ div.marquee>div.marquee-text {
 </body>
 </html>
 <script type="text/javascript">
-var auto_refresh = setInterval(function (){$('#test').load(window.location.href + " #test");}, 5000);
+var auto_refresh = setInterval(function (){$('#test').load(window.location.href + " #test");}, 30000);
 </script>
