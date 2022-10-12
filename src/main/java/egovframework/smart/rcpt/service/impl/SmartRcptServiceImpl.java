@@ -59,7 +59,16 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 		int result=0;
 
 		try{
-			Map<String, Object> resultmap = smartrcptDAO.InsertWebRcpt(params);
+			Map<String, Object> resultmap = new HashMap<String,Object>();
+
+			//예약접수
+			if(params.get("taskstat").toString().equals("CB-reserve"))
+				resultmap = smartrcptDAO.InsertWebReservationRcpt(params);
+			//일반접수
+			else if(params.get("taskstat").toString().equals("CB-receipt"))
+				resultmap = smartrcptDAO.InsertWebRcpt(params);
+
+			System.out.println(resultmap);
 			String takeseq = resultmap.get("takeseq").toString();
 			System.out.println(takeseq);
 			
@@ -240,6 +249,24 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 		map.put("resultList", result);
 		map.put("resultCnt", cnt);
 		return map;
+	}
+
+	@Override
+	public List<Object> SelectReservationRcptList(SmartRcptVO smartrcptVO) throws Exception {
+		return smartrcptDAO.SelectReservationRcptList();
+	}
+
+	@Override
+	public List<Object> Selectrcptinfo(Map<String, Object> params) {
+		return smartrcptDAO.Selectrcptinfo_params(params);
+	}
+
+	@Transactional
+	@Override
+	public int CancelWebRcpt(String takeseq) throws Exception {
+		int result=0;
+		result = smartrcptDAO.CancelWebRcpt(takeseq);
+		return result;
 	}
 
 }

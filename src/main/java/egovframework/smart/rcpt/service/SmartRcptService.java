@@ -30,4 +30,10 @@ public interface SmartRcptService {
 
     Map<String, Object> searchReservation(ReservationVO searchVO);
 
+    List<Object> SelectReservationRcptList(SmartRcptVO smartrcptVO)throws Exception;
+
+    List<Object> Selectrcptinfo(Map<String, Object> params)throws Exception;
+
+    int CancelWebRcpt(String takeseq)throws Exception;
+
 }

@@ -207,32 +207,7 @@ function fn_egov_cancel_popup() {
             </div>
 
             <div class="pop_container">
-                <!-- <div class="box_3">
-                    <label for="checkcarnum">차량번호</label>
-                    <input id="checkcarnum" class="f_txt2 ml15" type="text" name="checkcarnum" value="<c:out value="${checkcarnum}"/>" maxlength="20" />
-                    <input type="hidden" name="resultId" value="<c:out value="${checkcarNum}"/>" />
-                    
-                    <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
-                </div> -->
-                <!-- <label class="f_selectsmall">
-                    <select name="leadtimemain" id="leadtimemain">
-                        <option value="">선택</option>
-                        <c:forEach var="i" items="${leadtime}" varStatus="status">
-                            <option value="<c:out value='${i.CODE}'/>"><c:out value="${i.NAME}"/></option>
-                        </c:forEach>
-                    </select>
-                </label>
                 
-                <label class="f_selectsmall">
-                    <select name="leadtimemiddle" id="leadtimemiddle">
-                    </select>
-                </label>
-                
-                <label class="f_selectsmall">
-                    <select name="leadtimesub" id="leadtimesub">
-                    </select>
-
-                </label> -->
                 <div class="cont left text_left">
                     <strong>정비내용 선택</strong>
                     <div class="scrollBox01">
@@ -291,54 +266,6 @@ function fn_egov_cancel_popup() {
                     </div>
                 </div>
 
-                <!-- <label>
-                    <a href="#" class="btn btn_blue_30 w_50" onclick="AddRepair()"><spring:message code="cop.sms.addRecptn"/></a> >
-                </label> -->
-                <!-- <table class="board_list4" id="repair" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
-                    <colgroup>
-                        <col style="width: 150px;">
-                        <col style="width: 150px;">
-                        <col style="width: 200px;">
-                        <col style="width: 200px;">
-                        <col style="width: 90px;">
-                    </colgroup>
-                    <thead>
-                        <th>수리사항</th>
-                        <th>수리종류</th>
-                        <th>수리시간</th>
-                        <th>수리항목 비고</th>
-                        <th>수리여부</th>
-                        <th>비고</th>
-                    </thead>
-                    <tbody>
-                        <c:if test="${fn:length(RepairList) == 0}">
-                            <tr>
-                                <td colspan="5"><spring:message code="common.nodata.msg" /></td>
-                            </tr>
-                        </c:if>
-                        <c:forEach var="i" items="${RepairList}" varStatus="istatus">
-                            <tr id="repair_${istatus.count}">
-                                <td><c:out value="${i.REPAIRNAME}"/></td>
-                                <td>
-                                    <label class="f_selectsmall">
-                                        <select name="chk_repair" id="chk_repair_${istatus.count}">
-                                            <c:forEach var="j" items="${autome}" varStatus="jstatus">
-                                                <option value="${j.CODE}" <c:if test="${j.CODE == i.REPAIRMETHOD}">selected</c:if>><c:out value="${j.NAME}"/></option>
-                                            </c:forEach>
-                                        </select>
-                                    </label>
-                                </td>
-                                <td><c:out value="${i.LEADTIME}"/></td>
-                                <td><input type="text" class="f_txtsmall" name="repair_note" id="repair_note" value="<c:out value='${i.REPAIR_NOTE}'/>"></td>
-                                <td><input type="radio" name="ant_${istatus.count}" id="ant" value="Y" <c:if test="${i.REPAIRANT=='Y'}">checked</c:if> class="f_rdo">Y <input type="radio" name="ant_${istatus.count}" id="ant" value="N" <c:if test="${i.REPAIRANT=='N'}">checked</c:if> class="f_rdo">N</td>
-                                <td><input type='hidden' name="repair" value="<c:out value='${i.REPAIRCODE}'/>">
-                                    <input type='hidden' name="repairseq" value="<c:out value='${i.REPAIR_SEQ}'/>">
-                                    <a href='#' class='btn btn_blue_30 w_50' onclick="DeleteRepair(<c:out value='${istatus.count}'/>,'<c:out value='${i.REPAIR_SEQ}'/>')"><spring:message code='button.delete'/></a></td>
-                            </tr>
-
-                        </c:forEach>
-                    </tbody>
-                </table> -->
                 <div class="board_view2" style="border-top:none" >
                     <table>
                         <colgroup>
@@ -378,6 +305,8 @@ function fn_egov_cancel_popup() {
 
 $(".box_tit ul li label").click(function(){
     var $this = $(this);
+    $this.css("pointer-events","none");
+
     setTimeout(function(){
         var checkbox =$this.parent().find("input");
         // console.log(checkbox);
@@ -426,6 +355,8 @@ $(".box_tit ul li label").click(function(){
             html+="</tr>";
             repairhtml.append(html);
         }
+        $this.css("pointer-events","auto");
+
     },200)
 
 });

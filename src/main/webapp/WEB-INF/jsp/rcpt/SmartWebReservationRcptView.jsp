@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
     <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
     <script src="<c:url value='/'/>js/ui.js"></script>
+    <script src="<c:url value='/'/>js/datepicker.js"></script>
+
     <title>Auto Q 목포서비스센터 </title>
     <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
@@ -154,14 +156,6 @@
             return;
         }
 
-        //수리 리드타임 리스트화
-        // var array = new Array();
-		// $('input[name=repair]').each(function(index) {
-		// 	array.push($(this).data("time"));
-			
-		// });
-		// $("#repairleadtime").val(array);
-
         //수리종류 리스트화
         var array = new Array();
 		$('select[name=chk_repair]').find("option:selected").each(function(index) {
@@ -175,19 +169,28 @@
             return;
         }
 
-        // 수리항목 비고 리스트화
-        // var array = new Array();
-		// $('input[name=note]').each(function(index) {
-		// 	array.push($(this).val());
-			
-		// });
-		// $("#notelist").val(array);
+        //예약일자 값 검증
+        if($("#reservationdate").val()==null || $("#reservationdate").val()=="")
+        {
+            alert("예약일자와 시간을 선택해 주세요.");
+            return;
+        }
 
-        console.log($("#chkrepairlist").val());
-        console.log($("#repairlist").val());
+        var reserveDate = new Date($("#reservationdate").val());
+        var hour = $("#hour option:selected").val();
+        hour  = hour.split("-")[1];
+        reserveDate.setHours(0,0,0,0);
+        reserveDate.setHours(hour);
+        reserveDate = reserveDate.getFullYear()+"-"+(reserveDate.getMonth()+1)+"-"+reserveDate.getDate()+" "+reserveDate.getHours()+":00:00";
+        console.log(reserveDate);
+
+        $("#reservationdate").val(reserveDate);
+
+        // console.log($("#chkrepairlist").val());
+        // console.log($("#repairlist").val());
         // console.log($("#notelist").val());
         
-        document.rcptform.action = "<c:url value='InsertWebRcpt.do'/>";
+        document.rcptform.action = "<c:url value='InsertWebReservationRcpt.do'/>";
         document.rcptform.submit();
         
     }
@@ -220,23 +223,7 @@
             alert("해당 접수정보가 조회되지 않습니다. 새로고침후 다시 시도해 주세요");
             return;
         }
-        $.ajax({
-            type: "post",
-            url: "<c:url value='CancelWebRcpt.do'/>",
-            data: {takeseq:takeseq},
-            success: function (resp) {
-                if(resp==1)
-                {
-                    alert("접수취소되었습니다");
-                    window.location.reload();
-                }
-                else
-                {
-                    alert("오류: 취소할 접수의 상태가 변경되었습니다 다시 시도해 주세요");
-                    window.location.reload();                    
-                }
-            }
-        });
+        $("#deletetakeseq").val(takeseq);
     }
 
     function reload()
@@ -286,12 +273,14 @@
                                 </div>
                                 <form name="rcptform" id="rcptform" action="<c:url value='/rcpt/SmartWebRcptView.do'/>" method="post">
                                     <input type="hidden" name="id" value="">
-                                    <input type="hidden" name="taskstat" value="<c:out value='CB-receipt'/>">
+                                    <input type="hidden" name="taskstat" value="<c:out value='CB-reserve'/>">
                                     <input type="hidden" name="servicesys" value="<c:out value='${servicesys[0].CODE}'/>">
                                     <input type="hidden" name="repairlist" id="repairlist" value="">
                                     <!-- <input type="hidden" name="repairleadtime" id="repairleadtime" value=""> -->
                                     <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
                                     <!-- <input type="hidden" name="notelist" id="notelist" value=""> -->
+                                    <input type="hidden" name="deletetakeseq" id="deletetakeseq" value="">
+                                    <input type="hidden" name="reservationdate" id="reservationdate" value="">
                                     <div class="board_view2">
                                         <table>
                                             <colgroup>
@@ -386,6 +375,22 @@
 
                                                         </div>
                                                     </div>
+                                                    <div class="cont left" style="width: 500px;">
+                                                        <div>
+                                                            <strong>예약일자 선택</strong>
+                                                        </div>
+                                                        <div id="fix_date" style="margin: 15px;display: inline-block;"></div>
+                                                        <!-- <input type="text" class="f_txtsmall w_130" id="fix_date" style="margin: 15px;"> -->
+                                                        <label for="hour" class="f_select" style="height: 30px; margin-top: 15px;">
+                                                            <select name="hour" id="hour">
+                                                                <c:forEach var="i" items="${hour}" varStatus="status">
+                                                                    <option value="<c:out value='${i.CODE}'/>">${i.NAME}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </label>
+                                                        
+
+                                                    </div>
                                                    
                                                 </td>
                                             </tr>
@@ -442,35 +447,33 @@
                                                 <col style="width: auto;">
                                                 <col style="width: auto;">
                                                 <col style="width: auto;">
-                                                <col style="width: auto;">
-                                                <col style="width: auto;">
-                                                <col style="width: auto;">
-                                                <col style="width: auto;">
                                             </colgroup>
                                             <thead style="padding : 3px 0;">
                                                 <tr>
                                                     <th scope="col">접수일자</th>
+                                                    <th scope="col">예약일자</th>
                                                     <th scope="col">차량번호</th>
                                                     <th scope="col">차량종류</th>
                                                     <th scope="col">수리사항</th>
                                                     <th scope="col">고객명</th>
                                                     <th scope="col">연락처</th>
-                                                    <th scope="col">작업반</th>
-                                                    <th scope="col">예상완료시간</th>
-                                                    <th scope="col">작업상태</th>
-                                                    <th scope="col">비고</th>
+                                                    <th scope="col">취소</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:if test="${fn:length(rcptlist) == 0}">
+                                                <c:if test="${fn:length(reservelist) == 0}">
                                                 <tr>
                                                     <td colspan="11"><spring:message code="common.nodata.msg" /></td>
                                                 </tr>
                                                 </c:if>
-                                                <c:forEach var="result" items="${rcptlist}" varStatus="status">
+                                                <c:forEach var="result" items="${reservelist}" varStatus="status">
                                                 <tr>
                                                     <td>
                                                         <fmt:parseDate value="${result.RECEIPTDATE}" var="dateFmt" pattern="yyyy-MM-dd HH:mm" />
+                                                        <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd HH:mm"/>
+                                                    </td>
+                                                    <td>
+                                                        <fmt:parseDate value="${result.PLANDATE}" var="dateFmt" pattern="yyyy-MM-dd HH:mm" />
                                                         <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd HH:mm"/>
                                                     </td>
                                                     <td><c:out value="${result.AUTONUMBER}"/></td>
@@ -478,11 +481,11 @@
                                                     <td><a href="#" class="lnk" style="text-decoration: underline;" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIR_NAME}"/></a></td>
                                                     <td><c:out value="${result.CUSTOMER_NAME}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_TEL}"/></td>
-                                                    <td><c:out value="${result.POSITION eq null ? '미정' : result.POSITION}"/></td>
-                                                    <td><c:out value="${result.ESTIME}"/></td>
-                                                    <td><c:out value="${result.TASKSTAT_NM}"/></td>
+                                                    <!-- <td><c:out value="${result.POSITION eq null ? '미정' : result.POSITION}"/></td> -->
+                                                    <!-- <td><c:out value="${result.ESTIME}"/></td> -->
+                                                    <!-- <td><c:out value="${result.TASKSTAT_NM}"/></td> -->
                                                     <td>
-                                                        <c:if test="${result.TASKSTAT== 'CB-receipt'}">
+                                                        <c:if test="${result.TASKSTAT== 'CB-reserve'}">
                                                         <a href="#LINK" class="btn btn_blue_30 w_80" onclick="DeleteRcpt('<c:out value='${result.TAKESEQ}'/>'); return false;">접수취소</a>
                                                         </c:if>
                                                     </td>
@@ -524,6 +527,34 @@
 </html>
 
 <script>
+    $(document).ready(function () {
+        $.datepicker.regional['ko'] = {
+            prevText: '이전달',
+            nextText: '다음달',
+            monthNames: ['1월','2월','3월','4월','5월','6월',
+            '7월','8월','9월','10월','11월','12월'],
+            monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+            '7월','8월','9월','10월','11월','12월'],
+            dayNames: ['일','월','화','수','목','금','토'],
+            dayNamesShort: ['일','월','화','수','목','금','토'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            weekHeader: 'Wk',
+            dateFormat: 'yy-mm-dd',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: true,
+            yearSuffix: '',
+            yearRange: 'c-99:c+99',
+        };
+        $.datepicker.setDefaults($.datepicker.regional['ko']);
+        $('#fix_date').datepicker({
+            onSelect: function (datetext) {
+                $("#reservationdate").val(datetext);
+            }
+        });
+    });
+
+
 $("li.box_tit a").click(function(){
     // console.log($(this));
     if($(this).parent().hasClass("active"))
