@@ -18,6 +18,17 @@
             SELECT (TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.CURRVAL, 'FM0000')) FROM DUAL
         </selectKey>
     </insert>
+
+    <insert id="InsertWebReservationRcpt" parameterType="java.util.HashMap" >
+        INSERT INTO CAR_TAKEREPAIR
+        (TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,REPAIRNOTE,POSITION,RECEIPTDATE,PLANDATE,TASKSTAT,COMPTIME,NOTE,URGENT,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
+        VALUES((TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.NEXTVAL, 'FM0000')),#{servicesys},#{id},#{carnum},#{repairnote},#{position},TO_DATE(#{reservationdate},'YYYY-MM-DD HH24:MI:SS'),SYSDATE,#{taskstat},'',#{note},#{urgent},#{loginid},SYSDATE,'','')
+
+        <selectKey keyColumn="TAKESEQ" keyProperty="takeseq" resultType="java.lang.String" order="AFTER">
+            SELECT (TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.CURRVAL, 'FM0000')) FROM DUAL
+        </selectKey>
+    </insert>
+
     <select id="SelectRcptList" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
         SELECT 
             TAKESEQ,
@@ -81,6 +92,13 @@
             UPDATE_DATE=SYSDATE
         WHERE TAKESEQ = #{seq}
     </update>
+    <update id="CancelWebRcpt" parameterType="java.lang.String">
+        UPDATE CAR_TAKEREPAIR
+        SET
+            TASKSTAT= 'CB-Cancel'
+        WHERE TAKESEQ = ${takeseq}
+    </update>
+
     <update id="UpdateRepair">
         UPDATE CAR_LEAD_REPAIR
         SET
@@ -127,5 +145,29 @@
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.TASKSTAT = 'CB-reserve'
+    </select>
+
+    <select id="SelectReservationRcptList" resultType="java.util.HashMap">
+        SELECT *
+        FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
+        WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID 
+        AND  TASKSTAT = 'CB-reserve'
+        OR TASKSTAT = 'CB-reservecancel'
+        AND TO_CHAR(SYSDATE,'YYYY-MM-DD 00:00:00') <![CDATA[<]]> TO_CHAR(PLANDATE,'YYYY-MM-DD 23:59:59')
+    </select>
+
+    <select id="Selectrcptinfo_params" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT  TAKESEQ,
+                FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_NAME') NAME,
+                AUTONUMBER,
+                FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_TEL') TEL,
+                FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_AUTOKIND') KIND,
+                REPAIR_ENUM(TAKESEQ) ENUM,
+                RECEIPTDATE,
+                INSERT_DATE
+        FROM     CAR_TAKEREPAIR
+        WHERE    CUSTOMER_ID = #{id}
+        AND      ROWNUM      =1
+        ORDER BY RECEIPTDATE DESC
     </select>
 </mapper>

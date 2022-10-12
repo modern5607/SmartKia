@@ -148,6 +148,7 @@ public class SmartRcptController {
 		//response.getWriter().print(map);
 	}
 
+	/*
 	//모바일 예약 접수등록
 	@RequestMapping(value="/rcpt/SmartMobileRcptView.do")
 	public String SmartMobileRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO ,ModelMap model,HttpServletRequest request,HttpServletResponse response ) throws Exception{
@@ -169,34 +170,35 @@ public class SmartRcptController {
 			return null;
 		}
 		
-		// smartrcptVO.setPageUnit(propertyService.getInt("pageUnit"));
-		// smartrcptVO.setPageSize(propertyService.getInt("pageSize"));
+		smartrcptVO.setPageUnit(propertyService.getInt("pageUnit"));
+		smartrcptVO.setPageSize(propertyService.getInt("pageSize"));
 
-		//PaginationInfo paginationInfo = new PaginationInfo();
+		PaginationInfo paginationInfo = new PaginationInfo();
 
-		//paginationInfo.setCurrentPageNo(smartrcptVO.getPageIndex());
-		//paginationInfo.setRecordCountPerPage(smartrcptVO.getPageUnit());
-		//paginationInfo.setPageSize(smartrcptVO.getPageSize());
+		paginationInfo.setCurrentPageNo(smartrcptVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(smartrcptVO.getPageUnit());
+		paginationInfo.setPageSize(smartrcptVO.getPageSize());
 
-		// smartrcptVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		// smartrcptVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		// smartrcptVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		smartrcptVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		smartrcptVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		smartrcptVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		// model
-		// Map<String, Object> map = smartrcptservice.selectCommonCodeList(smartrcptVO);
-		// System.out.println("Map :" + map);
-		//int totCnt = 1;//Integer.parseInt((String) map.get("resultCnt"));
-		// System.out.println("Map Size :" +totCnt);
-		//paginationInfo.setTotalRecordCount(totCnt);
+		model
+		Map<String, Object> map = smartrcptservice.selectCommonCodeList(smartrcptVO);
+		System.out.println("Map :" + map);
+		int totCnt = 1;//Integer.parseInt((String) map.get("resultCnt"));
+		System.out.println("Map Size :" +totCnt);
+		paginationInfo.setTotalRecordCount(totCnt);
 
-		// model.addAttribute("smartrcptVO", smartrcptVO);
-		// model.addAttribute("resultList", map.get("resultList"));
-		// model.addAttribute("resultDetail", map.get("resultDetail"));
-		// model.addAttribute("resultCnt", map.get("resultCnt"));
-		//model.addAttribute("paginationInfo", paginationInfo);
+		model.addAttribute("smartrcptVO", smartrcptVO);
+		model.addAttribute("resultList", map.get("resultList"));
+		model.addAttribute("resultDetail", map.get("resultDetail"));
+		model.addAttribute("resultCnt", map.get("resultCnt"));
+		model.addAttribute("paginationInfo", paginationInfo);
 
 		return "rcpt/SmartMobileRcptView";
 	}
+	*/
 
 	//차량조회 팝업화면
 	@RequestMapping(value = "/rcpt/searchCarPopupView.do")
@@ -341,6 +343,18 @@ public class SmartRcptController {
 		response.getWriter().print(result);
 	}
 
+	//접수취소
+	@RequestMapping(value = "/rcpt/CancelWebRcpt.do",method = RequestMethod.POST)
+	public String CancelWebRcpt(@RequestParam("takeseq") String takeseq, RedirectAttributes attr) throws Exception
+	{
+		int result=0;
+		System.out.println(takeseq);
+
+		result = smartrcptservice.CancelWebRcpt(takeseq);
+		System.out.println("result :"+result);
+		return String.valueOf(result);
+	}
+
 	@RequestMapping(value = "/rcpt/ReservationstatusView.do")
 	public String ReservationstatusView(@ModelAttribute("ReservationVO") ReservationVO searchVO, ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo,
@@ -382,5 +396,109 @@ public class SmartRcptController {
 		model.addAttribute("paginationInfo", paginationInfo);
 		
 		return "/rcpt/ReservationstatusView";
+	}
+	@RequestMapping(value="/rcpt/SmartWebReservationRcptView.do")
+	public String SmartWebReservationRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO,ModelMap model,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		
+		if(request!=null)
+		{
+			Map<String,?> flashmap = RequestContextUtils.getInputFlashMap(request);
+			if(flashmap != null)
+				model.addAttribute("msg",flashmap.get("msg"));
+		}
+		
+			System.out.println("model :"+model);
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+		
+		
+		
+		Device device = DeviceUtils.getCurrentDevice(request);
+		smartrcptVO.setPageUnit(propertyService.getInt("pageUnit"));
+		smartrcptVO.setPageSize(propertyService.getInt("pageSize"));
+
+		PaginationInfo paginationInfo = new PaginationInfo();
+
+		paginationInfo.setCurrentPageNo(smartrcptVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(smartrcptVO.getPageUnit());
+		paginationInfo.setPageSize(smartrcptVO.getPageSize());
+
+		smartrcptVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		smartrcptVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		smartrcptVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
+		int totCnt = 1;//Integer.parseInt((String) map.get("resultCnt"));
+		
+		//디바이스 구분
+		if(device.isNormal())
+			model.addAttribute("servicesys",smartmdmservice.SelectCode("AUTO_SYSTEM", "CB-Web"));
+		else
+			model.addAttribute("servicesys",smartmdmservice.SelectCode("AUTO_SYSTEM", "CB-Mobile"));
+
+		
+		paginationInfo.setTotalRecordCount(totCnt);
+
+		model.addAttribute("smartrcptVO", smartrcptVO);
+		model.addAttribute("leadtimelist", leadtimelist);
+		// model.addAttribute("leadtime", leadtimelist.get("main"));
+		model.addAttribute("hour", smartmdmservice.SelectCmmCode("AUTO_HOUR"));
+		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
+		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
+		model.addAttribute("reservelist", smartrcptservice.SelectReservationRcptList(smartrcptVO));
+		System.out.println(model.get("reservelist"));
+
+		model.addAttribute("paginationInfo", paginationInfo);
+
+		return "rcpt/SmartWebReservationRcptView";
+	}
+
+	//예약접수등록
+	@RequestMapping(value = "/rcpt/InsertWebReservationRcpt.do")
+	public String InsertWebReservationRcpt(@RequestParam Map<String,Object> params,ModelMap model, RedirectAttributes attr) throws Exception {
+		System.out.println(params);
+
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+
+		System.out.println("params:"+params);
+		int result=0;
+		//고객 조회
+		HashMap<String,Object> customerInfo = smartrcptservice.selectMberList(params);
+		//System.out.println("customerInfo len :"+customerInfo.size());
+		//System.out.println("customerInfo :"+customerInfo);
+		if(params.get("id").toString().equals(""))
+			params.put("id",customerInfo.get("CUSTOMER_ID"));
+
+		//새 고객이면 고객 등록
+		if(customerInfo == null)
+		{
+			System.out.println("새 고객입니다 등록하겠습니다.");
+			result = smartrcptservice.InsertMber(params);
+			System.out.println("고객 등록 결과 :"+result);
+			// HashMap<String,Object> custominfo = smartrcptservice.selectMberList(params);
+		}
+		//접수등록
+		result = smartrcptservice.InsertWebRcpt(params);
+		
+		
+		if (result == 0) // insert실패
+			attr.addFlashAttribute("msg", "수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
+		else
+			attr.addFlashAttribute("msg", "접수 등록되었습니다.");
+
+		return "redirect:/rcpt/SmartWebReservationRcptView.do";
 	}
 }

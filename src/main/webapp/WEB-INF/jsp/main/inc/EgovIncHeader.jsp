@@ -37,7 +37,7 @@ function fn_egov_modal_remove() {
     <div class="inner">
         <div class="left_col">
             <h1 class="logo"><a href="<c:url value='/'/>cmm/main/mainPage.do"><img src="<c:url value='/images/logo.png'/>" style="width:180px;" alt="표준프레임워크 포털 eGovFrame 샘플 포털"></a></h1>
-            <a class="go" href="#LINK" onclick="fn_egov_modal_create(); return false;"><img src="<c:url value='/images/ico_question.png'/>" alt="메뉴구성 설명"></a>
+            <!-- <a class="go" href="#LINK" onclick="fn_egov_modal_create(); return false;"><img src="<c:url value='/images/ico_question.png'/>" alt="메뉴구성 설명"></a> -->
         </div>
 
 <!--         전체검색 -->
@@ -120,7 +120,7 @@ function fn_egov_modal_remove() {
                         <!-- <h2>접수관리</h2> -->
                         <ul>
                             <li><a href="/rcpt/SmartWebRcptView.do">접수등록(WEB)</a></li>
-                            <li><a href="/rcpt/SmartReservationRcptView.do">고객예약등록(WEB)</a></li>
+                            <li><a href="/rcpt/SmartWebReservationRcptView.do">고객예약등록(WEB)</a></li>
                             
                             <li><a href="/rcpt/ReservationstatusView.do">고객예약현황</a></li>
                             <li><a href="/crm/SmartAddRepairCar.do?">차량수리이력조회</a></li>
@@ -131,7 +131,7 @@ function fn_egov_modal_remove() {
                     <div>
                         <!-- <h2>키오스크</h2> -->
                         <ul>
-                        	<li><a href="/kiosk/selectKiosk.do?menuNo=3000000">키오스크접수</a></li>
+                        	<li><a href="/kiosk/SmartKiosk.do?menuNo=3000000">키오스크접수</a></li>
                             <!-- <li><a href="/kiosk/selectKioskin.do?menuNo=3000000">일반접수관리</a></li> -->
                             <!-- <li><a href="/kiosk/selectKioskinsurance.do?menuNo=3000000">보증접수관리</a></li> -->
                         </ul>

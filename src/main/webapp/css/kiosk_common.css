@@ -647,6 +647,7 @@ background-color:#ffffff;
   transition: 0.3s;
 }
 #r_left input[id*="answer"] + label + div p,ul{
+  list-style-type: none;
   display: block;
   padding: 20px;
   font-weight: 600; 
@@ -768,16 +769,28 @@ background-color:#ffffff;
   text-align: center;
   padding: 0 40px;
 }
-#pop_up_content .e1{
-  font-weight: bold;
-  margin-top: 50px;
+.e1{
+  font-size: 40px;
+    margin-left: 45px;
 }
-#pop_up_content .e2{
-  font-size: 24px;
-  font-weight: bold;
-  margin: 15% 0%;
+.e2{
+  font-size: 50px;
+  color: red;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  text-align: center;
 }
-#pop_up_content .e3{
+.footer{
+  font-size: 50px;
+  position: absolute;
+    margin-top: 50px;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.e3{
   font-size: 24px;
   font-weight: bold;
 }
@@ -808,3 +821,10 @@ a:link, a:visited, a:hover, a:active {text-decoration: none;}
 .cont .scrollBox03 td{color: #666;font-size: 15px;}
 
 .rcptBtn{font-size: 40px;margin-left: 25px;margin-top: 40px;}
+
+#ul ul{font-size: 50px;}
+#ul ul label{border: solid red;
+  margin-left: 20px;
+  padding: 0px 15px;}
+#ul ul label:after{border-color:#7d1919 transparent transparent transparent;}
+#ul li table tr{font-size: 35px;}

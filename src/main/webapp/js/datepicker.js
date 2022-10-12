@@ -25,6 +25,7 @@
     $('#sdate').datepicker("option", "onClose", function ( selectedDate ) {
         $("#edate").datepicker( "option", "minDate", selectedDate );
     });
+    
 
     $('#edate').datepicker();
     $('#edate').datepicker("option", "minDate", $("#sdate").val());

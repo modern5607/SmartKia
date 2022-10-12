@@ -12,8 +12,8 @@
 		<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
 		<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
 		<link rel="stylesheet" href="<c:url value='/'/>css/page.css"> -->
-		<link rel="stylesheet" href="/css/kiosk_common.css">
-		<link rel="stylesheet" href="/css/kiosk_main.css">
+		<link rel="stylesheet" href="/css/kiosk_common.css?after">
+		<link rel="stylesheet" href="/css/kiosk_main.css?after">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 		<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 		<script src="<c:url value='/'/>js/ui.js"></script>
@@ -71,6 +71,7 @@
 			<input type="radio" name="slide" id="slide06">
 			<input type="radio" name="slide" id="slide07">
 			<form name="kioskform" id="kioskform" action="<c:url value='/kiosk/InsertKioskRcpt.do'/>" method="post">
+				<input type="hidden" name="taskstat" value="<c:out value='CB-receipt'/>">
 				<input type="hidden" name="customerid">
 				<input type="hidden" name="carnum">
 				<input type="hidden" name="name">
@@ -181,9 +182,9 @@
 										<li><label>차종 : </label><label></label></li>
 									</ul>
 									<div class="fix_history">
-										<a href="#"  class="btn fix_bt">수리내역보기</a>
+										<a href="#"  class="btn fix_bt">정비내역보기</a>
 							
-										<a href="#" onclick="moveTo('slide06');" class="btn fix_bt">수리부분선택</a>
+										<a href="#" onclick="moveTo('slide06');" class="btn fix_bt">정비사항선택</a>
 									</div>
 								</div>
 							</div>
@@ -207,7 +208,7 @@
 						</div>
 
 					</li>
-					<!-- 정비사항 선택 (팝업) 06-->
+					<!-- 정비사항 선택 06-->
 					<li>
 						<div class="content">
 							<div id="s_header">
@@ -253,46 +254,45 @@
 							</div>
 						</div>
 					</li>
+					<!-- 접수완료 07 -->
+					<li>
+						<div class="content">
+							<div class="success" style="display:none;">
+								<div id="s_header">
+									<div class="s_title">
+										<h1>접수가 완료되었습니다</h1>
+									</div>
+								</div>					
+								<div class="e1">
+									<p>접수번호:</p>
+									<p>성함:</p>
+									<p>차종:</p>
+									<p style="text-overflow: ellipsis;width: 100%;overflow: hidden;">수리내역:</p>
+								</div>
+								<div class="e2">
+									<p>고객 대기실 모니터링을 통해 <br>접수 현황을 확인해 보실 수 있습니다.</p>
+								</div>
+							</div>
+							<div class="fail" style="display:none;">
+								<div id="s_header">
+									<div class="s_title">
+										<h1>접수가 실패하였습니다</h1>
+									</div>
+								</div>	
+								<div class="e2">
+									<p>데스크에 문의해 주세요</p>
+								</div>
+							</div>
+							<div class="footer">
+								<a href="#" onclick="clickconfirm();" class="btn">확인</a>
+							</div>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</body>
-	<div id="popup_wrap" class="">
-		<div id="pop_up">
-			<div id="pop_up_header">
-				<div class="pop_up_line">
-					<a href=""></a>
-				</div>
-				<div class="pop_up_inner">
-					<a href="" class="pop_up_logo">
-						<img src="../images/logo_members.png">
-					</a>
-				</div>
 	
-			</div>
-			<div id="pop_up_content" class="success" style="display: none;" >
-				<div class="e2">
-					<h1>접수가 완료되었습니다.</h1>
-				</div>
-				<div class="e3">
-					<p>고객 대기실 접수 모니터링을 통해 <br>접수 현황을 확인해 보실 수 있습니다.</p>
-				</div>
-			</div>
-			<div id="pop_up_content" class="fail" style="display: none;">
-				<div class="e2">
-					<h1>접수가 실패하였습니다</h1>
-				</div>
-				<div class="e3">
-					<p>데스크에 문의해 주세요</p>
-				</div>
-			</div>
-			<div id="pop_up_footer">
-				<div class="to_desk">
-					<a href="#" onclick="clickconfirm();" class="btn">확인</a>
-				</div>
-			</div>
-		</div>
-	</div>
 </html>
 
 
@@ -417,15 +417,21 @@ function clickRepair(id)
 					// var receipt_stamp = item.RECEIPTDATE;
 					// var receiptdate = new Date(receipt_stamp);
 					html+="<ul>"+item.RECEIPTDATE;
-					html+="<label> 더보기+ </label>";
-					html+="<li>";
+					html+="<label onclick='clickdetail(this)'>+</label>";
+					html+="<li style='display:none'>";
+					html+="<ul>주행거리 : "+item.KILRO_NOW+"KM</ul>";
 					html+="<table>";
+					html+="<colgroup>";
+					html+="<col width='400px'>"
+					html+="<col width='200px'>"
+					html+="<col width='300px'>"
+					html+="</colgroup>";
 					$.each(item.DETAIL, function (jndex, jtem) { 
 						html+="<tr>";
 						html+="<td>"+jtem.REPAIRNAME+"</td>";
 						html+="<td>"+jtem.METHODNAME+"</td>";
-						html+="<td>"+jtem.REPAIR_NOTE+"</td>";
-						html+="</tr>";			 
+						html+="<td>"+(jtem.REPAIR_NOTE=='null')?'':jtem.REPAIR_NOTE+"</td>";
+						html+="</tr>";
 					});
 					html+="</table>";		
 					html+="</li>";
@@ -441,6 +447,15 @@ function clickRepair(id)
 			
         }
     });
+}
+
+function clickdetail(e)
+{
+	console.log($(e));
+	if($(e).parent().children("li").css("display")=="none")
+		$(e).parent().children("li").show("0.1");
+	else
+		$(e).parent().children("li").hide("0.1");
 }
 
 $("li.box_tit a").click(function(){
@@ -517,15 +532,25 @@ function InsertWebRcpt()
         success: function (resp) {
 			
 			console.log(resp);
-			if(resp=="success")
+			if(resp==null || resp=="")
 			{
-				$("#popup_wrap").css("display","block");
-				$(".success").css("display","block");
+				moveTo("slide07");
+				$(".fail").show();				
 			}
-			else if(resp == "fail")
+			else if(resp != null)
 			{
-				$("#popup_wrap").css("display","block");
-				$(".fail").css("display","block");
+				var infohtml = $(".success").find(".e1").find("p");
+				var info = resp[0];
+				console.log(info);
+				console.log(infohtml);
+				infohtml.eq(0).text("접수번호 : "+info.TAKESEQ);
+				infohtml.eq(1).text("성함 : "+info.NAME);
+				infohtml.eq(2).text("차종 : "+info.KIND);
+				infohtml.eq(3).text("수리내역 : "+info.ENUM);
+
+				moveTo("slide07");
+				$(".success").show();
+
 			}
 		}
     });
@@ -534,10 +559,11 @@ function InsertWebRcpt()
 function clickconfirm()
 {
 	clickdel();
-	
-	$("#popup_wrap").css("display","none");
-	$(".success").css("display","none")
-	$(".fail").css("display","none")
+	$(".success").hide();
+	$(".fail").hide();
+	// $("#popup_wrap").css("display","none");
+	// $(".success").css("display","none")
+	// $(".fail").css("display","none")
 	moveTo("slide01");
 }
 </script>

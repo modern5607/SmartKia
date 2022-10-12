@@ -117,7 +117,7 @@ public class SmartKioskController {
 	//키오스크 접수등록
 	@RequestMapping(value = "/kiosk/InsertKioskRcpt.do",method = RequestMethod.POST)
 	@ResponseBody
-	public String InsertKioskRcpt(@RequestParam Map<String,Object> params,ModelMap model, RedirectAttributes attr) throws Exception {
+	public List<Object> InsertKioskRcpt(@RequestParam Map<String,Object> params,ModelMap model, RedirectAttributes attr) throws Exception {
 		
 		params.put("loginid", "KioskTest");
 		params.put("id", params.get("customerid").toString());
@@ -143,9 +143,14 @@ public class SmartKioskController {
 		//접수등록
 		result = smartrcptservice.InsertWebRcpt(params);
 		if(result==0)
-			return "fail";
+			return null;
 		else
-			return "success";
+		{
+			// Map<String,Object> info = new HashMap<String,Object>();
+			// info.put("info",smartrcptservice.Selectrcptinfo(params));
+			return smartrcptservice.Selectrcptinfo(params);
+		}
+			
 	}
 	
 

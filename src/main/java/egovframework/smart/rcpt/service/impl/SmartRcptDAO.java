@@ -76,5 +76,25 @@ public class SmartRcptDAO extends EgovAbstractMapper {
     public List<ReservationVO> searchReservation(ReservationVO searchVO) {
         return selectList("SmartRcptDAO.searchReservation",searchVO);
     }
+
+    public List<Object> SelectReservationRcptList() {
+        return selectList("SelectReservationRcptList");
+    }
+
+    public List<Object> Selectrcptinfo_params(Map<String, Object> params) {
+        return selectList("SmartRcptDAO.Selectrcptinfo_params",params);
+    }
+
+    public Map<String, Object> InsertWebReservationRcpt(Map<String, Object> map) {
+        insert("SmartRcptDAO.InsertWebReservationRcpt",map);
+        Map<String, Object> resultmap = new HashMap<String,Object>();
+        resultmap.put("takeseq", map.get("takeseq"));
+        // System.out.println(map);
+        return resultmap;
+    }
+
+    public int CancelWebRcpt(String takeseq) {
+        return update("SmartRcptDAO.CancelWebRcpt",takeseq);
+    }
 	 
 }
