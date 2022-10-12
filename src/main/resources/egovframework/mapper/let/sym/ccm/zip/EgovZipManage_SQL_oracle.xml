@@ -42,45 +42,15 @@
 			   AND  RNUM &lt;= #{firstIndex} + #{recordCountPerPage}
 		
 	</select> -->
- 	<select id="selectZipList" parameterType="egovframework.let.sym.ccm.zip.service.ZipVO" resultType="egovMap">
+ 	<select id="selectZipList" parameterType="egovframework.let.sym.ccm.zip.service.ZipVO" resultType="java.util.HashMap">
 		
-			SELECT  * 
-			  FROM  (
-			SELECT ROWNUM RNUM, ALL_LIST.* 
-			  FROM  (
-			/* 구현 Sql */
-			SELECT  POST_CD
-			     ,  SIDO
-			     ,  SIGUNGU
-			     ,  DORO
-			     ,  KENMULBHO_M
-			     ,  KENMULBHO_S
-			  FROM  CAR_KRPOST
-			 WHERE	1 = 1
-		
-			<if test="searchCondition == 1">AND
-				POST_CD = #{searchKeyword}
-			</if>
-			<if test="searchCondition == 2">AND
-				SIDO LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
-			</if>
-			<if test="searchCondition == 3">AND
-				SIGUNGU LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
-			</if>
-			<if test="searchCondition == 4">AND
-				DORO LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
-			</if>
-			<if test="searchCondition == 5">AND
-				KENMULBHO_M LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
-			</if>
-			<if test="searchCondition == 6">AND
-				KENMULBHO_S LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
-			</if>
-			/* 구현 Sql */
-				    ) ALL_LIST
-				    )
-			 WHERE  RNUM  &gt; #{firstIndex}
-			   AND  RNUM &lt;= #{firstIndex} + #{recordCountPerPage}
+			SELECT POST_CD 
+			 	   ,SIDO||' '||SIGUNGU||' '||DORO||' '||NN_NAME AS ADRESS
+				FROM CAR_KRPOST
+				WHERE SIDO=#{sido}
+					AND SIGUNGU =#{sigungu} 
+					AND DORO LIKE '%'||#{searchKeyword}||'%'
+			
 		
 	</select>
 
@@ -89,26 +59,17 @@
 			SELECT  COUNT(*) totcnt 
 			  FROM  CAR_KRPOST
 			 WHERE	1 = 1
-		
-			<if test="searchCondition == 1">AND
-				POST_CD = #{searchKeyword}
-			</if>
-			<if test="searchCondition == 2">AND
-				SIDO LIKE '%'||#{searchKeyword}||'%'
-			</if>
-			<if test="searchCondition == 3">AND
-				SIGUNGU LIKE '%'||#{searchKeyword}||'%'
-			</if>
-			<if test="searchCondition == 4">AND
-				DORO LIKE '%'||#{searchKeyword}||'%'
-			</if>
-			<if test="searchCondition == 5">AND
-				KENMULBHO_M LIKE '%'||#{searchKeyword}||'%'
-			</if>
-			<if test="searchCondition == 6">AND
-				KENMULBHO_S LIKE '%'||#{searchKeyword}||'%'
-			</if>
 	</select>
+	<select id="selectSIDO" parameterType="String" resultType="java.util.HashMap">
+	SELECT DISTINCT SIDO
+	FROM CAR_KRPOST
+	</select>
+
+	 <select id="SelectMiddleAdress" parameterType="String" resultType="java.util.HashMap">
+        SELECT DISTINCT SIGUNGU
+			FROM CAR_KRPOST
+			WHERE SIDO= #{sido}
+    </select>
 
 <!-- 	<select id="selectZipDetail" parameterType="egovframework.let.sym.ccm.zip.service.Zip" resultType="egovframework.let.sym.ccm.zip.service.Zip">
 		

@@ -105,4 +105,12 @@ public class ZipManageDAO extends EgovAbstractMapper {
 		update("ZipManageDAO.updateZip", smartZip);
 	}
 
+	public List<Object> selectSIDO() {
+		return selectList("ZipManageDAO.selectSIDO");
+	}
+
+	public List<Object> SelectMiddleAdress(String sido) {
+		return selectList("ZipManageDAO.SelectMiddleAdress",sido);
+	}
+
 }

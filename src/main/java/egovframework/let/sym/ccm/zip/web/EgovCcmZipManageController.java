@@ -1,6 +1,8 @@
 package egovframework.let.sym.ccm.zip.web;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -14,15 +16,19 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
@@ -80,11 +86,11 @@ public class EgovCcmZipManageController {
 	public String selectZipSearchList (@ModelAttribute("searchVO") ZipVO searchVO
 			, ModelMap model
 			) throws Exception {
-    	/** EgovPropertyService.sample */
+    	/** EgovPropertyService.sample 
     	searchVO.setPageUnit(propertiesService.getInt("pageUnit"));
     	searchVO.setPageSize(propertiesService.getInt("pageSize"));
-
-    	/** pageing */
+				*/
+    	/** pageing 
     	PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
@@ -93,13 +99,14 @@ public class EgovCcmZipManageController {
 		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
+	*/
+		model.addAttribute("sido",zipManageService.selectSIDO());
         model.addAttribute("resultList", zipManageService.selectZipList(searchVO));
-        
+        /*
         int totCnt = zipManageService.selectZipListTotCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
         model.addAttribute("paginationInfo", paginationInfo);
-        
+         */
         return "/cmm/sym/zip/EgovCcmZipSearchList";
 	}
 	
@@ -286,4 +293,16 @@ public class EgovCcmZipManageController {
 	    	return "forward:/sym/ccm/zip/EgovCcmZipList.do";
     	}
     }
+	
+	@RequestMapping(value = "/sym/cmm/detailList.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String,Object> SelectMiddleAdress(@RequestParam Map<String,Object> params, HttpServletResponse response) throws Exception {
+		// System.out.println(params.get("selectedvar"));
+		List<Object> list = zipManageService.SelectMiddleAdress(params.get("sido").toString());
+		System.out.println(list);
+		Map<String,Object> map =new HashMap<String,Object>();
+		map.put("list", list);
+		return map;
+		//response.getWriter().print(map);
+	}
 }

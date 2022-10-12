@@ -50,6 +50,26 @@
 		document.SmartBizU.submit();
 
 	}
+
+	function fn_egov_ZipSearch(){
+    
+    var $dialog = $('<div id="modalPan"></div>').html(
+			'<iframe style="border: 0px; " src="'
+				+ "<c:url value='/sym/cmm/EgovCcmZipSearchList.do'/>" 
+				+'" width="100%" height="100%"></iframe>')
+			.dialog({
+    			autoOpen: false,
+        		modal: true,
+        		width: 1100,
+        		height: 600
+			});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+}
+function callbackadress(adress){
+		document.SmartBizU.Address.value = adress;
+		fn_egov_modal_remove();
+	}
 </script>
 
 </head>
@@ -89,10 +109,7 @@
 									action="${pageContext.request.contextPath}/mdm/SmartUpdateBiz.do"
 									method="post">
 									<c:forEach items="${bizinfo}" var="bizinfo">
-										<input type="hidden" id="UdateBiz" name="UdateBiz"
-											value="<c:out value='${info.CUST_ID}'/>" />
-
-										<h1 class="tit_1">거래처관리 수정</h1>
+										<input type="hidden" id="UdateBiz" name="UdateBiz" value="<c:out value='${info.CUST_ID}'/>" />
 
 										<div class="board_view2" style="margin-top: 15px;">
 											<table summary="Q&amp;A에 대한 정보를 등록합니다.">
@@ -119,7 +136,7 @@
 												<tr>
 													<td class="lb"><label for="Address">주소</label></td>
 													<td><input id="Address" name="Address" class="f_txt"
-														size="35" maxlength="35"
+														size="35" maxlength="35"  onclick="fn_egov_ZipSearch()"
 														value="<c:out value='${bizinfo.ADDRESS}'/>" /></td>
 												</tr>
 												<tr>

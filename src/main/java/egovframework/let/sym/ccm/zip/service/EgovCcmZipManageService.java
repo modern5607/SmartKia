@@ -80,4 +80,8 @@ public interface EgovCcmZipManageService {
 	 */
 	void updateZip(SmartZip smartZip) throws Exception;
 
+	public List<Object> selectSIDO() throws Exception;
+
+	List<Object> SelectMiddleAdress(String sido)throws Exception;
+
 }

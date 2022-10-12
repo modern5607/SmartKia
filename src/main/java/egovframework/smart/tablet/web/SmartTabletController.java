@@ -395,4 +395,33 @@ public class SmartTabletController {
 		response.getWriter().print(result);
 	
 	}
+
+/*********************************************************************************************************************************
+ * 											태블릿 Controller
+ * *******************************************************************************************************************************/
+
+@RequestMapping(value = "/tablet/TabletAssignGroup.do")
+	public String TabletAssignGroup(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model,
+			@RequestParam(value = "menuNo", required = false) String menuNo,
+			HttpServletRequest request) throws Exception {
+		
+		// 선택된 메뉴정보를 세션으로 등록한다.
+		if (menuNo != null && !menuNo.equals("")) {
+			request.getSession().setAttribute("menuNo", menuNo);
+		}
+		// 0. Spring Security 사용자권한 처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+		// service
+		Map<String, Object> map = smarttabletservice.assignmentList(searchVO);
+
+		model.addAttribute("resultList", map.get("resultList"));
+		model.addAttribute("resultCnt", map.get("resultCnt"));
+		
+		
+		return "/tablet/TabletAssignGroup";
+	}
 }

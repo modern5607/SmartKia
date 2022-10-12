@@ -32,18 +32,13 @@
 	xhtml="true" cdata="false" />
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <script type="text/javaScript" language="javascript">
-	/* ********************************************************
-	 * 초기화
-	 ******************************************************** */
+	
 	function fn_egov_initl_qnacn() {
 
 		// 첫 입력란에 포커스..
 		SmartMdmBizVO.Custnm.focus();
 	}
 
-	/* ********************************************************
-	 * 저장처리화면
-	 ******************************************************** */
 	function fn_egov_regist_qnacn(form) {
 
 		form.submit();
@@ -71,15 +66,32 @@
 		$dialog.dialog('open');
 	}
 
-	/* ********************************************************
-	 * 목록 으로 가기
-	 ******************************************************** */
+	function fn_egov_ZipSearch(){
+    
+    var $dialog = $('<div id="modalPan"></div>').html(
+			'<iframe style="border: 0px; " src="'
+				+ "<c:url value='/sym/cmm/EgovCcmZipSearchList.do'/>" 
+				+'" width="100%" height="100%"></iframe>')
+			.dialog({
+    			autoOpen: false,
+        		modal: true,
+        		width: 1100,
+        		height: 600
+			});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+}
+
 	function fn_egov_inqire_qnalist() {
 		SmartMdmBizVO.action = "<c:url value='/mdm/SmartBiz.do'/>";
 		SmartMdmBizVO.submit();
 	};
 
-	//중복체크 기능 매핑
+	function callbackadress(adress){
+		document.SmartMdmBizVO.Address.value = adress;
+		fn_egov_modal_remove();
+	}
+
 	function showModalDialogCallback(retVal) {
 		if (retVal) {
 			document.SmartMdmBizVO.Custid.value = retVal;
@@ -127,12 +139,6 @@
 									method="post">
 									<input name="answerCn" type="hidden" value="Testing...">
 
-									<h1 class="tit_1">거래처관리 등록</h1>
-
-									<p class="txt_1">거래처관리 TEST 등록화면.</p>
-
-									<h2 class="tit_2">업체 등록</h2>
-
 									<div class="board_view2">
 										<table summary="Q&amp;A에 대한 정보를 등록합니다.">
 											<caption>Q&amp;A내용등록</caption>
@@ -141,25 +147,23 @@
 												<col style="width: auto;">
 											</colgroup>
 											<tr>
-												<td class="lb"><label for="Custnm">업체명</label> <span
-													class="req">필수</span></td>
-												<td><input id="Custnm" name="Custnm" class="f_txt"
-													size="30" maxlength="30" /></td>
+												<td class="lb"><label for="Custnm">업체명</label> 
+													<span class="req">필수</span></td>
+												<td><input id="Custnm" name="Custnm" class="f_txt" size="30" maxlength="30" /></td>
 											</tr>
 											<tr>
-												<td class="lb"><label for="Custid">업체코드</label> <span
-													class="req">필수</span></td>
-												<td><span class="f_search2 w_300"> <input
-														id="Custid" type="text" maxlength="30" name="Custid"
-														readonly>
-														<button type="button" class="btn"
-															onclick="javascript:fnIdCheck(); return false;"></button>
-												</span> <span class="f_txt_inner ml15">(중복 코드 검색)</span></td>
+												<td class="lb"><label for="Custid">업체코드</label> 
+													<span class="req">필수</span></td>
+												<td>
+													<span class="f_search2 w_300"> 
+													<input id="Custid" type="text" maxlength="30" name="Custid" readonly>
+													<button type="button" class="btn" onclick="javascript:fnIdCheck(); return false;"></button>
+													</span> 
+												<span class="f_txt_inner ml15">(중복 코드 검색)</span></td>
 											</tr>
 											<tr>
 												<td class="lb"><label for="Address">주소</label></td>
-												<td><input id="Address" name="Address" class="f_txt"
-													size="30" maxlength="30" /></td>
+												<td><input id="Address" name="Address" onclick="fn_egov_ZipSearch()" class="f_txt" size="40" maxlength="30" readonly/></td>
 											</tr>
 											<tr>
 												<td class="lb"><label for="Ceo">대표자명</label></td>

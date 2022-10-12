@@ -114,4 +114,14 @@ public class EgovCcmZipManageServiceImpl extends EgovAbstractServiceImpl impleme
 		zipManageDAO.updateZip(smartZip);
 	}
 
+	@Override
+	public List<Object> selectSIDO() throws Exception {
+		return zipManageDAO.selectSIDO();
+	}
+
+	@Override
+	public List<Object> SelectMiddleAdress(String sido) throws Exception {
+		return zipManageDAO.SelectMiddleAdress(sido);
+	}
+
 }

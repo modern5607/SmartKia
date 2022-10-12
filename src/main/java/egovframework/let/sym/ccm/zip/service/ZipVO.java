@@ -29,11 +29,39 @@ public class ZipVO extends Zip implements Serializable {
 
 	/** 검색조건 */
     private String searchCondition = "";
+
+	private String sido ="";
+	private String sigungu ="";
+	private String doro ="";
     
     /** 검색Keyword */
     private String searchKeyword = "";
     
-    /** 검색사용여부 */
+    public String getSido() {
+		return sido;
+	}
+
+	public void setSido(String sido) {
+		this.sido = sido;
+	}
+
+	public String getSigungu() {
+		return sigungu;
+	}
+
+	public void setSigungu(String sigungu) {
+		this.sigungu = sigungu;
+	}
+
+	public String getDoro() {
+		return doro;
+	}
+
+	public void setDoro(String doro) {
+		this.doro = doro;
+	}
+
+	/** 검색사용여부 */
     private String searchUseYn = "";
     
     /** 현재페이지 */

@@ -123,6 +123,8 @@ function fn_egov_modal_remove() {
                             <li><a href="/rcpt/SmartReservationRcptView.do">고객예약등록(WEB)</a></li>
                             
                             <li><a href="/rcpt/ReservationstatusView.do">고객예약현황</a></li>
+                            <li><a href="/crm/SmartAddRepairCar.do?">차량수리이력조회</a></li>
+
                         </ul>
                     </div>
 
@@ -152,11 +154,11 @@ function fn_egov_modal_remove() {
                     </div>
 
                     <div>
-                        <!-- <h2>고객관리</h2> -->
+                        <!-- <h2>현장태블릿</h2> -->
                         <ul>
+                            <li><a href="/tablet/TabletAssignGroup.do">접수현황</a></li>
                             <!-- <li><a href="/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">고객정보관리</a></li> -->
                             <!-- <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4100000">차량정보관리</a></li> -->
-                            <li><a href="/crm/SmartAddRepairCar.do?menuNo=4100000">차량수리이력조회</a></li>
                             <!-- <li><a href="/cop/com/selectTemplateInfs.do?menuNo=4100000">컴플레인관리</a></li> -->
                         </ul>
                     </div>
