@@ -171,7 +171,7 @@ public class EgovLoginController {
     	}
     	
 		if(device.isTablet()||device.isMobile()){
-			return "forward:/tablet/TabletAssignGroup.do";
+			return "tablet/TabletAssignGroup.do";
 		}
 		else{
 			return "forward:/cmm/main/mainPage.do";

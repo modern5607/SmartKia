@@ -26,11 +26,11 @@
 
 <script type="text/javascript">
 	function refresh(){
-        alert("메롱");
+        alert("테스트1");
     }
 
     function detail(){
-        alert("ㅄ");
+        alert("테스트2");
     }
 </script>
 </head>
