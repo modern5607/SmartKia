@@ -8,7 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>모니터링</title>
+<title>접수현황</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,13 @@
 </style>
 
 <script type="text/javascript">
-	
+	function refresh(){
+        alert("메롱");
+    }
+
+    function detail(){
+        alert("ㅄ");
+    }
 </script>
 </head>
 <body>
@@ -41,35 +47,45 @@
 								<h1 class="tit_1 team_left">접수 현황</h1>
                                 <div class="tab team_click active" id="normal">일반접수</div>
                                 <div class="tab team_click" id="reserve">예약접수</div>
-								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
+								<div class="logo team_left" style="width:65% !important ;"><img src="../images/kia_logo.png"></div>
+								<div class="menu_btn"><a href="#"><img src="../images/ico_allmenu.png"></a></div>
+								<div class="menu_bg"></div>
+								<div class="sidebar_menu">
+									<div class="close_btn"><a href="#"><img src="../images/ico_allmenu_close.png"></a></div>
+									<ul class="menu_wrap">
+										<li><a href="/tablet/TabletAssignGroup.do">접수현황</a></li>
+										<li><a href="/tablet/TabletWorkGroup.do">반별입고현황</a></li>
+									</ul>
+									<div style="position: absolute; bottom: 70px;"><img src="../images/kia_seo.png"></div>
+								</div>
 							</div>
 							<div class="board_list" id="tab1">
-								<table id="guesttable">
+								<table id="guesttable" style="table-layout: fixed;">
 									<colgroup>
-										<col style="width: 25%;">
-										<col style="width: 25%;">
-										<col style="width: 25%;">
-										<col style="width: 25%;">
+										<col style="width: 20%;">
+										<col style="width: 15%;">
+										<col style="width: 20%;">
+										<col style="width: 30%;">
+                                        <col style="width: 15%;">
 									</colgroup>
 									<thead>
 										<tr>
 											<th scope="col">접수번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차종</th>
-											<th scope="col">고객명</th>
+											<th scope="col">수리내역</th>
+                                            <th scope="col"><img src="../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach begin="0" end="11" varStatus="status">
+										<c:forEach var="result" items="${resultList}"
+                                            varStatus="status">
 											<tr>
-												<!-- <td><c:out value="${Guest[status.index].TAKESEQ}" /></td> -->
-												<!-- <td><c:out value="${Guest[status.index].AUTONUMBER}" /></td> -->
-												<!-- <td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td> -->
-												<!-- <td><c:out value="${Guest[status.index].NAME}" /></td> -->
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
+												<td><c:out value="${result.TAKESEQ}" /></td>
+												<td><c:out value="${result.AUTONUMBER}" /></td>
+												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
+                                                <td><a href="#LINK" class="btntablet" onclick="detail();">상세정보</a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -119,7 +135,6 @@
 
 <script>
 $("#normal").click(function(){
-    console.log("일반");
     $("#reserve").removeClass("active");
     $("#normal").addClass("active");
     $("#tab2").css("display","none");
@@ -127,13 +142,25 @@ $("#normal").click(function(){
 });
 
 $("#reserve").click(function(){
-    console.log("예약");
     $("#normal").removeClass("active");
     $("#reserve").addClass("active");
     $("#tab1").css("display","none");
     $("#tab2").css("display","block");
+});
+$(document).ready(function(){
+	$('.menu_btn>a').on('click',function(){
+	$('.menu_bg').show();
+	$('.sidebar_menu').show().animate({
+	right:0
+	});
+});
 
-
+$('.close_btn>a').on('click',function(){
+	$('.menu_bg').hide();
+	$('.sidebar_menu').animate({
+	right:'-'+50+'%'
+	},function(){$('.sidebar_menu').hide();});
+	});
 });
 
 </script>
