@@ -3,20 +3,20 @@ body{width: 100%;}
 
 .top_line {width: 100%; height: 5px; background:black;}
 
-.teamtables .header {height: 70px; background: linear-gradient(1deg, #c7c0c0, #0000000a);}
+.teamtables .header {height: 100px; background: linear-gradient(1deg, #c7c0c0, #0000000a);}
 
-.teamtables .header h1 {width: 20%;}
-.teamtables .header .logo {width: 20%; padding-left: 230px;}
-.teamtables .header .tab {width: 15%;}
-.teamtables .header .logo img {width:150px ;}
+.teamtables .header h1 {width: 10%;}
+.teamtables .header .logo {width: 55%; padding-left: 230px;}
+.teamtables .header .tab {width: 10%;}
+.teamtables .header .logo img {width: 200px; float: right; margin-top: 15px;}
 .team_left{    float: left; margin-top: 15px; padding-left: 15px;}
-.board_list tbody{background: linear-gradient(0deg, #bfbfbf, #16131329);}
+.board_list tbody{}
 
 .team_click{
     float: left;
     margin-top: 18px;
     min-width: 200px;
-    line-height: 50px;
+    line-height: 80px;
     font-size: 40px;
     text-align: center;
     background: #5D7D2B;
@@ -27,6 +27,15 @@ body{width: 100%;}
     font-weight: bold;
 }
 
+.btntablet{height: 35px;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 35px;
+    background: #000000;
+    padding: 5px 10px;}
 
 .sub_in{
     width: 100%;
@@ -38,19 +47,23 @@ body{width: 100%;}
 .tit_1{    color: #010101d2;
     font-size: 48px;
     font-weight: 600;
-    line-height: 35px;}
+    line-height: 70px;}
 
-.board_list th{padding: 7px 0; background: black; color:white; font-weight: bold; font-size: 32px;}
+.board_list th{    padding: 14px 0;
+    background: black;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;}
 .container {margin-top: 0px;}
 
 .board_list td{
-    padding: 10px 0 10px 0;
+    padding: 20px 0 20px 0;
     border-bottom: 2px solid #dde2e5;
     height: 59.5px;
     color: #060606;
     text-align: center;
     font-weight: bold;
-    font-size: 26px;
+    font-size: 40px;
 }
 
 .content {
@@ -62,4 +75,118 @@ body{width: 100%;}
     background: black;
     border-bottom: 3px solid black;
 
+}
+.menu_btn{
+    text-align:right;
+    padding:20px;
+}
+.menu_bg{
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+position:absolute;
+top:0;
+display:none;
+}
+.sidebar_menu{ display:none;
+width:20%;
+height:100%;
+background:#bbc3cb;
+position:absolute;
+top:0;
+right: -50%;
+
+}
+.close_btn{
+width:25px;
+height:25px;
+margin:10px;
+padding:10px;
+}
+.close_btn>a{
+display:block;
+width:100%;
+height:100%;
+}
+.menu_wrap{
+list-style:none;
+padding: 100px 0 0 0;
+}
+.menu_wrap li a{
+color:#000;
+text-decoration:none;
+font-size:50px;
+font-weight:bold;
+}
+.menu_wrap li{
+padding:25px 30px;
+border-bottom:2px solid #fff;
+}
+
+.mainimg{
+    float: left;
+    width: 50%;
+    height: 100vh;
+}
+.loginmain{
+    float: left;
+    width: 50%;
+    height: 100vh;
+}
+.mainimg img{
+    width: 100%;
+    height: 100%;
+}
+.loginmain .logoimg img{
+    width: 60%;
+    padding-top: 35%;
+    margin: 0 20%;
+}
+.loginbox{
+    margin: 30px 0;
+    padding: 0;
+    height: 50%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+.loginbox dl > *{
+    float: none;
+}
+
+.loginbox dd input[type=text]{
+    width: 483px;
+    height: 70px;
+    padding: 0 10px;
+    margin: 0 30%;
+    border-style: ridge;
+    color: #666;
+    font-size: 50px;
+    border: revert;
+    border-radius: 0px;
+    background: none;
+}
+.loginbox dd input[type=password]{
+    width: 483px;
+    height: 70px;
+    padding: 0 10px;
+    margin: 0 30%;
+    border-style: ridge;
+    color: #666;
+    font-size: 50px;
+    border: revert;
+    border-radius: 0px;
+    background: none;
+}
+.loginbox .btn_a .btn{
+    width: 483px;
+    height: 70px;
+    margin: 0 18.7%;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 70px;
+    background: #000000;
 }

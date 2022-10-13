@@ -26,6 +26,7 @@ import egovframework.smart.mdm.service.SmartCommonCodeVO;
 import egovframework.smart.mdm.service.SmartLeadTimeVO;
 import egovframework.smart.mdm.service.SmartMdmBizVO;
 import egovframework.smart.mdm.service.SmartMdmService;
+import egovframework.smart.monitoring.service.SmartMonitoringService;
 import egovframework.smart.rcpt.service.SmartRcptService;
 import egovframework.smart.tablet.service.SmartTabletService;
 import egovframework.smart.tablet.service.SmartTabletVO;
@@ -79,6 +80,9 @@ public class SmartTabletController {
 	@Resource(name = "SmartRcptService")
 	private SmartRcptService smartrcptservice;
 	
+	@Resource(name = "SmartMonitoringService")
+	private SmartMonitoringService smartMonitoringService;
+
 	@Autowired
 	private DefaultBeanValidator beanValidator;
 
@@ -400,6 +404,9 @@ public class SmartTabletController {
  * 											태블릿 Controller
  * *******************************************************************************************************************************/
 
+ /*
+  * 작업반 배정 view
+  */
 @RequestMapping(value = "/tablet/TabletAssignGroup.do")
 	public String TabletAssignGroup(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo,
@@ -423,5 +430,41 @@ public class SmartTabletController {
 		
 		
 		return "/tablet/TabletAssignGroup";
+	}
+
+/*
+ * 작업 현황 view
+ */
+@RequestMapping(value = "/tablet/TabletWorkGroup.do")
+	public String TabletWorkGroup(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, ModelMap model,
+			@RequestParam(value = "menuNo", required = false) String menuNo,
+			HttpServletRequest request) throws Exception {
+		
+		// 선택된 메뉴정보를 세션으로 등록한다.
+		if (menuNo != null && !menuNo.equals("")) {
+			request.getSession().setAttribute("menuNo", menuNo);
+		}
+		// 0. Spring Security 사용자권한 처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		
+		searchVO.setLoginid(loginVO.getUniqId().toString());
+		
+
+		// service
+		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
+			System.out.println("model1 :"+model);
+		// service
+		model.addAttribute("TeamA", smartMonitoringService.SceneMonitoring("CB-A"));
+		model.addAttribute("TeamB", smartMonitoringService.SceneMonitoring("CB-B"));
+		model.addAttribute("TeamC", smartMonitoringService.SceneMonitoring("CB-C"));
+		System.out.println("model2 :"+model);
+		
+		return "/tablet/TabletWorkGroup";
 	}
 }

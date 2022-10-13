@@ -157,6 +157,7 @@ function fn_egov_modal_remove() {
                         <!-- <h2>현장태블릿</h2> -->
                         <ul>
                             <li><a href="/tablet/TabletAssignGroup.do">접수현황</a></li>
+                            <li><a href="/tablet/TabletWorkGroup.do">반별입고현황</a></li>
                             <!-- <li><a href="/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">고객정보관리</a></li> -->
                             <!-- <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4100000">차량정보관리</a></li> -->
                             <!-- <li><a href="/cop/com/selectTemplateInfs.do?menuNo=4100000">컴플레인관리</a></li> -->
