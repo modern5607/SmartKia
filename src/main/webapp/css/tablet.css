@@ -63,3 +63,140 @@ body{width: 100%;}
     border-bottom: 3px solid black;
 
 }
+.teamtables ~ strong {
+    display: block;
+    font-size: 60px;
+    margin: 25px 0 0 10%;
+}
+
+.vehicleinfo_1{
+    height: 30vh;
+    margin: 0 40px 0 40px;
+    border: 1px solid gray;
+    border-radius: 80px;
+}
+
+.vehicleinfo_1 div{
+    width: 33%;
+    display: inline-block;
+    padding: 60px 0px 0px 120px;
+}
+.vehicleinfo_1 div strong{
+    font-size: 40px;
+    display: block;
+}
+.vehicleinfo_1 div input{
+    width: 70%;
+    padding: 10px 15px;
+    border-radius: 35px;
+    font-size: 35px;
+}
+
+.vehicleinfo_1 div a{
+    display: inline-block;
+    width: 70%;
+    padding: 10px 15px;
+    border: 1px solid #5D7D2B;
+    border-radius: 35px;
+    font-size: 35px;
+    text-align: center;
+    background: #5D7D2B;
+    color: white;
+    font-weight: bold;
+}
+
+.vehicleinfo_2 {
+    height: 45vh;
+    width: 60vw;
+    margin: 0 20px 0 40px;
+    border: 1px solid gray;
+    border-radius: 80px;
+    float: left;
+}
+
+.vehicleinfo_2 .repairselect{
+    margin: 5% 3% 0% 3%;
+    width: 44%;
+    float: left;
+}
+.vehicleinfo_2 .repairselect .cont{
+    width: 100%;
+}
+.vehicleinfo_2 .repairselect .cont .scrollBox01{
+    height: 570px;
+    margin: 0;
+}
+.vehicleinfo_2 .repairselect .cont .scrollBox01 ul li a{
+    font-size: 46px;
+    line-height: 65px;
+    height: 70px;
+    text-align: center;
+}
+
+.vehicleinfo_2 .repairpreview{
+    width: 44%;
+    margin: 0% 3%;
+    float: left;
+
+}
+.vehicleinfo_2 .repairpreview .cont{
+    width: auto;
+}
+.vehicleinfo_2 .repairpreview .cont strong{
+    font-size: 40px;
+    display: block;
+}
+
+.vehicleinfo_2 .remark{
+    width: 44%;
+    margin: 0% 3%;
+    display: inline-block;
+}
+.vehicleinfo_2 .remark .cont{
+    width: auto;
+
+}
+.vehicleinfo_2 .remark .cont textarea{
+    width: 93%;
+    margin: 15px 20px;
+    padding: 10px;
+    display: block;
+    border: 1px solid #dbdbdb;
+    font-size: 25px;
+    height: 260px;
+}
+.vehicleinfo_2 .remark .cont strong{
+    font-size: 40px;
+    display: block;
+}
+
+.vehicleinfo_3{
+    margin: 0 0px 0 20px;
+    border: 1px solid gray;
+    border-radius: 80px;
+    width: 35vw;
+    height: 45vh;
+    float: left;
+    text-align: center;
+    font-size: 50px;
+}
+
+.vehicleinfo_3 > div{
+    margin-top: 40px;
+}
+.vehicleinfo_3 strong{
+
+}
+.vehicleinfo_3 input{
+    width: 40%;
+    padding: 10px 15px;
+    border-radius: 35px;
+    font-size: 35px;
+}
+.vehicleinfo_3 a{
+    padding: 0 90px;
+    border: 1px solid #EA0029;
+    border-radius: 10px;
+    background: #EA0029;
+    color: white;
+}

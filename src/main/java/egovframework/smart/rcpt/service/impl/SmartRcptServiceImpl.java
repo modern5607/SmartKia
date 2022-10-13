@@ -269,4 +269,12 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 		return result;
 	}
 
+	@Transactional
+	@Override
+	public int CancelWebReservationRcpt(String takeseq) throws Exception {
+		int result=0;
+		result = smartrcptDAO.CancelWebReservationRcpt(takeseq);
+		return result;
+	}
+
 }

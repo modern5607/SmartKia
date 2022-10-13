@@ -344,13 +344,27 @@ public class SmartRcptController {
 	}
 
 	//접수취소
-	@RequestMapping(value = "/rcpt/CancelWebRcpt.do",method = RequestMethod.POST)
+	@RequestMapping(value = "/rcpt/CancelWebRcpt.do",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	public String CancelWebRcpt(@RequestParam("takeseq") String takeseq, RedirectAttributes attr) throws Exception
 	{
 		int result=0;
 		System.out.println(takeseq);
 
 		result = smartrcptservice.CancelWebRcpt(takeseq);
+		System.out.println("result :"+result);
+		return String.valueOf(result);
+	}
+
+	//예약접수취소
+	@RequestMapping(value = "/rcpt/CancelWebReservationRcpt.do",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String CancelWebReservationRcpt(@RequestParam("takeseq") String takeseq, RedirectAttributes attr) throws Exception
+	{
+		int result=0;
+		System.out.println(takeseq);
+
+		result = smartrcptservice.CancelWebReservationRcpt(takeseq);
 		System.out.println("result :"+result);
 		return String.valueOf(result);
 	}

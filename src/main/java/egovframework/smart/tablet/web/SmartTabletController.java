@@ -424,4 +424,12 @@ public class SmartTabletController {
 		
 		return "/tablet/TabletAssignGroup";
 	}
+
+	@RequestMapping(value ="/tablet/a.do")
+	public String a(ModelMap model)throws Exception
+	{
+		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
+		model.addAttribute("leadtimelist", leadtimelist);
+		return "/tablet/a";
+	}
 }

@@ -98,6 +98,12 @@
             TASKSTAT= 'CB-Cancel'
         WHERE TAKESEQ = ${takeseq}
     </update>
+    <update id="CancelWebReservationRcpt" parameterType="java.lang.String">
+        UPDATE CAR_TAKEREPAIR
+        SET
+            TASKSTAT= 'CB-reservecancel'
+        WHERE TAKESEQ = ${takeseq}
+    </update>
 
     <update id="UpdateRepair">
         UPDATE CAR_LEAD_REPAIR
