@@ -35,8 +35,16 @@ public class CusMberManageVO extends CusMberDefaultVO{
 	private String totalKm = "";
 	private String buildKia = "";
 	
-
     private String oldCusNm = "";
+    
+    private String receipDate ="";
+    private String repairName ="";
+    private String repairNote ="";
+    private String turnoverNote ="";
+    private String takeSeq ="";
+    private String repairCnt ="";
+    private String turnOverTime ="";
+    
 	public String getCusId() {
 		return cusId;
 	}
@@ -107,5 +115,47 @@ public class CusMberManageVO extends CusMberDefaultVO{
 	public void setOldCusNm(String oldCusNm) {
 		this.oldCusNm = oldCusNm;
 	}
+    public String getReceipDate() {
+        return receipDate;
+    }
+    public void setReceipDate(String receipDate) {
+        this.receipDate = receipDate;
+    }
+    public String getRepairName() {
+        return repairName;
+    }
+    public void setRepairName(String repairName) {
+        this.repairName = repairName;
+    }
+    public String getRepairNote() {
+        return repairNote;
+    }
+    public void setRepairNote(String repairNote) {
+        this.repairNote = repairNote;
+    }
+    public String getTurnoverNote() {
+        return turnoverNote;
+    }
+    public void setTurnoverNote(String turnoverNote) {
+        this.turnoverNote = turnoverNote;
+    }
+    public String getTakeSeq() {
+        return takeSeq;
+    }
+    public void setTakeSeq(String takeSeq) {
+        this.takeSeq = takeSeq;
+    }
+    public String getRepairCnt() {
+        return repairCnt;
+    }
+    public void setRepairCnt(String repairCnt) {
+        this.repairCnt = repairCnt;
+    }
+    public String getTurnOverTime() {
+        return turnOverTime;
+    }
+    public void setTurnOverTime(String turnOverTime) {
+        this.turnOverTime = turnOverTime;
+    }
 	
 }

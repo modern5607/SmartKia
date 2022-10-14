@@ -9,6 +9,7 @@ import java.util.Map;
 import egovframework.smart.customer.service.CusMberManageVO;
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
 import egovframework.smart.mdm.service.SmartCommonCodeVO;
+import egovframework.smart.tablet.service.SmartTabletVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -36,6 +37,7 @@ import org.springframework.stereotype.Service;
  * </pre>
  */
 
+@SuppressWarnings("unchecked")
 @Service("cusMberManageService")
 public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements CusMberManageService {
 
@@ -168,5 +170,20 @@ public class CusMberManageServiceImpl extends EgovAbstractServiceImpl implements
 		return cusMberManageDAO.selectMberList(userSearchVO);
 	}
 
-
+   @Override
+    public Map<String, Object> selectCus(CusMberManageVO vo) throws Exception {
+        List<CusMberManageVO> info = cusMberManageDAO.selectCus(vo);
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("info",info);
+        return map;
+    }
+   @Override
+    public List<Object> selectCusInfo(CusMberManageVO searchVO) {
+        return cusMberManageDAO.selectCusInfo(searchVO);
+    }
+   @Override
+   public List<Object> selectCusDetail(String seq) throws Exception {
+       return cusMberManageDAO.selectCusDetail(seq);
+   }
+   
 }
