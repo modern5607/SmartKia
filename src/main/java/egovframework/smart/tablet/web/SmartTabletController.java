@@ -467,11 +467,19 @@ public class SmartTabletController {
 		
 		return "/tablet/TabletWorkGroup";
 	}
-	@RequestMapping(value ="/tablet/a.do")
-	public String a(ModelMap model)throws Exception
+
+	//
+	@RequestMapping(value ="/tablet/TabletAssignView.do")
+	public String a(@RequestParam Map<String,Object> params, ModelMap model)throws Exception
 	{
+		System.out.println("params: "+params);
+		model.addAttribute("rcptinfo", smartrcptservice.SelectRcptinfo(params.get("takeseq").toString()));
+		model.addAttribute("RepairList", smartrcptservice.selectRcptRepairInfo(params.get("takeseq").toString()));
+		System.out.println("rcptinfo :"+model.get("rcptinfo"));
+		System.out.println("RepairList :"+model.get("RepairList"));
+
 		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
 		model.addAttribute("leadtimelist", leadtimelist);
-		return "/tablet/a";
+		return "/tablet/TabletAssignView";
 	}
 }

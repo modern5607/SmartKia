@@ -29,8 +29,10 @@
         alert("테스트1");
     }
 
-    function detail(){
-        alert("테스트2");
+    function detail(takeseq){
+        // alert("테스트2");
+		document.assignform.takeseq.value= takeseq;
+		document.assignform.submit();
     }
 </script>
 </head>
@@ -44,6 +46,9 @@
 						<div class="teamtables">
 							<div class="top_line"></div>
 							<div class="header">
+								<form name="assignform" action="<c:url value='/tablet/TabletAssignView.do'/>" method="post">
+									<input type="hidden" name="takeseq">
+								</form>
 								<h1 class="tit_1 team_left">접수 현황</h1>
                                 <div class="tab team_click active" id="normal">일반접수</div>
                                 <div class="tab team_click" id="reserve">예약접수</div>
@@ -86,7 +91,7 @@
 												<td><c:out value="${result.AUTONUMBER}" /></td>
 												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
-                                                <td><a href="#LINK" class="btntablet" onclick="detail();">상세정보</a></td>
+                                                <td><a href="#LINK" class="btntablet" onclick="detail('${result.TAKESEQ}');">상세정보</a></td>
 											</tr>
 										</c:forEach>
 									</tbody>

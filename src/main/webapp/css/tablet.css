@@ -75,7 +75,7 @@ body{width: 100%;}
     padding-bottom: 0;
 }
 
-.active{
+.header .active{
     background: black;
     border-bottom: 3px solid black;
 
@@ -197,7 +197,7 @@ border-bottom:2px solid #fff;
 }
 .teamtables ~ strong {
     display: block;
-    font-size: 40px;
+    font-size: 30px;
     margin: 0% 0 0 10%;
 }
 
@@ -211,10 +211,10 @@ border-bottom:2px solid #fff;
 .vehicleinfo_1 div{
     width: 33%;
     display: inline-block;
-    padding: 1% 0px 0px 2%;
+    padding: 0% 0px 0px 5%;
 }
 .vehicleinfo_1 div strong{
-    font-size: 30px;
+    font-size: 25px;
     display: block;
 }
 .vehicleinfo_1 div input{
@@ -230,7 +230,7 @@ border-bottom:2px solid #fff;
     padding: 0px 15px;
     border: 1px solid #5D7D2B;
     border-radius: 35px;
-    font-size: 26px;
+    font-size: 25px;
     text-align: center;
     background: #5D7D2B;
     color: white;
@@ -255,13 +255,13 @@ border-bottom:2px solid #fff;
     width: 100%;
 }
 .vehicleinfo_2 .repairselect .cont .scrollBox01{
-    height: 300px;
+    height: 220px;
     margin: 0;
 }
 .vehicleinfo_2 .repairselect .cont .scrollBox01 ul li a{
-    font-size: 28px;
-    line-height: 40px;
-    height: 40px;
+    font-size: 25px;
+    line-height: 31px;
+    height: 33px;
     text-align: center;
 }
 
@@ -282,6 +282,13 @@ border-bottom:2px solid #fff;
 
 .vehicleinfo_2 .repairpreview .cont .scrollBox03{
     margin: 1% 20px;
+    height: 100px;
+}
+.scrollBox03 td{
+    padding: 0px 2px;
+    border-bottom: none;
+    color: #666;
+    font-size: 13px;
 }
 
 .vehicleinfo_2 .remark{
@@ -294,16 +301,16 @@ border-bottom:2px solid #fff;
 
 }
 .vehicleinfo_2 .remark .cont textarea{
-    width: 93%;
-    margin: 15px 20px;
-    padding: 10px;
+    width: 88%;
+    margin: 0 20px;
+    padding: 5px;
     display: block;
     border: 1px solid #dbdbdb;
-    font-size: 25px;
-    height: 260px;
+    font-size: 15px;
+    height: 90px;
 }
 .vehicleinfo_2 .remark .cont strong{
-    font-size: 40px;
+    font-size: 20px;
     display: block;
 }
 
@@ -315,20 +322,20 @@ border-bottom:2px solid #fff;
     height: 45vh;
     float: left;
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .vehicleinfo_3 > div{
-    margin-top: 5px;
+    margin-top:15px;
 }
 .vehicleinfo_3 strong{
 
 }
 .vehicleinfo_3 input{
     width: 40%;
-    padding: 0px 15px;
+    padding: 5px 10px;
     border-radius: 35px;
-    font-size: 35px;
+    font-size: 15px;
 }
 .vehicleinfo_3 a{
     padding: 0 90px;

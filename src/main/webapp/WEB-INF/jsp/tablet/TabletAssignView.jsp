@@ -25,7 +25,16 @@
 </style>
 
 <script type="text/javascript">
-	
+	 function DeleteRepair(repairseq='')
+    {
+        if(repairseq != '')
+        {
+            deleteArr.push(repairseq);
+            $("#deletelist").val(deleteArr);
+        }
+        // $("tr#repair_"+i).remove();
+
+    }
 </script>
 </head>
 <body>
@@ -55,7 +64,7 @@
 			<div><strong>차종</strong><input type="text"></div>
 			<div><strong>고객명</strong><input type="text"></div>
 			<div><strong>연락처</strong><input type="text"></div>
-			<div><strong style="height: 59px;"></strong><a href="#">수리이력 확인하기</a></div>
+			<div><strong style="height: 42px;"></strong><a href="#">수리이력 확인하기</a></div>
 		</div>
 
 		<strong>정비내역</strong>
@@ -66,20 +75,20 @@
 					<div class="scrollBox01">
 						<ul id="rcrListUL">
 							<c:forEach var="i" items="${leadtimelist.infolist}" varStatus="istatus">
-								<li class="box_tit">
-									<a href="#">${i.NAME}</a>
-									<ul>
-										<c:forEach var="j" items="${i.LIST}" varStatus="jstatus">
-											<li>
-												<input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont"
-													value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>"
-													data-idx="${istatus.index}${jstatus.index}" style="width: 0px;height: 0px;">
-												<label for="mtn_cont${istatus.count}_${jstatus.count}">${j.NAME}</label>
-											</li>
-										</c:forEach>
-									</ul>
-								</li>
-							</c:forEach>
+                            <li class="box_tit">
+                                <a href="#">${i.NAME}</a>
+                                <ul>
+                                <c:forEach var="j" items="${i.LIST}" varStatus="jstatus">
+                                    <li>
+                                        <input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont" value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>" data-idx="${istatus.index}${jstatus.index}" 
+                                        <c:forEach var="k" items="${RepairList}" varStatus="kstatus">${(k.REPAIRCODE eq j.CODE)?"checked":""}</c:forEach>
+                                        style="width: 0px;height: 0px;">
+                                        <label for="mtn_cont${istatus.count}_${jstatus.count}">${j.NAME}</label>
+                                    </li>
+                                </c:forEach>
+                                </ul>
+                            </li>
+                            </c:forEach>
 						</ul>
 					</div>
 				</div>
@@ -147,6 +156,72 @@ $("#reserve").click(function(){
     $("#tab1").css("display","none");
     $("#tab2").css("display","block");
 
+
+});
+
+$("li.box_tit a").click(function(){
+    // console.log($(this));
+    if($(this).parent().hasClass("active"))
+        $(this).parent().removeClass("active");
+    else
+        $(this).parent().addClass("active");
+});
+
+$(".box_tit ul li label").click(function(){
+    var $this = $(this);
+    $this.css("pointer-events","none");
+
+    setTimeout(function(){
+        var checkbox =$this.parent().find("input");
+        // console.log(checkbox);
+        var checkbox_val = checkbox.val();
+        var checkbox_idx = checkbox.data("idx");
+        var repairtext = $this.text();
+        var textarea=''
+        var totalleadtime=0;
+        var textlist = new Array();
+        var vallist = new Array();
+        var notelist = new Array();
+        var leadtimelist = new Array();
+        var repairhtml = $("#repair").children("tbody");
+        
+
+        if(checkbox.is(":checked")==false)
+        {
+            var repairvallist = $("input[name=repair]");
+            repairvallist.each(function(){
+                console.log("checkbox_val:"+checkbox.val()+" / "+ $(this).val());
+                var repairseq = $(this).parent().find("input[name=repairseq]");
+                if($(this).val() == checkbox.val())
+                {
+                    // console.log("SEQ :"+$(this).parent().find("input[name=repairseq]").val());
+                    $(this).parent().remove();
+                    if(repairseq.val()!="")
+                            DeleteRepair(repairseq.val());
+                }
+                
+            });
+        }
+        else
+        {
+            var html='';
+            // var childCount = repair.children().length;
+            html+="<tr id='repair_"+(checkbox_idx)+"'>";
+            html+="<td>"+repairtext+"</td>";
+            // html+="<td>";
+            // html+="<label class='f_selectsmall'><select id='chk_repair_"+checkbox_idx+"' name='chk_repair' >";
+            // html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
+            // html+="</select></label>";
+            // html+="</td>";
+            // html+="<td>"+$(this).data("time")+"</td>";
+            // html+="<td><input type='text' class='f_txtsmall' name='note' id='note' placeholder='비고' value=''/></td>";
+            html+="<input type='hidden' name='repair' id='repair' value='"+checkbox_val+"'/>";
+            html+="</tr>";
+            repairhtml.append(html);
+        }
+        $this.css("pointer-events","auto");
+
+    },200)
 
 });
 
