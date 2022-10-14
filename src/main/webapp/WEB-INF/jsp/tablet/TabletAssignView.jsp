@@ -25,7 +25,8 @@
 </style>
 
 <script type="text/javascript">
-	 function DeleteRepair(repairseq='')
+    var deleteArr = new Array();
+	function DeleteRepair(repairseq='')
     {
         if(repairseq != '')
         {
@@ -59,11 +60,11 @@
 
 		<strong>차량정보</strong>
 		<div class="vehicleinfo_1">
-			<div><strong>차량번호</strong><input type="text"></div>
-			<div><strong>주행거리</strong><input type="text"></div>
-			<div><strong>차종</strong><input type="text"></div>
-			<div><strong>고객명</strong><input type="text"></div>
-			<div><strong>연락처</strong><input type="text"></div>
+			<div><strong>차량번호</strong><input type="text" value="<c:out value='${rcptinfo[0].AUTONUMBER}'/>" readonly></div>
+			<div><strong>주행거리</strong><input type="text" value="<c:out value='${rcptinfo[0].KILRO_TOTAL}'/>" readonly></div>
+			<div><strong>차종</strong><input type="text" value="<c:out value='${rcptinfo[0].KIND}'/>" readonly></div>
+			<div><strong>고객명</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_NAME}'/>" readonly></div>
+			<div><strong>연락처</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_TEL}'/>" readonly></div>
 			<div><strong style="height: 42px;"></strong><a href="#">수리이력 확인하기</a></div>
 		</div>
 
@@ -99,14 +100,33 @@
 					<strong>정비내용 선택사항</strong>
 					<div class="scrollBox03 board_view5"style="overflow:scroll;">
 						<table id="repair">
-							<colgroup>
-								<col style="width:220px;">
-								<col style="width:auto;">
-								<!-- <col style="width:auto;"> -->
-							</colgroup>
-							<tbody>
-							</tbody>
-						</table>
+                            <colgroup>
+                                <col style="width:220px;">
+                                <col style="width:auto;">
+                                <col style="width:auto;">
+                            </colgroup>
+                            <tbody>
+                            <c:forEach var="i" items="${RepairList}" varStatus="istatus">
+                                <tr>
+                                    <td>●<c:out value="${i.REPAIRNAME}"/></td>
+                                    <!-- <td>
+                                        <label class="f_selectsmall">
+                                            <select name="chk_repair" id="chk_repair_${istatus.count}">
+                                                <c:forEach var="j" items="${autome}" varStatus="jstatus">
+                                                    <option value="${j.CODE}" <c:if test="${j.CODE == i.REPAIRMETHOD}">selected</c:if>><c:out value="${j.NAME}"/></option>
+                                                </c:forEach>
+                                            </select>
+                                        </label>
+                                    </td> -->
+                                    <input type='hidden' name="repair" value="<c:out value='${i.REPAIRCODE}'/>">
+                                    <input type='hidden' name="repairseq" value="<c:out value='${i.REPAIR_SEQ}'/>">
+                                </tr>
+
+                            </c:forEach>
+                            </tbody>
+
+
+                        </table>
 					</div>
 				</div>
 			</div>
@@ -121,15 +141,22 @@
 		<div class="vehicleinfo_3">
 			<div class="info3_1">
 				<strong>총 주행거리</strong>
-				<div><input type="text">km</div>
+				<div><input type="text"><label>km</label></div>
 			</div>
 			<div class="info3_2">
 				<div><strong>예상소요시간</strong></div>
-				<div><input type="text">분</div>
+				<div><input type="text"><label>분</label></div>
 			</div>
 			<div class="info3_3">
 				<div><strong>작업반</strong></div>
-				<div><input type="text"></div>
+				<div>
+                    <c:forEach var="i" items="${autorooms}" varStatus="status">
+                    <c:if test="${logininfo[0].TEAM == i.CODE}">
+                        <input type="text" value="${i.NAME}" disabled readonly>
+                        <input type="hidden" name="autoroom" value="${logininfo[0].TEAM}" >
+                    </c:if>
+                    </c:forEach>
+                </div>
 			</div>
 			
 			<div><a href="" class="assign"><strong>정비 입고</strong></a></div>
@@ -207,7 +234,7 @@ $(".box_tit ul li label").click(function(){
             var html='';
             // var childCount = repair.children().length;
             html+="<tr id='repair_"+(checkbox_idx)+"'>";
-            html+="<td>"+repairtext+"</td>";
+            html+="<td>●"+repairtext+"</td>";
             // html+="<td>";
             // html+="<label class='f_selectsmall'><select id='chk_repair_"+checkbox_idx+"' name='chk_repair' >";
             // html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
