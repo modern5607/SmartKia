@@ -273,7 +273,7 @@ function fnKindCheck(){
                                         </tr>
 										<tr>
                                             <td class="lb">
-                                                <label for=note>총주행거리</label>
+                                                <label for=note>총주행거리(km)</label>
                                             </td>
                                             <td>
                                                 <!-- <input name="note" id="note" class="f_txt" type="text" value="" maxlength="100" /> -->

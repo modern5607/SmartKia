@@ -203,7 +203,7 @@ function fnKindCheck(){
                                         </tr>
                                         <tr>
                                             <td class="lb">
-                                                <label for=note>총주행거리</label>
+                                                <label for=note>총주행거리(km)</label>
                                             </td>
                                             <td>
                                                 <input name="totalKm" id="totalKm" class="f_txt w_350" title="총주행거리" maxlength="100" value="<c:out value='${cusMberManageVO.totalKm}'/>"/>

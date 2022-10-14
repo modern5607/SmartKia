@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
+import egovframework.smart.mdm.service.SmartCommonCodeVO;
+import egovframework.smart.tablet.service.SmartTabletVO;
 
 public interface CusMberManageService {
 
@@ -83,5 +85,11 @@ public interface CusMberManageService {
 	 * @throws Exception
 	 */
 	public int checkCusDplct(String checkCus) throws Exception;
+
+
+    public Map<String, Object> selectCus(CusMberManageVO vo) throws Exception;
+    public List<Object> selectCusInfo(CusMberManageVO searchVO);
+    public List<Object> selectCusDetail(String seq) throws Exception;
+
 
 }

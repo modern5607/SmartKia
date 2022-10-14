@@ -2,6 +2,7 @@ package egovframework.smart.customer.web;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
@@ -11,6 +12,7 @@ import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.uss.umt.service.MberManageVO;
 import egovframework.let.uss.umt.service.UserDefaultVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
+import egovframework.smart.crm.service.SmartCrmVO;
 import egovframework.smart.customer.service.CusMberDefaultVO;
 import egovframework.smart.customer.service.CusMberManageService;
 import egovframework.smart.customer.service.CusMberManageVO;
@@ -28,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -131,13 +134,12 @@ public String selectCusMberList(@ModelAttribute("userSearchVO") CusMberDefaultVO
 		userSearchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
 		
-		model.addAttribute("resultList", cusMberManageService.selectMberList(userSearchVO));		
+		model.addAttribute("resultList", cusMberManageService.selectMberList(userSearchVO));	
+        System.out.println("resultList"+cusMberManageService.selectMberList(userSearchVO));        	
 		int totCnt = cusMberManageService.selectMberListTotCnt(userSearchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
-//		System.out.println(userSearchVO);
-//		System.out.println(cusMberManageService.selectMberListTotCnt(userSearchVO));		 
 		return "customer/SmartCusMberManage";
 	}
 
@@ -224,27 +226,6 @@ public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAtt
 		return "/customer/SmartCusMberSelectUpdt";
 	  }
 
-//@RequestMapping("/customer/SmartCusMberSelectUpdtView.do")
-//public String updateMberView(@RequestParam("selectedId") String cusId, @ModelAttribute("cusMberDefaultVO") CusMberDefaultVO cusMberDefaultVO, Model model) throws Exception {
-//
-//	// 미인증 사용자에 대한 보안처리
-//	Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-//	if(!isAuthenticated) {
-//		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-//    	return "uat/uia/EgovLoginUsr";
-//	}
-//
-//
-//	CusMberManageVO selectMber = cusMberManageService.selectMber(cusId);
-//	model.addAttribute("cusMberManageVO", selectMber);
-//	model.addAttribute("cusMberDefaultVO", cusMberDefaultVO);
-////	model.addAttribute("team",map.get("info"));
-//	System.out.println(selectMber);
-//	System.out.println(cusMberDefaultVO);
-////	System.out.println("team :"+map.get("info"));
-//	return "/customer/SmartCusMberSelectUpdt"; 
-//}
-//	
 	  @RequestMapping("/customer/SmartCusMberSelectUpdt.do") public String
 	  updateMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,
 	  BindingResult bindingResult, Model model,HttpServletResponse response, RedirectAttributes attr, @RequestParam Map<String, Object> commandMap) throws Exception {
@@ -308,5 +289,26 @@ public String searchKindPopupView(@ModelAttribute("cusMberManageVO") CusMberMana
 //	System.out.println(vo);
 //	System.out.println(cusMberManageVO);
 	return "customer/searchKindPopupView";
+}
+
+@RequestMapping(value = "/customer/selectCusRepairInfo.do",method = RequestMethod.GET)
+public String selectCusRepairInfo(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,ModelMap model, String cusId) throws Exception {      
+
+//    System.out.println(cusId);
+    
+    model.addAttribute("cusinfo",cusMberManageService.selectCusInfo(cusMberManageVO));
+    
+//    System.out.println("cusinfo : "+cusMberManageVO);
+    return "customer/SmartRepairInfoPopup";
+}
+@RequestMapping(value = "/customer/selectCusRepairDetail.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+@ResponseBody
+public List<Object> selectCusRepairDetail(@RequestParam("seq") String seq, HttpServletResponse response) throws Exception {
+    
+//    System.out.println("seq :"+seq);
+    List<Object> list = cusMberManageService.selectCusDetail(seq);
+
+//    System.out.println("list :"+list);
+    return list;
 }
 }

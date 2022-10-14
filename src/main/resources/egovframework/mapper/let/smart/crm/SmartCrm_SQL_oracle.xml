@@ -26,7 +26,6 @@
 		WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 		AND A.TASKSTAT = 'CB-perfect'
 		AND A.TURNOVER = 'Y'
-		
         <if test="searchAutoNo != ''">
             AND A.CUSTOMER_AUTONO LIKE '%' ||#{searchAutoNo}|| '%'
         </if>
@@ -39,7 +38,15 @@
         <if test="(sdate != '' and edate != '')">
         	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
         </if>
-		
+        <if test="(sdate == '' and edate != '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &lt;= #{edate}
+        </if>
+        <if test="(sdate != '' and edate == '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &gt;= #{sdate}
+        </if>
+		<if test="(sdate == '' and edate == '')">
+			AND SUBSTR(ETIME,1,10) = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+        </if>
 	</select>
    	<select id="selectCrmListTotCnt" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="int">
 		
