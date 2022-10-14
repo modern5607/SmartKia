@@ -55,7 +55,19 @@
 
     </select>
     <select id="SelectRcptinfo" parameterType="java.lang.String" resultType="java.util.HashMap">
-        SELECT * FROM CAR_TAKEREPAIR WHERE TAKESEQ = #{seq}
+            SELECT 
+                TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,
+                FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_AUTOKIND') KIND,
+                FN_CUSTOMTER_INFO(CUSTOMER_ID,'KILRO_TOTAL') KILRO_TOTAL,
+                FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_NAME') CUSTOMER_NAME,
+                FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_TEL') CUSTOMER_TEL,
+                REPAIRCODE,REPAIRMETHOD,REPAIRNOTE,POSITION,RECEIPTDATE,
+                PLANDATE,ESTIME,ALPHAESTIME,TASKSTAT,COMPTIME,
+                NOTE,URGENT,TURNOVER,TURNOVERTIME,TURNOVER_ID,
+                TURNOVER_NOTE,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE,
+                TASK_NAME,TASK_TEL,KILRO_NOW,RECEPT_LID,TOTAL_LEADTIME,ETIME        
+            FROM   CAR_TAKEREPAIR
+            WHERE  TAKESEQ = #{seq}
     </select>
 
     <insert id="InsertLeadRepair" parameterType="java.util.HashMap" >

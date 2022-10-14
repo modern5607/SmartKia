@@ -470,16 +470,23 @@ public class SmartTabletController {
 
 	//
 	@RequestMapping(value ="/tablet/TabletAssignView.do")
-	public String a(@RequestParam Map<String,Object> params, ModelMap model)throws Exception
+	public String a(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO,@RequestParam Map<String,Object> params, ModelMap model)throws Exception
 	{
 		System.out.println("params: "+params);
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();		
+		searchVO.setLoginid(loginVO.getUniqId().toString());
+		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
+		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
 		model.addAttribute("rcptinfo", smartrcptservice.SelectRcptinfo(params.get("takeseq").toString()));
 		model.addAttribute("RepairList", smartrcptservice.selectRcptRepairInfo(params.get("takeseq").toString()));
 		System.out.println("rcptinfo :"+model.get("rcptinfo"));
 		System.out.println("RepairList :"+model.get("RepairList"));
+		System.out.println("logininfo :"+model.get("logininfo"));
+		System.out.println("autorooms :"+model.get("autorooms"));
 
 		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
 		model.addAttribute("leadtimelist", leadtimelist);
+		System.out.println("leadtimelist: "+leadtimelist);
 		return "/tablet/TabletAssignView";
 	}
 
