@@ -216,14 +216,33 @@
         $dialog.dialog('open');
     }
 
-    function DeleteRcpt(takeseq)
+    function CancelRcpt(takeseq)
     {
-        console.log(takeseq);
+        if(!confirm("접수 취소하시겠습니까?"))
+            return;
+
+        // console.log(takeseq);
         if(takeseq==''){
             alert("해당 접수정보가 조회되지 않습니다. 새로고침후 다시 시도해 주세요");
             return;
         }
-        $("#deletetakeseq").val(takeseq);
+        $.ajax({
+            type: "post",
+            url: "<c:url value='CancelWebRcpt.do'/>",
+            data: {takeseq:takeseq},
+            success: function (resp) {
+                if(resp=="1")
+                {
+                    alert("접수취소되었습니다");
+                    window.location.reload();
+                }
+                else
+                {
+                    alert("오류: 취소할 접수의 상태가 변경되었습니다 다시 시도해 주세요");
+                    window.location.reload();                    
+                }
+            }
+        });
     }
 
     function reload()
@@ -451,7 +470,7 @@
                                             <thead style="padding : 3px 0;">
                                                 <tr>
                                                     <th scope="col">접수일자</th>
-                                                    <th scope="col">예약일자</th>
+                                                    <th scope="col">예약일자(등록일자)</th>
                                                     <th scope="col">차량번호</th>
                                                     <th scope="col">차량종류</th>
                                                     <th scope="col">수리사항</th>
@@ -486,7 +505,7 @@
                                                     <!-- <td><c:out value="${result.TASKSTAT_NM}"/></td> -->
                                                     <td>
                                                         <c:if test="${result.TASKSTAT== 'CB-reserve'}">
-                                                        <a href="#LINK" class="btn btn_blue_30 w_80" onclick="DeleteRcpt('<c:out value='${result.TAKESEQ}'/>'); return false;">접수취소</a>
+                                                        <a href="#LINK" class="btn btn_blue_30 w_80" onclick="CancelRcpt('<c:out value='${result.TAKESEQ}'/>'); return false;">예약취소</a>
                                                         </c:if>
                                                     </td>
                                                 </tr>

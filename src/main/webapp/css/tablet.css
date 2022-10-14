@@ -3,21 +3,23 @@ body{width: 100%;}
 
 .top_line {width: 100%; height: 5px; background:black;}
 
-.teamtables .header {height: 100px; background: linear-gradient(1deg, #c7c0c0, #0000000a);}
+.teamtables .header {    height: 60px;
+    background: linear-gradient(1deg, #c7c0c0, #0000000a);}
 
-.teamtables .header h1 {width: 10%;}
-.teamtables .header .logo {width: 55%; padding-left: 230px;}
-.teamtables .header .tab {width: 10%;}
-.teamtables .header .logo img {width: 200px; float: right; margin-top: 15px;}
-.team_left{    float: left; margin-top: 15px; padding-left: 15px;}
-.board_list tbody{}
+.teamtables .header h1 {display: inline; margin-right: 40px;}
+.teamtables .header .logo {/*width: 20%;*/}
+.teamtables .header .tab {width: 15%;}
+.teamtables .header .logo img {    width: 200px;    float: right;    margin-top: 10px;}
+.team_left{    float: left; margin-top: 10px; padding-left: 15px;}
+.team_right{float: right; padding-right: 15px;}
+.board_list tbody{background: linear-gradient(0deg, #bfbfbf, #16131329);}
 
 .team_click{
     float: left;
-    margin-top: 18px;
+    margin-top: 13px;
     min-width: 200px;
-    line-height: 80px;
-    font-size: 40px;
+    line-height: 45px;
+    font-size: 35px;
     text-align: center;
     background: #5D7D2B;
     border: 1px solid #444444;
@@ -44,10 +46,12 @@ body{width: 100%;}
     box-sizing: border-box;
     padding: 0px 0px;
 }
-.tit_1{    color: #010101d2;
-    font-size: 48px;
+.tit_1{        
+    color: #010101d2;
+    font-size: 35px;
     font-weight: 600;
-    line-height: 70px;}
+    line-height: 35px;
+}
 
 .board_list th{    padding: 14px 0;
     background: black;
@@ -77,8 +81,9 @@ body{width: 100%;}
 
 }
 .menu_btn{
-    text-align:right;
-    padding:20px;
+    float: right;
+    text-align: right;
+    padding: 10px;
 }
 .menu_bg{
 width:100%;
@@ -189,4 +194,146 @@ border-bottom:2px solid #fff;
     text-align: center;
     line-height: 70px;
     background: #000000;
+}
+.teamtables ~ strong {
+    display: block;
+    font-size: 40px;
+    margin: 0% 0 0 10%;
+}
+
+.vehicleinfo_1{
+    height: 30vh;
+    margin: 0 40px 0 40px;
+    border: 1px solid gray;
+    border-radius: 40px;
+}
+
+.vehicleinfo_1 div{
+    width: 33%;
+    display: inline-block;
+    padding: 1% 0px 0px 2%;
+}
+.vehicleinfo_1 div strong{
+    font-size: 30px;
+    display: block;
+}
+.vehicleinfo_1 div input{
+    width: 70%;
+    padding: 0px 16px;
+    border-radius: 35px;
+    font-size: 35px;
+}
+
+.vehicleinfo_1 div a{
+    display: inline-block;
+    width: 70%;
+    padding: 0px 15px;
+    border: 1px solid #5D7D2B;
+    border-radius: 35px;
+    font-size: 26px;
+    text-align: center;
+    background: #5D7D2B;
+    color: white;
+    font-weight: bold;
+}
+
+.vehicleinfo_2 {
+    height: 45vh;
+    width: 60vw;
+    margin: 0 20px 0 40px;
+    border: 1px solid gray;
+    border-radius: 40px;
+    float: left;
+}
+
+.vehicleinfo_2 .repairselect{
+    margin: 5% 3% 0% 3%;
+    width: 44%;
+    float: left;
+}
+.vehicleinfo_2 .repairselect .cont{
+    width: 100%;
+}
+.vehicleinfo_2 .repairselect .cont .scrollBox01{
+    height: 300px;
+    margin: 0;
+}
+.vehicleinfo_2 .repairselect .cont .scrollBox01 ul li a{
+    font-size: 28px;
+    line-height: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.vehicleinfo_2 .repairpreview{
+    width: 44%;
+    margin: 0% 3%;
+    float: left;
+
+}
+.vehicleinfo_2 .repairpreview .cont{
+    width: auto;
+}
+.vehicleinfo_2 .repairpreview .cont strong{
+    margin-top: 1%;
+    font-size: 20px;
+    display: block;
+}
+
+.vehicleinfo_2 .repairpreview .cont .scrollBox03{
+    margin: 1% 20px;
+}
+
+.vehicleinfo_2 .remark{
+    width: 44%;
+    margin: 0% 3%;
+    display: inline-block;
+}
+.vehicleinfo_2 .remark .cont{
+    width: auto;
+
+}
+.vehicleinfo_2 .remark .cont textarea{
+    width: 93%;
+    margin: 15px 20px;
+    padding: 10px;
+    display: block;
+    border: 1px solid #dbdbdb;
+    font-size: 25px;
+    height: 260px;
+}
+.vehicleinfo_2 .remark .cont strong{
+    font-size: 40px;
+    display: block;
+}
+
+.vehicleinfo_3{
+    margin: 0 0px 0 20px;
+    border: 1px solid gray;
+    border-radius: 40px;
+    width: 30vw;
+    height: 45vh;
+    float: left;
+    text-align: center;
+    font-size: 30px;
+}
+
+.vehicleinfo_3 > div{
+    margin-top: 5px;
+}
+.vehicleinfo_3 strong{
+
+}
+.vehicleinfo_3 input{
+    width: 40%;
+    padding: 0px 15px;
+    border-radius: 35px;
+    font-size: 35px;
+}
+.vehicleinfo_3 a{
+    padding: 0 90px;
+    border: 1px solid #EA0029;
+    border-radius: 10px;
+    background: #EA0029;
+    color: white;
 }

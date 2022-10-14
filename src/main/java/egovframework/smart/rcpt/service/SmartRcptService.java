@@ -36,4 +36,6 @@ public interface SmartRcptService {
 
     int CancelWebRcpt(String takeseq)throws Exception;
 
+    int CancelWebReservationRcpt(String takeseq)throws Exception;
+
 }

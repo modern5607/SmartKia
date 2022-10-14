@@ -47,11 +47,12 @@
 								<h1 class="tit_1 team_left">접수 현황</h1>
                                 <div class="tab team_click active" id="normal">일반접수</div>
                                 <div class="tab team_click" id="reserve">예약접수</div>
-								<div class="logo team_left" style="width:65% !important ;"><img src="../images/kia_logo.png"></div>
-								<div class="menu_btn"><a href="#"><img src="../images/ico_allmenu.png"></a></div>
+								
+								<div class="menu_btn"><a href="#"><img src="../images/ico_allmenu_2.png"></a></div>
+								<div class="logo team_right"><img src="../images/kia_logo.png"></div>
 								<div class="menu_bg"></div>
 								<div class="sidebar_menu">
-									<div class="close_btn"><a href="#"><img src="../images/ico_allmenu_close.png"></a></div>
+									<div class="close_btn"><a href="#"><img src="../images/ico_allmenu_close_2.png"></a></div>
 									<ul class="menu_wrap">
 										<li><a href="/tablet/TabletAssignGroup.do">접수현황</a></li>
 										<li><a href="/tablet/TabletWorkGroup.do">반별입고현황</a></li>
