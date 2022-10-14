@@ -34,7 +34,7 @@
 			<div class="top_line"></div>
 			<div class="header">
 				<h1 class="tit_1 team_left">차량정보 자세히 보기</h1>
-				<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
+				<div class="logo team_right"><img src="../images/kia_logo.png" style="width:200px;"></div>
 			</div>
 		</div>
 

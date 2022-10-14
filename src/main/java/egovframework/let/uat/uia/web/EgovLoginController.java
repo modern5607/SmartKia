@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Controller;
@@ -81,12 +83,9 @@ public class EgovLoginController {
 	 * @return result - 로그인결과(세션정보)
 	 * @exception Exception
 	 */
-    @RequestMapping(value="/uat/uia/actionSecurityLogin.do")
-    public String actionSecurityLogin(@ModelAttribute("loginVO") LoginVO loginVO,
-    		                   HttpServletRequest request, HttpServletResponse response,
-    		                   ModelMap model)
-            throws Exception {
-
+	@RequestMapping(value="/uat/uia/actionSecurityLogin.do")
+    public String actionSecurityLogin(@ModelAttribute("loginVO") LoginVO loginVO,HttpServletRequest request, HttpServletResponse response,ModelMap model)throws Exception {
+		Device device = DeviceUtils.getCurrentDevice(request);
     	// 1. 일반 로그인 처리
         LoginVO resultVO = loginService.actionLogin(loginVO);
 
@@ -119,14 +118,14 @@ public class EgovLoginController {
         	
         	springSecurity.doFilter(new RequestWrapperForSecurity(request, resultVO.getUserSe() + resultVO.getId() , resultVO.getUniqId()), response, null);
         	
-        	return "forward:/cmm/main/mainPage.do";	// 성공 시 페이지.. (redirect 불가)
-
-        } else {
-        	
-        	model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-        	return "uat/uia/EgovLoginUsr";
-        }
-    }
+			if(device.isTablet()||device.isMobile()){
+				System.out.println("1");
+				return "forward:/tablet/TabletAssignGroup.do";	
+			}
+			else{
+				System.out.println("2");
+				return "forward:/cmm/main/mainPage.do";	// 성공 시 페이지.. (redirect 불가)
+			}
 
     /**
 	 * 로그인 후 메인화면으로 들어간다
@@ -135,8 +134,8 @@ public class EgovLoginController {
 	 * @exception Exception
 	 */
     @RequestMapping(value="/uat/uia/actionMain.do")
-	public String actionMain(ModelMap model)
-			throws Exception {
+	public String actionMain(ModelMap model,HttpServletRequest request)throws Exception {
+		Device device = DeviceUtils.getCurrentDevice(request);
     	
     	// 1. Spring Security 사용자권한 처리
     	Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -145,10 +144,13 @@ public class EgovLoginController {
         	return "uat/uia/EgovLoginUsr";
     	}
     	
+		if(device.isTablet()||device.isMobile()){
+			return "forward:/tablet/TabletAssignGroup.do";
+		}
+		else{
+			return "forward:/cmm/main/mainPage.do";
+		}
 		// 2. 메인 페이지 이동
-    	return "forward:/cmm/main/mainPage.do";
-
-	}
 
     /**
 	 * 로그아웃한다.
