@@ -482,4 +482,37 @@ public class SmartTabletController {
 		model.addAttribute("leadtimelist", leadtimelist);
 		return "/tablet/TabletAssignView";
 	}
+
+	/*
+	 * 작업반 배정 업데이트
+	 * */
+	@RequestMapping(value = "/tablet/TabletSaveReceive.do",method=RequestMethod.POST)
+	public void TabletSaveReceive(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model,HttpServletResponse response) throws Exception {
+		
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		System.out.println(params);
+
+		//접수수정
+		int result = smarttabletservice.UpdateAssign(params);
+		System.out.println(result);
+		
+		response.getWriter().print(result);
+		
+	}
+
+	@RequestMapping(value ="/tablet/TabletCompleteView.do")
+	public String TabletCompletView(@RequestParam Map<String,Object> params, ModelMap model)throws Exception
+	{
+		System.out.println("params: "+params);
+		model.addAttribute("rcptinfo", smartrcptservice.SelectRcptinfo(params.get("takeseq").toString()));
+		model.addAttribute("RepairList", smartrcptservice.selectRcptRepairInfo(params.get("takeseq").toString()));
+		System.out.println("rcptinfo :"+model.get("rcptinfo"));
+		System.out.println("RepairList :"+model.get("RepairList"));
+
+		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
+		model.addAttribute("leadtimelist", leadtimelist);
+		return "/tablet/TabletCompleteView";
+	}
 }

@@ -53,16 +53,16 @@
                                 <div class="tab team_click active" id="normal">일반접수</div>
                                 <div class="tab team_click" id="reserve">예약접수</div>
 								
-								<div class="menu_btn"><a href="#"><img src="../images/ico_allmenu_2.png"></a></div>
-								<div class="logo team_right"><img src="../images/kia_logo.png"></div>
+								<div class="menu_btn"><a href="#"><img src="../../images/ico_allmenu_2.png"></a></div>
+								<div class="logo team_right"><img src="../../images/kia_logo.png"></div>
 								<div class="menu_bg"></div>
 								<div class="sidebar_menu">
-									<div class="close_btn"><a href="#"><img src="../images/ico_allmenu_close_2.png"></a></div>
+									<div class="close_btn"><a href="#"><img src="../../images/ico_allmenu_close_2.png"></a></div>
 									<ul class="menu_wrap">
 										<li><a href="/tablet/TabletAssignGroup.do">접수현황</a></li>
 										<li><a href="/tablet/TabletWorkGroup.do">반별입고현황</a></li>
 									</ul>
-									<div style="position: absolute; bottom: 70px;"><img src="../images/kia_seo.png"></div>
+									<div style="position: absolute; bottom: 70px;"><img src="../../images/kia_seo.png"></div>
 								</div>
 							</div>
 							<div class="board_list" id="tab1">
@@ -80,7 +80,7 @@
 											<th scope="col">차량번호</th>
 											<th scope="col">차종</th>
 											<th scope="col">수리내역</th>
-                                            <th scope="col"><img src="../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
+                                            <th scope="col"><img src="../../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
 									<tbody>

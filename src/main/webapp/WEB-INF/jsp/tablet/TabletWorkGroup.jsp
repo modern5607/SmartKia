@@ -26,11 +26,12 @@
 
 <script type="text/javascript">
 	function refresh(){
-        alert("테스트1");
+        $('.board_list').load(location.href +" .board_list");
     }
 
-    function detail(){
-        alert("테스트2");
+    function detail(takeseq){
+        document.assignform.takeseq.value= takeseq;
+		document.assignform.submit();
     }
 </script>
 </head>
@@ -44,6 +45,9 @@
 						<div class="teamtables">
 							<div class="top_line"></div>
 							<div class="header">
+								<form name="assignform" action="<c:url value='/tablet/TabletCompleteView.do'/>" method="post">
+									<input type="hidden" name="takeseq">
+								</form>
 								<h1 class="tit_1 team_left">작업 현황</h1>
                                 <div class="tab team_click active" id="Aclass">A반</div>
                                 <div class="tab team_click" id="BClass">B반</div>
@@ -88,7 +92,7 @@
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
                                                 <td>
 													<c:if test="${logininfo[0].TEAM eq result.POSITION}">
-														<a href="#LINK" class="btntablet" onclick="detail();">상세정보</a>
+														<a href="#LINK" class="btntablet" onclick="detail('${result.TAKESEQ}');">상세정보</a>
 													</c:if>
 													<c:if test="${logininfo[0].TEAM ne result.POSITION}">
 														<a href="#LINK" class="btntablet" style="background: #ff0000;">진행 중</a>
