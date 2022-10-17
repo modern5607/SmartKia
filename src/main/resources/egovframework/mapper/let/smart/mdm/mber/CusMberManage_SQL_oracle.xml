@@ -22,8 +22,11 @@
         USE_YN                as "useYN",
         NOTE                  as "note",
         AUTOINT				  as "autoInt",
-        KILRO_TOTAL			  as "totalKm"
-    FROM    CAR_CUSTOMER
+        REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(KILRO_TOTAL), '([0-9]{3})','\1,')), '^,','') AS "totalKm",
+        (SELECT NVL(COUNT(1), 0)  FROM 	CAR_TAKEREPAIR
+		 WHERE 	CUSTOMER_ID = X.CUSTOMER_ID
+		 AND TURNOVER ='Y') RepairCnt
+    FROM    CAR_CUSTOMER X
     WHERE 1=1
         <if test="searchname != ''">
             AND UPPER(CUSTOMER_NAME) LIKE '%' ||UPPER(#{searchname})|| '%'
@@ -168,5 +171,42 @@
     <select id="IsexistMber" parameterType="egovframework.smart.customer.service.CusMberManageVO" resultType="java.util.HashMap">
     	SELECT * FROM CAR_CUSTOMER
     	WHERE CUSTOMER_NAME = #{cusNm} AND CUSTOMER_AUTONO = #{autoNo}
-    </select>
+    	</select>
+    	
+	  <select id="selectCusInfo" resultType="egovframework.smart.customer.service.CusMberManageVO">
+       SELECT 
+	        	TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '||TO_CHAR(TURNOVERTIME, 'DD')||'일 수리내역'  turnOverTime, 
+			 	REPAIR_ENUM(TAKESEQ) repairName,
+	        	REPAIRNOTE as repairNote,
+            	TAKESEQ as takeSeq,
+   				NVL(KILRO_NOW,0)||' km' AS totalKm,
+          		TURNOVERTIME
+		FROM 	CAR_TAKEREPAIR
+		WHERE 	CUSTOMER_ID = #{cusId}
+    	AND		TURNOVER ='Y'
+		UNION
+    
+	    SELECT 
+      			TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '  turnOverTime,
+			   	'' AS repairName,
+			   	'' AS repairNote,
+			   	'' AS TAKESEQ,
+    			REGEXP_REPLACE(REVERSE(REGEXP_REPLACE(REVERSE(TO_CHAR(NVL(B.KILRO_TOTAL,0))), '(\d{3})','\1,')), '^,','')||' km' AS totalKm,
+          		TO_DATE(TO_CHAR(LAST_DAY(TURNOVERTIME), 'YYYYMMDD')||'235959' ,'YYYYMMDDHH24MISS')
+    	FROM 	CAR_TAKEREPAIR A, CAR_CUSTOMER B
+		WHERE 	A.CUSTOMER_ID = #{cusId}
+   		AND		A.CUSTOMER_ID = B.CUSTOMER_ID
+      	AND		A.TURNOVER ='Y'
+    	GROUP BY TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 ',
+   				NVL(B.KILRO_TOTAL,0), TO_DATE(TO_CHAR(LAST_DAY(TURNOVERTIME), 'YYYYMMDD')||'235959' ,'YYYYMMDDHH24MISS')
+	 </select>
+	 
+	  <select id="selectCusDetail" parameterType="egovframework.smart.customer.service.CusMberManageVO" resultType="java.util.HashMap">
+		 SELECT 
+		 		FN_LEADTIME_NAME(REPAIRCODE, 'NAME') REPAIRCODE_NAME,
+				FN_CODENAME(REPAIRMETHOD, 'AUTO_ME') REPAIRMETHOD_NAME,
+	       		REPAIRMETHOD
+		 FROM 	CAR_LEAD_REPAIR a
+		 WHERE TAKESEQ = #{seq}
+	 </select>
 </mapper>

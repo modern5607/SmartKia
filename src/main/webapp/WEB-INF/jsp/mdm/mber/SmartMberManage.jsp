@@ -157,7 +157,7 @@ function init()
 								<input name="checkedIdForDel" type="hidden" />
 								<input name="pageIndex" type="hidden" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
 
-                                <h1 class="tit_1">사용자관리</h1>
+                                <!-- <h1 class="tit_1">사용자관리</h1> -->
 
                                <!--  <p class="txt_1">사용자 및 권한에 대한 제반사항을 관리합니다.</p>
  -->
@@ -166,25 +166,36 @@ function init()
                                 <h3 class="tit_3">회원관리</h3> -->
                                 
                                 <!-- 검색조건 -->
-                                <div class="condition" style="text-align: left; margin-top: 20px;">
+                                <div class="condition" style="text-align: left;">
 				                    <span class="item f_search">
 					                    <p class="left">
 					                    <label for="searchId">아이디</label>
 					                        <input class="f_input w_200" name="searchId" id="searchId" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchId}"/>"/>
 					                    <label for="searchNm">사용자이름</label>
 					                        <input class="f_input w_200" name="searchNm" id="searchNm" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchNm}"/>"/>
+					                    <label for="searchYn">사용여부</label>
+				                        <label class="f_select w_200" for="searchYn">
+											<select name="searchYn" id="searchYn">
+		                                        <option value=''></option>
+												<option value="Y" <c:if test="${info.useyn eq 'Y'}">selected</c:if>>사용</option>	
+												<option value="N" <c:if test="${info.useyn eq 'N'}">selected</c:if>>사용중지</option>	
+											</select>
+										</label>
 					                    <label for="searchTeam">작업반</label>
 					                        <input class="f_input w_200" name="searchTeam" id="searchTeam" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchTeam}"/>"/>
-					                    </p>
-					                    <p class="left">
+				                        <%-- <label for="searchYn">사용여부</label>
+					                        <input class="f_input w_200" name="searchYn" id="searchYn" type="text" maxlength="20" title="검색" value="<c:out value="${userSearchVO.searchYn}"/>"/> --%>
 					                    </p>
 					                        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
 				                    </span>
+				                    <p class="right">
+			                    		<a href="<c:url value='/mdm/SmartMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
+				                    </p>
                                 </div>
                                 <!--// 검색조건 -->
 
                                 <!-- 게시판 -->
-                                <div class="board_list_top">
+                                <div class="board_list_top" style="margin-top:0">
                                      <div class="left_col">
                                         <div class="list_count">
                                             <span>사용자수</span>
@@ -200,7 +211,7 @@ function init()
                                         <!-- 
                                         <a href="<c:url value='/uss/umt/mber/EgovMberManage.do'/>" class="btn btn_blue_46 w_100"><spring:message code="button.list" /></a>목록
                                          -->                     
-                                         <a href="<c:url value='/mdm/SmartMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
+                                         <%-- <a href="<c:url value='/mdm/SmartMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 --> --%>
                                     </div>
                                 </div>
 
@@ -245,7 +256,7 @@ function init()
                                             <td><c:out value="${(userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count}"/></td>
                                             <%-- <td><c:out value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}"/></td> --%>
                                                 
-                                                <td>
+                                                <td style="text-decoration: underline;">
                                                 	<a href="<c:url value='/mdm/mber/SmartMberSelectUpdtView.do'/>?selectedId=<c:out value="${result.uniqId}"/>" class="lnk" onclick="javascript:fnSelectUser('<c:out value="${result.userTy}"/>:<c:out value="${result.uniqId}"/>'); return false;">
                                                 		<c:out value="${result.userId}"/>
                                                 	</a>
@@ -287,7 +298,6 @@ function init()
                                 <!-- // 페이징 끝 -->
                                 
                                 </form>
-                                
                                 <!--// 게시판 -->
                             </div>
                         </div>

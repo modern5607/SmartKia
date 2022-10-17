@@ -6,6 +6,7 @@ import egovframework.smart.customer.service.CusMberDefaultVO;
 import egovframework.smart.customer.service.CusMberManageVO;
 import egovframework.smart.mdm.mber.service.SmartMberManageVO;
 import egovframework.smart.mdm.service.SmartCommonCodeVO;
+import egovframework.smart.tablet.service.SmartTabletVO;
 
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
@@ -123,5 +124,16 @@ public class CusMberManageDAO extends EgovAbstractMapper{
 		return selectList("cusMberManageDAO.IsexistMber", vo);
 	}
 
-
+   
+   @SuppressWarnings("unchecked")
+    public List<CusMberManageVO> selectCus(CusMberManageVO vo) { 
+        return (List<CusMberManageVO>)list("cusMberManageDAO.selectCus",vo);
+    }
+   public List<Object> selectCusInfo(CusMberManageVO searchVO) {
+       
+        return selectList("cusMberManageDAO.selectCusInfo", searchVO);
+    }
+    public List<Object> selectCusDetail(String seq) {
+        return selectList("cusMberManageDAO.selectCusDetail",seq);
+    }
 }

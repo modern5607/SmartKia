@@ -61,6 +61,7 @@ public class CusMberDefaultVO implements Serializable {
     private String searchname = "";
     private String searchcarNum = "";
     private String searchTel = "";
+    private String repairCnt ="";
 	/**
 	 * sbscrbSttus attribute 값을  리턴한다.
 	 * @return String
@@ -251,5 +252,13 @@ public class CusMberDefaultVO implements Serializable {
 	public void setSearchname(String searchname) {
 		this.searchname = searchname;
 	}
+
+    public String getRepairCnt() {
+        return repairCnt;
+    }
+
+    public void setRepairCnt(String repairCnt) {
+        this.repairCnt = repairCnt;
+    }
 
 }

@@ -98,6 +98,25 @@ function init()
 		alert("<c:out value='${msg}'/>");
 	}
 }
+function clickRepair(cusId){
+
+	console.log(cusId);
+
+	var url = "<c:url value='/customer/selectCusRepairInfo.do'/>?";
+   	var $dialog = $('<div id="modalPan"></div>').html(
+		   	'<iframe style="border: 0px; " src="'
+		   	+ "<c:url value='/customer/selectCusRepairInfo.do?cusId="+cusId+"'/>"
+			+ '" width="100%" height="100%"></iframe>').dialog(
+					{
+					   	autoOpen: false,
+					       modal: true,
+							width : 920,
+							height : 700
+					});
+	   	$(".ui-dialog-titlebar").hide();
+		$dialog.dialog('open');
+	}
+
 </script>
 </head>
 <body onload="init()">
@@ -129,17 +148,18 @@ function init()
 </div>
 <!--// Location -->
 
-<form id="listForm" name="listForm" action="/customer/SmartCusMberManage.do"
+<form modelAttribute="CusMberManageVO" id="listForm" name="listForm" action="/customer/SmartCusMberManage.do"
 	method="post">
+	<input name="cusId" type="hidden" />
 	<input name="selectedId" type="hidden" /> <input
 		name="checkedIdForDel" type="hidden" /> <input
 		name="pageIndex" type="hidden"
 		value="<c:out value='${userSearchVO.pageIndex}'/>" />
 
-	<h1 class="tit_1">이용고객관리</h1>
+	<!-- <h1 class="tit_1">이용고객관리</h1 >-->
 
 	
-	<div class="condition" style="text-align: left; margin-top: 20px;">
+	<div class="condition" style="text-align: left;">
 	    <span class="item f_search">
 			<p class="left">
 		    	<label for="searchKeyword">차량번호</label>
@@ -151,12 +171,15 @@ function init()
 			</p>
 	        <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.search' /></button><!-- 조회 -->
 	    </span>
+        <p class="right">
+       		<a href="<c:url value='/mdm/SmartMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
+        </p>
     </div>
 	<!--// 검색조건 -->
 
 
 	<!-- 게시판 -->
-	<div class="board_list_top">
+	<div class="board_list_top" style="margin-top:0">
 		<div class="left_col">
 			<div class="list_count">
 				<span>사용자수</span> <strong><c:out
@@ -169,14 +192,14 @@ function init()
 				onclick="fnDeleteUser(); return false;"><spring:message
 					code="button.delete" /></a> --%>
 			<!-- 삭제 -->
-			<a href="<c:url value='/customer/SmartCusMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
+			<%-- <a href="<c:url value='/customer/SmartCusMberInsertView.do'/>" class="btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 --> --%>
 			<!-- 
         <a href="<c:url value='/customer/SmartCusMberManage.do'/>" class="btn btn_blue_46 w_100"><spring:message code="button.list" /></a>목록
          -->
 		</div>
 	</div>
 
-	<div class="board_list">
+	<div class="board_list3">
 		<table summary="회원목록">
 			<caption>회원목록</caption>
 			<colgroup>
@@ -203,9 +226,9 @@ function init()
 					<th scope="col">차량종류</th>
 					<th scope="col">고객이름</th>
 					<th scope="col">연락처</th>
-					<th scope="col">총주행거리</th>
+					<th scope="col">총주행거리(km)</th>
 					<!-- <th scope="col">차량뒷번호</th> -->
-					<th scope="col">비고</th>
+					<th scope="col">수리내역</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -223,14 +246,19 @@ function init()
 						<td><c:out value="${(userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count}"/></td>
 						<%-- <td><c:out value="${paginationInfo.totalRecordCount+1 - ((userSearchVO.pageIndex-1) * userSearchVO.pageSize + status.count)}"/></td> --%>
 						<td><c:out value="${result.cusId}" /></td>
-						<td><a href="#" onclick="fnSelectUser('<c:out value="${result.cusId}"/>')" class="lnk"><c:out value="${result.autoNo}" /></a>
+						<td><a href="#" style="text-decoration: underline;" onclick="fnSelectUser('<c:out value="${result.cusId}"/>')" class="lnk"><c:out value="${result.autoNo}" /></a>
                        	</td>
 						<td><c:out value="${result.autoKind}" /></td>
 						<td><c:out value="${result.cusNm}" /></td>													
 						<td><c:out value="${result.cusTel}" /></td>
 						<td><c:out value="${result.totalKm}" /></td>
 						<%-- <td><c:out value="${result.autoInt}" /></td> --%>
-						<td><c:out value="${result.note}" /></td>
+						
+						<td> 
+							<c:if test="${result.repaircnt ne 0}">
+								<a href="#LINK" class="btn btn_blue_30 w_80" onclick="clickRepair('<c:out value="${result.cusId}"/>'); return false;">조회</a>
+							</c:if>
+						</td>
 					</tr>
 				</c:forEach>
 

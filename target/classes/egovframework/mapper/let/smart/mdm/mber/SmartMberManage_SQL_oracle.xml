@@ -43,6 +43,9 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
 	        <if test="searchTeam != ''">
 	            AND FN_CODENAME(TEAM, 'AUTO_ROOM') LIKE '%' ||UPPER(#{searchTeam})|| '%'
 	        </if>
+	        <if test="searchYn != ''">
+	            AND (CASE WHEN B.SCRTY_DTRMN_TRGET_ID IS NULL THEN 'N' ELSE 'Y' END) LIKE '%' ||UPPER(#{searchYn})|| '%'
+	        </if>
         ORDER BY ESNTL_ID DESC
         ) TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
     </select>

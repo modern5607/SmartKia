@@ -62,6 +62,7 @@ public class UserDefaultVO implements Serializable {
     private String searchId = "";
     private String searchNm = "";
     private String searchTeam = "";
+    private String searchYn = "";
 
 	public String getSearchId() {
 		return searchId;
@@ -252,6 +253,14 @@ public class UserDefaultVO implements Serializable {
      */
     public String toString() {
     	return ToStringBuilder.reflectionToString(this);
+    }
+
+    public String getSearchYn() {
+        return searchYn;
+    }
+
+    public void setSearchYn(String searchYn) {
+        this.searchYn = searchYn;
     }
 
 }

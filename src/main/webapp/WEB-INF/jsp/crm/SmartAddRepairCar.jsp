@@ -30,7 +30,7 @@ function fnSearch() {
 	document.smartCrmVO.pageIndex.value = 1;
 	document.smartCrmVO.action = "<c:url value='/crm/SmartAddRepairCar.do'/>";
 	document.smartCrmVO.submit();
-}	
+}
 </script>
 </head>
 <body>
@@ -54,7 +54,7 @@ function fnSearch() {
 									<ul>
 										<li><a class="home" href="">Home</a></li>
 										<li><a href="">고객관리</a></li>
-										<li>차량 수리 이력 등록</li>
+										<li>차량수리이력조회</li>
 									</ul>
 								</div>
 								<!--// Location -->

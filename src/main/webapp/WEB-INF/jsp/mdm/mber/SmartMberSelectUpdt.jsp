@@ -178,6 +178,22 @@ $(document).on("keyup", ".phoneNumber", function() {
 	                                          	</label>
                                             </td>
                                         </tr>
+                                        <c:forEach var="i" items="${RepairList}" varStatus="istatus">
+			                                <tr>
+			                                    <td><c:out value="${i.REPAIRNAME}"/></td>
+			                                    <td>
+			                                        <label class="f_selectsmall">
+			                                            <select name="chk_repair" id="chk_repair_${istatus.count}">
+			                                                <c:forEach var="j" items="${autome}" varStatus="jstatus">
+			                                                    <option value="${j.CODE}" <c:if test="${j.CODE == i.REPAIRMETHOD}">selected</c:if>><c:out value="${j.NAME}"/></option>
+			                                                </c:forEach>
+			                                            </select>
+			                                        </label>
+			                                    </td>
+			                                    <%-- <input type='hidden' name="repair" value="<c:out value='${i.REPAIRCODE}'/>">
+			                                    <input type='hidden' name="repairseq" value="<c:out value='${i.REPAIR_SEQ}'/>"> --%>
+			                                </tr>
+			                            </c:forEach>
                                         <tr>
                                             <td class="lb">
                                             	<label for="useYn">사용여부</label>
