@@ -36,6 +36,46 @@
         // $("tr#repair_"+i).remove();
 
     }
+
+    function UpdateAssign()
+    {
+        if($("#estime").val() == "")
+        {
+            alert("소요시간을 입력해 주세요");
+            $("#estime").focus();
+            return;
+        }
+
+        //수리항목 리스트화
+        var array = new Array();
+		$('input[name=repair]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairlist").val(array);
+        if($("#repairlist").val()==null||$("#repairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        var array = new Array();
+        $('input[name=chk_repair]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#chkrepairlist").val(array);
+
+        //수리항목 repairseq 리스트화
+        var array = new Array();
+		$('input[name=repairseq]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairseqlist").val(array);
+
+        document.Assignform.submit();
+    }
 </script>
 </head>
 <body>
@@ -43,6 +83,13 @@
 		<div class="teamtables">
 			<div class="top_line"></div>
 			<div class="header">
+                <form name="Assignform" action="TabletSaveReceive.do" method="post">
+                    <input type="hidden" name="seq" id="seq" value="<c:out value='${rcptinfo[0].TAKESEQ}'/>">
+                    <input type="hidden" name="repairlist" id="repairlist" value="">
+                    <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
+                    <input type="hidden" name="repairseqlist" id="repairseqlist" value="">
+                    <input type="hidden" name="deletelist" id="deletelist">
+
 				<h1 class="tit_1 team_left">차량정보 자세히 보기</h1>
 				<div class="menu_btn"><a href="#"><img src="../images/ico_allmenu_2.png"></a></div>
 				<div class="logo team_right"><img src="../images/kia_logo.png"></div>
@@ -65,7 +112,7 @@
 			<div><strong>차종</strong><input type="text" value="<c:out value='${rcptinfo[0].KIND}'/>" readonly></div>
 			<div><strong>고객명</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_NAME}'/>" readonly></div>
 			<div><strong>연락처</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_TEL}'/>" readonly></div>
-			<div><strong style="height: 42px;"></strong><a href="#">수리이력 확인하기</a></div>
+			<div><strong style="height: 22px;"></strong><a href="#">수리이력 확인하기</a></div>
 		</div>
 
 		<strong>정비내역</strong>
@@ -118,6 +165,7 @@
                                             </select>
                                         </label>
                                     </td> -->
+                                    <input type='hidden' name="chk_repair" value="<c:out value='${i.REPAIRMETHOD}'/>">
                                     <input type='hidden' name="repair" value="<c:out value='${i.REPAIRCODE}'/>">
                                     <input type='hidden' name="repairseq" value="<c:out value='${i.REPAIR_SEQ}'/>">
                                 </tr>
@@ -140,8 +188,8 @@
 		</div>
 		<div class="vehicleinfo_3">
 			<div class="info3_1">
-				<strong>총 주행거리</strong>
-				<div><input type="text"><label>km</label></div>
+				<!-- <strong>총 주행거리</strong>
+				<div><input type="text"><label>km</label></div> -->
 			</div>
 			<div class="info3_2">
 				<div><strong>예상소요시간</strong></div>
@@ -150,24 +198,41 @@
 			<div class="info3_3">
 				<div><strong>작업반</strong></div>
 				<div>
-                    <c:forEach var="i" items="${autorooms}" varStatus="status">
+                    <label class="f_select w_100" for="autoroom">
+                        <select name="autoroom" id="autoroom">
+                            <option value="all">전체</option>
+                            <c:forEach var="i" items="${autorooms}" varStatus="status">
+                            <option value="<c:out value='${i.CODE}'/>" ${logininfo[0].TEAM == i.CODE ? 'selected': '' } >${i.NAME}</option> 
+                            </c:forEach>
+                        </select>
+                </label>
+                    <!-- <c:forEach var="i" items="${autorooms}" varStatus="status">
                     <c:if test="${logininfo[0].TEAM == i.CODE}">
                         <input type="text" value="${i.NAME}" disabled readonly>
                         <input type="hidden" name="autoroom" value="${logininfo[0].TEAM}" >
                     </c:if>
-                    </c:forEach>
+                    </c:forEach> -->
                 </div>
 			</div>
 			
-			<div><a href="" class="assign"><strong>정비 입고</strong></a></div>
+			<div><a href="#" onclick="UpdateAssign();" class="assign"><strong>정비 입고</strong></a></div>
 		</div>
-		
+    </form>
 	</div>
 </body>
 </html>
 
 
 <script>
+$(document).ready(function(){
+	$('.menu_btn>a').on('click',function(){
+	$('.menu_bg').show();
+	$('.sidebar_menu').show().animate({
+	right:0
+	});
+});
+});
+
 $("#normal").click(function(){
     console.log("일반");
     $("#reserve").removeClass("active");
@@ -182,9 +247,14 @@ $("#reserve").click(function(){
     $("#reserve").addClass("active");
     $("#tab1").css("display","none");
     $("#tab2").css("display","block");
-
-
 });
+
+$('.close_btn>a').on('click',function(){
+	$('.menu_bg').hide();
+	$('.sidebar_menu').animate({
+	right:'-'+50+'%'
+	},function(){$('.sidebar_menu').hide();});
+	});
 
 $("li.box_tit a").click(function(){
     // console.log($(this));

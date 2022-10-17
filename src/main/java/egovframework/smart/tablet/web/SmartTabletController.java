@@ -53,6 +53,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 @Controller
@@ -492,9 +493,9 @@ public class SmartTabletController {
 
 	/*
 	 * 작업반 배정 업데이트
-	 * */
+	 */
 	@RequestMapping(value = "/tablet/TabletSaveReceive.do",method=RequestMethod.POST)
-	public void TabletSaveReceive(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model,HttpServletResponse response) throws Exception {
+	public String TabletSaveReceive(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model,HttpServletResponse response,RedirectAttributes attr) throws Exception {
 		
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
@@ -503,10 +504,13 @@ public class SmartTabletController {
 
 		//접수수정
 		int result = smarttabletservice.UpdateAssign(params);
-		System.out.println(result);
 		
-		response.getWriter().print(result);
-		
+		if (result == 0) // insert실패
+			attr.addFlashAttribute("msg", "수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
+		else
+			attr.addFlashAttribute("msg", "접수 등록되었습니다.");
+
+		return "redirect:/tablet/TabletAssignGroup.do";
 	}
 
 	@RequestMapping(value ="/tablet/TabletCompleteView.do")

@@ -204,7 +204,7 @@ border-bottom:2px solid #fff;
 }
 
 .vehicleinfo_1{
-    height: 30vh;
+    height: 22vh;
     margin: 0 40px 0 40px;
     border: 1px solid gray;
     border-radius: 40px;
@@ -216,14 +216,14 @@ border-bottom:2px solid #fff;
     padding: 0% 0px 0px 5%;
 }
 .vehicleinfo_1 div strong{
-    font-size: 25px;
+    font-size: 20px;
     display: block;
 }
 .vehicleinfo_1 div input{
     width: 70%;
     padding: 0px 16px;
     border-radius: 35px;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .vehicleinfo_1 div a{
@@ -232,7 +232,7 @@ border-bottom:2px solid #fff;
     padding: 0px 15px;
     border: 1px solid #5D7D2B;
     border-radius: 35px;
-    font-size: 25px;
+    font-size: 22px;
     text-align: center;
     background: #5D7D2B;
     color: white;
@@ -240,7 +240,7 @@ border-bottom:2px solid #fff;
 }
 
 .vehicleinfo_2 {
-    height: 45vh;
+    height: 53vh;
     width: 60vw;
     margin: 0 20px 0 40px;
     border: 1px solid gray;
@@ -257,7 +257,7 @@ border-bottom:2px solid #fff;
     width: 100%;
 }
 .vehicleinfo_2 .repairselect .cont .scrollBox01{
-    height: 220px;
+    height: 280px;
     margin: 0;
 }
 .vehicleinfo_2 .repairselect .cont .scrollBox01 ul li a{
@@ -265,6 +265,9 @@ border-bottom:2px solid #fff;
     line-height: 31px;
     height: 33px;
     text-align: center;
+}
+.vehicleinfo_2 .repairselect .cont .scrollBox01 ul li label{
+    font-size: 20px;
 }
 
 .vehicleinfo_2 .repairpreview{
@@ -284,7 +287,7 @@ border-bottom:2px solid #fff;
 
 .vehicleinfo_2 .repairpreview .cont .scrollBox03{
     margin: 1% 20px;
-    height: 100px;
+    height: 130px;
 }
 .scrollBox03 td{
     padding: 0px 2px;
@@ -309,7 +312,7 @@ border-bottom:2px solid #fff;
     display: block;
     border: 1px solid #dbdbdb;
     font-size: 15px;
-    height: 90px;
+    height: 120px;
 }
 .vehicleinfo_2 .remark .cont strong{
     font-size: 20px;
@@ -321,7 +324,7 @@ border-bottom:2px solid #fff;
     border: 1px solid gray;
     border-radius: 40px;
     width: 30vw;
-    height: 45vh;
+    height: 52vh;
     float: left;
     text-align: center;
     font-size: 20px;

@@ -102,6 +102,7 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 		try{
 		//접수 수정
 		result = SmartTabletDAO.UpdateAssign(params);
+		System.out.println("UpdateAssign"+result);
 		if(result==0)
 			throw new Exception("접수 수정 실패");
 		
@@ -132,7 +133,8 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 			if(repairlist[i]=="" || chkrepairlist[i] == "")
 			{
 				result =0;
-				break;
+				throw new Exception("실패, 수리 사항이 없거나 종류리스트에 데이터 없음");
+				// break;
 			}
 			Map<String,Object> repairParams = new HashMap<String,Object>();
 			//수정할게 있으면
