@@ -67,5 +67,13 @@ public class SmartTabletDAO extends EgovAbstractMapper {
     public int ReleaseRepair(Map<String, Object> params) {
         return update("SmartTabletDAO.ReleaseRepair",params);
     }
+
+    public List<Object> reservelist() {
+        return selectList("SmartTabletDAO.reservelist");
+    }
+
+    public int CallGuest(Map<String, Object> params) {
+        return update("SmartTabletDAO.CallGuest",params);
+    }
    
 }

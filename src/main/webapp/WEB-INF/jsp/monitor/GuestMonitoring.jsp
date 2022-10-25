@@ -89,7 +89,7 @@ div.marquee>div.marquee-text {
 									<tbody>
 										<c:forEach begin="0" end="8" varStatus="status">
 											<tr>
-												<td><c:out value="${Guest[status.index].TAKESEQ}" /></td>
+												<td><c:out value="${Guest[status.index].SEQ}" /></td>
 												<td><c:out value="${Guest[status.index].AUTONUMBER}" /></td>
 												<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
 												<td><c:out value="${Guest[status.index].NAME}" /></td>

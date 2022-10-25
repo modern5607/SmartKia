@@ -5,6 +5,7 @@
 	<select id="selectList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
 		
     	SELECT TAKESEQ,
+		SUBSTR (TAKESEQ,-4) SEQ ,
        			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
 			 	AUTONUMBER,
        			CUSTOMER_AUTOKIND,
@@ -23,6 +24,7 @@
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.TASKSTAT = 'CB-repaired'
+			AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
 			<choose>
 				<when test="autoroom ==''">
 					AND A.POSITION = (SELECT TEAM FROM LETTNGNRLMBER WHERE ESNTL_ID = #{loginid})
@@ -38,6 +40,7 @@
 	<select id="assignmentList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
 		
      SELECT TAKESEQ,
+	 SUBSTR (TAKESEQ,-4) SEQ ,
 			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
 			AUTONUMBER,
 			CUSTOMER_AUTOKIND,
@@ -55,8 +58,15 @@
 		FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 		WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.POSITION IS NULL
+			AND A.TASKSTAT != 'CB-reserve'
+			AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
+
+		<if test="searchtakestat == 'CB-receipt'">
 			AND A.TASKSTAT = 'CB-receipt'
-			
+		</if>
+		<if test="searchtakestat == 'CB-reserveconfirm'">
+			AND A.TASKSTAT = 'CB-reserveconfirm'
+		</if>	
 		<if test="searchcarnum != ''">
 			AND A.AUTONUMBER LIKE '%' || #{searchcarnum} || '%'
 		</if>
@@ -80,6 +90,7 @@
 	<select id="receiveList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
 		
     	SELECT TAKESEQ,
+		SUBSTR (TAKESEQ,-4) SEQ ,
        			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
 			 	AUTONUMBER,
        			CUSTOMER_AUTOKIND,
@@ -105,6 +116,7 @@
 	<select id="detailList" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
 		
     	SELECT TAKESEQ,
+		SUBSTR (TAKESEQ,-4) SEQ ,
        			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
 			 	AUTONUMBER,
        			CUSTOMER_AUTOKIND,
@@ -121,7 +133,7 @@
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
-			AND A.TASKSTAT = 'CB-perfect'
+			AND (A.TASKSTAT= 'CB-standby' OR A.TASKSTAT = 'CB-perfect')
 			AND A.TURNOVER = 'N'
 			
 			<if test="searchcarnum != ''">
@@ -168,7 +180,7 @@
 	<update id="RepairComplete" parameterType="java.util.HashMap">
 		UPDATE CAR_TAKEREPAIR
 			SET
-				TASKSTAT = 'CB-perfect',
+				TASKSTAT = 'CB-standby',
 				REPAIRNOTE = #{remark},
 				ETIME = TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI'),
 				UPDATE_ID = #{loginid},
@@ -195,5 +207,29 @@
   				TURNOVER_ID= #{loginid}
   			WHERE TAKESEQ = #{seq}
 	</update>
+<select id="reservelist" parameterType="egovframework.smart.tablet.service.SmartTabletVO" resultType="java.util.HashMap">
+		SELECT TAKESEQ,
+     		SUBSTR (TAKESEQ,-4) SEQ,
+       			TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
+			 	AUTONUMBER,
+       			CUSTOMER_AUTOKIND,
+       			CUSTOMER_NAME,
+            	CUSTOMER_TEL, 
+       			REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
+       			FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+       			A.POSITION,
+       			A.TASKSTAT,
+       			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
+			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
+			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.TASKSTAT = 'CB-reserveconfirm'
+			AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
+	</select>
 
+	<update id="CallGuest" parameterType="java.util.HashMap">
+		UPDATE CAR_TAKEREPAIR
+			SET
+				TASKSTAT='CB-perfect'
+			WHERE TAKESEQ =  #{seq}
+	</update>
 </mapper>

@@ -79,12 +79,11 @@ public class SmartMonitoringController {
 	public String SceneMonitoring(ModelMap model,HttpServletRequest request) throws Exception 
 	{
 		// service
+		model.addAttribute("Guest", smartMonitoringService.GuestMonitoring());
 
 		model.addAttribute("TeamA", smartMonitoringService.SceneMonitoring("CB-A"));
 		model.addAttribute("TeamB", smartMonitoringService.SceneMonitoring("CB-B"));
 		model.addAttribute("TeamC", smartMonitoringService.SceneMonitoring("CB-C"));
-		
-		System.out.println(model);
 		
 		return "/monitor/SceneMonitoring";
 	}

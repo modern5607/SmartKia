@@ -94,10 +94,18 @@
 									<div class="condition" style="margin-top: 20px;">
 										<span class="item f_search">
 											<p class="left">
-												<label for="searchcarnum">차량번호</label> <input
-													class="f_input w_200" name="searchcarnum" id="searchcarnum"
-													type="text"
-													value="<c:out value='${searchVO.searchcarnum}'/>" />
+												<label for="searchtakestat">접수상태</label>
+												<label class="f_select w_200" for="searchtakestat">
+													<select name="searchtakestat" id="searchtakestat">
+														<option value="">전체</option>
+														<option value="CB-receipt">현장접수</option>
+														<option value="CB-reserveconfirm">예약접수</option>
+													</select>
+												</label>
+											</p>
+											<p class="left">
+												<label for="searchcarnum">차량번호</label> 
+												<input class="f_input w_200" name="searchcarnum" id="searchcarnum" type="text" value="<c:out value='${searchVO.searchcarnum}'/>" />
 											</p>
 											<p class="left">
 												<label for="searchTel">연락처</label> <input
@@ -125,16 +133,18 @@
 												<col style="width: 100px;">
 												<col style="width: 100px;">
 												<col style="width: 100px;">
+												<col style="width: 100px;">
 											</colgroup>
 											<thead>
 												<tr>
 													<th scope="col">번호</th>
+													<th scope="col">접수상태</th>
 													<th scope="col">접수번호</th>
 													<th scope="col">차량번호</th>
 													<th scope="col">차량종류</th>
 													<th scope="col">고객명</th>
 													<th scope="col">연락처</th>
-													<th scope="col">수리내용</th>
+													<th scope="col">정비내용</th>
 													<th scope="col">배정</th>
 												</tr>
 											</thead>
@@ -149,6 +159,7 @@
 													varStatus="status">
 													<tr>
 														<td><c:out value="${(searchVO.pageIndex-1)*searchVO.pageSize+status.count}" /></td>
+														<td><c:out value="${result.TASKSTAT_NAME}" /></td>
 														<td><c:out value="${result.TAKESEQ}" /></td>
 														<td><c:out value="${result.AUTONUMBER}" /></td>
 														<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>

@@ -20,8 +20,17 @@ public class SmartTabletVO extends ComDefaultVO implements Serializable {
 	private String searchcarnum = "";
 	private String searchTel = "";
 	private String searchteam = "";
+	private String searchtakestat = "";
 
-    public String getMembernm() {
+    public String getSearchtakestat() {
+		return searchtakestat;
+	}
+
+	public void setSearchtakestat(String searchtakestat) {
+		this.searchtakestat = searchtakestat;
+	}
+
+	public String getMembernm() {
         return membernm;
     }
 

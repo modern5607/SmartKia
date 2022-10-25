@@ -45,6 +45,28 @@ function releasePOP(seq)
 		$dialog.dialog('open');
 	
 }    
+function CallGuestView(seq){
+	
+	var $dialog = $('<div id="modalPan"></div>').html(
+			'<iframe style="border: 0px;" src="'
+					+ "<c:url value='/tablet/CallGuestView.do?seq="+seq+"'/>"
+					+ '" width="100%" height="100%"></iframe>')
+			.dialog({
+				autoOpen : false,
+				modal : true,
+				width : 600,
+				height : 400
+			});
+		$(".ui-dialog-titlebar").hide();
+		$dialog.dialog('open');
+}
+
+function CallGuest(seq){
+	document.ProgressDetail.seq.value = seq;
+	
+	document.ProgressDetail.action = "<c:url value='/tablet/CallGuest.do'/>";
+	document.ProgressDetail.submit();
+}
 function reload(){
 	location.reload();
 }
@@ -83,6 +105,7 @@ function reload(){
 								<form modelAttribute="SmartTabletVO" name="ProgressDetail" id="ProgressDetail" action="<c:url value='/tablet/ProgressDetail.do'/>" method="post">
 									<input type="hidden" id="groupcode" name="groupcode" value="">
 									<input type="hidden" id="code" name="code" value="">
+									<input type="hidden" id="seq" name="seq" value="">
 									<div class="condition" style="margin-top: 20px;">
 										<span class="item f_search">
 											<p class="left">
@@ -138,7 +161,7 @@ function reload(){
 													<th scope="col">차량종류</th>
 													<th scope="col">고객명</th>
 													<th scope="col">연락처</th>
-													<th scope="col">수리내용</th>
+													<th scope="col">정비내용</th>
 													<th scope="col">작업반</th>
 													<th scope="col">완료시간</th>
 													<th scope="col">작업상태</th>
@@ -164,7 +187,14 @@ function reload(){
 														<td><c:out value="${result.POSITION_NAME}" /></td>
 														<td><c:out value="${result.ETIME}" /></td>
 														<td><c:out value="${result.TASKSTAT_NAME}" /></td>
-														<td><a href="#"onclick="releasePOP('${result.TAKESEQ}');" class="btn btn_blue_46 w_80" >출고처리</a> </td>
+														<td>
+															<c:if test="${result.TASKSTAT eq 'CB-standby'}">
+																<a href="#"onclick="CallGuestView('${result.TAKESEQ}');" class="btn btn_blue_46 w_80" >호출</a> 
+															</c:if>
+															<c:if test="${result.TASKSTAT ne 'CB-standby'}">
+																<a href="#"onclick="releasePOP('${result.TAKESEQ}');" class="btn btn_blue_46 w_80" >출고처리</a> 
+															</c:if>
+														</td>
 													</tr>
 												</c:forEach>
 											</tbody>

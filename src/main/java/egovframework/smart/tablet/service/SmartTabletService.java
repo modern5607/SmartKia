@@ -28,4 +28,8 @@ public interface SmartTabletService {
     public int RepairComplete(Map<String, Object> params)throws Exception;
 
     public int ReleaseRepair(Map<String, Object> params)throws Exception;
+
+    public List<Object> reservelist()throws Exception;
+
+    public int CallGuest(Map<String, Object> params)throws Exception;
 }

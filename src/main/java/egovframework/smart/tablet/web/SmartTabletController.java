@@ -401,6 +401,52 @@ public class SmartTabletController {
 	
 	}
 
+	/*
+	 * 고객 호출 view
+	 * */
+	@RequestMapping(value = "/tablet/CallGuestView.do",method = RequestMethod.GET)
+	public String CallGuestView(@RequestParam String seq,ModelMap model) throws Exception {
+		
+		
+		model.addAttribute("seq",seq);
+		return "/tablet/CallGuestView";
+	}
+	/**
+	 * 고객 호출 UPDATE
+	 */
+	@RequestMapping(value = "/tablet/CallGuest.do")
+	public String CallGuest(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
+		
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		
+		System.out.println("params :"+params);
+		
+		int result = smarttabletservice.CallGuest(params);
+		System.out.println("result : "+ result);
+		
+		if(result==0) //log insert 실패 
+		{
+			model.addAttribute("msg","호출 실패했습니다 다시시도해주세요.");
+			model.addAttribute("url","");
+		}
+		else 
+		{
+			model.addAttribute("msg","호출에 성공하여 모니터링에 표시되었습니다.");
+			model.addAttribute("url","ProgressDetail.do");
+		}
+		
+		return "alert";
+	}
+
 /*********************************************************************************************************************************
  * 											태블릿 Controller
  * *******************************************************************************************************************************/
@@ -425,7 +471,8 @@ public class SmartTabletController {
 		}
 		// service
 		Map<String, Object> map = smarttabletservice.assignmentList(searchVO);
-
+		
+		model.addAttribute("reserve", smarttabletservice.reservelist());
 		model.addAttribute("resultList", map.get("resultList"));
 		model.addAttribute("resultCnt", map.get("resultCnt"));
 		

@@ -26,7 +26,8 @@
 
 <script type="text/javascript">
 	function refresh(){
-        $('.board_list').load(location.href +" .board_list");
+		//$('#test').load(window.location.href + " #test");
+		location.reload();
     }
 
     function detail(takeseq){
@@ -67,10 +68,11 @@
 							<div class="board_list" id="tab1">
 								<table id="guesttable" style="table-layout: fixed;">
 									<colgroup>
-										<col style="width: 20%;">
 										<col style="width: 15%;">
-										<col style="width: 20%;">
-										<col style="width: 30%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 25%;">
                                         <col style="width: 15%;">
 									</colgroup>
 									<thead>
@@ -78,7 +80,8 @@
 											<th scope="col">접수번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차종</th>
-											<th scope="col">수리내역</th>
+											<th scope="col">예상완료시간</th>
+											<th scope="col">정비내역</th>
                                             <th scope="col"><img src="../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
@@ -86,9 +89,10 @@
 										<c:forEach var="result" items="${TeamA}"
                                             varStatus="status">
 											<tr>
-												<td><c:out value="${result.TAKESEQ}" /></td>
+												<td><c:out value="${result.SEQ}" /></td>
 												<td><c:out value="${result.AUTONUMBER}" /></td>
 												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+												<td><c:out value="${result.ESTIME}" /></td>
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
                                                 <td>
 													<c:if test="${logininfo[0].TEAM eq result.POSITION}">
@@ -106,10 +110,11 @@
                             <div class="board_list" id="tab2" style="display: none;">
 								<table id="guesttable" style="table-layout: fixed;">
 									<colgroup>
-										<col style="width: 20%;">
 										<col style="width: 15%;">
-										<col style="width: 20%;">
-										<col style="width: 30%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 25%;">
                                         <col style="width: 15%;">
 									</colgroup>
 									<thead>
@@ -117,7 +122,8 @@
 											<th scope="col">접수번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차종</th>
-											<th scope="col">수리내역</th>
+											<th scope="col">예상완료시간</th>
+											<th scope="col">정비내역</th>
                                             <th scope="col"><img src="../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
@@ -125,9 +131,10 @@
 										<c:forEach var="result" items="${TeamB}"
                                             varStatus="status">
 											<tr>
-												<td><c:out value="${result.TAKESEQ}" /></td>
+												<td><c:out value="${result.SEQ}" /></td>
 												<td><c:out value="${result.AUTONUMBER}" /></td>
 												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+												<td><c:out value="${result.ESTIME}" /></td>
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
                                                 <td>
 													<c:if test="${logininfo[0].TEAM eq result.POSITION}">
@@ -145,10 +152,11 @@
 							<div class="board_list" id="tab3" style="display: none;">
 								<table id="guesttable" style="table-layout: fixed;">
 									<colgroup>
-										<col style="width: 20%;">
 										<col style="width: 15%;">
-										<col style="width: 20%;">
-										<col style="width: 30%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 25%;">
                                         <col style="width: 15%;">
 									</colgroup>
 									<thead>
@@ -156,7 +164,8 @@
 											<th scope="col">접수번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차종</th>
-											<th scope="col">수리내역</th>
+											<th scope="col">예상완료시간</th>
+											<th scope="col">정비내역</th>
                                             <th scope="col"><img src="../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
@@ -164,9 +173,10 @@
 										<c:forEach var="result" items="${TeamC}"
                                             varStatus="status">
 											<tr>
-												<td><c:out value="${result.TAKESEQ}" /></td>
+												<td><c:out value="${result.SEQ}" /></td>
 												<td><c:out value="${result.AUTONUMBER}" /></td>
 												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+												<td><c:out value="${result.ESTIME}" /></td>
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
                                                 <td>
 													<c:if test="${logininfo[0].TEAM eq result.POSITION}">

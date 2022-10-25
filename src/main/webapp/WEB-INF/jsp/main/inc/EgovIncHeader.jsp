@@ -123,7 +123,7 @@ function fn_egov_modal_remove() {
                             <li><a href="/rcpt/SmartWebReservationRcptView.do">고객예약등록(WEB)</a></li>
                             
                             <li><a href="/rcpt/ReservationstatusView.do">고객예약현황</a></li>
-                            <li><a href="/crm/SmartAddRepairCar.do?">차량수리이력조회</a></li>
+                            <li><a href="/crm/SmartAddRepairCar.do?">일자별 정비 현황</a></li>
 
                         </ul>
                     </div>

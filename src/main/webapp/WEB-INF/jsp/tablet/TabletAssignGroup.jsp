@@ -26,7 +26,7 @@
 
 <script type="text/javascript">
 	function refresh(){
-        alert("테스트1");
+		location.reload();
     }
 
     function detail(takeseq){
@@ -68,10 +68,10 @@
 							<div class="board_list" id="tab1">
 								<table id="guesttable" style="table-layout: fixed;">
 									<colgroup>
-										<col style="width: 20%;">
 										<col style="width: 15%;">
-										<col style="width: 20%;">
-										<col style="width: 30%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 40%;">
                                         <col style="width: 15%;">
 									</colgroup>
 									<thead>
@@ -79,7 +79,7 @@
 											<th scope="col">접수번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차종</th>
-											<th scope="col">수리내역</th>
+											<th scope="col">정비내역</th>
                                             <th scope="col"><img src="../../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
@@ -87,7 +87,7 @@
 										<c:forEach var="result" items="${resultList}"
                                             varStatus="status">
 											<tr>
-												<td><c:out value="${result.TAKESEQ}" /></td>
+												<td><c:out value="${result.SEQ}" /></td>
 												<td><c:out value="${result.AUTONUMBER}" /></td>
 												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
@@ -100,30 +100,30 @@
                             <div class="board_list" id="tab2" style="display: none;">
 								<table id="guesttable">
 									<colgroup>
-										<col style="width: 25%;">
-										<col style="width: 25%;">
-										<col style="width: 25%;">
-										<col style="width: 25%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 40%;">
+                                        <col style="width: 15%;">
 									</colgroup>
 									<thead>
 										<tr>
 											<th scope="col">접수번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차종</th>
-											<th scope="col">고객명</th>
+											<th scope="col">정비내역</th>
+                                            <th scope="col"><img src="../../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach begin="0" end="10" varStatus="status">
+										<c:forEach var="result" items="${reserve}"
+                                            varStatus="status">
 											<tr>
-												<!-- <td><c:out value="${Guest[status.index].TAKESEQ}" /></td> -->
-												<!-- <td><c:out value="${Guest[status.index].AUTONUMBER}" /></td> -->
-												<!-- <td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td> -->
-												<!-- <td><c:out value="${Guest[status.index].NAME}" /></td> -->
-                                                <td>5</td>
-                                                <td>6</td>
-                                                <td>7</td>
-                                                <td>8</td>
+												<td><c:out value="${result.SEQ}" /></td>
+												<td><c:out value="${result.AUTONUMBER}" /></td>
+												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
+                                                <td><a href="#LINK" class="btntablet" onclick="detail('${result.TAKESEQ}');">상세정보</a></td>
 											</tr>
 										</c:forEach>
 									</tbody>

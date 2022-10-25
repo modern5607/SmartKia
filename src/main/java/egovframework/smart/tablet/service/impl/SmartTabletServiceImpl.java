@@ -399,6 +399,16 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 		return result;
 	}
 
+	@Override
+	public List<Object> reservelist() throws Exception {
+		return SmartTabletDAO.reservelist();
+	}
+
+	@Override
+	public int CallGuest(Map<String, Object> params) throws Exception {
+		return SmartTabletDAO.CallGuest(params);
+	}
+
 	
 
 	

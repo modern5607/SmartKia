@@ -25,14 +25,13 @@
 .board_list th{padding: 7px 0; background: black; color:white; font-weight: bold; font-size: 32px;}
 .container {margin-top: 0px;}
 
-.board_list td{
-    padding: 10px 0 10px 0;
+.board_list td{padding: 10px 0 10px 0;
     border-bottom: 2px solid #dde2e5;
     height: 59.5px;
     color: #060606;
     text-align: center;
-    font-weight: bold;
-    font-size: 26px;
+    font-weight: normal;
+    font-size: 22px;
 }
 
 .content {

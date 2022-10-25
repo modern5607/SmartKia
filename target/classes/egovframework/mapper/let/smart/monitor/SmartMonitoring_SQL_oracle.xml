@@ -7,6 +7,7 @@
 
 	<select id="selectMonitoringList" parameterType="comDefaultVO" resultType="java.util.HashMap">
 		SELECT TAKESEQ,
+		SUBSTR (TAKESEQ,-4) SEQ ,
 			 	AUTONUMBER,
        			CUSTOMER_AUTOKIND,
        			CUSTOMER_NAME,
@@ -17,13 +18,15 @@
 			FROM   CAR_TAKEREPAIR A , CAR_CUSTOMER B
 				WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 				AND A.TASKSTAT = 'CB-receipt'
-        AND A.TURNOVER = 'N'
+        		AND A.TURNOVER = 'N'
+				AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
       			ORDER BY A.ESTIME ASC
 	</select>
 
 	<select id="SceneMonitoring" parameterType="java.lang.String" resultType="java.util.HashMap">
 		
 			SELECT TAKESEQ,
+			SUBSTR (TAKESEQ,-4) SEQ ,
 			 	AUTONUMBER,
        			CUSTOMER_AUTOKIND,
        			CUSTOMER_NAME,
@@ -45,6 +48,7 @@
 	<select id="GuestMonitoring" parameterType="comDefaultVO" resultType="java.util.HashMap">
 		
 		SELECT TAKESEQ,
+		SUBSTR (TAKESEQ,-4) SEQ ,
 			 	AUTONUMBER,
        			CUSTOMER_AUTOKIND,
        			CUSTOMER_NAME,
@@ -58,11 +62,13 @@
 				WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 				AND A.TASKSTAT = 'CB-receipt'
        			AND A.TURNOVER = 'N'
+				AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
       				ORDER BY A.ESTIME ASC
 	</select>
 
 	<select id="CompleteMonitoring" parameterType="comDefaultVO" resultType="java.util.HashMap">
 SELECT TAKESEQ,
+SUBSTR (TAKESEQ,-4) SEQ ,
 			 	AUTONUMBER,
        			CUSTOMER_AUTOKIND,
        			CUSTOMER_NAME,

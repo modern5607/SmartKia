@@ -149,7 +149,7 @@ function fnCheckId(){
 													<th scope="col">차량종류</th>
 													<th scope="col">고객명</th>
 													<th scope="col">연락처</th>
-													<th scope="col">수리내용</th>
+													<th scope="col">정비내용</th>
 													<th scope="col">작업반</th>
 													<th scope="col">예상완료시간</th>
 													<th scope="col">작업상태</th>
