@@ -277,4 +277,36 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> selectReserveCarInfo(SmartRcptVO smartrcotVO) throws Exception {
+		List<Object> list = new ArrayList<>();
+		list.add(smartrcptDAO.selectCarInfo(smartrcotVO));
+		list.add(smartrcptDAO.selectReserveCarInfo(smartrcotVO));
+		String seq = ((HashMap<String,Object>)((List<Object>)list.get(1)).get(0)).get("TAKESEQ").toString();
+		// System.out.println(  );
+		list.add(smartrcptDAO.selectRcptRepairInfo(seq));
+		System.out.println(list);
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<Object> KioskReserveConfirm(String takeseq) throws Exception {
+		int result=0;
+
+		result = smartrcptDAO.update("SmartRcptDAO.KioskReserveConfirm",takeseq);
+		if(result==1)
+		{
+			List<Object> tmplist = smartrcptDAO.SelectRcptinfo(takeseq);
+			Map<String,Object> params = new HashMap<String,Object>();
+			params.put("id", ((HashMap<String,Object>)tmplist.get(0)).get("CUSTOMER_ID"));
+			List<Object> info = smartrcptDAO.Selectrcptinfo_params(params);
+			return info;
+		}
+		else
+			return null;
+	}
+
 }

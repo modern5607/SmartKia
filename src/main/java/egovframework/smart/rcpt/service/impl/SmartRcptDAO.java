@@ -100,5 +100,9 @@ public class SmartRcptDAO extends EgovAbstractMapper {
     public int CancelWebReservationRcpt(String takeseq) {
         return update("SmartRcptDAO.CancelWebReservationRcpt",takeseq);
     }
+
+    public List<Object> selectReserveCarInfo(SmartRcptVO smartrcotVO) {
+        return selectList("SmartRcptDAO.selectreserveCarInfo",smartrcotVO);
+    }
 	 
 }

@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
@@ -238,6 +239,18 @@ public class SmartMdmServiceImpl extends EgovAbstractServiceImpl implements Smar
 
 		// System.out.println("리스트안에 Map : "+result);
 		return result;
+	}
+
+	@Transactional
+	@Override
+	public int InsertGroupLeadTime(SmartLeadTimeVO leadtimeVO) throws Exception {
+		return smartDAO.InsertGroupLeadTime(leadtimeVO);
+	}
+
+	@Transactional
+	@Override
+	public int UpdateGroupLeadTime(SmartLeadTimeVO leadtimeVO) throws Exception {
+		return smartDAO.UpdateGroupLeadTime(leadtimeVO);
 	}
 
 }

@@ -92,6 +92,7 @@ background:rgba(0,0,0,0.7);
 position:absolute;
 top:0;
 display:none;
+z-index: 1;
 }
 .sidebar_menu{ display:none;
 width:20%;
@@ -100,6 +101,7 @@ background:#bbc3cb;
 position:absolute;
 top:0;
 right: -50%;
+z-index: 2;
 
 }
 .close_btn{
@@ -344,8 +346,34 @@ border-bottom:2px solid #fff;
 }
 .vehicleinfo_3 a{
     padding: 0 90px;
-    border: 1px solid #EA0029;
+    /* border: 1px solid #EA0029; */
     border-radius: 10px;
     background: #EA0029;
     color: white;
+}
+
+.vehicleinfo_3 .complete{
+    display: inline-block;
+    width: 49%;
+}
+.vehicleinfo_3 .complete a{
+    padding: 3% 20%;
+    background: #5d7d2b;
+}
+.vehicleinfo_3 .cancel{
+    display: inline-block;
+    width: 49%;
+}
+.vehicleinfo_3 .cancel a{
+    padding: 3% 20%;
+}
+
+.vehicleinfo_3 textarea{
+    width: 88%;
+    margin: 0 20px;
+    padding: 5px;
+    display: block;
+    border: 1px solid #dbdbdb;
+    font-size: 15px;
+    height: 120px;
 }

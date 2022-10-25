@@ -38,4 +38,8 @@ public interface SmartRcptService {
 
     int CancelWebReservationRcpt(String takeseq)throws Exception;
 
+    List<Object> selectReserveCarInfo(SmartRcptVO smartrcotVO)throws Exception;
+
+    List<Object> KioskReserveConfirm(String takeseq)throws Exception;
+
 }

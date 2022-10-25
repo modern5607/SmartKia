@@ -4,6 +4,13 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%    
+response.setHeader("Cache-Control","no-store");    
+response.setHeader("Pragma","no-cache");    
+response.setDateHeader("Expires",0);    
+if (request.getProtocol().equals("HTTP/1.1"))  
+        response.setHeader("Cache-Control", "no-cache");  
+%>
 <c:set var="ImgUrl" value="/images_old/egovframework/com/uss/olp/qtm/" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -92,10 +99,10 @@
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
                                                 <td>
 													<c:if test="${logininfo[0].TEAM eq result.POSITION}">
-														<a href="#LINK" class="btntablet" onclick="detail('${result.TAKESEQ}');">상세정보</a>
+														<a href="#" class="btntablet" onclick="detail('${result.TAKESEQ}');">상세정보</a>
 													</c:if>
 													<c:if test="${logininfo[0].TEAM ne result.POSITION}">
-														<a href="#LINK" class="btntablet" style="background: #ff0000;">진행 중</a>
+														<a href="#" class="btntablet" style="background: #ff0000;">진행 중</a>
 													</c:if>
 												</td>
 											</tr>
@@ -131,10 +138,10 @@
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
                                                 <td>
 													<c:if test="${logininfo[0].TEAM eq result.POSITION}">
-														<a href="#LINK" class="btntablet" onclick="detail();">상세정보</a>
+														<a href="#" class="btntablet" onclick="detail('${result.TAKESEQ}');">상세정보</a>
 													</c:if>
 													<c:if test="${logininfo[0].TEAM ne result.POSITION}">
-														<a href="#LINK" class="btntablet" style="background: #ff0000;">진행 중</a>
+														<a href="#" class="btntablet" onclick="clickComplete('<c:out value='${result.TAKESEQ}'/>')" style="background: #ff0000;">진행 중</a>
 													</c:if>
 												</td>
 											</tr>
@@ -170,7 +177,7 @@
 												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
                                                 <td>
 													<c:if test="${logininfo[0].TEAM eq result.POSITION}">
-														<a href="#LINK" class="btntablet" onclick="detail();">상세정보</a>
+														<a href="#" class="btntablet" onclick="detail('${result.TAKESEQ}');">상세정보</a>
 													</c:if>
 													<c:if test="${logininfo[0].TEAM ne result.POSITION}">
 														<a class="btntablet" style="background: #ff0000;">진행 중</a>

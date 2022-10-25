@@ -271,9 +271,11 @@ public class SmartMdmController {
 	public String UpdateCommonCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model)
 			throws Exception {
 		System.out.println(comCodeVO);
-		Map<String, Object> info = smartmdmservice.SelectCommonCode(comCodeVO);
-		System.out.println("info : "+info.get("info"));
-		model.addAttribute("info", info.get("info"));
+		// Map<String, Object> info = smartmdmservice.SelectCommonCode(comCodeVO);
+		List<Object> info = smartmdmservice.SelectCode(comCodeVO.getGroupcode(), comCodeVO.getCode());
+		// System.out.println("info : "+info);
+		model.addAttribute("info", info);
+		System.out.println("info : "+model.get("info"));
 		// model.addAttribute("previousgroupcode",comCodeVO.getGroupcode());
 		return "mdm/UpdateCommonCodeView";
 	}
@@ -349,10 +351,11 @@ public class SmartMdmController {
 		leadtimeVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
 		Map<String, Object> map = smartmdmservice.selectLeadTime(leadtimeVO);
-		List<Object> test = smartmdmservice.SelectCmmCode("USE_YN");
+		List<Object> useyn = smartmdmservice.SelectCmmCode("USE_YN");
 
-		System.out.println("test :" + test);
+		// System.out.println("test :" + test);
 
+		model.addAttribute("useyn", useyn);
 		model.addAttribute("leadtimeVO", leadtimeVO);
 		model.addAttribute("leadtimelist", map.get("leadtime"));
 		model.addAttribute("mainlist", map.get("main"));
@@ -363,7 +366,60 @@ public class SmartMdmController {
 		return "/mdm/SmartLeadTimeView";
 	}
 
+	@RequestMapping(value = "/mdm/InsertGroupLeadTime.do",method=RequestMethod.POST)
+	public String InsertGroupLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter();
+
+		Map<String,Object> msg = new HashMap<String, Object>();
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		leadtimeVO.setId(id);
+		System.out.println("InsertGroupLeadTime.do -> leadtimeVO : "+leadtimeVO);
+		int result = smartmdmservice.InsertGroupLeadTime(leadtimeVO);
+		// response.getWriter().print(result);
+		if (result == 0) // update실패
+		{
+			out.println("<script>");
+			out.println("alert('이미 존재하는 코드입니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+		} else {
+			out.println("<script>");
+			out.println("alert('성공적으로 등록되었습니다.')");
+			// out.println("location.href='/mdm/SmartLeadTime.do'");
+			out.println("</script>");
+		}
+		return "forward:/mdm/SmartLeadTime.do";
+	}
 	
+	@RequestMapping(value = "/mdm/UpdateGroupLeadTime.do")
+	public String UpdateGroupLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html; charset=euc-kr");
+		PrintWriter out = response.getWriter();
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		leadtimeVO.setId(id);
+		
+		System.out.println("UpdateGroupLeadTime : "+leadtimeVO);
+		
+
+		int result = smartmdmservice.UpdateGroupLeadTime(leadtimeVO);
+		System.out.println(result);
+		if (result == 0) // update실패
+		{
+			out.println("<script>");
+			out.println("alert('이미 존재하는 코드입니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+		} else {
+			out.println("<script>");
+			out.println("alert('성공적으로 등록되었습니다.')");
+			// out.println("location.href='/mdm/SmartLeadTime.do'");
+			out.println("</script>");
+		}
+		return "forward:/mdm/SmartLeadTime.do";
+	}
 
 	@RequestMapping(value = "/mdm/InsertLeadTime.do",method=RequestMethod.POST)
 	public void InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response) throws Exception {

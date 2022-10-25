@@ -45,7 +45,7 @@
                 <div class="visual">
                     <center>
                         <p>
-                            <span class="t1">KIA AUTO Q 옥암점에 오신걸 환영합니다.</span>
+                            <span class="t1">목포서비스 KIA AUTO Q에 오신걸 환영합니다.</span>
                         </p>
                     </center>
                     

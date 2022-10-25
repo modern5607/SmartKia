@@ -169,9 +169,8 @@ public String insertMberView(@ModelAttribute("userSearchVO") CusMberDefaultVO us
 	}
 
 
-@RequestMapping("/customer/SmartCusMberInsert.do") public String 
-insertMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,
-	  BindingResult bindingResult, Model model, RedirectAttributes attr) throws Exception {
+@RequestMapping("/customer/SmartCusMberInsert.do") 
+public String insertMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO, BindingResult bindingResult, Model model, RedirectAttributes attr) throws Exception {
 	  
 	System.out.println("cusMberManageVO :" +cusMberManageVO);
 	
@@ -181,26 +180,25 @@ insertMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO,
 	    	model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 	        return "uat/uia/EgovLoginUsr";
 	    }
-	    
-
-	 int result = cusMberManageService.insertMber(cusMberManageVO);
-	 //System.out.println(cusMberManageVO);
-//	 if(result==1)
-//	 {
-//		 model.addAttribute("resultMsg", "success.common.insert");
-//		 
-//	 }
-//	 else
-//	 {
-//		 model.addAttribute("resultMsg", "fail.common.insert");
-//	 }
+	
+	int result = cusMberManageService.insertMber(cusMberManageVO);
 	if (result == 0) // insert실패
 	{
 			attr.addFlashAttribute("msg","등록에 실패하였습니다.");
 	} else {
 			attr.addFlashAttribute("msg","성공적으로 등록 되었습니다.");
 	}
-return "redirect:/customer/SmartCusMberManage.do";
+	return "redirect:/customer/SmartCusMberManage.do";
+}
+
+@RequestMapping(value="/customer/KioskSmartCusMberInsert.do",method = RequestMethod.POST)
+@ResponseBody 
+public String kioskinsertMber(@ModelAttribute("cusMberManageVO") CusMberManageVO cusMberManageVO, BindingResult bindingResult, Model model, RedirectAttributes attr) throws Exception {
+	  
+	System.out.println("cusMberManageVO :" +cusMberManageVO);
+	
+	int result = cusMberManageService.insertMber(cusMberManageVO);
+	return String.valueOf(result);
 }
 	  
 	
@@ -298,7 +296,7 @@ public String selectCusRepairInfo(@ModelAttribute("cusMberManageVO") CusMberMana
     
     model.addAttribute("cusinfo",cusMberManageService.selectCusInfo(cusMberManageVO));
     
-//    System.out.println("cusinfo : "+cusMberManageVO);
+   System.out.println("cusinfo : "+model.get("cusinfo"));
     return "customer/SmartRepairInfoPopup";
 }
 @RequestMapping(value = "/customer/selectCusRepairDetail.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

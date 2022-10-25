@@ -3,8 +3,14 @@
 <mapper	namespace="SmartRcptDAO">
     <select id="selectCarInfo" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
         SELECT * FROM CAR_CUSTOMER
-        WHERE CUSTOMER_AUTONO LIKE '%'||#{checkcarnum}||'%'
+        WHERE CUSTOMER_AUTONO = #{checkcarnum}
+    </select>
 
+    <select id="selectreserveCarInfo" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
+        SELECT * FROM CAR_TAKEREPAIR
+        WHERE AUTONUMBER = #{checkcarnum}
+            AND TASKSTAT = 'CB-reserve'
+        
     </select>
     <select id="SelectMiddleLeadTime" parameterType="String" resultType="java.util.HashMap">
         SELECT IDX,H_CODE,CODE,NAME,LEAD_TIME,FN_CODENAME(LEAD_TIME,'LEADTIME') AS LEADTIME_NM FROM CAR_LEADTIME WHERE H_CODE = #{hcode} AND USE_YN='Y'
@@ -188,4 +194,10 @@
         AND      ROWNUM      =1
         ORDER BY RECEIPTDATE DESC
     </select>
+    <update id="KioskReserveConfirm" parameterType="String">
+        UPDATE CAR_TAKEREPAIR
+        SET TASKSTAT = 'CB-reserveconfirm'
+        WHERE TAKESEQ = #{takeseq}
+
+    </update>
 </mapper>

@@ -38,7 +38,7 @@ public class SmartMdmDAO extends EgovAbstractMapper {
 	}
 	@SuppressWarnings("unchecked")
 	public List<SmartCommonCodeVO> selectCommonCode(SmartCommonCodeVO vo) {	
-		return (List<SmartCommonCodeVO>)list("SmartMdmDAO.selectCommonCode",vo);
+		return (List<SmartCommonCodeVO>)list("SmartMdmDAO.selectCommonCodeDetail",vo);
 	}
 	public int insertCommonCode(SmartCommonCodeVO vo) {
 		return insert("SmartMdmDAO.insertCommonCode", vo);
@@ -125,4 +125,10 @@ public class SmartMdmDAO extends EgovAbstractMapper {
     public Object selectCritLeadtime() {
         return selectList("SmartMdmDAO.SelectCritLeadtime");
     }
+    public int InsertGroupLeadTime(SmartLeadTimeVO leadtimeVO) {
+        return insert("SmartMdmDAO.InsertGroupLeadTime",leadtimeVO);
+    }
+	public int UpdateGroupLeadTime(SmartLeadTimeVO leadtimeVO) {
+		return update("SmartMdmDAO.UpdateGroupLeadTime",leadtimeVO);
+	}
 }

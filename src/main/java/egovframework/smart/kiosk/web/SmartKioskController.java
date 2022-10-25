@@ -71,14 +71,11 @@ public class SmartKioskController {
 	private DefaultBeanValidator beanValidator;
 	
 	@RequestMapping(value = "/kiosk/SmartKiosk.do")
-	public String selectKiosk(ModelMap model,
-			@RequestParam(value = "menuNo", required = false) String menuNo,
-			HttpServletRequest request
-			) throws Exception {
+	public String selectKiosk(ModelMap model,@RequestParam(value = "menuNo", required = false) String menuNo,HttpServletRequest request) throws Exception {
 		// 선택된 메뉴정보를 세션으로 등록한다.
-		if (menuNo != null && !menuNo.equals("")) {
-			request.getSession().setAttribute("menuNo", menuNo);
-		}
+		// if (menuNo != null && !menuNo.equals("")) {
+		// 	request.getSession().setAttribute("menuNo", menuNo);
+		// }
 
 		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
 		model.addAttribute("leadtimelist", leadtimelist);
@@ -89,11 +86,30 @@ public class SmartKioskController {
 
 	@RequestMapping(value = "/kiosk/SelectCarInfo.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Object> SelectCarInfo(@RequestParam("carnum") String carnum, HttpServletResponse response) throws Exception {
+	public List<Object> SelectCarInfo(@RequestParam("carnum") String carnum,@RequestParam("mode") String mode, HttpServletResponse response) throws Exception {
+		SmartRcptVO smartrcotVO =new SmartRcptVO();
+		smartrcotVO.setCheckcarnum(carnum);
+		smartrcotVO.setMode(mode);
+		List<Object> list = smartrcptservice.selectCarInfo(smartrcotVO);
+		System.out.println(list);
+		return list;
+	}
+
+	//예약 접수 확인
+	@RequestMapping(value = "/kiosk/KioskReserveConfirm.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> KioskReserveConfirm(@RequestParam("takeseq") String takeseq, HttpServletResponse response) throws Exception {
+		return smartrcptservice.KioskReserveConfirm(takeseq);
+	}
+
+	//예약 정비내역 조회
+	@RequestMapping(value = "/kiosk/SelectReserveCarInfo.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> SelectReserveCarInfo(@RequestParam("carnum") String carnum, HttpServletResponse response) throws Exception {
 		// System.out.println(params.get("selectedvar"));
 		SmartRcptVO smartrcotVO =new SmartRcptVO();
 		smartrcotVO.setCheckcarnum(carnum);
-		List<Object> list = smartrcptservice.selectCarInfo(smartrcotVO);
+		List<Object> list = smartrcptservice.selectReserveCarInfo(smartrcotVO);
 		// List<Object> list = smartrcptservice.SelectMiddleLeadTime(params.get("selectedvar").toString());
 		System.out.println(list);
 		// Map<String,Object> map =new HashMap<String,Object>();
