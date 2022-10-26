@@ -65,12 +65,12 @@ function fnSearch() {
 									<div class="condition">
 										<span class="item f_search">
 											<p class="left">
-												<label for="searchAutoNo">차량번호 :</label> 
+												<%-- <label for="searchAutoNo">차량번호 :</label> 
 													<input name="searchAutoNo" id="searchAutoNo" class="f_input w_200" title="검색" type="text" maxlength="20" value="<c:out value="${SmartCrmVO.searchAutoNo}"/>" />
 												<label for="searchCusNm">고객명 :</label> 
 													<input name="searchCusNm" id="searchCusNm"class="f_input w_200" title="검색" type="text" value="<c:out value="${SmartCrmVO.searchCusNm}"/>" />
 												<label for="searchCusTel">연락처:</label> 
-													<input name="searchCusTel" id="searchCusTel"class="f_input w_200" title="검색" type="text" maxlength="20"value="<c:out value="${SmartCrmVO.searchCusTel}"/>" />
+													<input name="searchCusTel" id="searchCusTel"class="f_input w_200" title="검색" type="text" maxlength="20"value="<c:out value="${SmartCrmVO.searchCusTel}"/>" /> --%>
 												<label for="sdate">접수기간 :</label> 
 													<input name="sdate" id="sdate" readonly="readonly"class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.sdate}"/>" />
 												<label for="edate"> ~ </label> 
@@ -95,14 +95,13 @@ function fnSearch() {
 									</colgroup>
 									<thead>
 										<tr>
-											<th scope="col">접수번호</th>
+											<th scope="col">출고일</th>
 											<th scope="col">차량번호</th>
-											<th scope="col">차량종류</th>
 											<th scope="col">고객명</th>
-											<th scope="col">연락처</th>
+											<th scope="col">차량종류</th>
 											<th scope="col">작업반</th>
-											<th scope="col">완료시간</th>
-											<th scope="col">출고일시</th>
+											<th scope="col">연락처</th>
+											<!-- <th scope="col">완료시간</th> -->
 										</tr>
 									</thead>
 									<tbody>
@@ -115,14 +114,13 @@ function fnSearch() {
 										<c:forEach items="${resultList}" var="result"
 											varStatus="status">
 											<tr>
-												<td><c:out value="${result.TAKESEQ}" /></td>
-												<td><c:out value="${result.AUTONUMBER}" /></td>
-												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
-												<td><c:out value="${result.CUSTOMER_NAME}" /></td>
-												<td><c:out value="${result.CUSTOMER_TEL}" /></td>
-												<td><c:out value="${result.POSITION_NAME}" /></td>
-												<td><c:out value="${result.ETIME}" /></td>
 												<td><c:out value="${result.TURNOVERTIME}" /></td>
+												<td><c:out value="${result.AUTONUMBER}" /></td>
+												<td><c:out value="${result.CUSTOMER_NAME}" /></td>
+												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
+												<td><c:out value="${result.POSITION_NAME}" /></td>
+												<td><c:out value="${result.CUSTOMER_TEL}" /></td>
+												<%-- <td><c:out value="${result.ETIME}" /></td> --%>
 											</tr>
 										</c:forEach>
 									</tbody>

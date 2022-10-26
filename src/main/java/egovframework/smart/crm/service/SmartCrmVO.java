@@ -47,6 +47,12 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
     private String sdate = "";
     private String edate = "";
     
+    private String main = "";
+    private String middle = "";
+    private String leadtime = "";
+    private String id = "";
+
+
 	private int pageIndex = 1;
     private int pageUnit = 10;
     private int pageSize = 10;
@@ -201,6 +207,33 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
 	public void setTurnoverNote(String turnoverNote) {
 		this.turnoverNote = turnoverNote;
 	}	
-	
+    public String getMain() {
+        return main;
+    }
+
+    public void setMain(String main) {
+        this.main = main;
+    }
+
+    public String getMiddle() {
+        return middle;
+    }
+
+    public void setMiddle(String middle) {
+        this.middle = middle;
+    }
+    public String getLeadtime() {
+        return leadtime;
+    }
+    public void setLeadtime(String leadtime) {
+        this.leadtime = leadtime;
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+
 	
 }

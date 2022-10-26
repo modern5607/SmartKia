@@ -58,4 +58,33 @@
 				C.CUSTOMER_ID, LIKE '%' || #{searchKeyword} || '%'
 			</if> -->
 	</select>
+
+	<select id="dailyhead" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+		SELECT 	TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '||TO_CHAR(TURNOVERTIME, 'DD')||'일'  turnOverTime
+		FROM 	CAR_TAKEREPAIR
+		WHERE 	TURNOVER ='Y'
+		GROUP BY TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '||TO_CHAR(TURNOVERTIME, 'DD')||'일'
+		ORDER BY TURNOVERTIME DESC
+	</select>
+	
+    <select id="dailydetail" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+		SELECT 	FN_LEADTIME_NAME(A.REPAIRCODE, 'NAME') REPAIRCODE_NAME,
+	       		COUNT(*) CNT
+		FROM 	CAR_LEAD_REPAIR A, CAR_TAKEREPAIR B
+		WHERE 	A.TAKESEQ = B.TAKESEQ
+		AND 	B.TURNOVER = 'Y' 
+		AND 	TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '||TO_CHAR(TURNOVERTIME, 'DD')||'일' = #{turnoverTime}
+		GROUP BY FN_LEADTIME_NAME(A.REPAIRCODE, 'NAME')
+	</select>
+	
+		<select id="selectLeadTime" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = 'LEADTIME'
+	</select>
+	<select id="selectLeadMain" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+		SELECT * FROM CAR_LEADTIME WHERE H_CODE = 'STAT'
+	</select>
+	<select id="selectLeadMiddle" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+		SELECT * FROM CAR_LEADTIME WHERE H_CODE = #{main}
+	</select>
+	
 </mapper>

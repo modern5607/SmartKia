@@ -6,6 +6,7 @@ import java.util.Map;
 
 import egovframework.smart.crm.service.SmartCrmService;
 import egovframework.smart.crm.service.SmartCrmVO;
+import egovframework.smart.mdm.service.SmartLeadTimeVO;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -40,7 +41,38 @@ public class SmartCrmServiceImpl extends EgovAbstractServiceImpl implements Smar
 		return 0;
 	}
 
+    @Override
+    public Map<String,Object> dailyrepair(SmartCrmVO vo) throws Exception {
+    
+        List<SmartCrmVO> dailyhead = smartCrmDAO.dailyhead(vo);
+        List<SmartCrmVO> dailydetail = smartCrmDAO.dailydetail(vo);
+
+      System.out.println("dailyhead : "+dailyhead);
+      System.out.println("dailydetail : "+ dailydetail);
+            
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("dailyhead",dailyhead);
+        map.put("dailydetail",dailydetail);
+        return map;
+    }
+    @Override
+    public Map<String,Object> selectLeadTime(SmartCrmVO vo) throws Exception {
+
+        List<SmartCrmVO> leadtime = smartCrmDAO.selectLeadTime(vo);
+        List<SmartCrmVO> main = smartCrmDAO.selectLeadMain(vo);
+        List<SmartCrmVO> middle = smartCrmDAO.selectLeadMiddle(vo);
+
+            
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("leadtime",leadtime);
+        map.put("main",main);
+        map.put("middle",middle);
+        return map;
+    }
 
 
-
+    @Override
+    public List<Object> selectLeadTimelist(Map<String, Object> params) throws Exception {
+        return smartCrmDAO.selectLeadTimelist(params);
+    }
 }

@@ -170,12 +170,13 @@
     
     <select id="IsexistMber" parameterType="egovframework.smart.customer.service.CusMberManageVO" resultType="java.util.HashMap">
     	SELECT * FROM CAR_CUSTOMER
-    	WHERE CUSTOMER_NAME = #{cusNm} AND CUSTOMER_AUTONO = #{autoNo}
+    	WHERE CUSTOMER_AUTONO = #{autoNo}
+    	<!-- WHERE CUSTOMER_NAME = #{cusNm} AND CUSTOMER_AUTONO = #{autoNo} -->
     	</select>
     	
 	  <select id="selectCusInfo" resultType="egovframework.smart.customer.service.CusMberManageVO">
        SELECT 
-	        	TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '||TO_CHAR(TURNOVERTIME, 'DD')||'일 수리내역'  turnOverTime, 
+	        	TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '||TO_CHAR(TURNOVERTIME, 'DD')||'일 정비내역'  turnOverTime, 
 			 	REPAIR_ENUM(TAKESEQ) repairName,
 	        	REPAIRNOTE as repairNote,
             	TAKESEQ as takeSeq,
