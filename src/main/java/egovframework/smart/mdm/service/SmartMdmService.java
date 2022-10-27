@@ -48,5 +48,9 @@ public Map<String, Object> selectCommonCodeList(SmartCommonCodeVO vo) throws Exc
 
 	public Map<String, Object> selectLeadTime2()throws Exception;
 
+	public int InsertGroupLeadTime(SmartLeadTimeVO leadtimeVO)throws Exception;
+
+    public int UpdateGroupLeadTime(SmartLeadTimeVO leadtimeVO)throws Exception;
+
 
 }

@@ -37,15 +37,41 @@
         // document.SmartLeadTimeVO.action = "<c:url value='/mdm/SmartCode.do'/>";
         document.SmartLeadTimeVO.submit();
     }
+    
+    function InsertGroupLeadTime()
+    {
+        document.SmartLeadTimeVO.insertgroupcode.value = document.SmartLeadTimeVO.groupcode.value;
+        document.SmartLeadTimeVO.insertgroupname.value = document.SmartLeadTimeVO.groupname.value;
+        document.SmartLeadTimeVO.insertgroupord.value = document.SmartLeadTimeVO.groupord.value;
+        console.log(document.SmartLeadTimeVO.insertgroupcode.value);
+        console.log(document.SmartLeadTimeVO.insertgroupname.value);
+        console.log(document.SmartLeadTimeVO.insertgroupord.value);
 
-    function UpdateLeadTime(hcode,code,selectidx)
+        document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertGroupLeadTime.do'/>";
+        document.SmartLeadTimeVO.submit();
+    }
+
+    function UpdateGroupLeadtime(hcode,idx)
+    {
+        document.SmartLeadTimeVO.updatehcode.value = hcode;
+        document.SmartLeadTimeVO.updategroupord.value = $("#updategroupord"+idx).val();
+        document.SmartLeadTimeVO.action = "<c:url value='/mdm/UpdateGroupLeadTime.do'/>";
+        document.SmartLeadTimeVO.submit();
+    }
+
+    function UpdateLeadTime(hcode,code,idx)
     {
         document.SmartLeadTimeVO.updatehcode.value= hcode;
         document.SmartLeadTimeVO.updatecode.value= code;
-        document.SmartLeadTimeVO.updateleadtime.value = $("#leadtime"+selectidx+" option:selected").val();
+
+        document.SmartLeadTimeVO.updateleadtime.value = $("#updtleadtime"+idx).val();
+        document.SmartLeadTimeVO.updateuseyn.value = $("#useyn"+idx+" option:selected").val();
+        document.SmartLeadTimeVO.updateord.value = $("#updateord"+idx).val();
         console.log(document.SmartLeadTimeVO.updatehcode.value);
         console.log(document.SmartLeadTimeVO.updatecode.value);
         console.log(document.SmartLeadTimeVO.updateleadtime.value);
+        console.log(document.SmartLeadTimeVO.updateuseyn.value);
+        console.log(document.SmartLeadTimeVO.updateord.value);
         
         document.SmartLeadTimeVO.action = "<c:url value='/mdm/UpdateLeadTime.do'/>";
         document.SmartLeadTimeVO.submit();
@@ -63,10 +89,12 @@
             type: "post",
             url: "/mdm/InsertLeadTime.do",
             data: {
-                insertleadtime:document.SmartLeadTimeVO.insertleadtime.value,
-                insertname:document.SmartLeadTimeVO.insertname.value,
-                main:document.SmartLeadTimeVO.main.value,
-                middle:document.SmartLeadTimeVO.middle.value
+                insertcode : document.SmartLeadTimeVO.insertcode.value,
+                insertname : document.SmartLeadTimeVO.insertname.value,
+                insertord : document.SmartLeadTimeVO.insertord.value,
+                insertleadtime : document.SmartLeadTimeVO.insertleadtime.value,
+                main : document.SmartLeadTimeVO.main.value,
+                middle : document.SmartLeadTimeVO.middle.value
             },
             success: function (msg) {
 				if(msg==1)
@@ -114,40 +142,20 @@
                                     <input type="hidden" id="main" name="main" value="<c:out value='${leadtimeVO.main}'/>">
                                     <input type="hidden" id="middle" name="middle" value="<c:out value='${leadtimeVO.middle}'/>">
                                     <input type="hidden" id="sub" name="sub" value="<c:out value='${leadtimeVO.sub}'/>">
+                                    <input type="hidden" id="updategroupcode" name="updategroupcode" value="">
+                                    <input type="hidden" id="updategroupord" name="updategroupord" value="">
+                                    <input type="hidden" id="insertgroupcode" name="insertgroupcode" value="">
+                                    <input type="hidden" id="insertgroupname" name="insertgroupname" value="">
+                                    <input type="hidden" id="insertgroupord" name="insertgroupord" value="">
                                     <input type="hidden" id="updatehcode" name="updatehcode" value="">
                                     <input type="hidden" id="updatecode" name="updatecode" value="">
                                     <input type="hidden" id="updateleadtime" name="updateleadtime" value="">
+                                    <input type="hidden" id="updateuseyn" name="updateuseyn" value="">
+                                    <input type="hidden" id="updateord" name="updateord" value="">
                                     
-                                    <div >
-                                        <!-- 대분류 리스트 -->
-                                        <!-- <div class="w20 left" >
-                                            <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
-                                                <table>
-                                                    <colgroup>
-                                                        <col style="width: 50px;">
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">대분류</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:forEach var="result" items="${mainlist}" varStatus="status">
-                                                            <tr>
-                                                                <td><a href="#" class="lnk" onclick="ClickMainCode('${result.CODE}')"><c:out value="${result.NAME}"/></a></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div> -->
-                                        <!-- 대분류 리스트 끝-->
+                                    <div>
                                         <!-- 중분류 리스트 -->
                                         <div class="w50 left" style="margin-left:15px;">
-                                            <!-- <div class="right_col" style="margin-top: 10px;">
-                                                <a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()"><spring:message code="button.create"/></a>
-                                                <a href="#LINK" class="btn btn_blue_46 w_100 right btnmargin" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a>
-                                            </div> -->
                                             <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
                                                 <table>
                                                     <colgroup>
@@ -155,18 +163,53 @@
                                                     </colgroup>
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">대분류</th>
+                                                            <th scope="col">No</th>
+                                                            <th scope="col">대분류코드</th>
+                                                            <th scope="col">대분류명</th>
+                                                            <th scope="col">출력순서</th>
+                                                            <th scope="col"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <c:if test="${fn:length(middlelist) == 0}">
+                                                        <c:if test="${fn:length(mainlist) == 0}">
                                                         <tr>
                                                             <td colspan="1">데이터가 없습니다. 대분류를 선택해 주세요.</td>
                                                         </tr>
                                                         </c:if>
+                                                        <!-- 등록 -->
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>
+                                                                <label class="f_input" style="height: 30px;">
+                                                                    <input class="w_100" type="text" name="groupcode" id="groupcode">    
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <label class="f_input" style="height: 30px;">
+                                                                    <input class="w_200" type="text" name="groupname" id="groupname">    
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <label class="f_input" style="height: 30px;">
+                                                                    <input class="w_100" type="number" name="groupord" id="groupord">    
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="btn btn_blue_30" style="width:50px;" onclick="InsertGroupLeadTime(); return false;">등록</a>
+                                                            </td>
+                                                        </tr>
+                                                        <!-- 데이터 -->
                                                         <c:forEach var="result" items="${mainlist}" varStatus="status">
                                                             <tr>
+                                                                <td>${status.count}</td>
+                                                                <td>${result.CODE}</td>
                                                                 <td><a href="#" class="lnk" onclick="ClickMainCode('${result.CODE}')"><c:out value="${result.NAME}"/></a></td>
+                                                                <td>
+                                                                    <label class="f_input" style="height: 30px;">
+                                                                        <input class="w_100" type="text" name="updategroupord${status.index}" id="updategroupord${status.index}" value="<c:out value='${result.ORD}'/>">    
+                                                                    </label>
+                                                                </td>
+                                                                <td><a href="#" class="btn btn_blue_30" style="width:50px;" onclick="UpdateGroupLeadtime('<c:out value='${result.CODE}'/>','<c:out value='${status.index}'/>'); return false;">수정</a></td>
                                                             </tr>
                                                         </c:forEach>
                                                         
@@ -177,10 +220,6 @@
                                         <!-- 중분류 리스트 끝-->
                                         <!-- 소분류 리스트 -->
                                         <div class="w50 left" style="margin-left:14px;">
-                                            <!-- <div class="right_col" style="margin-top: 10px;">
-                                                <a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()"><spring:message code="button.create"/></a>
-                                                <a href="#LINK" class="btn btn_blue_46 w_100 right btnmargin" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a>
-                                            </div> -->
                                             <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
                                                 <table>
                                                     <colgroup>
@@ -189,8 +228,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">No</th>
+                                                            <th scope="col">부품코드</th>
                                                             <th scope="col">부품명</th>
-                                                            <th scope="col">소요시간</th>
+                                                            <th scope="col">출력순서</th>
+                                                            <th scope="col">사용유무</th>
+                                                            <th scope="col">소요시간(분)</th>
                                                             <th scope="col"></th>
                                                         </tr>
                                                     </thead>
@@ -200,18 +242,32 @@
                                                                 <td></td>
                                                                 <td>
                                                                     <label class="f_input" style="height: 30px;">
-                                                                        <input name="insertname" class="w_200" type="text">
+                                                                        <input name="insertcode" id="insertcode" class="w_100" type="text">
                                                                     </label>
                                                                 </td>
                                                                 <td>
-                                                                    <label for="" class="f_select" style="width:80%; padding-left:10px; height: 30px;">
+                                                                    <label class="f_input" style="height: 30px;">
+                                                                        <input name="insertname" id="insertname" class="w_200" type="text">
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="f_input" style="height: 30px;">
+                                                                        <input name="insertord" id="insertord" class="w_100" type="text" style="padding: 0 10px; text-align: right;">
+                                                                    </label>
+                                                                </td>
+                                                                <td></td>
+                                                                <td>
+                                                                    <label class="f_input" style="height: 30px;">
+                                                                        <input name="insertleadtime" id="insertleadtime" class="w_100" type="text" style="padding: 0 10px; text-align: right;">
+                                                                    </label>
+                                                                    <!-- <label for="" class="f_select" style="width:80%; padding-left:10px; height: 30px;">
                                                                         <select name="insertleadtime" id="insertleadtime">
                                                                             <option value="">선택</option>
                                                                             <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
                                                                             <option value="<c:out value='${leadtime.CODE}'/>"><c:out value="${leadtime.NAME}"/></option>
                                                                             </c:forEach>
                                                                         </select>
-                                                                    </label>
+                                                                    </label> -->
                                                                 </td>
                                                                 <td><a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="InsertLeadTime()"><spring:message code="button.create" /></a></td>
                                                             </tr>
@@ -220,69 +276,57 @@
                                                     	
                                                         <c:if test="${fn:length(middlelist) == 0}">
                                                         <tr>
-                                                            <td colspan="4">데이터가 없습니다. 항목을 추가해 주시거나 다른 중분류를 선택해 주세요.</td>
+                                                            <td colspan="5">데이터가 없습니다. 항목을 추가해 주시거나 다른 중분류를 선택해 주세요.</td>
                                                         </tr>
                                                         </c:if>
                                                         
                                                         <c:forEach var="result" items="${middlelist}" varStatus="status">
                                                             <tr>
                                                             	<td><c:out value="${status.count}"/></td>
+                                                                <td><c:out value="${result.CODE}"/></td>
                                                                 <td><c:out value="${result.NAME}"/></td>
                                                                 <td>
-                                                                    <label for="" class="f_select" style="width:80%; padding-left:10px; height:30px;">
+                                                                    <label class="f_input" style="height: 30px;">
+                                                                        <input name="updateord${result.IDX}" id="updateord${result.IDX}" class="w_100" type="text" value="<c:out value='${result.ORD}'/>" style="padding: 0 10px; text-align: right;">
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="f_select" style="width:80%; height:30px;">
+                                                                        <select name="useyn${result.IDX}" id="useyn${result.IDX}">
+                                                                            <c:forEach var="i" items="${useyn}" varStatus="status">
+                                                                                <option value="<c:out value='${i.CODE}'/>" ${i.CODE == result.USE_YN ? 'selected':''} >${i.NAME}</option>
+                                                                            </c:forEach>
+                                                                        </select>
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="f_input" style="height: 30px;">
+                                                                        <input name="updtleadtime${result.IDX}" id="updtleadtime${result.IDX}" class="w_100" type="text" value="<c:out value='${result.LEAD_TIME}'/>" style="padding: 0 10px; text-align: right;">
+                                                                    </label>
+                                                                    <!-- <label for="" class="f_select" style="width:80%; padding-left:10px; height:30px;">
                                                                         <select name="leadtime<c:out value='${result.IDX}'/>" id="leadtime<c:out value='${result.IDX}'/>">
                                                                             <option value="">선택</option>
                                                                             <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
                                                                             <option value="<c:out value='${leadtime.CODE}'/>" <c:if test="${result.LEAD_TIME eq leadtime.CODE}">selected</c:if>><c:out value="${leadtime.NAME}"/></option>
                                                                             </c:forEach>
                                                                         </select>
-                                                                    </label>
+                                                                    </label> -->
                                                                 </td>
                                                                 <td>
                                                                     <a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="UpdateLeadTime('<c:out value='${result.H_CODE}'/>','<c:out value='${result.CODE}'/>','<c:out value='${result.IDX}'/>'); return false;"><spring:message code="button.update" /></a>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
-                                                        <!-- <c:forEach var="result" items="${sublist}" varStatus="status">
-                                                            <tr>
-                                                            	<td><c:out value="${status.count}"/></td>
-                                                                <td><c:out value="${result.NAME}"/></td>
-                                                                <td>
-                                                                <label for="" class="f_select" style="width:80%; padding-left:10px; height:30px;">
-                                                                    <select name="leadtime<c:out value='${result.IDX}'/>" id="leadtime<c:out value='${result.IDX}'/>">
-                                                                        <option value="">선택</option>
-                                                                        <c:forEach var="leadtime" items="${leadtimelist}" varStatus="status">
-                                                                        <option value="<c:out value='${leadtime.CODE}'/>" <c:if test="${result.LEAD_TIME eq leadtime.CODE}">selected</c:if>><c:out value="${leadtime.NAME}"/></option>
-                                                                        </c:forEach>
-                                                                    </select>
-                                                                </label>
-                                                                </td>
-                                                                <td><a href="#LINK" class="btn btn_blue_30" style="width:50px;" onclick="UpdateLeadTime('<c:out value='${result.H_CODE}'/>','<c:out value='${result.CODE}'/>','<c:out value='${result.IDX}'/>'); return false;"><spring:message code="button.update" /></a></td>
-                                                            </tr>
-                                                        </c:forEach> -->
+                                                        
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                         <!-- 소분류 리스트 끝-->
-                                        
                                     </div>
                                 </form>
-                                <!-- 페이징 -->
-                                <!-- <div class="board_list_bot">
-                                    <div class="paging" id="paging_div">
-                                        <ul>
-                                            <ui:pagination paginationInfo = "${paginationInfo}" type="renew" jsFunction="linkPage" />
-                                        </ul>
-                                    </div>
-                                </div> -->
-                                <!-- // 페이징 끝 -->
                             </div>
-                            <!-- <div class="content">
-                            <div id="contents" class="tab_contents" style="padding: 44px 10px 20px 20px;">
-                                <a href="<c:url value='/kiosk/selectKioskin.do'/>" class="item btn btn_blue_46 w_500 h_400" style="font-size: 70px; padding: 160px 0px 0px 0px;">일반수리</a>
-                                <a href="<c:url value='/kiosk/selectKioskinsurance.do'/>" class="item btn btn_blue_46 w_500 h_400" style="font-size: 70px;  padding: 160px 0px 0px 0px;">보증수리</a>
-                            </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

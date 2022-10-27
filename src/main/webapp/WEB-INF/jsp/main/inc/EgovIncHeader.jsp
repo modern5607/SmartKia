@@ -2,10 +2,10 @@
 <%@ page import ="egovframework.com.cmm.LoginVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<script src="<c:url value='/'/>js/jquery.js"></script>
-	<script src="<c:url value='/'/>js/jqueryui.js"></script>
-    <link rel="favicon" href="./images/favicon.ico">
-	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+	<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jqueryui.js"></script>
+    <link rel="favicon" href="${pageContext.request.contextPath}/images/favicon.ico">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jqueryui.css">
 
 <script type="text/javaScript" language="javascript">
 
@@ -88,11 +88,11 @@ function fn_egov_modal_remove() {
             <ul>
 				<c:if test="${loginName == ''}">
                 <!-- case: 로그아웃했을경우 -->
-	                <li><a href="<c:url value='/'/>uat/uia/egovLoginUsr.do" class="login" title="로그인">로그인</a></li>
+	                <li><a href="${pageContext.request.contextPath}/uat/uia/egovLoginUsr.do" class="login" title="로그인">로그인</a></li>
 				</c:if>
 				<c:if test="${loginName != ''}">
                 <!-- case: 로그인했을경우 -->
-	                <li><a href="<c:url value='/'/>uat/uia/actionLogout.do" class="logout" title="로그아웃">로그아웃</a></li>
+	                <li><a href="${pageContext.request.contextPath}/uat/uia/actionLogout.do" class="logout" title="로그아웃">로그아웃</a></li>
                     
 	                <!-- <li><a href="" class="mail" title="메일">메일<span>3</span>건</a></li> -->
 	                 <li><a href="" class="allmenu" title="전체메뉴">전체메뉴</a></li>
@@ -253,7 +253,11 @@ function fn_egov_modal_remove() {
 
     function goMenuPage(menuNo){
     	var loginYN = "<%=loginVO%>";
-    	if(loginYN=="null" && menuNo!="4200000") return
+        console.log(loginYN);
+    	if(loginYN==null && (menuNo!="4200000"||menuNo!="3000000") )
+        {
+            return;
+        }
         document.getElementById("menuNo").value=menuNo;
         //document.getElementById("link").value=getLastLink(menuNo);
         document.menuListForm.action = "<c:url value='/'/>"+getLastLink(menuNo).substring(1);

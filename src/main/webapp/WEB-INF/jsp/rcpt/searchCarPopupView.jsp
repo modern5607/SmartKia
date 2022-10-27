@@ -24,7 +24,7 @@
 <script type="text/javascript" src="<c:url value='/js/showModalDialogCallee.js'/>" ></script>
 <script type="text/javaScript" language="javascript">
 $(document).ready(function () {
-	console.log("asdf");
+	// console.log("asdf");
     $("#checkcarnum").focus();
 });
 function fnCheckId(){

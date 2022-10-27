@@ -228,7 +228,7 @@
         }
         $.ajax({
             type: "post",
-            url: "<c:url value='CancelWebRcpt.do'/>",
+            url: "<c:url value='/rcpt/CancelWebReservationRcpt.do'/>",
             data: {takeseq:takeseq},
             success: function (resp) {
                 if(resp=="1")
@@ -299,7 +299,7 @@
                                     <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
                                     <!-- <input type="hidden" name="notelist" id="notelist" value=""> -->
                                     <input type="hidden" name="deletetakeseq" id="deletetakeseq" value="">
-                                    <input type="hidden" name="reservationdate" id="reservationdate" value="">
+                                    <input type="hidden" name="reservationdate" id="reservationdate" onchange="changedate(this);" value="">
                                     <div class="board_view2">
                                         <table>
                                             <colgroup>
@@ -476,6 +476,7 @@
                                                     <th scope="col">수리사항</th>
                                                     <th scope="col">고객명</th>
                                                     <th scope="col">연락처</th>
+                                                    <th scope="col">상태</th>
                                                     <th scope="col">취소</th>
                                                 </tr>
                                             </thead>
@@ -487,22 +488,14 @@
                                                 </c:if>
                                                 <c:forEach var="result" items="${reservelist}" varStatus="status">
                                                 <tr>
-                                                    <td>
-                                                        <fmt:parseDate value="${result.RECEIPTDATE}" var="dateFmt" pattern="yyyy-MM-dd HH:mm" />
-                                                        <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd HH:mm"/>
-                                                    </td>
-                                                    <td>
-                                                        <fmt:parseDate value="${result.PLANDATE}" var="dateFmt" pattern="yyyy-MM-dd HH:mm" />
-                                                        <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd HH:mm"/>
-                                                    </td>
+                                                    <td><c:out value="${result.RECEIPTDATE}"/></td>
+                                                    <td><c:out value="${result.PLANDATE}"/></td>
                                                     <td><c:out value="${result.AUTONUMBER}"/></td>
-                                                    <td><c:out value="${result.CUSTOMER_AUTOKIND}"/></td>
-                                                    <td><a href="#" class="lnk" style="text-decoration: underline;" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIR_NAME}"/></a></td>
+                                                    <td><c:out value="${result.KIND}"/></td>
+                                                    <td><a href="#" class="lnk" style="text-decoration: underline;" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIRENUM}"/></a></td>
                                                     <td><c:out value="${result.CUSTOMER_NAME}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_TEL}"/></td>
-                                                    <!-- <td><c:out value="${result.POSITION eq null ? '미정' : result.POSITION}"/></td> -->
-                                                    <!-- <td><c:out value="${result.ESTIME}"/></td> -->
-                                                    <!-- <td><c:out value="${result.TASKSTAT_NM}"/></td> -->
+                                                    <td><c:out value="${result.TASKSTAT_NAME}"/></td>
                                                     <td>
                                                         <c:if test="${result.TASKSTAT== 'CB-reserve'}">
                                                         <a href="#LINK" class="btn btn_blue_30 w_80" onclick="CancelRcpt('<c:out value='${result.TAKESEQ}'/>'); return false;">예약취소</a>
@@ -513,23 +506,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    
                                 </form>
-                                <!-- 페이징 -->
-                                <!-- div class="board_list_bot">
-                                    <div class="paging" id="paging_div">
-                                        <ul>
-                                            <ui:pagination paginationInfo = "${paginationInfo}" type="renew" jsFunction="linkPage" />
-                                        </ul>
-                                    </div>
-                                </div-->
-                                <!-- // 페이징 끝 -->
                             </div>
-                            <!-- <div class="content">
-                            <div id="contents" class="tab_contents" style="padding: 44px 10px 20px 20px;">
-                                <a href="<c:url value='/kiosk/selectKioskin.do'/>" class="item btn btn_blue_46 w_500 h_400" style="font-size: 70px; padding: 160px 0px 0px 0px;">일반수리</a>
-                                <a href="<c:url value='/kiosk/selectKioskinsurance.do'/>" class="item btn btn_blue_46 w_500 h_400" style="font-size: 70px;  padding: 160px 0px 0px 0px;">보증수리</a>
-                            </div> -->
                     </div>
                 </div>
             </div>
@@ -569,6 +547,7 @@
         $('#fix_date').datepicker({
             onSelect: function (datetext) {
                 $("#reservationdate").val(datetext);
+                changedate(datetext);
             }
         });
     });
@@ -646,7 +625,40 @@ function updatetotaltime(){
     // $("#estime").val(converttime);
 }
 
-
-
+var var_changedate='';
+function changedate(date)
+{
+    if(var_changedate == date)
+        return;
+    var_changedate = date
+    
+    $.ajax({
+        type: "post",
+        url: "/rcpt/ajaxWebReservationRcptlist.do",
+        data: {date:var_changedate},
+        success: function (resp) {
+            console.log(resp);
+            var tbody = $(".board_list4 table tbody");
+            console.log(tbody);
+            $.each(resp,function(index,item){
+                var html='';
+                html+="<tr>";
+                html+="<td>"+item.RECEIPTDATE+"</td>";
+                html+="<td>"+item.PLANDATE+"</td>";
+                html+="<td>"+item.AUTONUMBER+"</td>";
+                html+="<td>"+item.KIND+"</td>";
+                html+="<td><a href='#'' class='lnk' style='text-decoration: underline;' onclick='RepairDetail('"+item.TAKESEQ+"'); return false;'>"+item.REPAIRENUM+"</a></td>";
+                html+="<td>"+item.CUSTOMER_NAME+"</td>";
+                html+="<td>"+item.CUSTOMER_TEL+"</td>";
+                html+="<td>"+item.TASKSTAT_NAME+"</td>";
+                var tmp_html = item.TASKSTAT=='CB-reserve'?"<a href='#LINK' class='btn btn_blue_30 w_80' onclick=\"CancelRcpt('"+item.TAKESEQ+"\'); return false;\">예약취소</a>":''; 
+                html+="<td>"+tmp_html+"</td>";
+                html+="</tr>";
+                tbody.html('');
+                tbody.html(html);
+            });
+        }
+    });
+}
 
 </script>

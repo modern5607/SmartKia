@@ -6,7 +6,7 @@ body{
   font-weight: 400;
   line-height: 1.4; 
   font-family: 'Nanum Gothic', sans-serif;
-  width: 900px;
+  /* width: 900px; */
   overflow: hidden; 
 }
 
@@ -74,8 +74,9 @@ a.btnPush:not(:nth-child(3n))
 }
 .container a label{
   /* vertical-align: middle; */
+  font-size: 110px;
   position:absolute;
-  transform: translate(-50%,25%);
+  transform: translate(-50%,55%);
 }
 input.button {
   display: block;
@@ -156,7 +157,7 @@ input.btnPush {
   color: #fff;
 } */
 .r_btn{
-  width: 300px;
+  width: 400px;
 }
 /* .btn.btn--reverse {
   background-color: #333;
@@ -206,24 +207,31 @@ header .logo{
 .content .main_logo_img{
   position: absolute;
   top: 30%;
-  left: 50%;
+  left: 39%;
   transform: translate(-50%,-50%);
 }
 .content .main_logo_img >img{
   
-  width: 100%;
+  width: 200%;
 }
 .content .bt{
   position: absolute;
   top: 45%;
   left: 50%;
-  font-size: 50px;
+  font-size: 80px;
   transform: translate(-50%,-50%);
-  display: flex;
-  
+  /* display: flex; */
+}
+
+.content .insertmember{
+  position: absolute;
+  top: 90%;
+  left: 80%;
+  font-size: 60px;
+  transform: translate(-50%,-50%);
 }
 .content .bt .btn1{
-  margin-right: 20px;
+  margin-top: 70px;
 }
 
 
@@ -238,17 +246,17 @@ section {
 } 
 
 .input .title{
-  width: 800px;
-  position: absolute;
-  transform: translate(-50%,-50%);
-  top: 17%;
-  left: 50%;
-  font-size: 50px;
-  font-weight: bold;
-  text-align: center;
+     /* width: 800px; */
+     position: absolute;
+     transform: translate(-50%,-50%);
+     top: 17%;
+     left: 50%;
+     font-size: 50px;
+     font-weight: bold;
+     text-align: center;
 }
 .container{
-  width: 50%;
+  width: 65%;
   height: 50%;
   top:55%;
   left: 50%;
@@ -257,19 +265,33 @@ section {
 
 
 .input .input_num{
-  width: 330px;
-  height: 80px;
-  border:solid #333 2px;
+  width: 500px;
+  height: 100px;
+  border: solid #333 2px;
   border-radius: 50px;
   position: absolute;
-  left:50%;
+  left: 50%;
   top: 25%;
   transform: translate(-50%,-50%);
   margin-top: 20px;
-  font-size: 50px;
+  font-size: 70px;
   text-align: center;
   font-weight: bold;
 }
+.input .input_num + span{
+  position: absolute;
+    right: 3px;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    height: 14px;
+    margin: auto;
+    font-size: 12px;
+    cursor: pointer;
+    color: #ccc;
+    background-color: #fff;
+}
+
 .search{
   position: absolute;
   /* top:90%; */
@@ -281,9 +303,9 @@ section {
 }
 .search .searchbtn{
   position: absolute;
-  font-size: 50px;
-  width: 400px;
-  height: 80px;
+  font-size: 70px;
+  width: 480px;
+  height: 110px;
   /* bottom: 15%; */
   transform: translate(-50%,-50%);
   text-align: center;
@@ -801,24 +823,66 @@ a:link, a:visited, a:hover, a:active {text-decoration: none;}
 
 
 .cont {position:relative;box-sizing:border-box; }
-.cont .scrollBox01 {width: 550px; height:700px;margin:15px;border:1px solid #c7c7c7;overflow-y:scroll; }
+.cont .scrollBox01 {
+  width: 600px;
+  height: 1300px;
+  margin: 15px;
+  border: 1px solid #c7c7c7;
+  overflow-y: scroll;
+}
 .cont strong{margin-left: 20px;}
 .cont .scrollBox01 ul {}
 .cont .scrollBox01 ul li {list-style: none;}
 .cont .scrollBox01 ul li.box_tit {}
-.cont .scrollBox01 ul li a {position:relative;display:block;padding:0 8px;color:#333;font-size:23px;line-height:40px;border-bottom:1px solid #c7c7c7;background:#ededed;}
+.cont .scrollBox01 ul li a {
+  position: relative;
+  display: block;
+  padding: 15px 10px;
+  color: #333;
+  font-size: 50px;
+  line-height: 40px;
+  border-bottom: 1px solid #c7c7c7;
+  background: #ededed;
+}
 .cont .scrollBox01 ul li a:after {content:'';position:absolute;display:block;top:49%;right:10px;width:8px;height:4px;background:url(/images/step3_arrowB.png)0 0 no-repeat;transition:all 0.2s ease-in-out;}
 .cont .scrollBox01 ul li.active a:after {content:'';transform:rotate(180deg)}
 .cont .scrollBox01 ul li ul {display:none}
 .cont .scrollBox01 ul li.active ul {display:block}
-.cont .scrollBox01 ul li ul li {position:relative;width:100%;padding:9px 8px;line-height:22px;border-bottom:1px solid #c7c7c7;box-sizing:border-box;}
+.cont .scrollBox01 ul li ul li {
+  position: relative;
+  width: 100%;
+  padding: 13px 8px;
+  line-height: 22px;
+  border-bottom: 1px solid #c7c7c7;
+  box-sizing: border-box;
+}
 .cont .scrollBox01 ul li ul li input[type="checkbox"] {position:absolute;top:0px;left:0px;opacity:0;}
-.cont .scrollBox01 ul li ul li label {display:block;width:100%;background:url(/images/autoQ_radio2_off.png) right center/25px no-repeat;cursor:pointer;box-sizing:border-box;color:#333; font-size: 30px;}
-.cont .scrollBox01 ul li ul li input[type="checkbox"]:checked + label {background:url(/images/autoQ_radio2_on.png) right center/25px no-repeat;}
+.cont .scrollBox01 ul li ul li label {
+  display: block;
+  width: 100%;
+  background: url(/images/autoQ_radio2_off.png) right center/50px no-repeat;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: #333;
+  font-size: 35px;
+  line-height: normal;
+  vertical-align: middle;
+  height: 50px;
+}
+.cont .scrollBox01 ul li ul li input[type="checkbox"]:checked + label {background:url(/images/autoQ_radio2_on.png) right center/50px no-repeat;}
 .cont .scrollBox01 ul li ul li input[type="checkbox"]:focus + label{border:1px dotted #222;}
 .cont .scrollBox03 textarea{width:100%;height:100%;border:0; resize: none; letter-spacing: -0.025em;}
-.cont .scrollBox03 {width:240px ; height:500px;margin:15px 20px;padding:10px;border:1px solid #dbdbdb;}
-.cont .scrollBox03 td{color: #666;font-size: 15px;}
+.cont .scrollBox03 {
+  width: 380px;
+  height: 500px;
+  margin: 15px 20px;
+  padding: 10px;
+  border: 1px solid #dbdbdb;
+}
+.cont .scrollBox03 td{   
+  color: #666;
+  font-size: 30px;
+}
 
 .rcptBtn{font-size: 40px;margin-left: 25px;margin-top: 40px;}
 
@@ -828,3 +892,97 @@ a:link, a:visited, a:hover, a:active {text-decoration: none;}
   padding: 0px 15px;}
 #ul ul label:after{border-color:#7d1919 transparent transparent transparent;}
 #ul li table tr{font-size: 35px;}
+
+.popup_wrap{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+    width: 100vw;
+    background: #aaaaaa;
+    opacity: 0.3;
+
+}
+.popup{
+  height: 30vh;
+  width: 70vw;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  background: #fff;
+  border: 1px solid #aaaaaa;
+  border-radius: 60px;
+}
+.popup .title{
+  text-align: center;
+  font-size: 60px;
+  margin-top: 15px;
+}
+
+.popup .close_btn{
+  display: block;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  width: 40px;
+  border: 0;
+  height: 40px;
+  font-size: 0;
+  background: url(../images/ico_pop_close.png);
+  background-size: cover;
+}
+
+.popup table{
+  width: -webkit-fill-available;
+  margin: 10px 100px;
+  border-collapse: collapse;
+}
+
+.popup table td{
+  padding: 12px 30px;
+  color: #000;
+  border-bottom: 1px solid #dde2e5;
+  border-left: none;
+  font-size: 35px;
+}
+.popup table td input{
+  height: 45px;
+  border: 1px solid #aaaaaa;
+  font-size: 35px;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.popup table .lb{
+  background: #f5f6f7;
+  width: 40%;
+}
+.popup table .lb .req{
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  font-size: 0;
+  background: url(../images/ico_req.png);
+  background-size: cover;
+  vertical-align: 15px;
+}
+.search_btn{
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  right: 16%;
+  top: 64%;
+  transform: translate(-50%,-50%);
+  width: 27px;
+  height: 27px;
+  border: 0;
+  font-size: 0;
+  background: url(../images/ico_search_b.png) no-repeat;
+}
+
+.insert_member_btn{
+  text-align: -webkit-center;
+  margin-top: 25px;
+  font-size: 40px;
+}

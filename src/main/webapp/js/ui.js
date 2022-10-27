@@ -35,12 +35,12 @@ $(function() {
             this.$btn.mouseenter(function(){
                 if(objAllMenu.is(':visible') == false)
                 {
-                    objAllMenu.slideDown(100);
+                    objAllMenu.slideDown(30);
                     $(this).addClass('on');
                 }
             });
             this.$tartet.mouseleave(function(){
-                objAllMenu.slideUp(100);
+                objAllMenu.slideUp(30);
                 $(this).removeClass('on');
             });
         }

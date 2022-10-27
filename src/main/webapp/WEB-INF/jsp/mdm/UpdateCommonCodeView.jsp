@@ -65,8 +65,7 @@
 							<!--// Location -->
 
 							<form name="comCodeVO"	action="${pageContext.request.contextPath}/mdm/UpdateCommonCode.do" method="post">
-							<c:forEach items="${info}" var="info">
-								<input type="hidden" id="previouscode" name="previouscode" value="<c:out value='${info.CODE}'/>" />
+								<input type="hidden" id="previouscode" name="previouscode" value="<c:out value='${info[0].CODE}'/>" />
 								<h2 class="tit_2">공통코드 수정</h2>
 
 								<div class="board_view2">
@@ -78,38 +77,36 @@
 										
 										<tr>
 											<td class="lb"><label for="groupcode">그룹코드</label></td>
-											<td><input name="groupcode" id="groupcode" class="f_txt w_350" readonly type="text" value="<c:out value='${info.GROUP_CODE}'/>" /></td>
+											<td><input name="groupcode" id="groupcode" class="f_txt w_350" readonly type="text" value="<c:out value='${info[0].GROUP_CODE}'/>" /></td>
 										</tr>
 										<tr>
 											<td class="lb"><label for="code">코드</label></td>
-											<td><input name="code" id="code" class="f_txt w_350" type="text" value="<c:out value='${info.CODE}'/>" /></td>
+											<td><input name="code" id="code" class="f_txt w_350" type="text" value="<c:out value='${info[0].CODE}'/>" readonly/></td>
 										</tr>
 										<tr>
 											<td class="lb"><label for="name">코드명</label> <span
 												class="req">필수</span></td>
-											<td><input name="name" id="name" class="f_txt w_350"  type="text" value="<c:out value='${info.NAME}'/>" maxlength="60" /></td>
+											<td><input name="name" id="name" class="f_txt w_350"  type="text" value="<c:out value='${info[0].NAME}'/>" maxlength="60" /></td>
 										</tr>
 										<tr>
-											<td class="lb"><label for="groupremark">비고</label></td>
-											<td><input name="groupremark" id="groupremark" class="f_txt w_350"  type="text" value="<c:out value='${info.REMARK}'/>" maxlength="60" /></td>
+											<td class="lb"><label for="remark">비고</label></td>
+											<td><input name="remark" id="remark" class="f_txt w_350"  type="text" value="<c:out value='${info[0].REMARK}'/>" maxlength="60" /></td>
 										</tr>
 										<tr>
 											<td class="lb"><label for="USE_YN">사용유무</label></td>
 											<td>
 												<label class="f_select w_350" for="groupuseyn">
 													<select name="groupuseyn" id="groupuseyn">
-														<option value="Y" <c:if test="${info.USE_YN eq 'Y'}">selected</c:if>>사용</option>	
-														<option value="N" <c:if test="${info.USE_YN eq 'N'}">selected</c:if>>사용안함</option>	
+														<option value="Y" <c:if test="${info[0].USE_YN eq 'Y'}">selected</c:if>>사용</option>	
+														<option value="N" <c:if test="${info[0].USE_YN eq 'N'}">selected</c:if>>사용안함</option>	
 													</select>
 												</label>
 											</td>
 										</tr>
 										<tr>
 											<td class="lb"><label for="ord">출력순서</label></td>
-											<td><input type="number" name="ord" id="ord" class="f_txt w_350" value="<c:out value='${info.ORD}'/>" min="0"></td>
+											<td><input type="number" name="ord" id="ord" class="f_txt w_350" value="<c:out value='${info[0].ORD}'/>" min="0"></td>
 										</tr>
-										
-										</c:forEach>
 										
 									</table>
 								</div>

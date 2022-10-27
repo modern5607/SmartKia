@@ -516,7 +516,7 @@ public class SmartTabletController {
 		return "/tablet/TabletWorkGroup";
 	}
 
-	//
+	//배정 화면
 	@RequestMapping(value ="/tablet/TabletAssignView.do")
 	public String a(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO,@RequestParam Map<String,Object> params, ModelMap model)throws Exception
 	{
@@ -561,16 +561,19 @@ public class SmartTabletController {
 	}
 
 	@RequestMapping(value ="/tablet/TabletCompleteView.do")
-	public String TabletCompletView(@RequestParam Map<String,Object> params, ModelMap model)throws Exception
+	public String TabletCompletView(@ModelAttribute("SmartTabletVO") SmartTabletVO searchVO, @RequestParam Map<String,Object> params, ModelMap model)throws Exception
 	{
 		System.out.println("params: "+params);
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();		
+		searchVO.setLoginid(loginVO.getUniqId().toString());
+		model.addAttribute("logininfo",smarttabletservice.selectlogininfo(searchVO));
+		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
 		model.addAttribute("rcptinfo", smartrcptservice.SelectRcptinfo(params.get("takeseq").toString()));
 		model.addAttribute("RepairList", smartrcptservice.selectRcptRepairInfo(params.get("takeseq").toString()));
-		System.out.println("rcptinfo :"+model.get("rcptinfo"));
-		System.out.println("RepairList :"+model.get("RepairList"));
 
 		Map<String,Object> leadtimelist = smartmdmservice.selectLeadTime2();
 		model.addAttribute("leadtimelist", leadtimelist);
+
 		return "/tablet/TabletCompleteView";
 	}
 }

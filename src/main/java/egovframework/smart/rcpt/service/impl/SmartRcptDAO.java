@@ -20,6 +20,10 @@ public class SmartRcptDAO extends EgovAbstractMapper {
         return selectList("SmartRcptDAO.selectCarInfo",vo);
     }
 
+    public List<Object> selectCarInfo2(SmartRcptVO vo) {
+        return selectList("SmartRcptDAO.selectCarInfo2",vo);
+    }
+
     public List<Object> SelectMiddleLeadTime(String hcode) {
         return selectList("SmartRcptDAO.SelectMiddleLeadTime",hcode);
     }
@@ -100,5 +104,11 @@ public class SmartRcptDAO extends EgovAbstractMapper {
     public int CancelWebReservationRcpt(String takeseq) {
         return update("SmartRcptDAO.CancelWebReservationRcpt",takeseq);
     }
+
+    public List<Object> selectReserveCarInfo(SmartRcptVO smartrcotVO) {
+        return selectList("SmartRcptDAO.selectreserveCarInfo",smartrcotVO);
+    }
+
+   
 	 
 }

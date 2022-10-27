@@ -13,12 +13,71 @@ public class SmartLeadTimeVO extends ComDefaultVO implements Serializable {
 	private String middle = "";
 	private String sub = "";
 	private String leadtime = "";
+	private String insertgroupcode = "";
+	private String insertgroupname = "";
+	private String insertgroupord = "";
+	private String updategroupord = "";
 	private String updatehcode = "";
 	private String updatecode = "";
 	private String updateleadtime = "";
+	private String updateuseyn = "";
+	private String updateord = "";
+	private String insertcode = "";
+	public String getInsertcode() {
+		return insertcode;
+	}
+	public void setInsertcode(String insertcode) {
+		this.insertcode = insertcode;
+	}
+
 	private String insertname = "";
+	private String insertord = "";
+	public String getInsertord() {
+		return insertord;
+	}
+	public void setInsertord(String insertord) {
+		this.insertord = insertord;
+	}
+
 	private String insertleadtime = "";
 	private String id = "";
+
+	public String getUpdategroupord() {
+		return updategroupord;
+	}
+	public void setUpdategroupord(String updategroupord) {
+		this.updategroupord = updategroupord;
+	}
+	public String getInsertgroupcode() {
+		return insertgroupcode;
+	}
+public void setInsertgroupcode(String insertgroupcode) {
+		this.insertgroupcode = insertgroupcode;
+	}
+public String getInsertgroupname() {
+		return insertgroupname;
+	}
+public void setInsertgroupname(String insertgroupname) {
+		this.insertgroupname = insertgroupname;
+	}
+public String getInsertgroupord() {
+		return insertgroupord;
+	}
+public void setInsertgroupord(String insertgroupord) {
+		this.insertgroupord = insertgroupord;
+	}
+public String getUpdateord() {
+		return updateord;
+	}
+public void setUpdateord(String updateord) {
+		this.updateord = updateord;
+	}
+public String getUpdateuseyn() {
+		return updateuseyn;
+	}
+public void setUpdateuseyn(String updateuseyn) {
+		this.updateuseyn = updateuseyn;
+	}
 
 	public String getUpdatehcode() {
 		return updatehcode;

@@ -44,7 +44,14 @@ public class CusMberManageVO extends CusMberDefaultVO{
     private String takeSeq ="";
     private String repairCnt ="";
     private String turnOverTime ="";
+	private String device="";
     
+	public String getDevice() {
+		return device;
+	}
+	public void setDevice(String device) {
+		this.device = device;
+	}
 	public String getCusId() {
 		return cusId;
 	}

@@ -21,7 +21,7 @@
     overflow: hidden;
     background: black;
 }
-.p_main .visual p {height: 700px; background: url(../images/kiamain.png) no-repeat;}
+.p_main .visual p {height: 700px; background: url(/images/kiamain.png) no-repeat;}
 .p_main .visual p span {display: block;}
 .p_main .visual p .t1 {font-size: 35px; text-align: center; padding-top: 620px; color: aliceblue; font-weight: bold;}
 
@@ -60,8 +60,8 @@
 .p_main .g_area .faq dl a {color: #222; font-size: 20px;}
 .p_main .g_area .faq dl .q,
 .p_main .g_area .faq dl .a {display: block; position: absolute; left: 0; top: 0; width: 32px; height: 32px; font-size: 0;}
-.p_main .g_area .faq dl .q {background: url(../images/ico_q.png) no-repeat;}
-.p_main .g_area .faq dl .a {background: url(../images/ico_a.png) no-repeat;}
+.p_main .g_area .faq dl .q {background: url(/images/ico_q.png) no-repeat;}
+.p_main .g_area .faq dl .a {background: url(/images/ico_a.png) no-repeat;}
 .p_main .g_area .faq dl dt + dd {margin-top: 10px;}
 .p_main .g_area .faq dl dd + dt {margin-top: 30px;}
 .p_main .g_area .faq .more {display: block; position: absolute; right: 40px; top: 40px; width: 60px; height: 60px; font-size: 0; background: url(../images/ico_more.png) no-repeat;}

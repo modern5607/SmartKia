@@ -83,20 +83,6 @@
 
                                     <!-- 검색조건 -->
                                     <div class="condition" style="text-align: left;">
-                                        <!-- <label class="item f_select" for="sel1">
-                                            <select id="sel1" name="searchCondition" title="검색조건 선택">
-                                                <option value=''>선택하세요</option>
-                                                <option value='ETC_ANSWER_CN' <c:if
-                                                    test="${searchCondition == 'ETC_ANSWER_CN'}">selected</c:if>
-                                                    >기타답변내용</option>
-                                                <option value='RESPOND_ANSWER_CN' <c:if
-                                                    test="${searchCondition == 'RESPOND_ANSWER_CN'}">selected
-                                                    </c:if>>응답자답변내용</option>
-                                                <option value='RESPOND_NM' <c:if
-                                                    test="${searchCondition == 'RESPOND_NM'}">selected</c:if>
-                                                    >응답자명</option>
-                                            </select>
-                                        </label> -->
 										
                                         <span class="item f_search">
                                             <input type="hidden" id="groupcode" name="groupcode" value="">
@@ -221,7 +207,7 @@
                                                             <td><c:out value="${result.INSERT_ID}"/></td>
                                                             <td><c:out value="${result.UPDATE_DATE}"/></td>
                                                             <td><a href="#LINK" class="btn btn_blue_30 btnmargin" onclick="UpdateCommonCode('<c:out value='${comCodeVO.groupcode}'/>','<c:out value='${result.CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.update" /></a>
-                                                                <a href="#LINK" class="btn btn_blue_30 btnmargin" onclick="DeleteCommonCode('<c:out value='${result.GROUP_CODE}'/>','<c:out value='${result.CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.delete" /></a></td>
+                                                                <!-- <a href="#LINK" class="btn btn_blue_30 btnmargin" onclick="DeleteCommonCode('<c:out value='${result.GROUP_CODE}'/>','<c:out value='${result.CODE}'/>'); return false;" style="width:50px;"><spring:message code="button.delete" /></a></td> -->
                                                         </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -231,13 +217,13 @@
                                     </div>
                                 </form>
                                 <!-- 페이징 -->
-                                <div class="board_list_bot">
+                                <!-- <div class="board_list_bot">
                                     <div class="paging" id="paging_div">
                                         <ul>
                                             <ui:pagination paginationInfo = "${paginationInfo}" type="renew" jsFunction="linkPage" />
                                         </ul>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- // 페이징 끝 -->
                             </div>
                             <!-- <div class="content">

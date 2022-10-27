@@ -1,15 +1,3 @@
-<%--
-  Class Name : EgovMainView.jsp
-  Description : 메인화면
-  Modification Information
-
-      수정일         수정자                   수정내용
-    -------    --------    ---------------------------
-     2011.08.31   JJY       경량환경 버전 생성
-
-    author   : 실행환경개발팀 JJY
-    since    : 2011.08.31
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -45,7 +33,7 @@
                 <div class="visual">
                     <center>
                         <p>
-                            <span class="t1">KIA AUTO Q 옥암점에 오신걸 환영합니다.</span>
+                            <span class="t1">목포서비스 KIA AUTO Q에 오신걸 환영합니다.</span>
                         </p>
                     </center>
                     

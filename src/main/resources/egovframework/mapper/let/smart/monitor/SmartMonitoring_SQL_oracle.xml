@@ -63,7 +63,7 @@
 				AND A.TASKSTAT = 'CB-receipt'
        			AND A.TURNOVER = 'N'
 				AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
-      				ORDER BY A.ESTIME ASC
+      				ORDER BY A.TAKESEQ ASC
 	</select>
 
 	<select id="CompleteMonitoring" parameterType="comDefaultVO" resultType="java.util.HashMap">

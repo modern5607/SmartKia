@@ -515,4 +515,12 @@ public class SmartRcptController {
 
 		return "redirect:/rcpt/SmartWebReservationRcptView.do";
 	}
+
+	@RequestMapping(value = "/rcpt/ajaxWebReservationRcptlist.do")
+	@ResponseBody
+	public List<Object> ajaxWebReservationRcptlist(@RequestParam("date")String date)throws Exception{
+		System.out.println(date);
+		List<Object> list = smartrcptservice.ajaxWebReservationRcptlist(date);
+		return list;
+	}
 }

@@ -4,7 +4,17 @@
     <select id="selectCarInfo" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
         SELECT * FROM CAR_CUSTOMER
         WHERE CUSTOMER_AUTONO LIKE '%'||#{checkcarnum}||'%'
+    </select>
+    <select id="selectCarInfo2" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
+        SELECT * FROM CAR_CUSTOMER
+        WHERE CUSTOMER_AUTONO = #{checkcarnum}
+    </select>
 
+    <select id="selectreserveCarInfo" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
+        SELECT * FROM CAR_TAKEREPAIR
+        WHERE AUTONUMBER = #{checkcarnum}
+            AND TASKSTAT = 'CB-reserve'
+        
     </select>
     <select id="SelectMiddleLeadTime" parameterType="String" resultType="java.util.HashMap">
         SELECT IDX,H_CODE,CODE,NAME,LEAD_TIME,FN_CODENAME(LEAD_TIME,'LEADTIME') AS LEADTIME_NM FROM CAR_LEADTIME WHERE H_CODE = #{hcode} AND USE_YN='Y'
@@ -166,12 +176,19 @@
     </select>
 
     <select id="SelectReservationRcptList" resultType="java.util.HashMap">
-        SELECT *
-        FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
-        WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID 
-        AND  TASKSTAT = 'CB-reserve'
-        OR TASKSTAT = 'CB-reservecancel'
-        AND TO_CHAR(SYSDATE,'YYYY-MM-DD 00:00:00') <![CDATA[<]]> TO_CHAR(PLANDATE,'YYYY-MM-DD 23:59:59')
+        SELECT TAKESEQ,
+            TO_CHAR(RECEIPTDATE,'YYYY-MM-DD HH:MM') RECEIPTDATE,
+            TO_CHAR(PLANDATE ,'YYYY-MM-DD HH:MM') PLANDATE,
+            AUTONUMBER,
+            FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_AUTOKIND') KIND,
+            REPAIR_ENUM(TAKESEQ) REPAIRENUM,
+            FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_NAME') CUSTOMER_NAME,
+            FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_TEL') CUSTOMER_TEL,
+            TASKSTAT,
+            FN_CODENAME(TASKSTAT,'AUTO_PROC') TASKSTAT_NAME
+        FROM   CAR_TAKEREPAIR
+        WHERE  (TASKSTAT='CB-reserve' OR TASKSTAT='CB-reserveconfirm' OR TASKSTAT='CB-reservecancel')
+        AND TO_CHAR(RECEIPTDATE,'YYYY-MM-DD') <![CDATA[>=]]> TO_CHAR(SYSDATE,'YYYY-MM-DD')
     </select>
 
     <select id="Selectrcptinfo_params" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -187,5 +204,27 @@
         WHERE    CUSTOMER_ID = #{id}
         AND      ROWNUM      =1
         ORDER BY RECEIPTDATE DESC
+    </select>
+    <update id="KioskReserveConfirm" parameterType="String">
+        UPDATE CAR_TAKEREPAIR
+        SET TASKSTAT = 'CB-reserveconfirm'
+        WHERE TAKESEQ = #{takeseq}
+
+    </update>
+
+    <select id="ajaxWebReservationRcptlist" parameterType="String" resultType="java.util.HashMap">
+        SELECT TAKESEQ,
+            TO_CHAR(RECEIPTDATE,'YYYY-MM-DD HH:MM') RECEIPTDATE,
+            TO_CHAR(PLANDATE ,'YYYY-MM-DD HH:MM') PLANDATE,
+            AUTONUMBER,
+            FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_AUTOKIND') KIND,
+            REPAIR_ENUM(TAKESEQ) REPAIRENUM,
+            FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_NAME') CUSTOMER_NAME,
+            FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_TEL') CUSTOMER_TEL,
+            TASKSTAT,
+            FN_CODENAME(TASKSTAT,'AUTO_PROC') TASKSTAT_NAME
+        FROM   CAR_TAKEREPAIR
+        WHERE  (TASKSTAT='CB-reserve' OR TASKSTAT='CB-reserveconfirm' OR TASKSTAT='CB-reservecancel')
+        AND TO_CHAR(RECEIPTDATE,'YYYY-MM-DD') = #{date}
     </select>
 </mapper>
