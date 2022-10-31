@@ -34,56 +34,6 @@ function fn_egov_cancel_popup() {
 	
 	parent.fn_egov_modal_remove();
 }
-
-// function AddRepair()
-//     {
-//     	console.log($("#repair").children("tbody").length);
-//         var main = $("#leadtimemain option:selected");
-//         var middle = $("#leadtimemiddle option:selected");
-//         var sub = $("#leadtimesub option:selected");
-        
-//         if(main.val()==""||middle.val()==""||sub.val()=="")
-//         {
-//             alert("수리사항을 선택해 주세요");
-//             return;
-//         }
-        
-//         var splits = sub.text().split('/');
-//         var code = sub.val();
-//         var code_nm = splits[0];
-//         var time_nm = splits[1];
-//         var time = sub.data("time");
-//         var repair = $("#repair").children("tbody");
-//         console.log(repair);
-//         var childCount = repair.children().length;
-//         var html="";
-//         html+="<tr id='repair_"+(childCount+1)+"'>";
-//         // html+="<td>"+(childCount+1)+"</td>";
-//         html+="<td>"+code_nm+"</td>";
-//         html+="<td>";
-//         html+="<label class='f_selectsmall'><select id='chk_repair_"+(childCount+1)+"' name='chk_repair' >";
-//         html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
-//         html+="</select></label>";
-//         html+="</td>";
-//         html+="<td>"+time_nm+"</td>";
-//         html+="<td><input type='text' class='f_txtsmall' name='repair_note' id='repair_note'></td>";
-//         html+="<td><input type='radio' name='ant_"+(childCount+1)+"' id='ant' value='Y' checked class='f_rdo '>Y <input type='radio' name='ant_"+(childCount+1)+"' id='ant' value='N' class='f_rdo '>N</td>";
-//         html+="<td><input type='hidden' name='repair' data-time='"+time+"' value='"+code+"'/><input type='hidden' name='repairseq' value=''><a href='#' class='btn btn_blue_30 w_50' onclick='DeleteRepair("+(childCount+1)+")'><spring:message code='button.delete'/></a></td>";
-//         html+="</tr>";
-        
-//         repair.append(html);
-
-//         // CalculateTime();
-
-//     }
-    // function DeleteRepair(i)
-    // {
-    //     var deleteSelector = $();
-    //     $("tr#repair_"+i).remove();
-
-    //     // CalculateTime();
-    // }
-
     function SaveRepair(){
         //수리항목 리스트화
         var array = new Array();
@@ -167,9 +117,7 @@ function fn_egov_cancel_popup() {
                     fn_egov_cancel_popup();
                 }
             },
-            
         });
-        
     }
 
     var deleteArr = new Array();
@@ -181,9 +129,15 @@ function fn_egov_cancel_popup() {
             $("#deletelist").val(deleteArr);
         }
         // $("tr#repair_"+i).remove();
-
     }
 
+
+function Print()
+{
+    var takeseq = document.repairform.seq.value;
+    parent.Print(takeseq)
+    fn_egov_cancel_popup();
+}
 </script>
 </head>
 <body>
@@ -202,6 +156,7 @@ function fn_egov_cancel_popup() {
         <input type="hidden" name="deletelist" id="deletelist">
         <div class="pop_inner" style="width:100%;">
             <div class="pop_header">
+                <button type="button" class="print" onclick="Print();">인쇄</button>
                 <h1>수리항목 리스트</h1>
                 <button type="button" class="close" onclick="fn_egov_cancel_popup(); return false;">닫기</button>
             </div>

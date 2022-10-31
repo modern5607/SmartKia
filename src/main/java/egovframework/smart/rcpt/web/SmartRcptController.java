@@ -464,7 +464,7 @@ public class SmartRcptController {
 		model.addAttribute("autome", smartmdmservice.SelectCmmCode("AUTO_ME"));
 		model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
 		model.addAttribute("reservelist", smartrcptservice.SelectReservationRcptList(smartrcptVO));
-		System.out.println(model.get("reservelist"));
+		System.out.println("reservelist:"+model.get("reservelist"));
 
 		model.addAttribute("paginationInfo", paginationInfo);
 
@@ -522,5 +522,18 @@ public class SmartRcptController {
 		System.out.println(date);
 		List<Object> list = smartrcptservice.ajaxWebReservationRcptlist(date);
 		return list;
+	}
+
+	@RequestMapping("/rcpt/Rcptprint.do")
+	public String Rcptprint(@RequestParam Map<String,Object> params,ModelMap model)throws Exception{
+		System.out.println(params);
+		String takeseq = params.get("printseq").toString();
+		List<Object> info = smartrcptservice.SelectRcptinfo(takeseq);
+		List<Object> repairs = smartrcptservice.selectRcptRepairInfo(takeseq);
+		System.out.println(info);
+		System.out.println(repairs);
+		model.addAttribute("info", info.get(0));
+		model.addAttribute("repairs", repairs);
+		return "/rcpt/Rcptprint";
 	}
 }

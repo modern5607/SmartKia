@@ -22,20 +22,24 @@
     <insert id="InsertWebRcpt" parameterType="java.util.HashMap" >
         INSERT INTO CAR_TAKEREPAIR
         (TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,REPAIRNOTE,POSITION,RECEIPTDATE,TASKSTAT,COMPTIME,NOTE,URGENT,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
-        VALUES((TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.NEXTVAL, 'FM0000')),#{servicesys},#{id},#{carnum},#{repairnote},#{position},SYSDATE,#{taskstat},'',#{note},#{urgent},#{loginid},SYSDATE,'','')
+        VALUES(
+            FN_NEXT_TAKESEQ(TO_CHAR(SYSDATE,'YYYYMMDD')), 
+            #{servicesys},#{id},#{carnum},#{repairnote},#{position},SYSDATE,#{taskstat},'',#{note},#{urgent},#{loginid},SYSDATE,'','')
 
-        <selectKey keyColumn="TAKESEQ" keyProperty="takeseq" resultType="java.lang.String" order="AFTER">
-            SELECT (TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.CURRVAL, 'FM0000')) FROM DUAL
+        <selectKey keyColumn="TAKESEQ" keyProperty="takeseq" resultType="java.lang.String" order="BEFORE">
+            SELECT FN_NEXT_TAKESEQ(TO_CHAR(SYSDATE,'YYYYMMDD')) FROM DUAL
         </selectKey>
     </insert>
 
     <insert id="InsertWebReservationRcpt" parameterType="java.util.HashMap" >
         INSERT INTO CAR_TAKEREPAIR
         (TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,REPAIRNOTE,POSITION,RECEIPTDATE,PLANDATE,TASKSTAT,COMPTIME,NOTE,URGENT,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE)
-        VALUES((TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.NEXTVAL, 'FM0000')),#{servicesys},#{id},#{carnum},#{repairnote},#{position},TO_DATE(#{reservationdate},'YYYY-MM-DD HH24:MI:SS'),SYSDATE,#{taskstat},'',#{note},#{urgent},#{loginid},SYSDATE,'','')
+        VALUES(
+            FN_NEXT_TAKESEQ(TO_DATE(#{reservationdate},'YYYY-MM-DD HH24:MI:SS')), 
+            #{servicesys},#{id},#{carnum},#{repairnote},#{position},TO_DATE(#{reservationdate},'YYYY-MM-DD HH24:MI:SS'),SYSDATE,#{taskstat},'',#{note},#{urgent},#{loginid},SYSDATE,'','')
 
-        <selectKey keyColumn="TAKESEQ" keyProperty="takeseq" resultType="java.lang.String" order="AFTER">
-            SELECT (TO_CHAR(SYSDATE, 'YYYYMMDD')||TO_CHAR(SEQ_CAR_TAKEREPAIR.CURRVAL, 'FM0000')) FROM DUAL
+        <selectKey keyColumn="TAKESEQ" keyProperty="takeseq" resultType="java.lang.String" order="BEFORE">
+            SELECT FN_NEXT_TAKESEQ(TO_DATE(#{reservationdate},'YYYY-MM-DD HH24:MI:SS')) FROM DUAL
         </selectKey>
     </insert>
 
@@ -58,6 +62,7 @@
         FROM   CAR_TAKEREPAIR T
             LEFT OUTER JOIN CAR_CUSTOMER C ON C.CUSTOMER_ID = T.CUSTOMER_ID
         WHERE 1=1
+            AND TRUNC(T.RECEIPTDATE) = TRUNC(SYSDATE)
         <if test="searchcarnum != ''">
             AND T.AUTONUMBER LIKE '%'||#{searchcarnum}||'%'
         </if>
@@ -75,7 +80,7 @@
                 PLANDATE,ESTIME,ALPHAESTIME,TASKSTAT,COMPTIME,
                 NOTE,URGENT,TURNOVER,TURNOVERTIME,TURNOVER_ID,
                 TURNOVER_NOTE,INSERT_ID,INSERT_DATE,UPDATE_ID,UPDATE_DATE,
-                TASK_NAME,TASK_TEL,KILRO_NOW,RECEPT_LID,TOTAL_LEADTIME,ETIME        
+                TASK_NAME,TASK_TEL,KILRO_NOW,RECEPT_LID,TOTAL_LEADTIME,ETIME,REPAIRDATE
             FROM   CAR_TAKEREPAIR
             WHERE  TAKESEQ = #{seq}
     </select>
@@ -188,11 +193,11 @@
             FN_CODENAME(TASKSTAT,'AUTO_PROC') TASKSTAT_NAME
         FROM   CAR_TAKEREPAIR
         WHERE  (TASKSTAT='CB-reserve' OR TASKSTAT='CB-reserveconfirm' OR TASKSTAT='CB-reservecancel')
-        AND TO_CHAR(RECEIPTDATE,'YYYY-MM-DD') <![CDATA[>=]]> TO_CHAR(SYSDATE,'YYYY-MM-DD')
+        AND TRUNC(RECEIPTDATE) <![CDATA[>=]]> TRUNC(SYSDATE)
     </select>
 
     <select id="Selectrcptinfo_params" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT  TAKESEQ,
+        SELECT  SUBSTR (TAKESEQ,-4) TAKESEQ,
                 FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_NAME') NAME,
                 AUTONUMBER,
                 FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_TEL') TEL,

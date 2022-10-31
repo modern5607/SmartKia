@@ -286,12 +286,25 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 	@Override
 	public List<Object> selectReserveCarInfo(SmartRcptVO smartrcotVO) throws Exception {
 		List<Object> list = new ArrayList<>();
-		list.add(smartrcptDAO.selectCarInfo(smartrcotVO));
-		list.add(smartrcptDAO.selectReserveCarInfo(smartrcotVO));
+		List<Object> tmp_list = new ArrayList<>();
+		tmp_list = smartrcptDAO.selectCarInfo2(smartrcotVO);
+		System.out.println("selectCarInfo2:"+tmp_list.isEmpty());
+		if(tmp_list.isEmpty() == false)
+			list.add(tmp_list);
+		else
+			return null;
+		
+		tmp_list = smartrcptDAO.selectReserveCarInfo(smartrcotVO);
+		System.out.println("selectReserveCarInfo:"+tmp_list.isEmpty());
+
+		if(tmp_list.isEmpty()== false)
+			list.add(tmp_list);
+		else
+			return null;
+
 		String seq = ((HashMap<String,Object>)((List<Object>)list.get(1)).get(0)).get("TAKESEQ").toString();
-		// System.out.println(  );
 		list.add(smartrcptDAO.selectRcptRepairInfo(seq));
-		System.out.println(list);
+		// System.out.println(list);
 		return list;
 	}
 
