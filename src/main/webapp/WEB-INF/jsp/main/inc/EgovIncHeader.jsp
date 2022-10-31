@@ -77,7 +77,7 @@ function fn_egov_modal_remove() {
 		<div class="gnb">
 			<ul>
 		    	<c:forEach var="result" items="${list_headmenu}" varStatus="status">
-		    	<li><a href="#LINK" onclick="javascript:goMenuPage('<c:out value="${result.menuNo}"/>')" class='<c:if test="${result.menuOrdr >= 6}">manager</c:if>'><c:out value="${result.menuNm}"/></a></li>
+		    	<li><a href="#" onclick="javascript:goMenuPage('<c:out value="${result.menuNo}"/>')" class='<c:if test="${result.menuOrdr >= 6}">manager</c:if>'><c:out value="${result.menuNm}"/></a></li>
 		        </c:forEach>
 		    </ul>
 		</div>
@@ -260,8 +260,8 @@ function fn_egov_modal_remove() {
         }
         document.getElementById("menuNo").value=menuNo;
         //document.getElementById("link").value=getLastLink(menuNo);
-        document.menuListForm.action = "<c:url value='/'/>"+getLastLink(menuNo).substring(1);
-        console.log("<c:url value='/'/>"+getLastLink(menuNo).substring(1));
+        document.menuListForm.action = "/"+getLastLink(menuNo).substring(1);
+        console.log("/"+getLastLink(menuNo).substring(1));
         document.menuListForm.submit();
     }
 </script>

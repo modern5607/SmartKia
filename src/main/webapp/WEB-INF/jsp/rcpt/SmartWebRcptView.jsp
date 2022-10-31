@@ -241,6 +241,14 @@
         });
     }
 
+    function Print(takeseq)
+    {
+        console.log(takeseq);
+        document.rcptform.printseq.value = takeseq;
+        document.rcptform.action = "<c:url value='/rcpt/Rcptprint.do'/>";
+        document.rcptform.submit();
+    }
+
     function reload()
     {
         console.log("reload");
@@ -293,6 +301,7 @@
                                     <input type="hidden" name="repairlist" id="repairlist" value="">
                                     <!-- <input type="hidden" name="repairleadtime" id="repairleadtime" value=""> -->
                                     <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
+                                    <input type="hidden" name="printseq" id="printseq" value="">
                                     <!-- <input type="hidden" name="notelist" id="notelist" value=""> -->
                                     <div class="board_view2">
                                         <table>
@@ -364,7 +373,7 @@
                                                     </div>
                                                     <div class="cont left" style="width: 500px;">
                                                         <strong>정비내용 선택사항</strong>
-                                                        <div class="scrollBox03 board_view5"style="overflow:scroll;">
+                                                        <div class="scrollBox03 board_view5"style="overflow:auto;">
                                                             <table id="repair">
                                                                 <colgroup>
                                                                     <col style="width:220px;">

@@ -46,4 +46,5 @@ public interface SmartRcptService {
 
     List<Object> selectCarInfo2(SmartRcptVO smartrcotVO);
 
+
 }

@@ -111,7 +111,7 @@ public class SmartKioskController {
 		smartrcotVO.setCheckcarnum(carnum);
 		List<Object> list = smartrcptservice.selectReserveCarInfo(smartrcotVO);
 		// List<Object> list = smartrcptservice.SelectMiddleLeadTime(params.get("selectedvar").toString());
-		System.out.println(list);
+		System.out.println("list : "+list);
 		// Map<String,Object> map =new HashMap<String,Object>();
 		// map.put("list", list);
 		return list;

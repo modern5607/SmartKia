@@ -1,0 +1,137 @@
+*{
+    word-break: keep-all;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, em, font, img, ins, q, s, small, strike, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, thead, tbody, tfoot, tr, th, td, input {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+}
+img {
+    border: 0;
+    vertical-align: top;
+}
+table{
+    border-collapse: collapse;
+}
+.print_wrap{
+    width: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 70%;
+}
+.print_header{
+    height: 6vh;
+}
+.print_header h1{
+    text-align: center;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 3%;
+    font-size: 40px;
+}
+.print_header .takeseq{
+    display: inline-block;
+    width: 20%;
+    float: left;
+    border: 1px solid black;
+    height: 100%;
+}
+.print_header .takeseq td:nth-child(1){
+    letter-spacing: 3px;
+    padding: 8px;
+    font-size: 14px;
+}
+.print_header .takeseq td:nth-child(2){
+    border-left: 1px solid black;
+    width: 100%;
+    height: 55px;
+}
+
+.print_content{
+    height: 90vh;
+    border: solid;
+    margin-top: 3px;
+}
+.print_content .kia1{
+    margin: 5px;
+    width: -webkit-fill-available;
+}
+.print_content .kia1 td{
+    border: 1px solid;
+}
+.print_content .kia1 td:nth-child(odd){
+    background-color: #dddddd;
+    text-align: center;
+    height: 35px;
+}
+.print_content .kia2{
+    margin: 5px;
+    width: -webkit-fill-available;
+}
+.print_content .kia2 td{
+    border: 1px solid;
+}
+.print_content .kia2 td:nth-child(odd){
+    background-color: #dddddd;
+    text-align: center;
+    height: 35px;
+}
+
+.print_content .kia3{
+    margin: 5px;
+    width: -webkit-fill-available;
+}
+.print_content .kia3 thead{
+    text-align: center;
+    background: #dddddd;
+}
+.print_content .kia3 td{
+    border: 1px solid;
+    height: 35px;
+}
+.print_content .kia3 tfoot tr td:nth-child(1){
+text-align: center;
+background: #dddddd;
+}
+.print_content .kia3 tfoot tr td:nth-child(2){
+
+}
+
+.print_content .kia4{
+    margin: 5px;
+    width: -webkit-fill-available;
+}
+.print_content .kia4 td{
+    border: 1px solid;
+    /* height: 35px; */
+}
+.print_content .kia4 tr:nth-child(1) td:nth-child(1){
+    text-align: center;
+    background: #dddddd;
+}
+.print_content .kia4 tr:nth-child(1) td:nth-child(2) img{
+    width: 200px;
+    display: block;
+    margin: auto;
+}
+.print_content .kia4 td:nth-child(3){
+    height: 45px;
+    padding: 10px;
+    vertical-align: top;
+}
+.print_content .kia4 tr:nth-child(2) td:nth-child(1){
+    padding: 10px;
+    vertical-align: top;
+}
+.print_footer{
+    height: 4vh;
+}

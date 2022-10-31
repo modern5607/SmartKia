@@ -639,7 +639,7 @@ function changedate(date)
         success: function (resp) {
             console.log(resp);
             var tbody = $(".board_list4 table tbody");
-            console.log(tbody);
+            // console.log(tbody);
             $.each(resp,function(index,item){
                 var html='';
                 html+="<tr>";
@@ -654,6 +654,7 @@ function changedate(date)
                 var tmp_html = item.TASKSTAT=='CB-reserve'?"<a href='#LINK' class='btn btn_blue_30 w_80' onclick=\"CancelRcpt('"+item.TAKESEQ+"\'); return false;\">예약취소</a>":''; 
                 html+="<td>"+tmp_html+"</td>";
                 html+="</tr>";
+                console.log(html);
                 tbody.html('');
                 tbody.html(html);
             });
