@@ -228,7 +228,7 @@ function clickRepair(cusId){
 					<th scope="col">연락처</th>
 					<th scope="col">총주행거리(km)</th>
 					<!-- <th scope="col">차량뒷번호</th> -->
-					<th scope="col">수리내역</th>
+					<th scope="col">정비내역</th>
 				</tr>
 			</thead>
 			<tbody>

@@ -38,22 +38,32 @@
 		const element = document.getElementById('remark');
 		element.innerHTML = repairNote;
 		const elements = document.getElementById('receip');
-		elements.innerHTML = turnOverTime.replace(' 수리내역','');
+		elements.innerHTML = turnOverTime.replace(' 정비내역','');
+				$.ajax({
+					type : "post",
+					url : "/customer/selectCusRepairDetail.do",
+					// contentType:"application/json;charset=UTF-8",
+					// dataType:"json",
+					data : {
+						seq : seq
+					},
+					success : function(resp) {
+						console.log(resp);
+						/* console.log(seq); */
+						if (resp == null) {
 
 		$("#totalkm").text(totalkm);
 
-		$.ajax({
-			type : "post",
-			url : "/customer/selectCusRepairDetail.do",
-			// contentType:"application/json;charset=UTF-8",
-			// dataType:"json",
-			data : {
-				seq : seq
-			},
-			success : function(resp) {
-				console.log(resp);
-				/* console.log(seq); */
-				if (resp == null) {
+												/* if (jtem.REPAIRMETHOD == 'CB-general') {
+													check_add1 = 'checked';
+												} else if (jtem.REPAIRMETHOD == 'CB-guaranty') {
+													check_add2 = 'checked';
+												}
+												if (jtem.REPAIRMETHOD == 'CB-general') {
+													class_add1 = 'on';
+												} else if (jtem.REPAIRMETHOD == 'CB-guaranty') {
+													class_add2 = 'on';
+												} */
 
 					alert("정보가 없습니다.");
 					return;
@@ -70,16 +80,17 @@
 										var check_add1 = '';
 										var check_add2 = '';
 
-										if (jtem.REPAIRMETHOD == 'CB-general') {
-											check_add1 = 'checked';
-										} else if (jtem.REPAIRMETHOD == 'CB-guaranty') {
-											check_add2 = 'checked';
-										}
-										if (jtem.REPAIRMETHOD == 'CB-general') {
-											class_add1 = 'on';
-										} else if (jtem.REPAIRMETHOD == 'CB-guaranty') {
-											class_add2 = 'on';
-										}
+												/* html += "<td>";
+												html += "<label for='rdo1' class=' " + class_add1 +"'>";
+												html += "<input type='radio' id='rdo"+ jndex +"' name='repairmethod"+ jndex +"'onclick='return false;'  "+ check_add1 +">";
+												html += "</label>";
+												html += "</td>";
+												html += "<td>";
+												html += "<label for='rdo1' class=' " + class_add2 +"'>";
+												html += "<input type='radio' id='rdo1"+ jndex +"' name='repairmethod"+ jndex +"'onclick='return false;' "+ check_add2 +">";
+												html += "</label>";
+												html += "</td>"; */
+												html += "</tr>";
 
 										html += "<tr>";
 										html += "<td>"
@@ -112,7 +123,6 @@
 </head>
 <body>
 
-	<!-- 아이디중복확인 팝업 -->
 	<div class="popup POP_DUPID_CONF"
 		style="background-color: white; text-align: center;">
 
@@ -126,7 +136,7 @@
             <input type="hidden" name="deletelist" id="deletelist"> -->
 			<div class="pop_inner" style="width: 100%;">
 				<div class="pop_header" style="border: 0;">
-					<h1>수리내역 상세보기</h1>
+					<h1>정비내역 상세보기</h1>
 					<button type="button" class="close"
 						onclick="fn_egov_cancel_popup(); return false;">닫기</button>
 				</div>
@@ -157,19 +167,19 @@
 						</div>
 					</div>
 					<div class="cont left text" style="width: 400px;">
-						<strong style="margin-left: 0px; font-size: 24px">상세수리 내역</strong>
+						<strong style="margin-left: 0px; font-size: 24px">상세 정비내역</strong>
 						<div class="f_txt"
 							style="padding: 0; margin-left: 0px; margin-right: 20px; height: 454px;">
 							<table id="repair">
 								<colgroup>
 									<col style="width: 200px;">
-									<col style="width: auto;">
-									<col style="width: auto;">
+									<%-- <col style="width: auto;">
+									<col style="width: auto;"> --%>
 								</colgroup>
 								<thead>
-									<th>수리부분</th>
-									<th>일반</th>
-									<th>보증</th>
+									<th>정비부분</th>
+									<!-- <th>일반</th>
+									<th>보증</th> -->
 								</thead>
 								<tbody id="ul">
 								</tbody>
@@ -178,14 +188,17 @@
 
 					</div>
 					<div class="cont left text" style="width: 190px;">
-						<strong style="margin-left: 0px; font-size: 24px">수리 완료일</strong>
-						<div id="receip" class="f_txt" style="margin-bottom: 20px; line-height: 44px"></div>
+						<!--<strong style="margin-left: 0px; font-size: 24px">총 주행거리</strong>-->
+						<strong style="margin-left: 0px; font-size: 24px">정비 완료일</strong>
+						<div id="receip" class="f_txt" style="margin-bottom: 20px; line-height: 44px">
 
 						<strong style="margin-left: 0px; font-size: 24px">총 주행거리</strong>
 						<div id="totalkm" class="f_txt" style="margin-bottom: 20px; line-height: 44px"></div>
 
-						<strong style="margin-left: 0px; font-size: 24px">수리비고</strong>
-						<div id="remark" class="f_txt" style="margin-left: 0px; margin-right: 0px; height: 250px;"></div>
+						<strong style="margin-left: 0px; font-size: 24px">정비비고</strong>
+						<div id="remark" class="f_txt"
+							style="margin-left: 0px; margin-right: 0px; height: 352px;">
+						</div>
 
 					</div>
 					<table class="board_list4"></table>

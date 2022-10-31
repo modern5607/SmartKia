@@ -6,6 +6,7 @@ import java.util.Map;
 
 import egovframework.smart.crm.service.SmartCrmService;
 import egovframework.smart.crm.service.SmartCrmVO;
+import egovframework.smart.mdm.service.SmartLeadTimeVO;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -40,7 +41,66 @@ public class SmartCrmServiceImpl extends EgovAbstractServiceImpl implements Smar
 		return 0;
 	}
 
+//    @Override
+//    public Map<String,Object> dailyrepair(SmartCrmVO vo) throws Exception {
+//    
+//        List<SmartCrmVO> dailyhead = smartCrmDAO.dailyhead(vo);
+//        List<SmartCrmVO> dailydetail = smartCrmDAO.dailydetail(vo);
+//
+//      System.out.println("dailyhead : "+dailyhead);
+//      System.out.println("dailydetail : "+ dailydetail);
+//            
+//        Map<String,Object> map = new HashMap<String, Object>();
+//        map.put("dailyhead",dailyhead);
+//        map.put("dailydetail",dailydetail);
+//        return map;
+//    }
+    @Override
+    public Map<String,Object> selectLeadTime(SmartCrmVO vo) throws Exception {
+
+        List<SmartCrmVO> main = smartCrmDAO.selectLeadMain(vo);
+        List<SmartCrmVO> middle = smartCrmDAO.selectLeadMiddle(vo);
+
+            
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("main",main);
+        map.put("middle",middle);
+        return map;
+    }
 
 
+    @Override
+    public List<Object> selectLeadTimelist(Map<String, Object> params) throws Exception {
+        return smartCrmDAO.selectLeadTimelist(params);
+    }
+    
+    @Override
+    public  Map<String,Object> selectRepairList(SmartCrmVO vo) throws Exception {
+//        //System.out.println("impl");
+        List<SmartCrmVO> result = smartCrmDAO.selectRepairList(vo);
+//        //System.out.println("DETAIL : "+detail);
+        String cnt = Integer.toString(result.size());
 
+        Map<String,Object> list = new HashMap<String,Object>();
+        list.put("resultList", result);
+        list.put("resultCnt", cnt);
+        return list;
+    }
+    
+    @Override
+    public List<Object> SelectCmmCode(String vo) throws Exception {
+        return smartCrmDAO.selectCmmCode(vo);
+    }
+    
+    @Override
+    public Map<String,Object> repairStat(SmartCrmVO SmartCrmVO){
+      List<SmartCrmVO> main = smartCrmDAO.selectStatMain(SmartCrmVO);
+//      List<SmartCrmVO> middle = smartCrmDAO.selectStatMiddle(SmartCrmVO);
+
+
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("main",main);
+//        map.put("middle",middle);
+        return map;
+    }
 }

@@ -12,41 +12,33 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
 	
 
     private String seq = "";
-    
     private String cusId = "";
-    
     private String cusAutoNo = "";
-    
     private String cusAutoKind = "";
-    
     private String cusNm = "";
-    
     private String cusTel = "";
-    
     private String taskStat = "";
-    
-    private String positon = "";
-    
+    private String position = "";
     private String compTime = "";
-    
     private String note = "";
-    
     private String turnOver = "";
-    
     private String turnoverTime = "";
-  
     private String turnoverNote = "";
-    
     private String searchAutoNo = "";
-    
     private String searchCusNm = "";
-    
     private String searchCusTel = "";
-    
-
+    private String searchrepairname = "";
     private String sdate = "";
     private String edate = "";
-    
+    private String main = "";
+    private String middle = "";
+    private String leadtime = "";
+    private String id = "";
+
+    private String PIDX = "";
+    private String PIDX1 = "";
+    private String POSITION = "";
+
 	private int pageIndex = 1;
     private int pageUnit = 10;
     private int pageSize = 10;
@@ -165,11 +157,11 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
 	public void setTaskStat(String taskStat) {
 		this.taskStat = taskStat;
 	}
-	public String getPositon() {
-		return positon;
+	public String getPosition() {
+		return position;
 	}
-	public void setPositon(String positon) {
-		this.positon = positon;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 	public String getCompTime() {
 		return compTime;
@@ -201,6 +193,57 @@ public class SmartCrmVO extends ComDefaultVO implements Serializable {
 	public void setTurnoverNote(String turnoverNote) {
 		this.turnoverNote = turnoverNote;
 	}	
-	
+    public String getMain() {
+        return main;
+    }
+
+    public void setMain(String main) {
+        this.main = main;
+    }
+
+    public String getMiddle() {
+        return middle;
+    }
+
+    public void setMiddle(String middle) {
+        this.middle = middle;
+    }
+    public String getLeadtime() {
+        return leadtime;
+    }
+    public void setLeadtime(String leadtime) {
+        this.leadtime = leadtime;
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getPIDX() {
+        return PIDX;
+    }
+    public void setPIDX(String pIDX) {
+        PIDX = pIDX;
+    }
+    public String getPIDX1() {
+        return PIDX1;
+    }
+    public void setPIDX1(String pIDX1) {
+        PIDX1 = pIDX1;
+    }
+    public String getSearchrepairname() {
+        return searchrepairname;
+    }
+    public void setSearchrepairname(String searchrepairname) {
+        this.searchrepairname = searchrepairname;
+    }
+    public String getPOSITION() {
+        return POSITION;
+    }
+    public void setPOSITION(String pOSITION) {
+        POSITION = pOSITION;
+    }
+
 	
 }

@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -314,10 +315,12 @@ public class SmartMdmController {
 	// ---------------표준작업관리-----------
 	@RequestMapping(value = "/mdm/SmartLeadTime.do")
 	public String SmartLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model,
-			@RequestParam(value = "menuNo", required = false) String menuNo,
+			@RequestParam(value = "menuNo", required = false) String menuNo, @RequestParam(value = "callsys", required = false) String callsys,
 			HttpServletRequest request) throws Exception {
 
-		System.out.println("SmartLeadTime.do -> leadtimeVO : " + leadtimeVO);
+//	    System.out.println("SmartLeadTime.do -> =========================== ");
+//		System.out.println("SmartLeadTime.do -> leadtimeVO : " + leadtimeVO);
+//		System.out.println("SmartLeadTime.do -> callsys : " + callsys);
 
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
@@ -363,8 +366,6 @@ public class SmartMdmController {
 		model.addAttribute("sublist", map.get("sub"));
 		model.addAttribute("paginationInfo", paginationInfo);
 
-		return "/mdm/SmartLeadTimeView";
-	}
 
 	@RequestMapping(value = "/mdm/InsertGroupLeadTime.do",method=RequestMethod.POST)
 	public String InsertGroupLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response) throws Exception {

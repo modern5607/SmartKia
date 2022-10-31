@@ -16,6 +16,9 @@
         isRTL: false,
         showMonthAfterYear: true,
         yearSuffix: '',
+        showOn: 'both', 
+        buttonImage: '/images/ico_calendar.png', 
+        buttonImageOnly: true,
         yearRange: 'c-99:c+99',
     };
     $.datepicker.setDefaults($.datepicker.regional['ko']);
@@ -24,6 +27,7 @@
     $('#sdate').datepicker("option", "maxDate", $("#edate").val());
     $('#sdate').datepicker("option", "onClose", function ( selectedDate ) {
         $("#edate").datepicker( "option", "minDate", selectedDate );
+    $('img.ui-datepicker-trigger').attr('style','position:relative; right:25px; top:15px; cursor:pointer;');
     });
     
 
@@ -31,5 +35,7 @@
     $('#edate').datepicker("option", "minDate", $("#sdate").val());
     $('#edate').datepicker("option", "onClose", function ( selectedDate ) {
         $("#sdate").datepicker( "option", "maxDate", selectedDate );
+    $('img.ui-datepicker-trigger').attr('style','position:relative; right:25px; top:15px; cursor:pointer;');
     });
+    $('img.ui-datepicker-trigger').attr('style','position:relative; right:25px; top:15px; cursor:pointer;');
 });

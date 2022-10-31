@@ -54,7 +54,7 @@ function fnSearch() {
 									<ul>
 										<li><a class="home" href="">Home</a></li>
 										<li><a href="">고객관리</a></li>
-										<li>차량수리이력조회</li>
+										<li>차량 정비내역 조회</li>
 									</ul>
 								</div>
 								<!--// Location -->
@@ -72,9 +72,9 @@ function fnSearch() {
 												<label for="searchCusTel">연락처:</label> 
 													<input name="searchCusTel" id="searchCusTel"class="f_input w_200" title="검색" type="text" maxlength="20"value="<c:out value="${SmartCrmVO.searchCusTel}"/>" />
 												<label for="sdate">접수기간 :</label> 
-													<input name="sdate" id="sdate" readonly="readonly"class="f_input w_150" title="검색" type="text"value="<c:out value="${SmartCrmVO.sdate}"/>" />
+													<input name="sdate" id="sdate" readonly="readonly"class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.sdate}"/>" />
 												<label for="edate"> ~ </label> 
-													<input name="edate" id="edate" readonly="readonly" class="f_input w_150" title="검색" type="text"value="<c:out value="${SmartCrmVO.edate}"/>" /> 
+													<input name="edate" id="edate" readonly="readonly" class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.edate}"/>" /> 
 												<button class="btn" type="submit"onclick="fnSearch(); return false;" style="right: -50px;"><spring:message code='button.search' /></button> 
 											</p>
 										</span>
