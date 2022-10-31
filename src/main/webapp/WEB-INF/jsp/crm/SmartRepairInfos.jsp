@@ -70,10 +70,7 @@
 		document.SmartCrmVO.action = "<c:url value='/crm/SmartRepairInfos.do'/>";
 		document.SmartCrmVO.submit();
 	}
-    $(document).ready(function () {
-    	$('#sdate').datepicker('setDate', 'today');
 
-    });
 </script>
 </head>
 <body>

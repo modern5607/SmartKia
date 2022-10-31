@@ -113,16 +113,16 @@
 	  AND c.TASKSTAT    IN('CB-standby', 'CB-perfect')
 	  AND b.H_CODE 			= d.CODE
 	  <if test="(sdate != '' and edate != '')">
-        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
+        	AND TO_CHAR(C.RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
         </if>
         <if test="(sdate == '' and edate != '')">
-        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &lt;= #{edate}
+        	AND TO_CHAR(C.RECEIPTDATE, 'YYYY-MM-DD') &lt;= #{edate}
         </if>
         <if test="(sdate != '' and edate == '')">
-        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &gt;= #{sdate}
+        	AND TO_CHAR(C.RECEIPTDATE, 'YYYY-MM-DD') &gt;= #{sdate}
         </if>
 		<if test="(sdate == '' and edate == '')">
-			AND SUBSTR(ETIME,1,10) = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+			 AND TO_CHAR(TO_DATE(C.RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
         </if>
 	 group BY  b.H_CODE,D.NAME,b.CODE,B.NAME,d.ORD,b.ORD,c.RECEIPTDATE
 	 ORDER  BY d.ORD,b.ORD

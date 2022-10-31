@@ -46,9 +46,7 @@
         // document.SmartLeadTimeVO.action = "<c:url value='/mdm/SmartCode.do'/>";
         document.SmartLeadTimeVO.submit();
     }
-     $(document).ready(function () {
-    		$('#sdate').datepicker('setDate', 'today');
-    	});
+
     </script>
 
 </head>
@@ -84,7 +82,7 @@
 												<label for="sdate">기간 </label> 
 													<input name="sdate" id="sdate" readonly="readonly"class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.sdate}"/>" />
 												<label for="edate"> ~ </label> 
-													<input name="edate" id="edate" readonly="readonly" class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.edate}"/>" /> 
+													<input name="edate" id="edate" readonly="readonly" class="f_input w_180" title="검색" type="text" value="<c:out value="${SmartCrmVO.edate}"/>" />
 												<%-- <label for="searchTeam">작업반</label>
 					                        		<input class="f_input w_200" name="POSITION" id="POSITION" type="text" maxlength="20" title="검색" value="<c:out value="${SmartCrmVO.POSITION}"/>"/> --%>
 												<button class="btn" type="submit"onclick="fnSearch(); return false;" style="right: -50px;"><spring:message code='button.search' /></button> 
@@ -136,7 +134,7 @@
                                                         </c:if>
                                                         <c:forEach var="result" items="${mainlist}" varStatus="status">
                                                             <tr>
-                                                                <td><a href="#" class="lnk" onclick="ClickMainCode('${result.H_CODE}')"><c:out value="${result.H_NAME}"/></a></td>
+                                                                <td><c:out value="${result.H_NAME}"/></td>
                                                             	<%-- <td><c:out value="${status.count}"/></td> --%>
                                                             	<td><c:out value="${result.NAME}"/></td>
                                                                 <td><c:out value="${result.CNT}"/></td>
