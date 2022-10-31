@@ -1,6 +1,7 @@
 package egovframework.smart.crm.web;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 /*import java.io.PrintWriter;*/
 import java.util.Map;
@@ -8,7 +9,6 @@ import java.util.Map;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.service.EgovCmmUseService;
-import egovframework.smart.crm.service.SmartCrmRepairVO;
 import egovframework.smart.crm.service.SmartCrmService;
 import egovframework.smart.crm.service.SmartCrmVO;
 import egovframework.smart.mdm.mber.service.SmartMberManageService;
@@ -16,6 +16,7 @@ import egovframework.smart.mdm.mber.service.SmartMberManageVO;
 import egovframework.smart.mdm.mber.service.UserDefaultVO;
 import egovframework.smart.mdm.service.SmartLeadTimeVO;
 import egovframework.smart.mdm.service.SmartMdmBizVO;
+import egovframework.smart.mdm.service.SmartMdmService;
 import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 
@@ -46,7 +47,8 @@ public class SmartCrmController {
 	
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
-	
+	@Resource(name = "SmartMdmService")
+	private SmartMdmService smartmdmservice;
 	@Resource(name = "smartCrmService")
 	private SmartCrmService smartCrmService;
 
@@ -104,12 +106,12 @@ public class SmartCrmController {
 		return "crm/SmartAddRepairPopup";
 	}
 
-    @RequestMapping(value = "/crm/SmartDailyRepair.do")
-    public String SmartDailyRepair(@ModelAttribute("SmartCrmVO") SmartCrmVO SmartCrmVO, ModelMap model,
+    @RequestMapping(value = "/crm/SmartRepairStat.do")
+    public String SmartRepairStat(@ModelAttribute("SmartCrmVO") SmartCrmVO SmartCrmVO, ModelMap model,
             @RequestParam(value = "menuNo", required = false) String menuNo,
             HttpServletRequest request) throws Exception {
     
-        System.out.println("SmartDailyRepair.do -> SmartCrmVO : " + SmartCrmVO);
+        System.out.println("SmartRepairStat.do -> SmartCrmVO : " + SmartCrmVO);
     
         // 선택된 메뉴정보를 세션으로 등록한다.
         if (menuNo != null && !menuNo.equals("")) {
@@ -142,24 +144,28 @@ public class SmartCrmController {
         SmartCrmVO.setLastIndex(paginationInfo.getLastRecordIndex());
         SmartCrmVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
     
-        Map<String, Object> map = smartCrmService.dailyrepair(SmartCrmVO);
+//        Map<String, Object> map = smartCrmService.dailyrepair(SmartCrmVO);
+        Map<String, Object> map = smartCrmService.repairStat(SmartCrmVO);
     
 //        System.out.println("test :" + test);
+        System.out.println("vo : "+SmartCrmVO);
     
         model.addAttribute("leadtimeVO", SmartCrmVO);
-        model.addAttribute("dailyhead", map.get("dailyhead"));
-        model.addAttribute("dailydetail", map.get("dailydetail"));
+        model.addAttribute("mainlist", map.get("main"));
+//        model.addAttribute("middlelist", map.get("middle"));
+        System.out.println("main :" + map.get("main"));
+//        System.out.println("middle :" + map.get("middle"));
         model.addAttribute("paginationInfo", paginationInfo);
     
-        return "/crm/SmartDailyRepair";
+        return "/crm/SmartRepairStat";
     }
     @RequestMapping(value = "/crm/SmartRepairInfos.do")
     public String SmartRepairInfos(@ModelAttribute("SmartCrmVO") SmartCrmVO vo, ModelMap model,
             @RequestParam(value = "menuNo", required = false) String menuNo,
             HttpServletRequest request) throws Exception {
 
-//          System.out.println("SmartLeadTime.do -> =========================== ");
-//          System.out.println("SmartLeadTime.do -> leadtimeVO : " + leadtimeVO);
+          //System.out.println("SmartRepairInfos.do -> =========================== ");
+         // System.out.println("SmartRepairInfos.do -> SmartCrmVO : " + vo);
 //          System.out.println("SmartLeadTime.do -> callsys : " + callsys);
 
             // 선택된 메뉴정보를 세션으로 등록한다.
@@ -192,20 +198,22 @@ public class SmartCrmController {
             vo.setFirstIndex(paginationInfo.getFirstRecordIndex());
             vo.setLastIndex(paginationInfo.getLastRecordIndex());
             vo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-            Map<String, Object> list = smartCrmService.selectCrmList(vo);
-            
-            model.addAttribute("smartCrmVO", vo);
-            model.addAttribute("resultList", list.get("resultList"));
-            
+            System.out.println("vo : "+vo);
+//            Map<String, Object> list = smartCrmService.selectCrmList(vo);
             Map<String, Object> map = smartCrmService.selectLeadTime(vo);
             
-            model.addAttribute("selectLeadTime", vo);
+            //model.addAttribute("selectLeadTime", vo);
             model.addAttribute("leadtimelist", map.get("leadtime"));
             model.addAttribute("mainlist", map.get("main"));
             model.addAttribute("middlelist", map.get("middle"));
             model.addAttribute("paginationInfo", paginationInfo);
 
+            Map<String, Object> list = smartCrmService.selectRepairList(vo);
+            model.addAttribute("smartCrmVO", vo);
+            model.addAttribute("resultList", list.get("resultList"));
+            System.out.println("list.get"+list.get("resultList"));
+            model.addAttribute("autorooms", smartmdmservice.SelectCmmCode("AUTO_ROOM"));
+            
             return "/crm/SmartRepairInfos";
         }
 
@@ -213,14 +221,16 @@ public class SmartCrmController {
     @RequestMapping(value = "/crm/SmartRepairAjax.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Object> SmartRepairAjax(@RequestParam Map<String,Object> params, ModelMap model,HttpServletRequest request) throws Exception {
 
-        System.out.println(params);
+        System.out.println("params: "+params);
 
         // System.out.println("SmartRepairAjax.do -> =========================== ");
         // System.out.println("SmartRepairAjax.do -> leadtimeVO : " + leadtimeVO);
         // System.out.println("SmartRepairAjax.do -> callsys : " + callsys);
 
         
-        List<Object> list = smartCrmService.selectLeadTimelist(params);
+        List<Object> list = new ArrayList<>();
+        list.add(params);
+        list.add(smartCrmService.selectLeadTimelist(params));
         System.out.println("list : "+list);
         // List<Object> test = smartmdmservice.SelectCmmCode("USE_YN");
 

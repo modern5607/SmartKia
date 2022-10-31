@@ -16,7 +16,7 @@
         isRTL: false,
         showMonthAfterYear: true,
         yearSuffix: '',
-        showOn: 'button', 
+        showOn: 'both', 
         buttonImage: '/images/ico_calendar.png', 
         buttonImageOnly: true,
         yearRange: 'c-99:c+99',

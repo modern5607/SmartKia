@@ -27,13 +27,13 @@
 		AND A.TASKSTAT = 'CB-perfect'
 		AND A.TURNOVER = 'Y'
         <if test="searchAutoNo != ''">
-            AND A.CUSTOMER_AUTONO LIKE '%' ||#{searchAutoNo}|| '%'
+            AND AUTONUMBER LIKE '%' ||#{searchAutoNo}|| '%'
         </if>
         <if test="searchCusNm != ''">
-            AND A.CUSTOMER_NAME LIKE '%' ||#{searchCusNm}|| '%'
+            AND CUSTOMER_NAME LIKE '%' ||#{searchCusNm}|| '%'
         </if>
         <if test="searchCusTel != ''">
-            AND A.CUSTOMER_TEL LIKE '%' ||#{searchCusTel}|| '%'
+            AND CUSTOMER_TEL LIKE '%' ||#{searchCusTel}|| '%'
         </if>
         <if test="(sdate != '' and edate != '')">
         	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
@@ -59,7 +59,7 @@
 			</if> -->
 	</select>
 
-	<select id="dailyhead" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+<!-- 	<select id="dailyhead" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
 		SELECT 	TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '||TO_CHAR(TURNOVERTIME, 'DD')||'일'  turnOverTime
 		FROM 	CAR_TAKEREPAIR
 		WHERE 	TURNOVER ='Y'
@@ -75,7 +75,72 @@
 		AND 	B.TURNOVER = 'Y' 
 		AND 	TO_CHAR(TURNOVERTIME, 'YYYY')||'년 '||TO_CHAR(TURNOVERTIME, 'MM')||'월 '||TO_CHAR(TURNOVERTIME, 'DD')||'일' = #{turnoverTime}
 		GROUP BY FN_LEADTIME_NAME(A.REPAIRCODE, 'NAME')
+	</select> -->
+	<select id="repairStat" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+	
+		SELECT  b.H_CODE, d.NAME h_name,b.CODE,b.NAME,COUNT(*) cnt,TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD')  RECEIPTDATE
+	FROM CAR_LEAD_REPAIR A,
+		   CAR_LEADTIME B,
+   	  CAR_TAKEREPAIR C,
+	     CAR_LEADTIME D
+	WHERE a.REPAIRCODE  = b.CODE
+	  AND a.TAKESEQ			= c.TAKESEQ
+	  AND c.TASKSTAT    IN('CB-standby', 'CB-perfect')
+	  AND b.H_CODE 			= d.CODE
+	 <if test="(sdate != '' and edate != '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
+        </if>
+        <if test="(sdate == '' and edate != '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &lt;= #{edate}
+        </if>
+        <if test="(sdate != '' and edate == '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &gt;= #{sdate}
+        </if>
+		<if test="(sdate == '' and edate == '')">
+			AND SUBSTR(ETIME,1,10) = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+        </if>
+        group BY  b.H_CODE,D.NAME,b.CODE,B.NAME,d.ORD,b.ORD,c.RECEIPTDATE
+	 ORDER  BY d.ORD,b.ORD
 	</select>
+	<select id="selectStatMain" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+				SELECT  b.H_CODE, d.NAME h_name,b.CODE,b.NAME,COUNT(*) cnt,TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD')  RECEIPTDATE
+	FROM CAR_LEAD_REPAIR A,
+		   CAR_LEADTIME B,
+   	  CAR_TAKEREPAIR C,
+	     CAR_LEADTIME D
+	WHERE a.REPAIRCODE  = b.CODE
+	  AND a.TAKESEQ			= c.TAKESEQ
+	  AND c.TASKSTAT    IN('CB-standby', 'CB-perfect')
+	  AND b.H_CODE 			= d.CODE
+	  <if test="(sdate != '' and edate != '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
+        </if>
+        <if test="(sdate == '' and edate != '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &lt;= #{edate}
+        </if>
+        <if test="(sdate != '' and edate == '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &gt;= #{sdate}
+        </if>
+		<if test="(sdate == '' and edate == '')">
+			AND SUBSTR(ETIME,1,10) = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+        </if>
+	 group BY  b.H_CODE,D.NAME,b.CODE,B.NAME,d.ORD,b.ORD,c.RECEIPTDATE
+	 ORDER  BY d.ORD,b.ORD
+
+	</select>    
+<!-- 	<select id="selectStatMiddle" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+		SELECT  b.H_CODE, d.NAME h_name,b.CODE,b.NAME,COUNT(*) cnt,TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD')  RECEIPTDATE
+	FROM CAR_LEAD_REPAIR A,
+		   CAR_LEADTIME B,
+   	  CAR_TAKEREPAIR C,
+	     CAR_LEADTIME D
+	WHERE a.REPAIRCODE  = b.CODE
+	  AND a.TAKESEQ			= c.TAKESEQ
+	  AND c.TASKSTAT    IN('CB-standby', 'CB-perfect')
+	  AND b.H_CODE 			= d.CODE
+	 group BY  b.H_CODE,D.NAME,b.CODE,B.NAME,d.ORD,b.ORD,c.RECEIPTDATE
+	 ORDER  BY d.ORD,b.ORD
+	</select> -->
 	
 		<select id="selectLeadTime" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
 		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = 'LEADTIME'
@@ -84,7 +149,65 @@
 		SELECT * FROM CAR_LEADTIME WHERE H_CODE = 'STAT'
 	</select>
 	<select id="selectLeadMiddle" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
-		SELECT * FROM CAR_LEADTIME WHERE H_CODE = #{main}
+		SELECT * FROM CAR_LEADTIME WHERE H_CODE = #{PIDX}
+	</select>
+	<select id="selectLeadTimelist" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT * FROM CAR_LEADTIME WHERE H_CODE = #{PIDX}
+	</select>
+	<select id="selectRepairList" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
+        SELECT DISTINCT 
+        	A.TAKESEQ,
+            TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
+            D.CUSTOMER_AUTONO,
+            A.REPAIRCODE,
+            REPAIR_ENUM(C.TAKESEQ) REPAIR_NAME,
+          	D.CUSTOMER_ID,
+            D.CUSTOMER_NAME,
+            D.CUSTOMER_AUTOKIND,
+            D.CUSTOMER_TEL,
+            FN_CODENAME(POSITION,'AUTO_ROOM') POSITION,
+            ETIME,
+            TASKSTAT,
+            FN_CODENAME(TASKSTAT,'AUTO_PROC') TASKSTAT_NM,
+            FN_CODENAME(C.REPAIRMETHOD,'AUTO_ME') REPAIRMETHOD
+	        FROM CAR_LEAD_REPAIR A,
+			   	 CAR_LEADTIME B,
+		    	 CAR_TAKEREPAIR C,
+		    	 CAR_CUSTOMER D
+		WHERE a.REPAIRCODE  = b.CODE
+		  AND a.TAKESEQ			= c.TAKESEQ
+		  AND c.CUSTOMER_ID = d.CUSTOMER_ID
+		  AND c.TASKSTAT    IN('CB-standby', 'CB-perfect')
+		  AND b.H_CODE      = NVL('',b.H_CODE)
+		  AND b.CODE        = NVL('',b.CODE)
+		  AND c.POSITION    = NVL('',c.POSITION)
+		<if test="PIDX != '' and PIDX1 != ''">
+            AND b.H_CODE LIKE '%'||#{PIDX}||'%'
+            AND b.CODE LIKE '%'||#{PIDX1}||'%'
+        </if>  
+        <if test="PIDX != '' and PIDX1 == ''">
+            AND b.H_CODE LIKE '%'||#{PIDX}||'%'
+        </if>
+        <if test="POSITION != ''">
+	        AND POSITION LIKE '%' ||UPPER(#{POSITION})|| '%'
+	    </if>
+        <if test="(sdate != '' and edate != '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
+        </if>
+        <if test="(sdate == '' and edate != '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &lt;= #{edate}
+        </if>
+        <if test="(sdate != '' and edate == '')">
+        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &gt;= #{sdate}
+        </if>
+		<if test="(sdate == '' and edate == '')">
+			AND SUBSTR(ETIME,1,10) = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+        </if>
+        ORDER BY RECEIPTDATE DESC
+        
+	</select>
+	<select id="SelectCmmCode" parameterType="String" resultType="java.util.HashMap">
+		SELECT * FROM CAR_COMCODE WHERE GROUP_CODE = #{groupcode}
 	</select>
 	
 </mapper>

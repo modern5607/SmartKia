@@ -16,127 +16,64 @@
     <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
     <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
     <script src="<c:url value='/'/>js/ui.js"></script>
+    <!-- 캘린더 -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+	<script src="<c:url value='/'/>js/datepicker.js"></script>
+	<!-- /캘린더 -->
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+	    
     <title>표준작업관리</title>
     <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
-    <script type="text/javascript">
-    
+<script type="text/javascript">
 
-    function UpdateLeadTime(hcode,code,selectidx)
+    function setSelectBox()
     {
-        document.SmartLeadTimeVO.updatehcode.value= hcode;
-        document.SmartLeadTimeVO.updatecode.value= code;
-        document.SmartLeadTimeVO.updateleadtime.value = $("#leadtime"+selectidx+" option:selected").val();
-        console.log(document.SmartLeadTimeVO.updatehcode.value);
-        console.log(document.SmartLeadTimeVO.updatecode.value);
-        console.log(document.SmartLeadTimeVO.updateleadtime.value);
-        
-        document.SmartLeadTimeVO.action = "<c:url value='/mdm/UpdateLeadTime.do'/>";
-        document.SmartLeadTimeVO.submit();
-    }
-
-    function InsertLeadTime()
-    {
-        if(document.SmartLeadTimeVO.insertname.value == "")
-        {
-            alert("부품명을 입력해 주세요");
-            document.SmartLeadTimeVO.insertname.focus();
-            return false;
-        }
-        $.ajax({
-            type: "post",
-            url: "/mdm/InsertLeadTime.do",
-            data: {
-                insertleadtime:document.SmartLeadTimeVO.insertleadtime.value,
-                insertname:document.SmartLeadTimeVO.insertname.value,
-                main:document.SmartLeadTimeVO.main.value,
-                middle:document.SmartLeadTimeVO.middle.value
-            },
-            success: function (msg) {
-				if(msg==1)
-					location.reload();
-				else
-				{
-					alert("등록에 실패하였습니다. 다시 시도해 주세요.");
-					location.reload();
-				}
-            }
-        });
-        // document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertLeadTime.do'/>";
-        // document.SmartLeadTimeVO.submit();
-    }
-
-    function setSelectBox(arg)
-    {
-    	// document.SmartLeadTimeVO.main.value = $("#PIDX option:selected").val();
-        // document.SmartLeadTimeVO.middle.value = "";
-        // document.SmartLeadTimeVO.sub.value = "";
-    	// document.SmartLeadTimeVO.callsys.value = 'ajax';
+		//console.log(arg);
     	
     	$.ajax({
             type: "post",
-            url: "/mdm/SmartRepairAjax.do",
+            url: "/crm/SmartRepairAjax.do",
             data: $("#SmartCrmVO").serialize(),
             success: function (data) {
-                console.log(data);
                 if(data == null)
 			{
-				
 				alert("정보가 없습니다.");
 				return;
 			}
 			else
 			{
+				var reCode = "";
                 var html ="";
 				var repair_selector = $("#PIDX1");
 				    html+="<select>";
-                    html+="<option value='all'>전체</option>";
-				    $.each(data, function (index, item) {
-                        html+="<option value=" + item.CODE + ">" + item.NAME + "</option>";
+                    html+="<option value=''>전체</option>";
+                    console.log(data[1]);
+				    $.each(data[1], function (index, item) {
+				    	console.log(item.CODE);
+				    	html+="<option value='"+item.CODE+"'>"+ item.NAME + "</option>";				    	
                     });
                     html+="</select>";
-            
-            }
-                repair_selector.html(html);
-            
+					repair_selector.html('');
+					repair_selector.html(html);                    
+            }    
             }
         });
-}
-    
-    </script>
+	}
 
-</head>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-<!-- 캘린더 -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-<script src="<c:url value='/'/>js/datepicker.js"></script>
-<!-- /캘린더 -->
-<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-<script src="<c:url value='/'/>js/ui.js"></script>
+	
+    function fnSearch() {
+		document.SmartCrmVO.pageIndex.value = 1;
+		document.SmartCrmVO.action = "<c:url value='/crm/SmartRepairInfos.do'/>";
+		document.SmartCrmVO.submit();
+	}
+    $(document).ready(function () {
+    	$('#sdate').datepicker('setDate', 'today');
 
-<title>기준정보 > 사용자관리</title>
-<script type="text/javaScript" language="javascript" defer="defer">
-
-function fnSearch() {
-	document.smartCrmVO.pageIndex.value = 1;
-	document.smartCrmVO.action = "<c:url value='/crm/SmartAddRepairCar.do'/>";
-	document.smartCrmVO.submit();
-}
+    });
 </script>
 </head>
 <body>
@@ -165,40 +102,64 @@ function fnSearch() {
 								</div>
 								<!--// Location -->
 								<form name="SmartCrmVO" id="SmartCrmVO" action="<c:url value='/crm/SmartRepairInfos.do'/>" method="post">
-                                    <input type="hidden" id="main" name="main" value="<c:out value='${SmartCrmVO.main}'/>">
-                                    <input type="hidden" id="middle" name="middle" value="<c:out value='${SmartCrmVO.middle}'/>">
+                                    <%-- <input id="main" name="main" value="<c:out value='${SmartCrmVO.main}'/>">
+                                    <input id="middle" name="middle" value="<c:out value='${SmartCrmVO.middle}'/>">
+                                    <input id="searchrepairname" name="searchrepairname" value="<c:out value='${SmartCrmVO.searchrepairname}'/>"> --%>
                                     <input type="hidden" id="callsys" name="callsys" value="">
 									<input name="selectedId" type="hidden" /> 
-									<input name="checkedIdForDel" type="hidden" /> 
+									<input name="checkedIdForDel" type="hidden" />
 									<%-- <input name="pageIndex" type="hidden" value="<c:out value='${userSearchVO.pageIndex}'/>" /> --%>
 									<div class="condition">
 										<span class="item f_search">
 											<p class="left">
-														대분류
+														<label for="PIDX">분류</label>
 														<label class="f_select w_200" for="PIDX">
-																<select name="PIDX" id="PIDX" onchange="setSelectBox(this.value)">
-																	<option value="all">전체</option>
+																<select name="PIDX" id="PIDX" onchange="setSelectBox();">
+																	<option value="">전체</option>
 																	<c:forEach var="i" items="${mainlist}" varStatus="status">
-			                                                            <option value="<c:out value='${i.CODE}'/>" ${searchVO.autoroom ==i.CODE ? 'selected' : ((logininfo[0].TEAM == i.CODE && searchVO.autoroom =='') ? 'selected' : '')} >${i.NAME}</option> 
+			                                                            <option value="<c:out value='${i.CODE}'/>" ${SmartCrmVO.PIDX ==i.CODE ? 'selected' : ''} >${i.NAME}</option> 
 			                                                        </c:forEach>
 																</select>
 														</label>
-														중분류
+														<label for="PIDX1"></label>
 			                                            <label class="f_select w_200" for="PIDX1"> 
 																<select name="PIDX1" id="PIDX1">
-																	<option value="all">전체</option>
+																	<option value="">전체</option>
 																	<c:forEach var="middlelist" items="${middlelist}" varStatus="status">
-			                                                            <option value="<c:out value='${middlelist.CODE}'/>">${middlelist.NAME}</option> 
+			                                                            <option value="<c:out value='${middlelist.CODE}'/>" ${SmartCrmVO.PIDX1 == middlelist.CODE?'selected':''} >${middlelist.NAME}</option> 
 			                                                        </c:forEach>
 																</select>
 														</label>
-												<label for="sdate"></label> 
+												<label for="sdate">기간 </label> 
 													<input name="sdate" id="sdate" readonly="readonly"class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.sdate}"/>" />
 												<label for="edate"> ~ </label> 
 													<input name="edate" id="edate" readonly="readonly" class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.edate}"/>" /> 
+												<label for="searchTeam">작업반</label>
+					                        		<%-- <input class="f_input w_200" name="POSITION" id="POSITION" type="text" maxlength="20" title="검색" value="<c:out value="${SmartCrmVO.POSITION}"/>"/> --%>
+													 <label class="f_select w_200" for="POSITION">
+															<select name="POSITION" id="POSITION">
+																<option value="">전체</option>
+																<c:forEach var="j" items="${autorooms}" varStatus="status">
+		                                                            <option value="<c:out value='${j.CODE}'/>" ${SmartCrmVO.POSITION == j.CODE?'selected':''} >${j.NAME}</option> 
+		                                                        </c:forEach>
+															</select>
+													</label>
 												<button class="btn" type="submit"onclick="fnSearch(); return false;" style="right: -50px;"><spring:message code='button.search' /></button> 
 											</p>
 										</span>
+										<%-- <div class="right_col">
+                                            <label class="f_select w_200" for="autoroom">
+													<select name="autoroom" id="autoroom">
+														<option value="all">전체</option>
+														<c:forEach var="k" items="${autorooms}" varStatus="status">
+                                                            <option value="<c:out value='${k.CODE}'/>" ${SmartCrmVO.position ==k.CODE ? 'selected' : ((logininfo[0].TEAM == k.CODE && SmartCrmVO.position =='') ? 'selected' : '')} >${k.NAME}</option> 
+                                                        </c:forEach>
+													</select>
+													
+														
+											</label>
+											<a href="#" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
+										</div> --%>
 									</div>
 							</div>
 														
@@ -214,15 +175,16 @@ function fnSearch() {
 										<col style="width: 100px;">
 										<col style="width: 100px;">
 										<col style="width: 100px;">
-										<%-- <col style="width: 100px;"> --%>
+										<col style="width: 100px;">
 									</colgroup>
 									<thead>
 										<tr>
-											<th scope="col">출고일</th>
+											<th scope="col">정비일</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">고객명</th>
 											<th scope="col">차량종류</th>
 											<th scope="col">작업반</th>
+											<th scope="col">수리사항</th>
 											<th scope="col">연락처</th>
 											<!-- <th scope="col">완료시간</th> -->
 										</tr>
@@ -237,11 +199,12 @@ function fnSearch() {
 										<c:forEach items="${resultList}" var="result"
 											varStatus="status">
 											<tr>
-												<td><c:out value="${result.TURNOVERTIME}" /></td>
-												<td><c:out value="${result.AUTONUMBER}" /></td>
+												<td><c:out value="${result.RECEIPTDATE}" /></td>
+												<td><c:out value="${result.CUSTOMER_AUTONO}" /></td>
 												<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
-												<td><c:out value="${result.POSITION_NAME}" /></td>
+												<td><c:out value="${result.POSITION}" /></td>
+												<td><c:out value="${result.REPAIR_NAME}" /></td>
 												<td><c:out value="${result.CUSTOMER_TEL}" /></td>
 												<%-- <td><c:out value="${result.ETIME}" /></td> --%>
 											</tr>

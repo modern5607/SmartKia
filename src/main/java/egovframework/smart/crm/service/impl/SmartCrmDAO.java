@@ -36,19 +36,30 @@ public class SmartCrmDAO extends EgovAbstractMapper{
 	public List<SmartCrmVO> selectCrmList(SmartCrmVO vo) throws Exception{
         return (List<SmartCrmVO>) list("smartCrmDAO.selectCrmList", vo);
     }    
+//    @SuppressWarnings("unchecked")
+//    public List<SmartCrmVO> dailyrepair(SmartCrmVO vo) {
+//        return selectList("smartCrmDAO.dailyrepair");
+//    }
+//    @SuppressWarnings("unchecked")
+//    public List<SmartCrmVO> dailyhead(SmartCrmVO vo) {
+//        return selectList("smartCrmDAO.dailyhead",vo);
+//    }
+//    @SuppressWarnings("unchecked")
+//    public List<SmartCrmVO> dailydetail(SmartCrmVO vo) {
+//        return selectList("smartCrmDAO.dailydetail",vo);
+//    }
     @SuppressWarnings("unchecked")
-    public List<SmartCrmVO> dailyrepair(SmartCrmVO vo) {
-        return selectList("smartCrmDAO.dailyrepair");
+    public List<SmartCrmVO> repairStat(SmartCrmVO SmartCrmVO) {
+        return selectList("smartCrmDAO.repairStat");
     }
-    @SuppressWarnings("unchecked")
-    public List<SmartCrmVO> dailyhead(SmartCrmVO vo) {
-        return selectList("smartCrmDAO.dailyhead",vo);
-    }
-    @SuppressWarnings("unchecked")
-    public List<SmartCrmVO> dailydetail(SmartCrmVO vo) {
-        return selectList("smartCrmDAO.dailydetail",vo);
-    }
-    
+  @SuppressWarnings("unchecked")
+  public List<SmartCrmVO> selectStatMain(SmartCrmVO SmartCrmVO) {
+      return selectList("smartCrmDAO.selectStatMain",SmartCrmVO);
+  }
+//  @SuppressWarnings("unchecked")
+//  public List<SmartCrmVO> selectStatMiddle(SmartCrmVO SmartCrmVO) {
+//      return selectList("smartCrmDAO.selectStatMiddle",SmartCrmVO);
+//  }
     @SuppressWarnings("unchecked")
     public List<SmartCrmVO> selectLeadTime(SmartCrmVO vo) {
         return selectList("smartCrmDAO.selectLeadTime");
@@ -61,7 +72,16 @@ public class SmartCrmDAO extends EgovAbstractMapper{
     public List<SmartCrmVO> selectLeadMiddle(SmartCrmVO vo) {
         return selectList("smartCrmDAO.selectLeadMiddle",vo);
     }
+
+    @SuppressWarnings("unchecked")
     public List<Object> selectLeadTimelist(Map<String, Object> params) {
-        return selectList("SmartMdmDAO.selectLeadTimelist",params);
+        return selectList("smartCrmDAO.selectLeadTimelist", params);
+    }
+    @SuppressWarnings("unchecked")
+    public List<SmartCrmVO> selectRepairList(SmartCrmVO vo) throws Exception{
+        return (List<SmartCrmVO>) list("smartCrmDAO.selectRepairList", vo);
+    } 
+    public List<Object> selectCmmCode(String vo){
+        return selectList("smartCrmDAO.SelectCmmCode",vo);
     }
 }

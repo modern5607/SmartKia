@@ -15,10 +15,16 @@ public interface SmartCrmService {
 	
 	public int selectCrmListTotCnt(SmartCrmVO vo) throws Exception;
 
-    public  Map<String, Object> dailyrepair(SmartCrmVO vo) throws Exception;
+//    public  Map<String, Object> dailyrepair(SmartCrmVO vo) throws Exception;
     
     public Map<String,Object> selectLeadTime(SmartCrmVO vo)throws Exception;
 
     public List<Object> selectLeadTimelist(Map<String, Object> params)throws Exception;
+
+    public  Map<String, Object> selectRepairList(SmartCrmVO vo) throws Exception;
+    
+    public List<Object> SelectCmmCode(String vo) throws Exception;
+
+    public Map<String, Object> repairStat(SmartCrmVO SmartCrmVO);
 
 }

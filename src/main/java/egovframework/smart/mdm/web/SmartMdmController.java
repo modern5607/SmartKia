@@ -363,37 +363,9 @@ public class SmartMdmController {
 		model.addAttribute("sublist", map.get("sub"));
 		model.addAttribute("paginationInfo", paginationInfo);
 
-		if("ajax".equals(callsys))
-		{
-//		    System.out.println("SmartLeadTime.do -> ===========================11111 " + map.get("middle").toString());
-		    return "/crm/SmartRepairInfos";
-		       
-		}
-		else 
-		{
-//		    System.out.println("SmartLeadTime.do -> ===========================22222 ");
-		    return "/crm/SmartRepairInfos";    
-		}
-		
+
+		return "/mdm/SmartLeadTimeView";    
 	}
-
-	@ResponseBody
-	@RequestMapping(value = "/mdm/SmartRepairAjax.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Object> SmartRepairAjax(@RequestParam Map<String,Object> params, ModelMap model,HttpServletRequest request) throws Exception {
-
-		System.out.println(params);
-
-        // System.out.println("SmartRepairAjax.do -> =========================== ");
-        // System.out.println("SmartRepairAjax.do -> leadtimeVO : " + leadtimeVO);
-        // System.out.println("SmartRepairAjax.do -> callsys : " + callsys);
-
-		
-        List<Object> list = smartmdmservice.selectLeadTimelist(params);
-		System.out.println("list : "+list);
-        // List<Object> test = smartmdmservice.SelectCmmCode("USE_YN");
-
-        return list;
-    }
 
 	@RequestMapping(value = "/mdm/InsertLeadTime.do",method=RequestMethod.POST)
 	public void InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response) throws Exception {
