@@ -41,6 +41,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -463,15 +465,26 @@ public class SmartTabletController {
 		if (menuNo != null && !menuNo.equals("")) {
 			request.getSession().setAttribute("menuNo", menuNo);
 		}
+		Device device = DeviceUtils.getCurrentDevice(request);
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
+			if(device.isTablet()||device.isMobile()){
+				return "uat/uia/TabletLogin";	
+			}
+			else
+			{
+				return "uat/uia/EgovLoginUsr";	
+			}
 		}
+		
+		searchVO.setSearchtakestat("CB-receipt");
 		// service
 		Map<String, Object> map = smarttabletservice.assignmentList(searchVO);
 		
+
+		model.addAttribute("SmartTabletVO", searchVO);
 		model.addAttribute("reserve", smarttabletservice.reservelist());
 		model.addAttribute("resultList", map.get("resultList"));
 		model.addAttribute("resultCnt", map.get("resultCnt"));
@@ -493,10 +506,18 @@ public class SmartTabletController {
 			request.getSession().setAttribute("menuNo", menuNo);
 		}
 		// 0. Spring Security 사용자권한 처리
+		Device device = DeviceUtils.getCurrentDevice(request);
+
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
+			if(device.isTablet()||device.isMobile()){
+				return "uat/uia/TabletLogin";	
+			}
+			else
+			{
+				return "uat/uia/EgovLoginUsr";	
+			}
 		}
 
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
@@ -575,5 +596,58 @@ public class SmartTabletController {
 		model.addAttribute("leadtimelist", leadtimelist);
 
 		return "/tablet/TabletCompleteView";
+	}
+	/*
+	 * 정비완료 업데이트
+	 */
+	@RequestMapping(value = "/tablet/TabletRepairComplete.do",method=RequestMethod.POST)
+	public String tabletRepairComplete(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model,HttpServletResponse response,RedirectAttributes attr) throws Exception {
+		
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		System.out.println(params);
+
+		//정비수정
+		System.out.println("parmas:"+params);
+		int result = smarttabletservice.RepairComplete(params);
+
+		if (result == 0) // insert실패
+			attr.addFlashAttribute("msg", "수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
+		else
+			attr.addFlashAttribute("msg", "수리 완료되었습니다.");
+
+		return "redirect:/tablet/TabletWorkGroup.do";
+	}
+	/**
+	 * 입고 취소 UPDATE
+	 */
+	@RequestMapping(value = "/tablet/tabletReceiveCancel.do")
+	public String tabletReceiveCancel(@RequestParam Map<String,Object> params,SmartTabletVO vo,ModelMap model) throws Exception {
+		
+		// 미인증 사용자에 대한 보안처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		String id = loginVO.getUniqId();
+		params.put("loginid", id);
+		
+		int result = smarttabletservice.cancelreceive(params);
+		if(result==0) //log insert 실패 
+		{
+			model.addAttribute("msg","입고취소가 실패했습니다 다시시도해주세요.");
+			model.addAttribute("url","");
+		}
+		else 
+		{
+			model.addAttribute("msg","입고가 취소되었습니다.");
+			model.addAttribute("url","TabletWorkGroup.do");
+		}
+		
+		return "alert";
 	}
 }
