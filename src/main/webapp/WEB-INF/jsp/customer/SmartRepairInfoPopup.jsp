@@ -34,7 +34,7 @@
 		parent.fn_egov_modal_remove();
 	}
 
-	function clickRepairdetail(seq, repairNote, turnOverTime,totalkm) {
+	function clickRepairdetail(seq, repairNote, turnOverTime) {
 		const element = document.getElementById('remark');
 		element.innerHTML = repairNote;
 		const elements = document.getElementById('receip');
@@ -52,7 +52,20 @@
 						/* console.log(seq); */
 						if (resp == null) {
 
-		$("#totalkm").text(totalkm);
+							alert("정보가 없습니다.");
+							return;
+						} else {
+							var html = "";
+							var repair_selector = $("#ul");
+							html += "<table>";
+							$
+									.each(
+											resp,
+											function(jndex, jtem) {
+												var class_add1 = '';
+												var class_add2 = '';
+												var check_add1 = '';
+												var check_add2 = '';
 
 												/* if (jtem.REPAIRMETHOD == 'CB-general') {
 													check_add1 = 'checked';
@@ -65,20 +78,10 @@
 													class_add2 = 'on';
 												} */
 
-					alert("정보가 없습니다.");
-					return;
-				} else {
-					var html = "";
-					var repair_selector = $("#ul");
-					html += "<table>";
-					$
-							.each(
-									resp,
-									function(jndex, jtem) {
-										var class_add1 = '';
-										var class_add2 = '';
-										var check_add1 = '';
-										var check_add2 = '';
+												html += "<tr>";
+												html += "<td>"
+														+ jtem.REPAIRCODE_NAME
+														+ "</td>";
 
 												/* html += "<td>";
 												html += "<label for='rdo1' class=' " + class_add1 +"'>";
@@ -92,32 +95,15 @@
 												html += "</td>"; */
 												html += "</tr>";
 
-										html += "<tr>";
-										html += "<td>"
-												+ jtem.REPAIRCODE_NAME
-												+ "</td>";
+											});
+							html += "</table>";
+							html += "</li>";
+							html += "</ul>";
+						}
 
-										html += "<td>";
-										html += "<label for='rdo1' class=' " + class_add1 +"'>";
-										html += "<input type='radio' id='rdo"+ jndex +"' name='repairmethod"+ jndex +"'onclick='return false;'  "+ check_add1 +">";
-										html += "</label>";
-										html += "</td>";
-										html += "<td>";
-										html += "<label for='rdo1' class=' " + class_add2 +"'>";
-										html += "<input type='radio' id='rdo1"+ jndex +"' name='repairmethod"+ jndex +"'onclick='return false;' "+ check_add2 +">";
-										html += "</label>";
-										html += "</td>";
-										html += "</tr>";
-
-									});
-					html += "</table>";
-					html += "</li>";
-					html += "</ul>";
-				}
-
-				repair_selector.html(html);
-			}
-		});
+						repair_selector.html(html);
+					}
+				});
 	}
 </script>
 </head>
@@ -153,7 +139,7 @@
 											<li style="font-size: 14px"><c:out
 													value="${list.turnOverTime}" /><br> <a href="#"
 												style=""
-												onclick="clickRepairdetail('<c:out value="${list.takeSeq}"/>', '<c:out value="${list.repairNote}"/>', '<c:out value="${list.turnOverTime}"/>','<c:out value='${list.totalKm}'/>'); return false;">-자세히보기-</a>
+												onclick="clickRepairdetail('<c:out value="${list.takeSeq}"/>', '<c:out value="${list.repairNote}"/>', '<c:out value="${list.turnOverTime}"/>'); return false;">-자세히보기-</a>
 											</li>
 										</c:when>
 										<c:otherwise>
@@ -192,8 +178,16 @@
 						<strong style="margin-left: 0px; font-size: 24px">정비 완료일</strong>
 						<div id="receip" class="f_txt" style="margin-bottom: 20px; line-height: 44px">
 
-						<strong style="margin-left: 0px; font-size: 24px">총 주행거리</strong>
-						<div id="totalkm" class="f_txt" style="margin-bottom: 20px; line-height: 44px"></div>
+							<table>
+								<tr>
+									<!-- <c:forEach var="list" items="${cusinfo}" varStatus="status"
+										begin="0" end="0">
+										<td><c:out value="${list.totalKm}"></c:out></td>
+									</c:forEach> -->
+								</tr>
+
+							</table>
+						</div>
 
 						<strong style="margin-left: 0px; font-size: 24px">정비비고</strong>
 						<div id="remark" class="f_txt"

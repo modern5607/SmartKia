@@ -365,7 +365,9 @@ public class SmartMdmController {
 		model.addAttribute("middlelist", map.get("middle"));
 		model.addAttribute("sublist", map.get("sub"));
 		model.addAttribute("paginationInfo", paginationInfo);
-
+		
+        return "/mdm/SmartLeadTimeView";
+    }
 
 	@RequestMapping(value = "/mdm/InsertGroupLeadTime.do",method=RequestMethod.POST)
 	public String InsertGroupLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response) throws Exception {
