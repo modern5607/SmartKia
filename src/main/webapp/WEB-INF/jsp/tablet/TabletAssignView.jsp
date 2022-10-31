@@ -133,6 +133,14 @@ function fn_egov_modal_remove() {
             $(".ui-dialog-titlebar").hide();
             $dialog.dialog('open');
         }
+
+    function maxLengthCheck(estime){
+    	if(estime.value>=241){
+    		alert("당일수리불가 항목 처리되었습니다.");
+    		estime.value="240";
+    		return;
+    	}
+    }
 </script>
 </head>
 <body>
@@ -250,7 +258,7 @@ function fn_egov_modal_remove() {
 			</div>
 			<div class="info3_2">
 				<div><strong>예상소요시간</strong></div>
-				<div><input type="text" name="estime" id="estime"><label>분</label></div>
+				<div><input type="number"maxlength="3" oninput="maxLengthCheck(this);" name="estime" id="estime"><label>분</label></div>
 			</div>
 			<div class="info3_3">
 				<div><strong>작업반</strong></div>

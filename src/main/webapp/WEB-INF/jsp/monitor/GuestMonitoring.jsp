@@ -12,13 +12,13 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/monitoring.css">
-<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-<script src="<c:url value='/'/>js/ui.js"></script>
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/component.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="/css/monitoring.css">
+<script src="/js/jquery-1.11.2.min.js"></script>
+<script src="/js/ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <style>
 /* tr:nth-child(even){
@@ -90,7 +90,7 @@ div.marquee>div.marquee-text {
 										<c:forEach begin="0" end="8" varStatus="status">
 											<tr>
 												<td><c:out value="${Guest[status.index].SEQ}" /></td>
-												<td><c:out value="${Guest[status.index].AUTONUMBER}" /></td>
+												<td><c:out value="${Guest[status.index].CARNUM}" /></td>
 												<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
 												<td><c:out value="${Guest[status.index].NAME}" /></td>
 											</tr>
@@ -128,63 +128,13 @@ div.marquee>div.marquee-text {
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach begin="0" end="2" varStatus="status">
+										<c:forEach begin="0" end="8" varStatus="status">
 											<tr>
-												<td><c:out value="${TeamA[status.index].AUTONUMBER}" /></td>
-												<td><c:out value="${TeamA[status.index].NAME}" /></td>
-												<td><c:out value="${TeamA[status.index].ESTIME}" /></td>
-												<td><c:out value="${TeamA[status.index].POSITION_NAME}" /></td>
-												<td style="color:red;"><c:out value="${TeamA[status.index].TASKSTAT_NAME}" /></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="teamtables">
-							<div class="board_list"style="border-top: none;">
-								<table id="btable">
-									<colgroup>
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-									</colgroup>
-									<tbody>
-										<c:forEach begin="0" end="2" var="result"
-											varStatus="status">
-											<tr>
-												<td><c:out value="${TeamB[status.index].AUTONUMBER}" /></td>
-												<td><c:out value="${TeamB[status.index].NAME}" /></td>
-												<td><c:out value="${TeamB[status.index].ESTIME}" /></td>
-												<td><c:out value="${TeamB[status.index].POSITION_NAME}" /></td>
-												<td style="color:red;"><c:out value="${TeamB[status.index].TASKSTAT_NAME}" /></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="teamtables">
-							<div class="board_list" style="border-top: none;">
-								<table id="ctable">
-									<colgroup>
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-									</colgroup>
-									<tbody>
-										<c:forEach begin="0" end="2" var="result"
-											varStatus="status">
-											<tr>
-												<td><c:out value="${TeamC[status.index].AUTONUMBER}" /></td>
-												<td><c:out value="${TeamC[status.index].NAME}" /></td>
-												<td><c:out value="${TeamC[status.index].ESTIME}" /></td>
-												<td><c:out value="${TeamC[status.index].POSITION_NAME}" /></td>
-												<td style="color:red;"><c:out value="${TeamC[status.index].TASKSTAT_NAME}" /></td>
+												<td><c:out value="${Team[status.index].CARNUM}" /></td>
+												<td><c:out value="${Team[status.index].NAME}" /></td>
+												<td><c:out value="${Team[status.index].ESTIME}" /></td>
+												<td><c:out value="${Team[status.index].POSITION_NAME}" /></td>
+												<td style="color:red;"><c:out value="${Team[status.index].TASKSTAT_NAME}" /></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -221,7 +171,7 @@ div.marquee>div.marquee-text {
 							<tbody>
 								<c:forEach begin="0" end="2" varStatus="status">
 									<tr>
-										<td><c:out value="${Complete[status.index].AUTONUMBER}" /></td>
+										<td><c:out value="${Complete[status.index].CARNUM}" /></td>
 										<td><c:out value="${Complete[status.index].CUSTOMER_AUTOKIND}" /></td>
 										<td><c:out value="${Complete[status.index].NAME}" /></td>
 										<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td>

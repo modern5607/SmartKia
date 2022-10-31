@@ -57,9 +57,9 @@ if (request.getProtocol().equals("HTTP/1.1"))
 									<input type="hidden" name="takeseq">
 								</form>
 								<h1 class="tit_1 team_left">작업 현황</h1>
-                                <div class="tab team_click active" id="Aclass">A반</div>
-                                <div class="tab team_click" id="BClass">B반</div>
-								<div class="tab team_click" id="Cclass">C반</div>
+                                <div class="tab team_click active" id="Aclass">1반</div>
+                                <div class="tab team_click" id="BClass">2반</div>
+								<div class="tab team_click" id="Cclass">3반</div>
 								<div class="menu_btn"><a href="#"><img src="../images/ico_allmenu_2.png"></a></div>
 								<div class="logo team_right"><img src="../images/kia_logo.png"></div>
 								<div class="menu_bg"></div>

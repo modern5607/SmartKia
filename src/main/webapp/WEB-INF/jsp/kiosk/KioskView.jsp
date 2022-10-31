@@ -147,7 +147,10 @@ function fn_egov_modal_remove() {
 								<h1 class="title">
 									차량번호 7자리 또는 8자리를 입력해 주세요
 								</h1>
-								<input type="search" class="input_num" name="searchcarnum" id="searchcarnum">
+								<input type="search" class="input_num" name="searchcarnum" id="searchcarnum" onkeypress="javascript:if(event.keyCode==13)clicksearch();">
+								<div id="searchcarwarning">
+
+								</div>
 								<!-- <span id="searchclear">X</span> -->
 								
 							</div>
@@ -193,6 +196,7 @@ function fn_egov_modal_remove() {
 									<ul class="car_info">
 										<li><label>차량번호 : </label><label></label></li>
 										<li><label>소유주 : </label><label></label></li>
+										<li><label>연락처 : </label><label></label></li>
 										<li><label>차종 : </label><label></label></li>
 									</ul>
 									<div class="fix_history">
@@ -391,7 +395,7 @@ function initialization_input()
 }
 
 $(document).on("keyup","#searchcarnum",function () { 
-	console.log($(this).val());
+	// console.log($(this).val());
 	if($(this).val().length >=8)
 	{
 		$(this).val($(this).val().slice(0,7));
@@ -487,7 +491,13 @@ function moveTo(num,mode='')
 		$("input[name=mode]").val('');
 	}
 	if(num=="slide02" && $("input[name=mode]").val() == "" && mode !='')
+	{
+		$("#searchcarwarning").text("");
 		$("input[name=mode]").val(mode);
+		setTimeout(function(){
+			$("#searchcarnum").focus();
+		},1000);
+	}
 
 	//정비사항 화면
 	if(num == "slide05")
@@ -531,29 +541,33 @@ function carNumCheck(str) {
 	return false;
 }
 
-function clickback()
-{
-	if(carnum=="")
-		return;
+// function clickback()
+// {
+// 	if(carnum=="")
+// 		return;
 		
-	carnum = carnum.slice(0,carnum.length-1)
-	// console.log(carnum);
-	$("#carnum").val(carnum);
+// 	carnum = carnum.slice(0,carnum.length-1)
+// 	// console.log(carnum);
+// 	$("#carnum").val(carnum);
 	
-}
+// }
 
-function clickdel()
-{
-	carnum='';
-	$("#carnum").val(carnum);
-}
+// function clickdel()
+// {
+// 	carnum='';
+// 	$("#carnum").val(carnum);
+// }
 
 function clicksearch()
 {
 	carnum = $("#searchcarnum").val();
 	var mode = $("input[name=mode]").val();
 	if(carNumCheck(carnum)==false)
-		return;	
+	{
+		var text = "차량번호 형식이 알맞지 않습니다. 다시 확인해 주세요";
+		$("#searchcarwarning").text(text);
+		return;
+	}
 	
 	if(mode == "normal"){
 		$.ajax({
@@ -566,8 +580,16 @@ function clicksearch()
 				mode:mode
 			},
 			success: function (resp) {
-				// console.log(resp);
-
+				console.log(resp);
+				if(resp ==""|| resp==null)
+				{
+					var text = "차량 정보가 없습니다. 고객등록을 먼저 진행해 주세요";
+					$("#searchcarwarning").text(text);
+					// setTimeout(function(){
+					// 	moveTo("slide01");
+					// },3000)
+					return;
+				}
 				clickCar(resp[0].CUSTOMER_AUTONO,resp[0].CUSTOMER_NAME,resp[0].CUSTOMER_AUTOKIND,resp[0].CUSTOMER_TEL,resp[0].CUSTOMER_ID);
 				// var cartbody = $("#s_content table tbody");
 				
@@ -609,8 +631,14 @@ function clicksearch()
 				carnum:carnum
 			},
 			success: function (resp) {
-				// console.log(resp);
-
+				console.log(resp);
+				//정보 없을시
+				if(resp ==""|| resp==null)
+				{
+					var text = "예약 정보가 없습니다 데스크에 문의해 주세요";
+					$("#searchcarwarning").text(text);
+					return;
+				}
 				clickCar(resp[0][0].CUSTOMER_AUTONO,resp[0][0].CUSTOMER_NAME,resp[0][0].CUSTOMER_AUTOKIND,resp[0][0].CUSTOMER_TEL,resp[0][0].CUSTOMER_ID,resp[2],resp[1][0].TAKESEQ);
 				
 			}
@@ -622,7 +650,8 @@ function clicksearch()
 function clickCar(carnum,name,kind,tel,id,repairs='',seq=''){
 	$(".car_info").children("li:eq(0)").children("label:eq(1)").text(carnum);
 	$(".car_info").children("li:eq(1)").children("label:eq(1)").text(name);
-	$(".car_info").children("li:eq(2)").children("label:eq(1)").text(kind);
+	$(".car_info").children("li:eq(2)").children("label:eq(1)").text(tel);
+	$(".car_info").children("li:eq(3)").children("label:eq(1)").text(kind);
 	$(".fix_history").children("a:eq(0)").attr("onclick","clickRepair('"+id+"');")
 
 	$("input[name=customerid]").val(id);

@@ -73,7 +73,7 @@
 						<div class="teamtables teamtb"id="Team_1">
 							<div class="top_line"></div>
 							<div class="header">
-								<h1 class="tit_1 team_left">A반 작업 현황</h1>
+								<h1 class="tit_1 team_left">1반 작업 현황</h1>
 								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
 							</div>
 							<div class="board_list">
@@ -108,7 +108,7 @@
 						<div class="teamtables teamtb"id="Team_2" style="display: none;">
 							<div class="top_line"></div>
 							<div class="header">
-								<h1 class="tit_1 team_left">B반 작업 현황</h1>
+								<h1 class="tit_1 team_left">2반 작업 현황</h1>
 								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
 							</div>
 							<div class="board_list">
@@ -143,7 +143,7 @@
 						<div class="teamtables teamtb"id="Team_3"  style="display: none;">
 							<div class="top_line"></div>
 							<div class="header">
-								<h1 class="tit_1 team_left">C반 작업 현황</h1>
+								<h1 class="tit_1 team_left">3반 작업 현황</h1>
 								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
 							</div>
 							<div class="board_list">
