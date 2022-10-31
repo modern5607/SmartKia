@@ -90,7 +90,7 @@ div.marquee>div.marquee-text {
 										<c:forEach begin="0" end="8" varStatus="status">
 											<tr>
 												<td><c:out value="${Guest[status.index].SEQ}" /></td>
-												<td><c:out value="${Guest[status.index].AUTONUMBER}" /></td>
+												<td><c:out value="${Guest[status.index].CARNUM}" /></td>
 												<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
 												<td><c:out value="${Guest[status.index].NAME}" /></td>
 											</tr>
@@ -128,63 +128,13 @@ div.marquee>div.marquee-text {
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach begin="0" end="2" varStatus="status">
+										<c:forEach begin="0" end="8" varStatus="status">
 											<tr>
-												<td><c:out value="${TeamA[status.index].AUTONUMBER}" /></td>
-												<td><c:out value="${TeamA[status.index].NAME}" /></td>
-												<td><c:out value="${TeamA[status.index].ESTIME}" /></td>
-												<td><c:out value="${TeamA[status.index].POSITION_NAME}" /></td>
-												<td style="color:red;"><c:out value="${TeamA[status.index].TASKSTAT_NAME}" /></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="teamtables">
-							<div class="board_list"style="border-top: none;">
-								<table id="btable">
-									<colgroup>
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-									</colgroup>
-									<tbody>
-										<c:forEach begin="0" end="2" var="result"
-											varStatus="status">
-											<tr>
-												<td><c:out value="${TeamB[status.index].AUTONUMBER}" /></td>
-												<td><c:out value="${TeamB[status.index].NAME}" /></td>
-												<td><c:out value="${TeamB[status.index].ESTIME}" /></td>
-												<td><c:out value="${TeamB[status.index].POSITION_NAME}" /></td>
-												<td style="color:red;"><c:out value="${TeamB[status.index].TASKSTAT_NAME}" /></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="teamtables">
-							<div class="board_list" style="border-top: none;">
-								<table id="ctable">
-									<colgroup>
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-									</colgroup>
-									<tbody>
-										<c:forEach begin="0" end="2" var="result"
-											varStatus="status">
-											<tr>
-												<td><c:out value="${TeamC[status.index].AUTONUMBER}" /></td>
-												<td><c:out value="${TeamC[status.index].NAME}" /></td>
-												<td><c:out value="${TeamC[status.index].ESTIME}" /></td>
-												<td><c:out value="${TeamC[status.index].POSITION_NAME}" /></td>
-												<td style="color:red;"><c:out value="${TeamC[status.index].TASKSTAT_NAME}" /></td>
+												<td><c:out value="${Team[status.index].CARNUM}" /></td>
+												<td><c:out value="${Team[status.index].NAME}" /></td>
+												<td><c:out value="${Team[status.index].ESTIME}" /></td>
+												<td><c:out value="${Team[status.index].POSITION_NAME}" /></td>
+												<td style="color:red;"><c:out value="${Team[status.index].TASKSTAT_NAME}" /></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -221,7 +171,7 @@ div.marquee>div.marquee-text {
 							<tbody>
 								<c:forEach begin="0" end="2" varStatus="status">
 									<tr>
-										<td><c:out value="${Complete[status.index].AUTONUMBER}" /></td>
+										<td><c:out value="${Complete[status.index].CARNUM}" /></td>
 										<td><c:out value="${Complete[status.index].CUSTOMER_AUTOKIND}" /></td>
 										<td><c:out value="${Complete[status.index].NAME}" /></td>
 										<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td>

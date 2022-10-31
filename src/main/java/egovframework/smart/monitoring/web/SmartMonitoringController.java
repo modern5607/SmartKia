@@ -98,9 +98,7 @@ public class SmartMonitoringController {
 		
 		model.addAttribute("Guest", smartMonitoringService.GuestMonitoring());
 		
-		model.addAttribute("TeamA", smartMonitoringService.SceneMonitoring("CB-A"));
-		model.addAttribute("TeamB", smartMonitoringService.SceneMonitoring("CB-B"));
-		model.addAttribute("TeamC", smartMonitoringService.SceneMonitoring("CB-C"));
+		model.addAttribute("Team", smartMonitoringService.repairMonitoring());
 
 		model.addAttribute("Complete", smartMonitoringService.CompleteMonitoring());
 

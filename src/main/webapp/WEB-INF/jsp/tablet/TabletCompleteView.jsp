@@ -168,7 +168,7 @@ function fn_egov_modal_remove() {
 		});
 		$("#repairseqlist").val(array);
 
-        document.Assignform.action=""; //경로 넣을것.
+        document.Assignform.action="/tablet/TabletRepairComplete.do"; //경로 넣을것.
         document.Assignform.submit();
     }
 
@@ -206,7 +206,7 @@ function fn_egov_modal_remove() {
 		});
 		$("#repairseqlist").val(array);
 
-        document.Assignform.action=""; //경로 넣을것.
+        document.Assignform.action="/tablet/tabletReceiveCancel.do"; //경로 넣을것.
         document.Assignform.submit();
     }
 </script>
@@ -244,7 +244,9 @@ function fn_egov_modal_remove() {
 			<div><strong>주행거리</strong><input type="text" value="<c:out value='${rcptinfo[0].KILRO_TOTAL}'/>" readonly></div>
 			<div><strong>차종</strong><input type="text" value="<c:out value='${rcptinfo[0].KIND}'/>" readonly></div>
 			<div><strong>고객명</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_NAME}'/>" readonly></div>
-			<div><strong>연락처</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_TEL}'/>" readonly></div>
+			<div><strong>연락처</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_TEL}'/>" readonly>
+                <input type="hidden" name="customerid" value="<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>" />	
+            </div>
 			<div><strong style="height: 22px;"></strong><a href="#" onclick="clickRepair('<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>');">수리이력 확인하기</a></div>
 		</div>
 
@@ -320,12 +322,12 @@ function fn_egov_modal_remove() {
 		<div class="vehicleinfo_3">
 			<div class="info3_1">
 				<strong>총 주행거리</strong>
-				<div><input type="text"><label>km</label></div>
+				<div><input type="number"name="newkilro" id="newkilro" placeholder="총주행거리(Km)"><label>km</label></div>
 			</div>
 			<div class="info3_3">
 				<div><strong>담당자 확인사항</strong></div>
 				<div>
-                    <textarea name="repair_note" id="repair_note" cols="30" rows="10"></textarea>
+                    <textarea name="remark" id="remark" cols="30" rows="10"></textarea>
                 </div>
 			</div>
 			

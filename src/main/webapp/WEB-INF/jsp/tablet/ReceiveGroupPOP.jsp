@@ -131,9 +131,9 @@
     }
     
     function maxLengthCheck(estime){
-    	if(estime.value.length>estime.maxLength){
-    		alert("소요시간(분)최대길이는 3자리입니다.");
-    		estime.value="";
+    	if(estime.value>=241){
+    		alert("당일수리불가 항목 처리되었습니다.");
+    		estime.value="240";
     		return;
     	}
     }

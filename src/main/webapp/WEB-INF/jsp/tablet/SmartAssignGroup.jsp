@@ -98,8 +98,8 @@
 												<label class="f_select w_200" for="searchtakestat">
 													<select name="searchtakestat" id="searchtakestat">
 														<option value="">전체</option>
-														<option value="CB-receipt">현장접수</option>
-														<option value="CB-reserveconfirm">예약접수</option>
+														<option value="CB-receipt" ${SmartTabletVO.searchtakestat == "CB-receipt"? 'selected':''}>현장접수</option>
+														<option value="CB-reserveconfirm" ${SmartTabletVO.searchtakestat == "CB-reserveconfirm"? 'selected':''}>예약접수</option>
 													</select>
 												</label>
 											</p>
@@ -151,7 +151,7 @@
 											<tbody>
 												<c:if test="${fn:length(resultList) == 0}">
 													<tr>
-														<td colspan="8"><spring:message
+														<td colspan="9"><spring:message
 																code="common.nodata.msg" /></td>
 													</tr>
 												</c:if>

@@ -24,7 +24,6 @@
 			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
 			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.TASKSTAT = 'CB-repaired'
-			AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
 			<choose>
 				<when test="autoroom ==''">
 					AND A.POSITION = (SELECT TEAM FROM LETTNGNRLMBER WHERE ESNTL_ID = #{loginid})
@@ -59,6 +58,7 @@
 		WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
 			AND A.POSITION IS NULL
 			AND A.TASKSTAT != 'CB-reserve'
+			AND A.TASKSTAT != 'CB-reservecancel'
 			AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
 
 		<if test="searchtakestat == 'CB-receipt'">
@@ -160,11 +160,18 @@
 	</select>
 <update id="UpdateAssign" parameterType="java.util.HashMap">
 		UPDATE CAR_TAKEREPAIR
-		SET    ESTIME   = TO_CHAR(SYSDATE + #{estime}/1440,'yyyy-mm-dd hh24:mi:ss'),
+		SET 
 			POSITION = #{autoroom},
 			TASKSTAT = 'CB-repaired',
 			UPDATE_ID = #{loginid},
-			UPDATE_DATE = SYSDATE
+			UPDATE_DATE = SYSDATE,
+			REPAIRDATE = SYSDATE,   
+			<if test= "estime == '240'">
+				ESTIME   = NULL
+			</if>
+			<if test= "estime != '240'">
+			ESTIME   = TO_CHAR(SYSDATE + #{estime}/1440,'yyyy-mm-dd hh24:mi:ss')
+			</if>
 		WHERE  TAKESEQ  = #{seq}
 	</update>
 	

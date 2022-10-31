@@ -54,6 +54,9 @@
        			CUSTOMER_NAME,
 				concat(concat(SUBSTR(CUSTOMER_NAME,1,1),'*'),SUBSTR (CUSTOMER_NAME,3,10) ) NAME, 
        			A.TASKSTAT,
+				CASE WHEN LENGTH(AUTONUMBER) = 7 THEN concat(concat(SUBSTR(AUTONUMBER,0,0),'**'),SUBSTR (AUTONUMBER,3,7) )
+            		ELSE concat(concat(SUBSTR(AUTONUMBER,0,0),'***'),SUBSTR (AUTONUMBER,4,8) )
+                  		END CARNUM,
           		FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
 				A.POSITION,
           		REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
@@ -63,7 +66,7 @@
 				AND A.TASKSTAT = 'CB-receipt'
        			AND A.TURNOVER = 'N'
 				AND TO_CHAR(TO_DATE(RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
-      				ORDER BY A.ESTIME ASC
+      				ORDER BY A.TAKESEQ ASC
 	</select>
 
 	<select id="CompleteMonitoring" parameterType="comDefaultVO" resultType="java.util.HashMap">
@@ -74,6 +77,9 @@ SUBSTR (TAKESEQ,-4) SEQ ,
        			CUSTOMER_NAME,
 				concat(concat(SUBSTR(CUSTOMER_NAME,1,1),'*'),SUBSTR (CUSTOMER_NAME,3,10) ) NAME, 
        			A.TASKSTAT,
+				CASE WHEN LENGTH(AUTONUMBER) = 7 THEN concat(concat(SUBSTR(AUTONUMBER,0,0),'**'),SUBSTR (AUTONUMBER,3,7) )
+            			ELSE concat(concat(SUBSTR(AUTONUMBER,0,0),'***'),SUBSTR (AUTONUMBER,4,8) )
+                  		END CARNUM,
           		FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
           		REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
        			FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
@@ -83,4 +89,29 @@ SUBSTR (TAKESEQ,-4) SEQ ,
         		AND A.TURNOVER = 'N'
       			ORDER BY A.ESTIME ASC
 	</select>
+
+<select id="repairMonitoring" parameterType="java.lang.String" resultType="java.util.HashMap">
+		
+SELECT TAKESEQ,
+		SUBSTR (TAKESEQ,-4) SEQ ,
+		AUTONUMBER,
+       	CUSTOMER_AUTOKIND,
+       	CUSTOMER_NAME,
+		concat(concat(SUBSTR(CUSTOMER_NAME,1,1),'*'),SUBSTR (CUSTOMER_NAME,3,10) ) NAME, 
+       	A.TASKSTAT,
+		CASE WHEN LENGTH(AUTONUMBER) = 7 THEN concat(concat(SUBSTR(AUTONUMBER,0,0),'**'),SUBSTR (AUTONUMBER,3,7) )
+            ELSE concat(concat(SUBSTR(AUTONUMBER,0,0),'***'),SUBSTR (AUTONUMBER,4,8) )
+                END CARNUM,
+        TO_CHAR(TO_DATE(A.ESTIME,'YYYY-MM-DD HH24:MI:SS'),'HH24:MI') AS ESTIME,
+        FN_CODENAME(POSITION, 'AUTO_ROOM') POSITION_NAME,
+		A.POSITION,
+        REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME, 
+       	FN_CODENAME(TASKSTAT, 'AUTO_PROC') TASKSTAT_NAME
+			FROM   CAR_TAKEREPAIR A , CAR_CUSTOMER B
+			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+			AND A.TASKSTAT ='CB-repaired'
+        	AND A.TURNOVER='N'
+			AND A.ESTIME  IS NOT NULL
+      	ORDER BY TAKESEQ ASC
+</select>
 </mapper>

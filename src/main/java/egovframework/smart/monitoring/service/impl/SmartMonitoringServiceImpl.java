@@ -65,4 +65,10 @@ public class SmartMonitoringServiceImpl extends EgovAbstractServiceImpl implemen
 		return list;
 	}
 
+	@Override
+	public List<Object> repairMonitoring() throws Exception {
+		List<Object> result = smartmonitoringDAO.repairMonitoring();
+		return result;
+	}
+
 }
