@@ -251,10 +251,31 @@ section {
      transform: translate(-50%,-50%);
      top: 17%;
      left: 50%;
-     font-size: 50px;
+     font-size: 42px;
      font-weight: bold;
      text-align: center;
 }
+.input .input_form{
+  width: 100%;
+  height: 20vh;
+  position: absolute;
+  top: 20%;
+}
+.input_form div .label{
+  width: 30%;
+  margin: 0 2%;
+  display: inline-block;
+  text-align: center;
+}
+
+.label + div{
+  display: inline-block;
+}
+
+.input_form label{
+  font-size: 44px;
+}
+
 .container{
   width: 65%;
   height: 50%;
@@ -265,25 +286,22 @@ section {
 
 
 .input .input_num{
-  width: 500px;
+  width: 57%;
+  margin: 0 50px;
   height: 100px;
   border: solid #333 2px;
   border-radius: 50px;
-  position: absolute;
-  left: 50%;
-  top: 25%;
-  transform: translate(-50%,-50%);
-  margin-top: 20px;
   font-size: 70px;
   text-align: center;
   font-weight: bold;
+  display: inline;
 }
 .input #searchcarwarning{
   position: absolute;
   transform: translate(-50%, -50%);
   width: 100%;
   height: 5vh;
-  top: 33%;
+  top: 40%;
   left: 50%;
   font-size: 40px;
   text-align: center;

@@ -10,9 +10,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-    <link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-    <link rel="stylesheet" href="<c:url value='/'/>css/component.css?ver=1">
+    <link rel="stylesheet" href="<c:url value='/'/>css/base.css?after">
+    <link rel="stylesheet" href="<c:url value='/'/>css/layout.css?after">
+    <link rel="stylesheet" href="<c:url value='/'/>css/component.css?after">
     <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
     <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
     <script src="<c:url value='/'/>js/ui.js"></script>
@@ -70,10 +70,6 @@
 		document.SmartCrmVO.action = "<c:url value='/crm/SmartRepairInfos.do'/>";
 		document.SmartCrmVO.submit();
 	}
-    $(document).ready(function () {
-    	$('#sdate').datepicker('setDate', 'today');
-
-    });
 </script>
 </head>
 <body>
@@ -112,30 +108,30 @@
 									<div class="condition">
 										<span class="item f_search">
 											<p class="left">
-														<label for="PIDX">분류</label>
-														<label class="f_select w_200" for="PIDX">
-																<select name="PIDX" id="PIDX" onchange="setSelectBox();">
-																	<option value="">전체</option>
-																	<c:forEach var="i" items="${mainlist}" varStatus="status">
-			                                                            <option value="<c:out value='${i.CODE}'/>" ${SmartCrmVO.PIDX ==i.CODE ? 'selected' : ''} >${i.NAME}</option> 
-			                                                        </c:forEach>
-																</select>
-														</label>
-														<label for="PIDX1"></label>
-			                                            <label class="f_select w_200" for="PIDX1"> 
-																<select name="PIDX1" id="PIDX1">
-																	<option value="">전체</option>
-																	<c:forEach var="middlelist" items="${middlelist}" varStatus="status">
-			                                                            <option value="<c:out value='${middlelist.CODE}'/>" ${SmartCrmVO.PIDX1 == middlelist.CODE?'selected':''} >${middlelist.NAME}</option> 
-			                                                        </c:forEach>
-																</select>
-														</label>
+												<label for="PIDX">분류</label>
+												<label class="f_select w_200" for="PIDX">
+														<select name="PIDX" id="PIDX" onchange="setSelectBox();">
+															<option value="">전체</option>
+															<c:forEach var="i" items="${mainlist}" varStatus="status">
+																<option value="<c:out value='${i.CODE}'/>" ${SmartCrmVO.PIDX ==i.CODE ? 'selected' : ''} >${i.NAME}</option> 
+															</c:forEach>
+														</select>
+												</label>
+												<label for="PIDX1"></label>
+												<label class="f_select w_200" for="PIDX1"> 
+														<select name="PIDX1" id="PIDX1">
+															<option value="">전체</option>
+															<c:forEach var="middlelist" items="${middlelist}" varStatus="status">
+																<option value="<c:out value='${middlelist.CODE}'/>" ${SmartCrmVO.PIDX1 == middlelist.CODE?'selected':''} >${middlelist.NAME}</option> 
+															</c:forEach>
+														</select>
+												</label>
 												<label for="sdate">기간 </label> 
-													<input name="sdate" id="sdate" readonly="readonly"class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.sdate}"/>" />
+													<input name="sdate" id="sdate" readonly class="f_input w_180" type="text" value="<c:out value='${SmartCrmVO.sdate}'/>" />
 												<label for="edate"> ~ </label> 
-													<input name="edate" id="edate" readonly="readonly" class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.edate}"/>" /> 
+													<input name="edate" id="edate" readonly class="f_input w_180" type="text" value="<c:out value='${SmartCrmVO.edate}'/>" /> 
 												<label for="searchTeam">작업반</label>
-					                        		<%-- <input class="f_input w_200" name="POSITION" id="POSITION" type="text" maxlength="20" title="검색" value="<c:out value="${SmartCrmVO.POSITION}"/>"/> --%>
+					                        		
 													 <label class="f_select w_200" for="POSITION">
 															<select name="POSITION" id="POSITION">
 																<option value="">전체</option>
@@ -166,27 +162,29 @@
                                     <!-- 검색조건 -->
 
 							<div class="board_list3">
-								<table summary="고객목록">
-									<caption>고객목록</caption>
+								<table style="table-layout: fixed;">
 									<colgroup>
-										<col style="width: 100px;">
-										<col style="width: 100px;">
-										<col style="width: 100px;">
-										<col style="width: 100px;">
-										<col style="width: 100px;">
-										<col style="width: 100px;">
-										<col style="width: 100px;">
+										<col style="width: 10%;">
+										<col style="width: 10%;">
+										<col style="width: 10%;">
+										<col style="width: 5%;">
+										<col style="width: 10%;">
+										<col style="width: 5%;">
+										<col style="width: 5%;">
+										<col style="width: auto;">
+										<col style="width: 10%;">
 									</colgroup>
 									<thead>
 										<tr>
-											<th scope="col">정비일</th>
+											<th scope="col">접수일자</th>
+											<th scope="col">완료일자</th>
+											<th scope="col">접수번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">고객명</th>
 											<th scope="col">차량종류</th>
 											<th scope="col">작업반</th>
 											<th scope="col">수리사항</th>
 											<th scope="col">연락처</th>
-											<!-- <th scope="col">완료시간</th> -->
 										</tr>
 									</thead>
 									<tbody>
@@ -200,13 +198,14 @@
 											varStatus="status">
 											<tr>
 												<td><c:out value="${result.RECEIPTDATE}" /></td>
+												<td><c:out value="${result.ETIME}" /></td>
+												<td><c:out value="${result.TAKESEQ}" /></td>
 												<td><c:out value="${result.CUSTOMER_AUTONO}" /></td>
 												<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 												<td><c:out value="${result.CUSTOMER_AUTOKIND}" /></td>
 												<td><c:out value="${result.POSITION}" /></td>
-												<td><c:out value="${result.REPAIR_NAME}" /></td>
+												<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><c:out value="${result.REPAIR_NAME}" /></td>
 												<td><c:out value="${result.CUSTOMER_TEL}" /></td>
-												<%-- <td><c:out value="${result.ETIME}" /></td> --%>
 											</tr>
 										</c:forEach>
 									</tbody>

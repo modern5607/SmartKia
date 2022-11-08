@@ -38,12 +38,12 @@
 								<div class="logo team_left"></div>
 							</div>
 							<div class="board_list">
-								<table id="guesttable">
+								<table id="guesttable" style="table-layout: fixed;">
 									<colgroup>
+										<col style="width: 15%;">
+										<col style="width: 15%;">
 										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 40%;">
+										<col style="width: 50%;">
 									</colgroup>
 									<thead>
 										<tr>
@@ -54,12 +54,19 @@
 										</tr>
 									</thead>
 									<tbody>
+										<tr>
+											
+										</tr>
 										<c:forEach begin="0" end="14" varStatus="status">
 											<tr>
-												<td><c:out value="${Guest[status.index].SEQ}" /></td>
-												<td><c:out value="${Guest[status.index].AUTONUMBER}" /></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<!-- <td><c:out value="${Guest[status.index].SEQ}" /></td>
+												<td><c:out value="${Guest[status.index].CARNUM}" /></td>
 												<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
-												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${Guest[status.index].REPAIRCODE_NAME}" /></td>
+												<td><c:out value="${Guest[status.index].REPAIRCODE_NAME}" /></td> -->
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -79,96 +86,34 @@
 							<div class="board_list">
 								<table id="atable" style="table-layout: fixed;">
 									<colgroup>
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 40%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: auto;">
 									</colgroup>
 									<thead>
 										<tr>
+											<th scope="col">접수번호</th>
 											<th scope="col">차량번호</th>
 											<th scope="col">차종</th>
-											<th scope="col">예상완료시간</th>
+											<th scope="col" style="font-size: 25px;">예상완료시간</th>
 											<th scope="col">정비내용</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach begin="0" end="14" varStatus="status">
 											<tr>
-												<td><c:out value="${TeamA[status.index].AUTONUMBER}" /></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<!-- <td><c:out value="${TeamA[status.index].SEQ}" /></td>
+												<td><c:out value="${TeamA[status.index].CARNUM}" /></td>
 												<td><c:out value="${TeamA[status.index].CUSTOMER_AUTOKIND}" /></td>
 												<td><c:out value="${TeamA[status.index].ESTIME}" /></td>
-												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${TeamA[status.index].REPAIRCODE_NAME}" /></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="teamtables teamtb"id="Team_2" style="display: none;">
-							<div class="top_line"></div>
-							<div class="header">
-								<h1 class="tit_1 team_left">2반 작업 현황</h1>
-								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
-							</div>
-							<div class="board_list">
-								<table id="atable" style="table-layout: fixed;">
-									<colgroup>
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 40%;">
-									</colgroup>
-									<thead>
-										<tr>
-											<th scope="col">차량번호</th>
-											<th scope="col">차종</th>
-											<th scope="col">예상완료시간</th>
-											<th scope="col">정비내용</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach begin="0" end="14" varStatus="status">
-											<tr>
-												<td><c:out value="${TeamB[status.index].AUTONUMBER}" /></td>
-												<td><c:out value="${TeamB[status.index].CUSTOMER_AUTOKIND}" /></td>
-												<td><c:out value="${TeamB[status.index].ESTIME}" /></td>
-												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${TeamB[status.index].REPAIRCODE_NAME}" /></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="teamtables teamtb"id="Team_3"  style="display: none;">
-							<div class="top_line"></div>
-							<div class="header">
-								<h1 class="tit_1 team_left">3반 작업 현황</h1>
-								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
-							</div>
-							<div class="board_list">
-								<table id="atable" style="table-layout: fixed;">
-									<colgroup>
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 20%;">
-										<col style="width: 40%;">
-									</colgroup>
-									<thead>
-										<tr>
-											<th scope="col">차량번호</th>
-											<th scope="col">차종</th>
-											<th scope="col">예상완료시간</th>
-											<th scope="col">정비내용</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach begin="0" end="14" varStatus="status">
-											<tr>
-												<td><c:out value="${TeamC[status.index].AUTONUMBER}" /></td>
-												<td><c:out value="${TeamC[status.index].CUSTOMER_AUTOKIND}" /></td>
-												<td><c:out value="${TeamC[status.index].ESTIME}" /></td>
-												<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${TeamC[status.index].REPAIRCODE_NAME}" /></td>
+												<td><c:out value="${TeamA[status.index].REPAIRCODE_NAME}" /></td> -->
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -184,20 +129,132 @@
 </html>
 <script type="text/javascript">
 	
-$(document).ready(function(){
-	var i = 2;
-	var auto_refresh = setInterval(function (){
-		$('#test').load(window.location.href + " #test");
-	}, 15000);
-	var auto_refresh = setInterval(function (){
-		console.log(i);
-		console.log("#Team_"+i);
-		$(".teamtb").css("display", "none");
-		$("#Team_"+i).css("display", "block");
-		i++;
-		
-		if(i==4){ i=1};
+	var rcptlist='';
+	var teamlist='';
+	var total_page=0;//총 페이지수
+	var total_cnt=0; //총 데이터수
+	var current_page=1; //현재 페이지
+	var current_team=0; //0:1반, 1:2반, 2:3반
 
-	}, 5000);
+function init()
+{
+	
+}
+
+$(document).ready(function(){
+	
+	//접수 테이블 리스트
+	$.ajax({
+		type: "post",
+		url: "/monitor/selectRcptmonitor.do",
+		success: function (response) {
+			rcptlist=response;
+			console.log(rcptlist);
+			total_cnt = rcptlist.length;
+			total_page = Math.ceil(total_cnt / 15);
+		}
+	});
+		
+	//현장반 테이블 리스트
+	$.ajax({
+		type: "post",
+		url: "/monitor/selectTeammonitor.do",
+		success: function (response) {
+			console.log(response);
+			teamlist=response;
+		}
+	});
+	
+
+	setInterval(function(){
+		//접수 테이블 리스트
+		$.ajax({
+			type: "post",
+			url: "/monitor/selectRcptmonitor.do",
+			success: function (response) {
+				rcptlist=response;
+				console.log(rcptlist);
+				total_cnt = rcptlist.length;
+				total_page = Math.ceil(total_cnt / 15);
+			}
+		});
+			
+		//현장반 테이블 리스트
+		$.ajax({
+			type: "post",
+			url: "/monitor/selectTeammonitor.do",
+			success: function (response) {
+				console.log(response);
+				teamlist=response;
+			}
+		});
+	},60000);
+
+	
+	var html="";
+	setInterval(function(){
+		html="";
+		for(var i=(current_page-1)*15 ; i < current_page*15 ; i++)
+		{
+			if(rcptlist[i]!=null){
+				html +="<tr>";
+				html +="<td>"+rcptlist[i].SEQ+"</td>";
+				html +="<td>"+rcptlist[i].CARNUM+"</td>";
+				html +="<td>"+rcptlist[i].CUSTOMER_AUTOKIND+"</td>";
+				html +="<td>"+rcptlist[i].REPAIRCODE_NAME+"</td>";
+				html +="</tr>";
+			}
+			else{
+				html +="<tr>";
+				html +="<td></td>";
+				html +="<td></td>";
+				html +="<td></td>";
+				html +="<td></td>";
+				html +="</tr>";
+			}
+		}
+		tbody = $("#guesttable tbody");
+		tbody.html('');
+		tbody.html(html);
+		current_page++;
+		if(current_page > total_page)
+			current_page=1;
+	},10000)
+
+
+	setInterval(function(){
+		
+		html="";
+		for(var j=0;j<15;j++)
+		{
+			if(teamlist[current_team][j] != null){
+				html +="<tr>";
+				html +="<td>"+teamlist[current_team][j].SEQ+"</td>";
+				html +="<td>"+teamlist[current_team][j].CARNUM+"</td>";
+				html +="<td>"+teamlist[current_team][j].CUSTOMER_AUTOKIND+"</td>";
+				html +="<td>"+teamlist[current_team][j].ESTIME+"</td>";
+				html +="<td>"+teamlist[current_team][j].REPAIRCODE_NAME+"</td>";
+				html +="</tr>";
+			}
+			else{
+				html +="<tr>";
+				html +="<td></td>";
+				html +="<td></td>";
+				html +="<td></td>";
+				html +="<td></td>";
+				html +="<td></td>";
+				html +="</tr>";
+			}
+		}
+		var tbody = $("#atable tbody");
+		tbody.html('');
+		tbody.html(html);
+		$(".teamtb .tit_1").text((current_team+1)+"반 작업 현황");
+		current_team++;
+		if(current_team >= 3)
+			current_team=0;
+		
+	},10000)
+
 });
 </script>

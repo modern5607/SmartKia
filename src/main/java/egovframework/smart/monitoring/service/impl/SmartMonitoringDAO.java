@@ -11,10 +11,9 @@ import egovframework.smart.monitoring.service.SmartMonitoringVO;
 @Repository("SmartMonitoringDAO")
 public class SmartMonitoringDAO extends EgovAbstractMapper {
     
-    @SuppressWarnings("unchecked")
-    public List<ComDefaultVO> selectMonitoringList(ComDefaultVO vo) throws Exception
+    public List<Object> selectMonitoringList() throws Exception
     {
-        return (List<ComDefaultVO>) list("SmartMonitoringDAO.selectMonitoringList", vo);
+        return selectList("SmartMonitoringDAO.selectMonitoringList");
     }
 
     public List<Object> SceneMonitoring(String Team) {
@@ -32,4 +31,5 @@ public class SmartMonitoringDAO extends EgovAbstractMapper {
     public List<Object> repairMonitoring() {
         return selectList("SmartMonitoringDAO.repairMonitoring");
     }
+
 }

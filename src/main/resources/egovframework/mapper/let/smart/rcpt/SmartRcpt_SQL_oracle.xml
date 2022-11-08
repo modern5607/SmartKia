@@ -8,12 +8,14 @@
     <select id="selectCarInfo2" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
         SELECT * FROM CAR_CUSTOMER
         WHERE CUSTOMER_AUTONO = #{checkcarnum}
+        AND CUSTOMER_TEL = #{tel}
     </select>
 
     <select id="selectreserveCarInfo" parameterType="egovframework.smart.rcpt.service.SmartRcptVO" resultType="java.util.HashMap">
         SELECT * FROM CAR_TAKEREPAIR
         WHERE AUTONUMBER = #{checkcarnum}
             AND TASKSTAT = 'CB-reserve'
+            AND TRUNC(RECEIPTDATE) = TRUNC(SYSDATE)
         
     </select>
     <select id="SelectMiddleLeadTime" parameterType="String" resultType="java.util.HashMap">
@@ -70,7 +72,7 @@
 
     </select>
     <select id="SelectRcptinfo" parameterType="java.lang.String" resultType="java.util.HashMap">
-            SELECT 
+            SELECT SUBSTR (TAKESEQ,-4) SEQ,REPAIR_ENUM(TAKESEQ) ENUM,
                 TAKESEQ,SERVICE_SYS,CUSTOMER_ID,AUTONUMBER,
                 FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_AUTOKIND') KIND,
                 FN_CUSTOMTER_INFO(CUSTOMER_ID,'KILRO_TOTAL') KILRO_TOTAL,
@@ -168,22 +170,33 @@
     </select>
 
     <select id="searchReservation" parameterType="egovframework.smart.rcpt.service.ReservationVO" resultType="java.util.HashMap">
-	SELECT TAKESEQ,
-       			TO_CHAR(PLANDATE, 'YYYY-MM-DD HH24:MI')  PLANDATE,
-			 	AUTONUMBER,
-       			CUSTOMER_AUTOKIND,
-       			CUSTOMER_NAME,
-            	CUSTOMER_TEL, 
-       			REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME
-			FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
-			WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
-			AND A.TASKSTAT = 'CB-reserve'
+        SELECT TAKESEQ,
+            TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI') RECEIPTDATE,
+            TO_CHAR(PLANDATE, 'YYYY-MM-DD HH24:MI')  PLANDATE,
+            AUTONUMBER,
+            CUSTOMER_AUTOKIND,
+            CUSTOMER_NAME,
+            CUSTOMER_TEL, 
+            REPAIR_ENUM(TAKESEQ) REPAIRCODE_NAME,
+            TASKSTAT,
+            FN_CODENAME(TASKSTAT,'AUTO_PROC') TASKSTAT_NAME
+        FROM   CAR_TAKEREPAIR A, CAR_CUSTOMER B
+        WHERE  A.CUSTOMER_ID = B.CUSTOMER_ID
+            AND A.PLANDATE IS NOT NULL
+        <if test="taskstat!=''">
+            AND A.TASKSTAT = #{taskstat}
+        </if>
+        <choose>
+            <when test="sdate !='' and edate !=''">AND A.RECEIPTDATE BETWEEN #{sdate} AND #{edate}</when>
+            <when test="sdate !='' and edate ==''">AND A.RECEIPTDATE <![CDATA[>=]]> #{sdate}</when>
+            <otherwise></otherwise>
+        </choose>
     </select>
 
     <select id="SelectReservationRcptList" resultType="java.util.HashMap">
         SELECT TAKESEQ,
-            TO_CHAR(RECEIPTDATE,'YYYY-MM-DD HH:MM') RECEIPTDATE,
-            TO_CHAR(PLANDATE ,'YYYY-MM-DD HH:MM') PLANDATE,
+            TO_CHAR(RECEIPTDATE,'YYYY-MM-DD HH:MI') RECEIPTDATE,
+            TO_CHAR(PLANDATE ,'YYYY-MM-DD HH:MI') PLANDATE,
             AUTONUMBER,
             FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_AUTOKIND') KIND,
             REPAIR_ENUM(TAKESEQ) REPAIRENUM,
@@ -208,6 +221,7 @@
         FROM     CAR_TAKEREPAIR
         WHERE    CUSTOMER_ID = #{id}
         AND      ROWNUM      =1
+        <!-- AND TASKSTAT = 'CB-reserveconfirm' -->
         ORDER BY RECEIPTDATE DESC
     </select>
     <update id="KioskReserveConfirm" parameterType="String">
@@ -219,8 +233,8 @@
 
     <select id="ajaxWebReservationRcptlist" parameterType="String" resultType="java.util.HashMap">
         SELECT TAKESEQ,
-            TO_CHAR(RECEIPTDATE,'YYYY-MM-DD HH:MM') RECEIPTDATE,
-            TO_CHAR(PLANDATE ,'YYYY-MM-DD HH:MM') PLANDATE,
+            TO_CHAR(RECEIPTDATE,'YYYY-MM-DD HH:MI') RECEIPTDATE,
+            TO_CHAR(PLANDATE ,'YYYY-MM-DD HH:MI') PLANDATE,
             AUTONUMBER,
             FN_CUSTOMTER_INFO(CUSTOMER_ID,'CUSTOMER_AUTOKIND') KIND,
             REPAIR_ENUM(TAKESEQ) REPAIRENUM,
@@ -232,4 +246,9 @@
         WHERE  (TASKSTAT='CB-reserve' OR TASKSTAT='CB-reserveconfirm' OR TASKSTAT='CB-reservecancel')
         AND TO_CHAR(RECEIPTDATE,'YYYY-MM-DD') = #{date}
     </select>
+    <update id="ConfirmWebReservationRcpt" parameterType="String">
+        UPDATE CAR_TAKEREPAIR
+        SET TASKSTAT= 'CB-reserveconfirm'
+        WHERE TAKESEQ = #{takeseq}
+    </update>
 </mapper>

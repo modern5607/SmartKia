@@ -141,7 +141,8 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 			if(repairseqlist.length > i && repairseqlist[i]!="")
 			{
 				//UPDATE
-				repairParams.put("repairseq", params.get("repairseq"));
+				// repairParams.put("repairseq", params.get("repairseq"));
+				repairParams.put("repairseq", repairseqlist[i]);
 				repairParams.put("takeseq", params.get("seq"));
 				repairParams.put("method", chkrepairlist[i]);
 				repairParams.put("code", repairlist[i]);
@@ -253,7 +254,8 @@ public class SmartTabletServiceImpl extends EgovAbstractServiceImpl implements S
 			if(repairseqlist.length > i && repairseqlist[i]!="")
 			{
 				//UPDATE
-				repairParams.put("repairseq", params.get("repairseq"));
+				// repairParams.put("repairseq", params.get("repairseq"));
+				repairParams.put("repairseq", repairseqlist[i]);
 				repairParams.put("takeseq", params.get("seq"));
 				repairParams.put("method", chkrepairlist[i]);
 				repairParams.put("code", repairlist[i]);

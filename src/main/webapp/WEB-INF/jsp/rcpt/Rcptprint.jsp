@@ -57,7 +57,7 @@ body{
      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
  }
  .subpage {
-     padding: 0.3cm;
+     padding: 0.6cm;
      /* border: 5px red solid; */
      height: 257mm;
      /* outline: 2cm #FFEAEA solid; */
@@ -88,6 +88,7 @@ body{
     background: #dddddd !important; 
     -webkit-print-color-adjust:exact;
     width: 150px; 
+    height: 25px;
     border: none;
  }
 
@@ -97,6 +98,15 @@ img {
 }
 table{
     border-collapse: collapse;
+}
+.txt_left{
+    text-align: left;
+}
+.txt_cen{
+    text-align: center;
+}
+.txt_right{
+    text-align: right;
 }
 .print_wrap{
     /* width: 50%;
@@ -148,8 +158,9 @@ table{
     font-size: 0.8em;
     padding: 0 7px;
     background: #dddddd !important;
-    text-align: justify;
-    text-align-last: justify;
+    -webkit-print-color-adjust:exact;
+    text-align: center;
+    /* text-align-last: justify; */
 }
 
 .print_content .kia1 td{
@@ -167,32 +178,34 @@ table{
     height: 0.8cm;
     font-size: 0.8em;
 } */
-.print_content .kia2{
+/* .print_content .kia2{
     margin: 5px;
     width: -webkit-fill-available;
-}
-.print_content .kia2 th{
+} */
+/* .print_content .kia2 th{
     border: 1px solid;
     height: 0.8cm;
     font-size: 0.8em;
     padding: 0 7px;
     background: #dddddd !important;
-    text-align: justify;
-    text-align-last: justify;
-}
+    -webkit-print-color-adjust:exact;
+    text-align: center;
+    // text-align-last: justify;
+} */
 
-.print_content .kia2 td{
+/* .print_content .kia2 td{
     border: 1px solid;
     padding: 0 5px;
+    font-size: 0.8em;
 
-}
-.print_content .kia2 td:nth-child(odd){
+} */
+/* .print_content .kia2 td:nth-child(odd){
     background-color: #dddddd !important;
     -webkit-print-color-adjust:exact;
     text-align: center;
     height: 0.8cm;
     font-size: 0.8em;
-}
+} */
 
 .print_content .kia3{
     margin: 5px;
@@ -307,6 +320,7 @@ right: 0;
     border: 1px solid;
     height: 0.7cm;
     font-size: 0.8em;
+    padding: 0 5px;
 }
 /* .print_content .kia6 td:nth-child(1){
     background:#dddddd;
@@ -346,7 +360,7 @@ right: 0;
                                 <col style="width:3cm;">
                             </colgroup>
                             <tr>
-                                <th>접 수 시 간</th>
+                                <th>접수시간</th>
                                 <td><fmt:formatDate value="${info.RECEIPTDATE}" pattern="HH:mm"/></td>
                                 <th>착수시간</th>
                                 <td><fmt:formatDate value="${info.REPAIRDATE}" pattern="HH:mm"/></td>
@@ -354,28 +368,39 @@ right: 0;
                                 <td><fmt:formatDate value="${info.ESTIME}" pattern="HH:mm"/></td>
                             </tr>
                             <tr>
-                                <th>입 고 구 분</th>
+                                <th>입고구분</th>
                                 <td colspan="5"> □1년2만Km이내 신차&nbsp;&nbsp;&nbsp;&nbsp;□보증&nbsp;&nbsp;&nbsp;&nbsp;□정기점검&nbsp;&nbsp;&nbsp;&nbsp;□일반&nbsp;&nbsp;&nbsp;&nbsp;□사고(기타)</td>
                             </tr>
+                            <tr>
+                                <td style="border-left: none; border-right: none;height: 5px;"></td>
+                                <td style="border-left: none; border-right: none;height: 5px;"></td>
+                                <td style="border-left: none; border-right: none;height: 5px;"></td>
+                                <td style="border-left: none; border-right: none;height: 5px;"></td>
+                                <td style="border-left: none; border-right: none;height: 5px;"></td>
+                                <td style="border-left: none; border-right: none;height: 5px;"></td>
+                            </tr>
+                            <tr>
+                                <th>차량번호</th>
+                                <td colspan="5" style="text-align: left;">${info.AUTONUMBER}</td>
+                            </tr>
+                            <tr>
+                                <th>차종</th>
+                                <td colspan="2" style="text-align: left;">${info.KIND}</td>
+                                <th>주행거리</th>
+                                <td colspan="2" style="text-align: right;">${info.KILRO_TOTAL}km</td>
+                            </tr>
                         </table>
-                        <table class="kia2">
+                        <!-- <table class="kia2">
                            <colgroup>
-                                <col style="width:2.5cm;">
-                                <col style="width:auto;">
-                                <col style="width:2.5cm;">
-                                <col style="width:auto;">
+                            <col style="width:2.5cm;">
+                            <col style="width:3cm;">
+                            <col style="width:1.5cm;">
+                            <col style="width:3cm;">
+                            <col style="width:1.5cm;">
+                            <col style="width:3cm;">
                             </colgroup>
-                            <tr>
-                                <th>차 량 번 호</th>
-                                <td colspan="3">${info.AUTONUMBER}</td>
-                            </tr>
-                            <tr>
-                                <th>차 종</th>
-                                <td>${info.KIND}</td>
-                                <th>주 행 거 리</th>
-                                <td style="text-align: right;">${info.KILRO_TOTAL}km</td>
-                            </tr>
-                        </table>
+                            
+                        </table> -->
                         <h4>『고객상담 및 요청내용』</h4>
                         <table class="kia3">
                             <colgroup>
@@ -462,7 +487,11 @@ right: 0;
                                     <td colspan="3" style="text-align: left;padding-left: 6px;font-size: 13px;">본 차량의 상담 내용에 대하여 확인하며 작업을 요청합니다.</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" style="text-align: right;font-size: 13px; padding-right: 5px;">20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;년&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;월&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일</td>
+                                    <c:set var="now" value="<%=new java.util.Date()%>"/>
+                                    <c:set var="year"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set> 
+                                    <c:set var="month"><fmt:formatDate value="${now}" pattern="MM" /></c:set> 
+                                    <c:set var="day"><fmt:formatDate value="${now}" pattern="dd" /></c:set> 
+                                    <td colspan="3" style="text-align: right;font-size: 15px; padding-right: 5px;">${year}년 ${month}월 ${day}일</td>
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align: right;font-size: 13px; padding-right: 5px;">상 담 자 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 고 객 명 <input type="text"> (서 명) <input type="text"></td>
@@ -487,11 +516,11 @@ right: 0;
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>소 유 자</th>
+                                    <th>소유자</th>
                                     <th style=" width: 45px;">성 명</th>
-                                    <td colspan="2"></td>
+                                    <td colspan="2" class="txt_left">${info.CUSTOMER_NAME}</td>
                                     <th style=" width: 130px;">휴 대 폰 번 호</th>
-                                    <td></td>
+                                    <td class="txt_left">${info.CUSTOMER_TEL}</td>
                                 </tr>
                                 <tr>
                                     <th rowspan="2">정 비 의 뢰 자</th>

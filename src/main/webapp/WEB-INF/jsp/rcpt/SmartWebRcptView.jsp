@@ -321,20 +321,20 @@
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="name" id="name" class="f_txtsmall" />
+                                                    <input name="name" id="name" class="f_txtsmall" readonly/>
                                                 </td>
                                                 <td class="lb">
                                                     <label for="carnum">차량번호</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="carnum" id="carnum" class="f_txtsmall"/>
+                                                    <input name="carnum" id="carnum" class="f_txtsmall"readonly/>
                                                 </td>
                                                 <td class="lb">
                                                     <label for="carkind">차종</label>
                                                 </td>
                                                 <td>
-                                                    <input name="carkind" id="carkind" class="f_txtsmall"/>
+                                                    <input name="carkind" id="carkind" class="f_txtsmall"readonly/>
                                                 </td>
                                                 
                                                 <td class="lb">
@@ -342,7 +342,7 @@
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="tel" id="tel" class="f_txtsmall"/>
+                                                    <input name="tel" id="tel" class="f_txtsmall"readonly/>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -461,6 +461,7 @@
                                             <thead style="padding : 3px 0;">
                                                 <tr>
                                                     <th scope="col">접수일자</th>
+                                                    <th scope="col">접수번호</th>
                                                     <th scope="col">차량번호</th>
                                                     <th scope="col">차량종류</th>
                                                     <th scope="col">수리사항</th>
@@ -484,9 +485,10 @@
                                                         <fmt:parseDate value="${result.RECEIPTDATE}" var="dateFmt" pattern="yyyy-MM-dd HH:mm" />
                                                         <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd HH:mm"/>
                                                     </td>
+                                                    <td><c:out value="${result.TAKESEQ}"/></td>
                                                     <td><c:out value="${result.AUTONUMBER}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_AUTOKIND}"/></td>
-                                                    <td><a href="#" class="lnk" style="text-decoration: underline;" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIR_NAME}"/></a></td>
+                                                    <td><c:choose><c:when test="${result.TASKSTAT=='CB-receipt'}"><a href="#" class="lnk" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIR_NAME}"/></a></c:when><c:otherwise>${result.REPAIR_NAME}</c:otherwise></c:choose></td>
                                                     <td><c:out value="${result.CUSTOMER_NAME}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_TEL}"/></td>
                                                     <td><c:out value="${result.POSITION eq null ? '미정' : result.POSITION}"/></td>

@@ -116,4 +116,28 @@ public class SmartMonitoringController {
 	}
  */
 
+	@RequestMapping(value="/monitor/selectRcptmonitor.do",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> selectRcptmonitor()throws Exception
+	{
+		return smartMonitoringService.selectMonitoringList();
+	}
+	@RequestMapping(value="/monitor/selectTeammonitor.do",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> selectTeammonitor()throws Exception
+	{
+		return smartMonitoringService.selectTeammonitor();
+	}
+	@RequestMapping(value="/monitor/selectTeammonitorall.do",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> selectTeammonitorall()throws Exception
+	{
+		return smartMonitoringService.repairMonitoring();
+	}
+	@RequestMapping(value="/monitor/selectCompletemonitor.do",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Object> selectCompletemonitor()throws Exception
+	{
+		return smartMonitoringService.CompleteMonitoring();
+	}
 }

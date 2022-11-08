@@ -71,12 +71,12 @@ div.marquee>div.marquee-text {
 								<div class="logo team_left"></div>
 							</div>
 							<div class="board_list">
-								<table id="guesttable">
+								<table id="guesttable" style="table-layout: fixed;">
 									<colgroup>
-										<col style="width: 25%;">
-										<col style="width: 25%;">
-										<col style="width: 25%;">
-										<col style="width: 25%;">
+										<col style="width: 15%;">
+										<col style="width: 15%;">
+										<col style="width: 20%;">
+										<col style="width: 50%;">
 									</colgroup>
 									<thead>
 										<tr>
@@ -89,10 +89,14 @@ div.marquee>div.marquee-text {
 									<tbody>
 										<c:forEach begin="0" end="8" varStatus="status">
 											<tr>
-												<td><c:out value="${Guest[status.index].SEQ}" /></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<!-- <td><c:out value="${Guest[status.index].SEQ}" /></td>
 												<td><c:out value="${Guest[status.index].CARNUM}" /></td>
 												<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
-												<td><c:out value="${Guest[status.index].NAME}" /></td>
+												<td><c:out value="${Guest[status.index].NAME}" /></td> -->
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -110,7 +114,7 @@ div.marquee>div.marquee-text {
 								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
 							</div>
 							<div class="board_list">
-								<table id="atable" >
+								<table id="atable" style="table-layout: fixed;">
 									<colgroup>
 										<col style="width: 20%;">
 										<col style="width: 20%;">
@@ -130,11 +134,16 @@ div.marquee>div.marquee-text {
 									<tbody>
 										<c:forEach begin="0" end="8" varStatus="status">
 											<tr>
-												<td><c:out value="${Team[status.index].CARNUM}" /></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<!-- <td><c:out value="${Team[status.index].CARNUM}" /></td>
 												<td><c:out value="${Team[status.index].NAME}" /></td>
 												<td><c:out value="${Team[status.index].ESTIME}" /></td>
 												<td><c:out value="${Team[status.index].POSITION_NAME}" /></td>
-												<td style="color:red;"><c:out value="${Team[status.index].TASKSTAT_NAME}" /></td>
+												<td style="color:red;"><c:out value="${Team[status.index].TASKSTAT_NAME}" /></td> -->
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -155,26 +164,36 @@ div.marquee>div.marquee-text {
 					<div class="board_list">
 						<table id="comtable">
 							<colgroup>
-								<col style="width: 20%;">
-								<col style="width: 20%;">
-								<col style="width: 20%;">
-								<col style="width: 20%;">
+								<col style="width: 16.67%;">
+								<col style="width: 16.67%;">
+								<col style="width: 16.67%;">
+								<col style="width: 16.67%;">
+								<col style="width: 16.67%;">
+								<col style="width: 16.67%;">
 							</colgroup>
 							<thead>
 								<tr>
+									<th scope="col">접수번호</th>
 									<th scope="col">차량번호</th>
 									<th scope="col">차종</th>
 									<th scope="col">고객명</th>
 									<th scope="col">작업반</th>
+									<th scope="col">상태</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach begin="0" end="2" varStatus="status">
 									<tr>
-										<td><c:out value="${Complete[status.index].CARNUM}" /></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<!-- <td><c:out value="${Complete[status.index].CARNUM}" /></td>
 										<td><c:out value="${Complete[status.index].CUSTOMER_AUTOKIND}" /></td>
 										<td><c:out value="${Complete[status.index].NAME}" /></td>
-										<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td>
+										<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td> -->
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -191,5 +210,198 @@ div.marquee>div.marquee-text {
 </body>
 </html>
 <script type="text/javascript">
-var auto_refresh = setInterval(function (){$('#test').load(window.location.href + " #test");}, 30000);
+	var rcptlist='';
+	var teamlist='';
+	var completelist='';
+
+	var total_page=0;//총 페이지수
+	var total_cnt=0; //총 데이터수
+	var current_page=1; //현재 페이지
+
+	var team_total_page=0;//총 페이지수
+	var team_total_cnt=0; //총 데이터수
+	var team_current_page=1; //현재 페이지
+
+	var complete_total_page=0;//총 페이지수
+	var complete_total_cnt=0; //총 데이터수
+	var complete_current_page=1; //현재 페이지
+
+
+	$(document).ready(function () {
+		//접수 테이블 리스트
+		$.ajax({
+			type: "post",
+			url: "/monitor/selectRcptmonitor.do",
+			success: function (response) {
+				rcptlist=response;
+				// console.log(rcptlist);
+				total_cnt = rcptlist.length;
+				total_page = Math.ceil(total_cnt / 9);
+			}
+		});
+			
+		//현장반 테이블 리스트
+		$.ajax({
+			type: "post",
+			url: "/monitor/selectTeammonitorall.do",
+			success: function (response) {
+				// console.log(response);
+				teamlist=response;
+				team_total_cnt = teamlist.length;
+				team_total_page = Math.ceil(team_total_cnt/9);
+			}
+		});
+
+		//작업완료 테이블 리스트
+		$.ajax({
+			type: "post",
+			url: "/monitor/selectCompletemonitor.do",
+			success: function (response) {
+				console.log(response);
+				completelist=response;
+				team_total_cnt = teamlist.length;
+				team_total_page = Math.ceil(team_total_cnt/3);
+			}
+		});
+		
+		setInterval(function(){
+			//접수 테이블 리스트
+			$.ajax({
+				type: "post",
+				url: "/monitor/selectRcptmonitor.do",
+				success: function (response) {
+					rcptlist=response;
+					console.log(rcptlist);
+					total_cnt = rcptlist.length;
+					total_page = Math.ceil(total_cnt / 9);
+				}
+			});
+				
+			//현장반 테이블 리스트
+			$.ajax({
+				type: "post",
+				url: "/monitor/selectTeammonitorall.do",
+				success: function (response) {
+					console.log(response);
+					teamlist=response;
+					team_total_cnt = teamlist.length;
+					team_total_page = Math.ceil(team_total_cnt/9);
+				}
+			});
+
+			//작업완료 테이블 리스트
+			$.ajax({
+				type: "post",
+				url: "/monitor/selectCompletemonitor.do",
+				success: function (response) {
+					console.log(response);
+					completelist=response;
+					team_total_cnt = teamlist.length;
+					team_total_page = Math.ceil(team_total_cnt/3);
+				}
+			});
+		},60000);
+
+		var html="";
+		setInterval(function(){
+			html="";
+			for(var i=(current_page-1)*9 ; i < current_page*9 ; i++)
+			{
+				if(rcptlist[i]!=null){
+					html +="<tr>";
+					html +="<td>"+rcptlist[i].SEQ+"</td>";
+					html +="<td>"+rcptlist[i].CARNUM+"</td>";
+					html +="<td>"+rcptlist[i].CUSTOMER_AUTOKIND+"</td>";
+					html +="<td>"+rcptlist[i].REPAIRCODE_NAME+"</td>";
+					html +="</tr>";
+				}
+				else{
+					html +="<tr>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="</tr>";
+				}
+			}
+			tbody = $("#guesttable tbody");
+			tbody.html('');
+			tbody.html(html);
+			current_page++;
+			if(current_page > total_page)
+				current_page=1;
+		},10000);
+
+
+		setInterval(function(){
+			
+			html="";
+			for(var j=(team_current_page-1)*9;j<team_current_page*9;j++)
+			{
+				if(teamlist[j] != null){
+					html +="<tr>";
+					html +="<td>"+teamlist[j].CARNUM+"</td>";
+					html +="<td>"+teamlist[j].NAME+"</td>";
+					html +="<td>"+teamlist[j].ESTIME+"</td>";
+					html +="<td>"+teamlist[j].POSITION_NAME+"</td>";
+					html +="<td style=\"color:red;\">"+teamlist[j].TASKSTAT_NAME+"</td>";
+					html +="</tr>";
+				}
+				else{
+					html +="<tr>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="</tr>";
+				}
+			}
+			var tbody = $("#atable tbody");
+			tbody.html('');
+			tbody.html(html);
+			team_current_page++;
+			if(team_current_page > team_total_page)
+				team_current_page=1;
+			
+		},10000);
+
+
+		setInterval(function(){
+			
+			html="";
+			for(var j=(complete_current_page-1)*3;j<complete_current_page*3;j++)
+			{
+				if(completelist[j] != null){
+					html +="<tr>";
+					html +="<td>"+completelist[j].SEQ+"</td>";
+					html +="<td>"+completelist[j].CARNUM+"</td>";
+					html +="<td>"+completelist[j].CUSTOMER_AUTOKIND+"</td>";
+					html +="<td>"+completelist[j].NAME+"</td>";
+					html +="<td>"+completelist[j].POSITION_NAME+"</td>";
+					html +="<td>"+completelist[j].TASKSTAT_NAME+"</td>";
+					// html +="<td>"+completelist[j].TASKSTAT_NAME+"</td>";
+					html +="</tr>";
+				}
+				else{
+					html +="<tr>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="<td></td>";
+					html +="</tr>";
+				}
+			}
+			var tbody = $("#comtable tbody");
+			tbody.html('');
+			tbody.html(html);
+			// $(".completetb .tit_1").text((complete_current_complete+1)+"반 작업 현황");
+			complete_current_page++;
+			if(complete_current_page > complete_total_page)
+				complete_current_page=1;
+			
+		},10000);
+	});
 </script>
