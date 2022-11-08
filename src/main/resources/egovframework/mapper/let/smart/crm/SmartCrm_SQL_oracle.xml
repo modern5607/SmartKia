@@ -103,30 +103,35 @@
 	 ORDER  BY d.ORD,b.ORD
 	</select>
 	<select id="selectStatMain" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
-				SELECT  b.H_CODE, d.NAME h_name,b.CODE,b.NAME,COUNT(*) cnt,TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD')  RECEIPTDATE
-	FROM CAR_LEAD_REPAIR A,
-		   CAR_LEADTIME B,
-   	  CAR_TAKEREPAIR C,
-	     CAR_LEADTIME D
-	WHERE a.REPAIRCODE  = b.CODE
-	  AND a.TAKESEQ			= c.TAKESEQ
-	  AND c.TASKSTAT    IN('CB-standby', 'CB-perfect')
-	  AND b.H_CODE 			= d.CODE
-	  <if test="(sdate != '' and edate != '')">
-        	AND TO_CHAR(C.RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
-        </if>
-        <if test="(sdate == '' and edate != '')">
-        	AND TO_CHAR(C.RECEIPTDATE, 'YYYY-MM-DD') &lt;= #{edate}
-        </if>
-        <if test="(sdate != '' and edate == '')">
-        	AND TO_CHAR(C.RECEIPTDATE, 'YYYY-MM-DD') &gt;= #{sdate}
-        </if>
-		<if test="(sdate == '' and edate == '')">
-			 AND TO_CHAR(TO_DATE(C.RECEIPTDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD') = TO_CHAR(TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD')
-        </if>
-	 group BY  b.H_CODE,D.NAME,b.CODE,B.NAME,d.ORD,b.ORD,c.RECEIPTDATE
-	 ORDER  BY d.ORD,b.ORD
-
+		SELECT  b.H_CODE,
+				d.NAME H_NAME,
+				b.CODE,
+				b.NAME NAME,
+				SUM(DECODE (PLANDATE,NULL,1,0)) NORMAL_COUNT,
+				SUM(DECODE (PLANDATE,NULL,0,1)) RESERVE_COUNT,
+				COUNT(*) TOTAL_COUNT
+		FROM    CAR_LEAD_REPAIR A,
+				CAR_LEADTIME B,
+				CAR_TAKEREPAIR C,
+				CAR_LEADTIME D
+		WHERE    a.REPAIRCODE = b.CODE
+		AND      a.TAKESEQ    = c.TAKESEQ
+		AND      c.TASKSTAT IN('CB-standby','CB-perfect')
+		AND      b.H_CODE = d.CODE
+		<choose>
+			<when test="sdate !='' and edate !=''">AND C.RECEIPTDATE BETWEEN #{sdate} AND #{edate}</when>
+			<when test="sdate !='' and edate ==''">AND C.RECEIPTDATE <![CDATA[>=]]> #{sdate}</when>
+			<otherwise></otherwise>
+		</choose>
+		group BY b.H_CODE,
+				D.NAME,
+				b.CODE,
+				B.NAME,
+				d.ORD,
+				b.ORD
+		ORDER BY d.ORD,
+				b.ORD
+		
 	</select>    
 <!-- 	<select id="selectStatMiddle" parameterType="egovframework.smart.crm.service.SmartCrmVO" resultType="java.util.HashMap">
 		SELECT  b.H_CODE, d.NAME h_name,b.CODE,b.NAME,COUNT(*) cnt,TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD')  RECEIPTDATE
@@ -159,7 +164,6 @@
         	A.TAKESEQ,
             TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD HH24:MI')  RECEIPTDATE,
             D.CUSTOMER_AUTONO,
-            A.REPAIRCODE,
             REPAIR_ENUM(C.TAKESEQ) REPAIR_NAME,
           	D.CUSTOMER_ID,
             D.CUSTOMER_NAME,
@@ -191,18 +195,11 @@
         <if test="POSITION != ''">
 	        AND POSITION LIKE '%' ||UPPER(#{POSITION})|| '%'
 	    </if>
-        <if test="(sdate != '' and edate != '')">
-        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') between #{sdate} and #{edate}
-        </if>
-        <if test="(sdate == '' and edate != '')">
-        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &lt;= #{edate}
-        </if>
-        <if test="(sdate != '' and edate == '')">
-        	AND TO_CHAR(RECEIPTDATE, 'YYYY-MM-DD') &gt;= #{sdate}
-        </if>
-		<if test="(sdate == '' and edate == '')">
-			AND SUBSTR(ETIME,1,10) = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
-        </if>
+        <choose>
+            <when test="sdate !='' and edate !=''">AND C.RECEIPTDATE BETWEEN #{sdate} AND #{edate}</when>
+            <when test="sdate !='' and edate ==''">AND C.RECEIPTDATE <![CDATA[>=]]> #{sdate}</when>
+            <otherwise></otherwise>
+        </choose>
         ORDER BY RECEIPTDATE DESC
         
 	</select>

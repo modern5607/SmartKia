@@ -46,7 +46,6 @@
         // document.SmartLeadTimeVO.action = "<c:url value='/mdm/SmartCode.do'/>";
         document.SmartLeadTimeVO.submit();
     }
-
     </script>
 
 </head>
@@ -76,148 +75,86 @@
                                 </div>
                                 <form name="SmartCrmVO" id="SmartCrmVO" action="<c:url value='/crm/SmartRepairStat.do'/>" method="post">
                                 <!--// Location -->
-                                <div class="condition" style="text-align: left;">
-										<span class="item f_search">
-											<p class="left">
-												<label for="sdate">기간 </label> 
-													<input name="sdate" id="sdate" readonly="readonly"class="f_input w_180" title="검색" type="text"value="<c:out value="${SmartCrmVO.sdate}"/>" />
-												<label for="edate"> ~ </label> 
-													<input name="edate" id="edate" readonly="readonly" class="f_input w_180" title="검색" type="text" value="<c:out value="${SmartCrmVO.edate}"/>" />
-												<%-- <label for="searchTeam">작업반</label>
-					                        		<input class="f_input w_200" name="POSITION" id="POSITION" type="text" maxlength="20" title="검색" value="<c:out value="${SmartCrmVO.POSITION}"/>"/> --%>
-												<button class="btn" type="submit"onclick="fnSearch(); return false;" style="right: -50px;"><spring:message code='button.search' /></button> 
-											</p>
-										</span>
-										<%-- <div class="right_col">
-                                            <label class="f_select w_200" for="autoroom">
-													<select name="autoroom" id="autoroom">
-														<option value="all">전체</option>
-														<c:forEach var="k" items="${autorooms}" varStatus="status">
-                                                            <option value="<c:out value='${k.CODE}'/>" ${SmartCrmVO.position ==k.CODE ? 'selected' : ((logininfo[0].TEAM == k.CODE && SmartCrmVO.position =='') ? 'selected' : '')} >${k.NAME}</option> 
-                                                        </c:forEach>
-													</select>
-													
-														
-											</label>
-											<a href="#" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
-										</div> --%>
-									</div>
+                                    <div class="condition" style="text-align: left;">
+                                            <span class="item f_search">
+                                                <p class="left">
+                                                    <label for="sdate">기간 </label> 
+                                                        <input name="sdate" id="sdate" readonly class="f_input w_180" type="text"value="<c:out value="${SmartCrmVO.sdate}"/>" />
+                                                    <label for="edate"> ~ </label> 
+                                                        <input name="edate" id="edate" readonly  class="f_input w_180" type="text"value="<c:out value="${SmartCrmVO.edate}"/>" /> 
+                                                    <%-- <label for="searchTeam">작업반</label>
+                                                        <input class="f_input w_200" name="POSITION" id="POSITION" type="text" maxlength="20" title="검색" value="<c:out value="${SmartCrmVO.POSITION}"/>"/> --%>
+                                                    <button class="btn" type="submit"onclick="fnSearch(); return false;" style="right: -50px;"><spring:message code='button.search' /></button> 
+                                                </p>
+                                            </span>
+                                    </div>
                                     <!-- 검색조건 -->
                                     <div>
-                                        <!-- 중분류 리스트 -->
-                                        <!-- <div class="w50 left" style="margin-left:15px;"> -->
-                                            <!-- <div class="right_col" style="margin-top: 10px;">
-                                                <a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()"><spring:message code="button.create"/></a>
-                                                <a href="#LINK" class="btn btn_blue_46 w_100 right btnmargin" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a>
-                                            </div> -->
-                                            <div class="board_list3">
-                                                <table>
-                                                    <colgroup>
-                                                        <col style="width: 100px;">
-                                                        <%-- <col style="width: 50px;"> --%>
-                                                        <col style="width: 200px;">
-                                                        <col style="width: 50px;">
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">대분류</th>
-                                                            <!-- <th scope="col">No</th> -->
-                                                            <th scope="col">부품명</th>
-                                                            <th scope="col">정비횟수</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:if test="${fn:length(mainlist) == 0}">
-                                                        <tr>
-                                                            <td colspan="3">자료가 없습니다. 다른 검색조건을 선택해주세요</td>
-                                                        </tr>
+                                        <div class="board_list3">
+                                            <table>
+                                                <colgroup>
+                                                    <col style="width: 20%px;">
+                                                    <col style="width: 35%px;">
+                                                    <col style="width: 15%px;">
+                                                    <col style="width: 15%px;">
+                                                    <col style="width: 15%px;">
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">대분류</th>
+                                                        <th scope="col">부품명</th>
+                                                        <th scope="col">예약건수</th>
+                                                        <th scope="col">일반건수</th>
+                                                        <th scope="col">총 건수</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:if test="${fn:length(mainlist) == 0}">
+                                                    <tr>
+                                                        <td colspan="5">자료가 없습니다. 다른 검색조건을 선택해주세요</td>
+                                                    </tr>
+                                                    </c:if>
+                                                    <c:set var="Rtotal" value="0"/>
+                                                    <c:set var="Ntotal" value="0"/>
+                                                    <c:set var="Ttotal" value="0"/>
+                                                    <!-- <c:set var="cur" value=""/>
+                                                    <c:set var="prev" value=""/>
+                                                    <c:set var="overlap_cnt" value="0"/>
+                                                    <c:forEach var="result" items="${mainlist}" varStatus="status">
+                                                        <c:set var="prev" value="${cur}"/>
+                                                        <c:set var="cur" value="${result.H_CODE}"/>
+                                                        <c:if test="${cur == prev}">
+                                                        <c:set var="overlap_cnt" value="${overlap_cnt + 1}"/>
                                                         </c:if>
-                                                        <c:forEach var="result" items="${mainlist}" varStatus="status">
-                                                            <tr>
-                                                                <td><c:out value="${result.H_NAME}"/></td>
-                                                            	<%-- <td><c:out value="${status.count}"/></td> --%>
-                                                            	<td><c:out value="${result.NAME}"/></td>
-                                                                <td><c:out value="${result.CNT}"/></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                    </c:forEach> -->
+                                                    
+                                                    <c:forEach var="result" items="${mainlist}" varStatus="status">
+                                                        <c:set var="Rtotal" value="${Rtotal + result.RESERVE_COUNT}"/>
+                                                        <c:set var="Ntotal" value="${Ntotal + result.NORMAL_COUNT}"/>
+                                                        <c:set var="Ttotal" value="${Ttotal + result.TOTAL_COUNT}"/>
+                                                        <tr>
+                                                            <td>${result.H_NAME}</td>
+                                                            <td>${result.NAME}</td>
+                                                            <!-- <td><a href="#" class="lnk" onclick="ClickMainCode('${result.H_CODE}')"><c:out value="${result.H_NAME}"/></a></td> -->
+                                                            <td><c:out value="${result.RESERVE_COUNT}"/></td>
+                                                            <td><c:out value="${result.NORMAL_COUNT}"/></td>
+                                                            <td><c:out value="${result.TOTAL_COUNT}"/></td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th colspan="2">합계</th>
+                                                        <th><c:out value="${Rtotal}"/></th>
+                                                        <th><c:out value="${Ntotal}"/></th>
+                                                        <th><c:out value="${Ttotal}"/></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
-
-                                    <%-- <div>
-                                        <!-- 중분류 리스트 -->
-                                        <div class="w50 left" style="margin-left:15px;">
-                                            <!-- <div class="right_col" style="margin-top: 10px;">
-                                                <a href="<c:url value='/mdm/InsertCommonGroupCodeView.do'/>" class="btn btn_blue_46 w_100 btnmargin" onclick="ClickGroupCode()"><spring:message code="button.create"/></a>
-                                                <a href="#LINK" class="btn btn_blue_46 w_100 right btnmargin" onclick="fnDeleteUser(); return false;"><spring:message code="button.delete" /></a>
-                                            </div> -->
-                                            <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
-                                                <table>
-                                                    <colgroup>
-                                                        <col style="width: 50px;">
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">대분류</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:if test="${fn:length(mainlist) == 0}">
-                                                        <tr>
-                                                            <td colspan="1">자료가 없습니다. 다른 검색조건을 선택해주세요</td>
-                                                        </tr>
-                                                        </c:if>
-                                                        <c:forEach var="result" items="${mainlist}" varStatus="status">
-                                                            <tr>
-                                                                <td><a href="#" class="lnk" onclick="ClickMainCode('${result.H_CODE}')"><c:out value="${result.H_NAME}"/></a></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <!-- 중분류 리스트 끝-->
-                                        <!-- 소분류 리스트 -->
-                                        <div class="w50 left" style="margin-left:14px;">
-                                            <div class="board_list3" style="border-radius:10px; border: 1px solid #dde2e5; padding: 15px;">
-                                                <table>
-                                                    <colgroup>
-                                                        <col style="width: 50px;">
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">No</th>
-                                                            <th scope="col">부품명</th>
-                                                            <th scope="col">정비횟수</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    	
-                                                        <c:if test="${fn:length(middlelist) == 0}">
-                                                        <tr>
-                                                            <td colspan="4">데이터가 없습니다. 기간을 선택해 주세요.</td>
-                                                        </tr>
-                                                        </c:if>
-                                                        
-                                                        <c:forEach var="result" items="${middlelist}" varStatus="status">
-                                                            <tr>
-                                                            	<td><c:out value="${status.count}"/></td>
-                                                            	<td><c:out value="${result.NAME}"/></td>
-                                                                <td><c:out value="${result.CNT}"/></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        
-                                    </div> --%>
+                                    </div>
                                 </form>
                             </div>
-                            
                     </div>
                 </div>
             </div>

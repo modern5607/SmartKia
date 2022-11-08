@@ -42,9 +42,11 @@ public interface SmartRcptService {
 
     List<Object> KioskReserveConfirm(String takeseq)throws Exception;
 
-    List<Object> ajaxWebReservationRcptlist(String date);
+    List<Object> ajaxWebReservationRcptlist(String date)throws Exception;
 
-    List<Object> selectCarInfo2(SmartRcptVO smartrcotVO);
+    List<Object> selectCarInfo2(SmartRcptVO smartrcotVO)throws Exception;
+
+    int ConfirmWebReservationRcpt(String takeseq)throws Exception;
 
 
 }

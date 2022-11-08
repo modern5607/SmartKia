@@ -86,9 +86,10 @@ public class SmartKioskController {
 
 	@RequestMapping(value = "/kiosk/SelectCarInfo.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Object> SelectCarInfo(@RequestParam("carnum") String carnum,@RequestParam("mode") String mode, HttpServletResponse response) throws Exception {
+	public List<Object> SelectCarInfo(@RequestParam("carnum") String carnum,@RequestParam("tel") String tel,@RequestParam("mode") String mode, HttpServletResponse response) throws Exception {
 		SmartRcptVO smartrcotVO =new SmartRcptVO();
 		smartrcotVO.setCheckcarnum(carnum);
+		smartrcotVO.setTel(tel);
 		smartrcotVO.setMode(mode);
 		List<Object> list = smartrcptservice.selectCarInfo2(smartrcotVO);
 		System.out.println(list);
@@ -105,10 +106,11 @@ public class SmartKioskController {
 	//예약 정비내역 조회
 	@RequestMapping(value = "/kiosk/SelectReserveCarInfo.do",method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Object> SelectReserveCarInfo(@RequestParam("carnum") String carnum, HttpServletResponse response) throws Exception {
+	public List<Object> SelectReserveCarInfo(@RequestParam("carnum") String carnum,@RequestParam("tel") String tel, HttpServletResponse response) throws Exception {
 		// System.out.println(params.get("selectedvar"));
 		SmartRcptVO smartrcotVO =new SmartRcptVO();
 		smartrcotVO.setCheckcarnum(carnum);
+		smartrcotVO.setTel(tel);
 		List<Object> list = smartrcptservice.selectReserveCarInfo(smartrcotVO);
 		// List<Object> list = smartrcptservice.SelectMiddleLeadTime(params.get("selectedvar").toString());
 		System.out.println("list : "+list);

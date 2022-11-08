@@ -145,9 +145,23 @@ function fn_egov_modal_remove() {
 							</div>
 							<div class="input">
 								<h1 class="title">
-									차량번호 7자리 또는 8자리를 입력해 주세요
+									고객님의 차량번호와 휴대폰 번호를 입력해 주세요
 								</h1>
-								<input type="search" class="input_num" name="searchcarnum" id="searchcarnum" onkeypress="javascript:if(event.keyCode==13)clicksearch();">
+								<div class="input_form">
+									<div style="margin-top: 50px;">
+										<div class="label"><label>차량번호</label></div>
+										<div>
+										<input type="search" class="input_num" name="searchcarnum" id="searchcarnum" onkeypress="javascript:if(event.keyCode==13)clicksearch();"></div>
+									</div>
+									<br>
+									<div style="margin-top: 50px;">
+										<div class="label"><label>휴대폰번호</label></div>
+										<div>
+											<input type="search" class="input_num" name="searchtel" id="searchtel">
+										</div>
+									</div>
+									
+								</div>
 								<div id="searchcarwarning">
 
 								</div>
@@ -173,6 +187,7 @@ function fn_egov_modal_remove() {
 							  </div>
 						</div>
 					</li>
+					
 					<!-- 차량정보,수리내역보기,수리부분선택 03-->
 					<li>
 						<div class="content">
@@ -200,7 +215,7 @@ function fn_egov_modal_remove() {
 										<li><label>차종 : </label><label></label></li>
 									</ul>
 									<div class="fix_history">
-										<a href="#"  class="btn fix_bt">정비내역보기</a>
+										<a href="#"  class="btn fix_bt">내 차 수리이력보기</a>
 							
 										<a href="#" onclick="moveTo('slide05');" class="btn fix_bt">정비사항선택</a>
 									</div>
@@ -368,6 +383,9 @@ function fn_egov_modal_remove() {
 
 
 <script>
+$(document).on("keyup", "#searchtel", function() { 
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+});
 $(document).ready(function () {
 	$(".popup_wrap").css("display","none");
 	$(".popup").css("display","none");
@@ -489,6 +507,9 @@ function moveTo(num,mode='')
 	if(num == "slide01")
 	{
 		$("input[name=mode]").val('');
+		carnum ="";
+		$("#searchcarnum").val(carnum);
+		$("#searchtel").val('');
 	}
 	if(num=="slide02" && $("input[name=mode]").val() == "" && mode !='')
 	{
@@ -513,6 +534,7 @@ function moveTo(num,mode='')
 	{
 		carnum ="";
 		$("#searchcarnum").val(carnum);
+		$("searchtel").val('');
 
 	}
 	else if(num == "slide03" && $("input[name=mode]").val() == "reserve")
@@ -566,8 +588,12 @@ function clicksearch()
 	{
 		var text = "차량번호 형식이 알맞지 않습니다. 다시 확인해 주세요";
 		$("#searchcarwarning").text(text);
+		$("#searchcarnum").focus();
+
 		return;
 	}
+	
+	var searchtel = $("#searchtel").val();
 	
 	if(mode == "normal"){
 		$.ajax({
@@ -577,6 +603,7 @@ function clicksearch()
 			//dataType:"json",
 			data: {
 				carnum:carnum,
+				tel:searchtel,
 				mode:mode
 			},
 			success: function (resp) {
@@ -628,14 +655,15 @@ function clicksearch()
 			//contentType:"application/json;charset=UTF-8",
 			//dataType:"json",
 			data: {
-				carnum:carnum
+				carnum:carnum,
+				tel:searchtel
 			},
 			success: function (resp) {
 				console.log(resp);
 				//정보 없을시
 				if(resp ==""|| resp==null)
 				{
-					var text = "예약 정보가 없습니다 데스크에 문의해 주세요";
+					var text = "예약 정보가 없습니다. 데스크에 문의해 주세요";
 					$("#searchcarwarning").text(text);
 					return;
 				}
@@ -818,8 +846,8 @@ function InsertWebRcpt()
 					var info = resp[0];
 					// console.log(info);
 					// console.log(infohtml);
-					infohtml.eq(0).text("접수번호 : "+info.TAKESEQ);
-					infohtml.eq(1).text("성함 : "+info.NAME);
+					infohtml.eq(0).text("접수번호 : "+info.SEQ);
+					infohtml.eq(1).text("성함 : "+info.CUSTOMER_NAME);
 					infohtml.eq(2).text("차종 : "+info.KIND);
 					infohtml.eq(3).text("정비내역 : "+info.ENUM);
 
@@ -888,7 +916,7 @@ function InsertWebRcpt()
 
 function clickconfirm()
 {
-	clickdel();
+	// clickdel();
 	$(".success").hide();
 	$(".fail").hide();
 	// $("#popup_wrap").css("display","none");

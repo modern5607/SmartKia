@@ -23,6 +23,10 @@
     <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
     <script type="text/javascript">
+
+        
+var var_changedate='';
+
     function fnIdCheck(){
         var url = "<c:url value='/rcpt/searchCarPopupView.do'/>?";
         
@@ -114,87 +118,6 @@
    
 
 
-    function InsertWebRcpt(){
-        
-        // if($("input[name=chk_repair]").is(":checked")==false)
-        // {
-        //     alert("수리종류를 선택해 주세요");
-        //     return;
-        // }
-
-        
-        if($("input[name=name]").val()=="")
-        {
-            alert("조회를 통해 차량및 고객을 선택해 주세요");
-            return;
-        }
-        if($("input[name=carnum]").val()=="")
-        {
-            alert("조회를 통해 차량및 고객을 선택해 주세요");
-            return;
-        }
-        
-
-        if($("#urgent").is(":checked"))
-            $("#urgent").val("Y");
-        else
-        {
-            $("#urgent").val("N");
-            $("#urgent").prop("checked",true);            
-        }
-
-        //수리항목 리스트화
-        var array = new Array();
-		$('input[name=repaircode]').each(function(index) {
-			array.push($(this).val());
-			
-		});
-		$("#repairlist").val(array);
-        if($("#repairlist").val()==null||$("#repairlist").val()=='')
-        {
-            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
-            return;
-        }
-
-        //수리종류 리스트화
-        var array = new Array();
-		$('select[name=chk_repair]').find("option:selected").each(function(index) {
-			array.push($(this).val());
-			
-		});
-		$("#chkrepairlist").val(array);
-        if($("#chkrepairlist").val()==null||$("#chkrepairlist").val()=='')
-        {
-            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
-            return;
-        }
-
-        //예약일자 값 검증
-        if($("#reservationdate").val()==null || $("#reservationdate").val()=="")
-        {
-            alert("예약일자와 시간을 선택해 주세요.");
-            return;
-        }
-
-        var reserveDate = new Date($("#reservationdate").val());
-        var hour = $("#hour option:selected").val();
-        hour  = hour.split("-")[1];
-        reserveDate.setHours(0,0,0,0);
-        reserveDate.setHours(hour);
-        reserveDate = reserveDate.getFullYear()+"-"+(reserveDate.getMonth()+1)+"-"+reserveDate.getDate()+" "+reserveDate.getHours()+":00:00";
-        console.log(reserveDate);
-
-        $("#reservationdate").val(reserveDate);
-
-        // console.log($("#chkrepairlist").val());
-        // console.log($("#repairlist").val());
-        // console.log($("#notelist").val());
-        
-        document.rcptform.action = "<c:url value='InsertWebReservationRcpt.do'/>";
-        document.rcptform.submit();
-        
-    }
-
     function RepairDetail(seq)
     {
         console.log(seq);
@@ -243,6 +166,35 @@
                 }
             }
         });
+    }
+
+    function ConfirmRcpt(takeseq)
+    {
+        if(!confirm("예약 확인을 하시겠습니까?"))
+            return;
+
+        if(takeseq==''){
+            alert("해당 접수정보가 조회되지 않습니다. 새로고침후 다시 시도해 주세요");
+            return;
+        }
+        $.ajax({
+            type: "post",
+            url: "<c:url value='/rcpt/ConfirmWebReservationRcpt.do'/>",
+            data: {takeseq:takeseq},
+            success: function (resp) {
+                if(resp=="1")
+                {
+                    alert("접수예약이 확인되었습니다");
+                    window.location.reload();
+                }
+                else
+                {
+                    alert("오류: 확인할 접수의 상태가 변경되었습니다 다시 시도해 주세요");
+                    window.location.reload();                    
+                }
+            }
+        });
+
     }
 
     function reload()
@@ -318,20 +270,20 @@
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="name" id="name" class="f_txtsmall" />
+                                                    <input name="name" id="name" class="f_txtsmall" readonly/>
                                                 </td>
                                                 <td class="lb">
                                                     <label for="carnum">차량번호</label>
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="carnum" id="carnum" class="f_txtsmall"/>
+                                                    <input name="carnum" id="carnum" class="f_txtsmall" readonly/>
                                                 </td>
                                                 <td class="lb">
                                                     <label for="carkind">차종</label>
                                                 </td>
                                                 <td>
-                                                    <input name="carkind" id="carkind" class="f_txtsmall"/>
+                                                    <input name="carkind" id="carkind" class="f_txtsmall" readonly/>
                                                 </td>
                                                 
                                                 <td class="lb">
@@ -339,7 +291,7 @@
                                                     <span class="req">필수</span>
                                                 </td>
                                                 <td>
-                                                    <input name="tel" id="tel" class="f_txtsmall"/>
+                                                    <input name="tel" id="tel" class="f_txtsmall" readonly/>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -477,7 +429,7 @@
                                                     <th scope="col">고객명</th>
                                                     <th scope="col">연락처</th>
                                                     <th scope="col">상태</th>
-                                                    <th scope="col">취소</th>
+                                                    <th scope="col">비고</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -492,12 +444,15 @@
                                                     <td><c:out value="${result.PLANDATE}"/></td>
                                                     <td><c:out value="${result.AUTONUMBER}"/></td>
                                                     <td><c:out value="${result.KIND}"/></td>
-                                                    <td><a href="#" class="lnk" style="text-decoration: underline;" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIRENUM}"/></a></td>
+                                                    <td><c:choose><c:when test="${result.TASKSTAT=='CB-reserve'||result.TASKSTAT=='CB-reserveconfirm'}"><a href="#" class="lnk" onclick="RepairDetail('<c:out value='${result.TAKESEQ}'/>'); return false;"><c:out value="${result.REPAIRENUM}"/></a></c:when><c:otherwise>${result.REPAIRENUM}</c:otherwise></c:choose></td>
                                                     <td><c:out value="${result.CUSTOMER_NAME}"/></td>
                                                     <td><c:out value="${result.CUSTOMER_TEL}"/></td>
                                                     <td><c:out value="${result.TASKSTAT_NAME}"/></td>
                                                     <td>
                                                         <c:if test="${result.TASKSTAT== 'CB-reserve'}">
+                                                        <a href="#LINK" class="btn btn_blue_30 w_80" onclick="ConfirmRcpt('<c:out value='${result.TAKESEQ}'/>'); return false;">예약확인</a>
+                                                        </c:if>
+                                                        <c:if test="${result.TASKSTAT== 'CB-reserve' || result.TASKSTAT== 'CB-reserveconfirm'}">
                                                         <a href="#LINK" class="btn btn_blue_30 w_80" onclick="CancelRcpt('<c:out value='${result.TAKESEQ}'/>'); return false;">예약취소</a>
                                                         </c:if>
                                                     </td>
@@ -625,12 +580,123 @@ function updatetotaltime(){
     // $("#estime").val(converttime);
 }
 
-var var_changedate='';
+
+
+function InsertWebRcpt(){
+        if($("input[name=name]").val()=="")
+        {
+            alert("조회를 통해 차량및 고객을 선택해 주세요");
+            return;
+        }
+        if($("input[name=carnum]").val()=="")
+        {
+            alert("조회를 통해 차량및 고객을 선택해 주세요");
+            return;
+        }
+        
+
+        if($("#urgent").is(":checked"))
+            $("#urgent").val("Y");
+        else
+        {
+            $("#urgent").val("N");
+            $("#urgent").prop("checked",true);            
+        }
+
+        //수리항목 리스트화
+        var array = new Array();
+		$('input[name=repaircode]').each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#repairlist").val(array);
+        if($("#repairlist").val()==null||$("#repairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        //수리종류 리스트화
+        var array = new Array();
+		$('select[name=chk_repair]').find("option:selected").each(function(index) {
+			array.push($(this).val());
+			
+		});
+		$("#chkrepairlist").val(array);
+        if($("#chkrepairlist").val()==null||$("#chkrepairlist").val()=='')
+        {
+            alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
+            return;
+        }
+
+        //예약일자 값 검증
+        if($("#reservationdate").val()==null || $("#reservationdate").val()=="")
+        {
+            alert("예약일자와 시간을 선택해 주세요.");
+            return;
+        }
+
+        var reserveDate = new Date($("#reservationdate").val());
+        var hour = $("#hour option:selected").val();
+        hour  = hour.split("-")[1];
+        reserveDate.setHours(0,0,0,0);
+        reserveDate.setHours(hour);
+        reserveDate = reserveDate.getFullYear()+"-"+(reserveDate.getMonth()+1)+"-"+reserveDate.getDate()+" "+reserveDate.getHours()+":00:00";
+        console.log(reserveDate);
+
+        $("#reservationdate").val(reserveDate);
+
+        // console.log($("#chkrepairlist").val());
+        // console.log($("#repairlist").val());
+        // console.log($("#notelist").val());
+        
+        var form = $("#rcptform")[0];
+        var formdata = new FormData(form);
+        $.ajax({
+            type: "post",
+            url: "/rcpt/InsertWebReservationRcpt.do",
+            data: formdata,
+            processData:false,
+            contentType:false,
+            success: function (resp) {
+                console.log("result:"+resp);
+                if(resp=="1")
+                {
+                    $("#name").val('');
+                    $("#carnum").val('');
+                    $("#carkind").val('');
+                    $("#tel").val('');
+
+                    var checkedlist = $("input[name=mtn_cont]:checked");
+                    checkedlist.each(function(){
+                        $(this).prop("checked",false);
+                    });
+                    $("#repair tbody").empty();
+                    $("li.box_tit a").parent().removeClass("active");
+
+                    $("#urgent").val('');
+                    $("#urgent").prop("checked",false);        
+
+                    $("#note").val('');
+                    $("#repairnote").val('');
+
+                    
+                    changedate(var_changedate);
+                    alert("예약이 등록되었습니다.");
+                    
+                }
+                else
+                {
+                    alert("예약 등록에 실패하였습니다. 다시 시도해 주세요");
+                }
+            }
+        });
+        
+    }
+
 function changedate(date)
 {
-    if(var_changedate == date)
-        return;
-    var_changedate = date
+    var_changedate = date;
     
     $.ajax({
         type: "post",
@@ -639,9 +705,12 @@ function changedate(date)
         success: function (resp) {
             console.log(resp);
             var tbody = $(".board_list4 table tbody");
+            var html='';
             // console.log(tbody);
-            $.each(resp,function(index,item){
-                var html='';
+
+            if(resp.length > 0)
+            {
+                $.each(resp,function(index,item){
                 html+="<tr>";
                 html+="<td>"+item.RECEIPTDATE+"</td>";
                 html+="<td>"+item.PLANDATE+"</td>";
@@ -651,13 +720,25 @@ function changedate(date)
                 html+="<td>"+item.CUSTOMER_NAME+"</td>";
                 html+="<td>"+item.CUSTOMER_TEL+"</td>";
                 html+="<td>"+item.TASKSTAT_NAME+"</td>";
-                var tmp_html = item.TASKSTAT=='CB-reserve'?"<a href='#LINK' class='btn btn_blue_30 w_80' onclick=\"CancelRcpt('"+item.TAKESEQ+"\'); return false;\">예약취소</a>":''; 
-                html+="<td>"+tmp_html+"</td>";
+                var tmp_html_confirm = item.TASKSTAT=='CB-reserve'?"<a href='#LINK' class='btn btn_blue_30 w_80' onclick=\"ConfirmRcpt('"+item.TAKESEQ+"\'); return false;\">예약확인</a>":''; 
+                var tmp_html_cancel = (item.TASKSTAT=='CB-reserve'||item.TASKSTAT=='CB-reserveconfirm')?"<a href='#LINK' class='btn btn_blue_30 w_80' onclick=\"CancelRcpt('"+item.TAKESEQ+"\'); return false;\">예약취소</a>":''; 
+                html+="<td>"+tmp_html_confirm+" "+tmp_html_cancel+"</td>";
                 html+="</tr>";
-                console.log(html);
+                // console.log(html);
                 tbody.html('');
                 tbody.html(html);
             });
+            }
+            else
+            {
+                html+="<tr>";
+                html+="<td colspan='9'>해당 날짜에 예약된 고객이 없습니다.</td>";
+                html+="</tr>";
+                tbody.html('');
+                tbody.html(html);
+
+            }
+            
         }
     });
 }

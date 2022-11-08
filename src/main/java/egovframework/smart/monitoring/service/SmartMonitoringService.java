@@ -7,7 +7,7 @@ import egovframework.com.cmm.ComDefaultVO;
 
 public interface SmartMonitoringService {
 	
-	public Map<String, Object> selectMonitoringList(ComDefaultVO vo) throws Exception;
+	public List<Object> selectMonitoringList() throws Exception;
 
     public List<Object> SceneMonitoring(String Team)throws Exception;
 
@@ -18,6 +18,6 @@ public interface SmartMonitoringService {
     public List<Object> GetMonitoringData()throws Exception;
 
     public List<Object> repairMonitoring()throws Exception;
-	
 
+    public List<Object> selectTeammonitor();
 }

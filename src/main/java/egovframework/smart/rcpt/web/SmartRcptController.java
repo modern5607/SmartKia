@@ -20,6 +20,9 @@ import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -369,10 +372,22 @@ public class SmartRcptController {
 		return String.valueOf(result);
 	}
 
+	//예약접수확인
+	@RequestMapping(value = "/rcpt/ConfirmWebReservationRcpt.do",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String ConfirmWebReservationRcpt(@RequestParam("takeseq") String takeseq, RedirectAttributes attr) throws Exception
+	{
+		int result=0;
+		System.out.println(takeseq);
+
+		result = smartrcptservice.ConfirmWebReservationRcpt(takeseq);
+		System.out.println("result :"+result);
+		return String.valueOf(result);
+	}
+
+
 	@RequestMapping(value = "/rcpt/ReservationstatusView.do")
-	public String ReservationstatusView(@ModelAttribute("ReservationVO") ReservationVO searchVO, ModelMap model,
-			@RequestParam(value = "menuNo", required = false) String menuNo,
-			HttpServletRequest request) throws Exception {
+	public String ReservationstatusView(@ModelAttribute("ReservationVO") ReservationVO searchVO, ModelMap model, @RequestParam(value = "menuNo", required = false) String menuNo, HttpServletRequest request) throws Exception {
 		
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
@@ -386,6 +401,14 @@ public class SmartRcptController {
 			return "uat/uia/EgovLoginUsr";
 		}
 
+		if(searchVO.getSdate()=="")
+		{
+			LocalDate localdate = LocalDate.now();
+			// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String Now = localdate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			searchVO.setSdate(Now);
+		}
+		System.out.println(searchVO);
 		// paging
 		searchVO.setPageUnit(propertyService.getInt("pageUnit"));
 		searchVO.setPageSize(propertyService.getInt("pageSize"));
@@ -405,6 +428,7 @@ public class SmartRcptController {
 
 		paginationInfo.setTotalRecordCount(totCnt);
 
+		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("resultList", map.get("resultList"));
 		model.addAttribute("resultCnt", map.get("resultCnt"));
 		model.addAttribute("paginationInfo", paginationInfo);
@@ -473,6 +497,7 @@ public class SmartRcptController {
 
 	//예약접수등록
 	@RequestMapping(value = "/rcpt/InsertWebReservationRcpt.do")
+	@ResponseBody
 	public String InsertWebReservationRcpt(@RequestParam Map<String,Object> params,ModelMap model, RedirectAttributes attr) throws Exception {
 		System.out.println(params);
 
@@ -508,12 +533,13 @@ public class SmartRcptController {
 		result = smartrcptservice.InsertWebRcpt(params);
 		
 		
-		if (result == 0) // insert실패
-			attr.addFlashAttribute("msg", "수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
-		else
-			attr.addFlashAttribute("msg", "접수 등록되었습니다.");
+		// if (result == 0) // insert실패
+		// 	attr.addFlashAttribute("msg", "수리사항 데이터가 없습니다. 사이트 제작사에 문의해 주세요");
+		// else
+		// 	attr.addFlashAttribute("msg", "접수 등록되었습니다.");
 
-		return "redirect:/rcpt/SmartWebReservationRcptView.do";
+		// return "redirect:/rcpt/SmartWebReservationRcptView.do";
+		return String.valueOf(result);
 	}
 
 	@RequestMapping(value = "/rcpt/ajaxWebReservationRcptlist.do")

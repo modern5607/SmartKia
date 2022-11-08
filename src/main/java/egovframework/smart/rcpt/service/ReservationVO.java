@@ -13,7 +13,14 @@ public class ReservationVO extends ComDefaultVO implements Serializable{
     private String tel ="";
     private String sdate="";
     private String edate="";
+    private String taskstat="";
 
+    public String getTaskstat() {
+        return taskstat;
+    }
+    public void setTaskstat(String taskstat) {
+        this.taskstat = taskstat;
+    }
     public String getCustnm() {
         return custnm;
     }

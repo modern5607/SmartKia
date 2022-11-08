@@ -21,15 +21,15 @@ public class SmartMonitoringServiceImpl extends EgovAbstractServiceImpl implemen
 	private SmartMonitoringDAO smartmonitoringDAO;
 	
 	@Override
-	public Map<String, Object> selectMonitoringList(ComDefaultVO vo) throws Exception {
+	public List<Object> selectMonitoringList() throws Exception {
 		
-		List<ComDefaultVO> result = smartmonitoringDAO.selectMonitoringList(vo);
-		String cnt = Integer.toString(result.size());
+		return smartmonitoringDAO.selectMonitoringList();
+		// String cnt = Integer.toString(result.size());
 
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("resultList", result);
-		map.put("resultCnt", cnt);
-		return map;
+		// Map<String,Object> map = new HashMap<String,Object>();
+		// map.put("resultList", result);
+		// map.put("resultCnt", cnt);
+		// return map;
 	}
 
 	@Override
@@ -70,5 +70,15 @@ public class SmartMonitoringServiceImpl extends EgovAbstractServiceImpl implemen
 		List<Object> result = smartmonitoringDAO.repairMonitoring();
 		return result;
 	}
+
+	@Override
+	public List<Object> selectTeammonitor() {
+		List<Object> list = new ArrayList<>();
+		list.add(smartmonitoringDAO.SceneMonitoring("CB-A"));
+		list.add(smartmonitoringDAO.SceneMonitoring("CB-B"));
+		list.add(smartmonitoringDAO.SceneMonitoring("CB-C"));
+		return list;
+	}
+
 
 }

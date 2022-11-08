@@ -1,6 +1,8 @@
 package egovframework.smart.crm.web;
 
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 /*import java.io.PrintWriter;*/
@@ -44,7 +46,9 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 
 @Controller
 public class SmartCrmController {
-	
+	/** EgovMessageSource */
+	@Resource(name = "egovMessageSource")
+	EgovMessageSource egovMessageSource;
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
 	@Resource(name = "SmartMdmService")
@@ -118,18 +122,25 @@ public class SmartCrmController {
             request.getSession().setAttribute("menuNo", menuNo);
         }
     
-        // 0. Spring Security 사용자권한 처리
-//        Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-//        if (!isAuthenticated) {
-//            model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-//            return "uat/uia/EgovLoginUsr";
-//        }
+       // 0. Spring Security 사용자권한 처리
+       Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+       if (!isAuthenticated) {
+           model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+           return "uat/uia/EgovLoginUsr";
+       }
     
         // // 로그인 객체 선언
         // LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
         // if (loginVO == null) {
         // loginVO = new LoginVO();
         // }
+        if(SmartCrmVO.getSdate()=="")
+        {
+            LocalDate localdate = LocalDate.now();
+            // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String Now = localdate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            SmartCrmVO.setSdate(Now);
+        }
     
         SmartCrmVO.setPageUnit(propertyService.getInt("pageUnit"));
         SmartCrmVO.setPageSize(propertyService.getInt("pageSize"));
@@ -150,7 +161,7 @@ public class SmartCrmController {
 //        System.out.println("test :" + test);
         System.out.println("vo : "+SmartCrmVO);
     
-        model.addAttribute("leadtimeVO", SmartCrmVO);
+        model.addAttribute("SmartCrmVO", SmartCrmVO);
         model.addAttribute("mainlist", map.get("main"));
 //        model.addAttribute("middlelist", map.get("middle"));
         System.out.println("main :" + map.get("main"));
@@ -160,31 +171,26 @@ public class SmartCrmController {
         return "/crm/SmartRepairStat";
     }
     @RequestMapping(value = "/crm/SmartRepairInfos.do")
-    public String SmartRepairInfos(@ModelAttribute("SmartCrmVO") SmartCrmVO vo, ModelMap model,
-            @RequestParam(value = "menuNo", required = false) String menuNo,
-            HttpServletRequest request) throws Exception {
-
-          //System.out.println("SmartRepairInfos.do -> =========================== ");
-         // System.out.println("SmartRepairInfos.do -> SmartCrmVO : " + vo);
-//          System.out.println("SmartLeadTime.do -> callsys : " + callsys);
-
+    public String SmartRepairInfos(@ModelAttribute("SmartCrmVO") SmartCrmVO vo, ModelMap model,@RequestParam(value = "menuNo", required = false) String menuNo, HttpServletRequest request) throws Exception {
             // 선택된 메뉴정보를 세션으로 등록한다.
-            if (menuNo != null && !menuNo.equals("")) {
-                request.getSession().setAttribute("menuNo", menuNo);
+		if (menuNo != null && !menuNo.equals("")) {
+			request.getSession().setAttribute("menuNo", menuNo);
+		}
+
+		// 0. Spring Security 사용자권한 처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!isAuthenticated) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+            if(vo.getSdate()=="")
+            {
+                LocalDate localdate = LocalDate.now();
+                // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String Now = localdate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                vo.setSdate(Now);
             }
-
-            // 0. Spring Security 사용자권한 처리
-//            Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-//            if (!isAuthenticated) {
-//                model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-//                return "uat/uia/EgovLoginUsr";
-//            }
-
-            // // 로그인 객체 선언
-            // LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-            // if (loginVO == null) {
-            // loginVO = new LoginVO();
-            // }
 
             vo.setPageUnit(propertyService.getInt("pageUnit"));
             vo.setPageSize(propertyService.getInt("pageSize"));

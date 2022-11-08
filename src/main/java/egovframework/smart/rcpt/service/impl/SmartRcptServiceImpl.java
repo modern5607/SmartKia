@@ -77,7 +77,7 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 			String takeseq = resultmap.get("takeseq").toString();
 			System.out.println(takeseq);
 			
-
+			
 			if(takeseq !="")//takeseq가 있다면(성공) 수리사항 등록
 			{
 				String[] repairlist = params.get("repairlist").toString().split(",");
@@ -318,10 +318,10 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 		if(result==1)
 		{
 			List<Object> tmplist = smartrcptDAO.SelectRcptinfo(takeseq);
-			Map<String,Object> params = new HashMap<String,Object>();
-			params.put("id", ((HashMap<String,Object>)tmplist.get(0)).get("CUSTOMER_ID"));
-			List<Object> info = smartrcptDAO.Selectrcptinfo_params(params);
-			return info;
+			// Map<String,Object> params = new HashMap<String,Object>();
+			// params.put("id", ((HashMap<String,Object>)tmplist.get(0)).get("CUSTOMER_ID"));
+			// List<Object> info = smartrcptDAO.Selectrcptinfo_params(params);
+			return tmplist;
 		}
 		else
 			return null;
@@ -330,6 +330,11 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 	@Override
 	public List<Object> ajaxWebReservationRcptlist(String date) {
 		return smartrcptDAO.selectList("SmartRcptDAO.ajaxWebReservationRcptlist",date);
+	}
+
+	@Override
+	public int ConfirmWebReservationRcpt(String takeseq) throws Exception {
+		return smartrcptDAO.ConfirmWebReservationRcpt(takeseq);
 	}
 
 
