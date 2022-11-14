@@ -19,13 +19,13 @@ if (request.getProtocol().equals("HTTP/1.1"))
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-<!-- <link rel="stylesheet" href="<c:url value='/'/>css/layout.css"> -->
-<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/tablet.css">
-<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-<script src="<c:url value='/'/>js/ui.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
+<!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css"> -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/component.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/page.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/tablet.css">
+<script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <style>
 
@@ -60,16 +60,16 @@ if (request.getProtocol().equals("HTTP/1.1"))
                                 <div class="tab team_click active" id="Aclass">1반</div>
                                 <div class="tab team_click" id="BClass">2반</div>
 								<div class="tab team_click" id="Cclass">3반</div>
-								<div class="menu_btn"><a href="#"><img src="../images/ico_allmenu_2.png"></a></div>
-								<div class="logo team_right"><img src="../images/kia_logo.png"></div>
+								<div class="menu_btn"><a href="#"><img src="${pageContext.request.contextPath}/images/ico_allmenu_2.png"></a></div>
+								<div class="logo team_right"><img src="${pageContext.request.contextPath}/images/kia_logo.png"></div>
 								<div class="menu_bg"></div>
 								<div class="sidebar_menu">
-									<div class="close_btn"><a href="#"><img src="../images/ico_allmenu_close_2.png"></a></div>
+									<div class="close_btn"><a href="#"><img src="${pageContext.request.contextPath}/images/ico_allmenu_close_2.png"></a></div>
 									<ul class="menu_wrap">
-										<li><a href="/tablet/TabletAssignGroup.do">접수현황</a></li>
-										<li><a href="/tablet/TabletWorkGroup.do">반별입고현황</a></li>
+										<li><a href="${pageContext.request.contextPath}/tablet/TabletAssignGroup.do">접수현황</a></li>
+										<li><a href="${pageContext.request.contextPath}/tablet/TabletWorkGroup.do">반별입고현황</a></li>
 									</ul>
-									<div style="position: absolute; bottom: 70px;"><img src="../images/kia_seo.png"></div>
+									<div style="position: absolute; bottom: 70px;"><img src="${pageContext.request.contextPath}/images/kia_seo.png"></div>
 								</div>
 							</div>
 							<div class="board_list" id="tab1">
@@ -89,7 +89,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 											<th scope="col">차종</th>
 											<th scope="col">예상완료시간</th>
 											<th scope="col">정비내역</th>
-                                            <th scope="col"><img src="../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
+                                            <th scope="col"><img src="${pageContext.request.contextPath}/images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -131,7 +131,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 											<th scope="col">차종</th>
 											<th scope="col">예상완료시간</th>
 											<th scope="col">정비내역</th>
-                                            <th scope="col"><img src="../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
+                                            <th scope="col"><img src="${pageContext.request.contextPath}/images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -173,7 +173,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 											<th scope="col">차종</th>
 											<th scope="col">예상완료시간</th>
 											<th scope="col">정비내역</th>
-                                            <th scope="col"><img src="../images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
+                                            <th scope="col"><img src="${pageContext.request.contextPath}/images/refresh.png" style="width: 30px;" onclick="refresh();"></th>
 										</tr>
 									</thead>
 									<tbody>

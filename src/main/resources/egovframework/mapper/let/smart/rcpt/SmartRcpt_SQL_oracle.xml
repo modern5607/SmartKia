@@ -207,6 +207,9 @@
         FROM   CAR_TAKEREPAIR
         WHERE  (TASKSTAT='CB-reserve' OR TASKSTAT='CB-reserveconfirm' OR TASKSTAT='CB-reservecancel')
         AND TRUNC(RECEIPTDATE) <![CDATA[>=]]> TRUNC(SYSDATE)
+        <if test="searchcarnum != ''">
+            AND AUTONUMBER LIKE '%'||#{searchcarnum}||'%'
+        </if>
     </select>
 
     <select id="Selectrcptinfo_params" parameterType="java.util.HashMap" resultType="java.util.HashMap">

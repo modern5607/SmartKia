@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
     <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
     <script src="<c:url value='/'/>js/ui.js"></script>
-    <title>샘플 포털 > 사이트 소개 > 사이트 소개</title>
+    <title>목포서비스 KIA AUTO Q</title>
     <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
     <script type="text/javascript">
@@ -46,12 +46,18 @@
     	confirm("정말 삭제하시겠습니까?");
     	
     }
+    function init()
+    {
+        if ("<c:out value='${msg}'/>" != "") {
+			alert("<c:out value='${msg}'/>");
+		}
+    }
     
     </script>
 
 </head>
 
-<body>
+<body onload="init()">
     <!-- Skip navigation -->
     <a href="#contents" class="skip_navi">본문 바로가기</a>
 

@@ -23,7 +23,7 @@
 	<script src="<c:url value='/'/>js/jqueryui.js"></script>
 	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
 
-	<title>샘플 포털 > 포털시스템관리 > 사용자관리 > 회원관리</title>
+	<title>목포서비스 KIA AUTO Q</title>
 	<script type="text/javascript" src="<c:url value='/validator.do'/>"></script>
 	<script type="text/javaScript">
 
@@ -95,8 +95,8 @@
 										<tr>
 											<td class="lb"><label for="USE_YN">사용유무</label></td>
 											<td>
-												<label class="f_select w_350" for="groupuseyn">
-													<select name="groupuseyn" id="groupuseyn">
+												<label class="f_select w_350" for="useyn">
+													<select name="useyn" id="useyn">
 														<option value="Y" <c:if test="${info[0].USE_YN eq 'Y'}">selected</c:if>>사용</option>	
 														<option value="N" <c:if test="${info[0].USE_YN eq 'N'}">selected</c:if>>사용안함</option>	
 													</select>

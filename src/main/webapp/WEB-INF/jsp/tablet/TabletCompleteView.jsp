@@ -168,7 +168,7 @@ function fn_egov_modal_remove() {
 		});
 		$("#repairseqlist").val(array);
 
-        document.Assignform.action="/tablet/TabletRepairComplete.do"; //경로 넣을것.
+        document.Assignform.action="TabletRepairComplete.do"; //경로 넣을것.
         document.Assignform.submit();
     }
 
@@ -206,7 +206,7 @@ function fn_egov_modal_remove() {
 		});
 		$("#repairseqlist").val(array);
 
-        document.Assignform.action="/tablet/tabletReceiveCancel.do"; //경로 넣을것.
+        document.Assignform.action="tabletReceiveCancel.do"; //경로 넣을것.
         document.Assignform.submit();
     }
 </script>

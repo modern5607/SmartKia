@@ -21,8 +21,8 @@
 	<script src="<c:url value='/'/>js/jqueryui.js"></script>
 	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
 	
-<title>기준정보 > 사용자관리</title>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
+    <title>목포서비스 KIA AUTO Q</title>
+    <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="smartMberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript">
 

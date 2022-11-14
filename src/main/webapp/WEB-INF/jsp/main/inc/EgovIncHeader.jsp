@@ -107,24 +107,24 @@ function fn_egov_modal_remove() {
                     <div>
                         <!-- <h2>기준정보</h2> -->
                         <ul>
-                            <li><a href="/mdm/SmartCode.do?menuNo=1010000">공통코드관리</a></li>
-                            <li><a href="/mdm/SmartMberManage.do?menuNo=1000000">사용자관리</a></li>
-                            <!-- <li><a href="/EgovPageLink.do?link=main/sample_menu/EgovLocation?menuNo=1000000">찾아오시는 길</a></li> -->
-                            <li><a href="/mdm/SmartLeadTime.do?menuNo=1070000">표준작업관리</a></li>
-                            <li><a href="/mdm/SmartBiz.do">거래처 관리</a></li>
-                            <li><a href="/customer/SmartCusMberManage.do?menuNo=1000000">이용고객관리</a></li>
+                            <li><a href="${pageContext.request.contextPath}/mdm/SmartCode.do?menuNo=1010000">공통코드관리</a></li>
+                            <li><a href="${pageContext.request.contextPath}/mdm/SmartMberManage.do?menuNo=1000000">사용자관리</a></li>
+                            <!-- <li><a href="${pageContext.request.contextPath}/EgovPageLink.do?link=main/sample_menu/EgovLocation?menuNo=1000000">찾아오시는 길</a></li> -->
+                            <li><a href="${pageContext.request.contextPath}/mdm/SmartLeadTime.do?menuNo=1070000">표준작업관리</a></li>
+                            <li><a href="${pageContext.request.contextPath}/mdm/SmartBiz.do">거래처 관리</a></li>
+                            <li><a href="${pageContext.request.contextPath}/customer/SmartCusMberManage.do?menuNo=1000000">이용고객관리</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <!-- <h2>접수관리</h2> -->
                         <ul>
-                            <li><a href="/rcpt/SmartWebRcptView.do">접수등록(WEB)</a></li>
-                            <li><a href="/rcpt/SmartWebReservationRcptView.do">고객예약등록(WEB)</a></li>
+                            <li><a href="${pageContext.request.contextPath}/rcpt/SmartWebRcptView.do">접수등록(WEB)</a></li>
+                            <li><a href="${pageContext.request.contextPath}/rcpt/SmartWebReservationRcptView.do">고객예약등록(WEB)</a></li>
                             
-                            <li><a href="/rcpt/ReservationstatusView.do">고객예약현황</a></li>
-                            <li><a href="/crm/SmartRepairInfos.do?">차량 정비내역 조회</a></li>
-                            <li><a href="/crm/SmartRepairStat.do?">기간별 정비내역 조회</a></li>
+                            <li><a href="${pageContext.request.contextPath}/rcpt/ReservationstatusView.do">고객예약현황</a></li>
+                            <li><a href="${pageContext.request.contextPath}/crm/SmartRepairInfos.do?">차량 정비내역 조회</a></li>
+                            <li><a href="${pageContext.request.contextPath}/crm/SmartRepairStat.do?">기간별 정비내역 조회</a></li>
 
                         </ul>
                     </div>
@@ -132,9 +132,9 @@ function fn_egov_modal_remove() {
                     <div>
                         <!-- <h2>키오스크</h2> -->
                         <ul>
-                        	<li><a href="/kiosk/SmartKiosk.do?menuNo=3000000">키오스크접수</a></li>
-                            <!-- <li><a href="/kiosk/selectKioskin.do?menuNo=3000000">일반접수관리</a></li> -->
-                            <!-- <li><a href="/kiosk/selectKioskinsurance.do?menuNo=3000000">보증접수관리</a></li> -->
+                        	<li><a href="${pageContext.request.contextPath}/kiosk/SmartKiosk.do?menuNo=3000000">키오스크접수</a></li>
+                            <!-- <li><a href="${pageContext.request.contextPath}/kiosk/selectKioskin.do?menuNo=3000000">일반접수관리</a></li> -->
+                            <!-- <li><a href="${pageContext.request.contextPath}/kiosk/selectKioskinsurance.do?menuNo=3000000">보증접수관리</a></li> -->
                         </ul>
                     </div>
                     
@@ -142,34 +142,34 @@ function fn_egov_modal_remove() {
                         <!-- <h2>현장관리</h2> -->
                         <ul>
                             <!--
-                                <li><a href="/uss/olp/qri/EgovQustnrRespondInfoList.do?menuNo=4000000">접수List조회</a></li>
-                                <li><a href="/uss/olh/qna/QnaListInqire.do?menuNo=4000000">접수작업분배</a></li>
-                                <li><a href="/uss/olp/qnn/EgovQustnrRespondInfoManageList.do?menuNo=4000000">작업장별처리내역</a></li>
-                                <li><a href="/uss/olp/qtm/EgovQustnrTmplatManageRegist.do?menuNo=4000000">긴급접수관리</a></li>
-                                <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4000000">접수현황내역</a></li> 
+                                <li><a href="${pageContext.request.contextPath}/uss/olp/qri/EgovQustnrRespondInfoList.do?menuNo=4000000">접수List조회</a></li>
+                                <li><a href="${pageContext.request.contextPath}/uss/olh/qna/QnaListInqire.do?menuNo=4000000">접수작업분배</a></li>
+                                <li><a href="${pageContext.request.contextPath}/uss/olp/qnn/EgovQustnrRespondInfoManageList.do?menuNo=4000000">작업장별처리내역</a></li>
+                                <li><a href="${pageContext.request.contextPath}/uss/olp/qtm/EgovQustnrTmplatManageRegist.do?menuNo=4000000">긴급접수관리</a></li>
+                                <li><a href="${pageContext.request.contextPath}/cop/bbs/SelectBBSMasterInfs.do?menuNo=4000000">접수현황내역</a></li> 
                             -->
-                            <li><a href="/tablet/SmartAssignGroup.do">작업반배정</a></li>
-                            <li><a href="/tablet/SmartWorkGroup.do">반별입고현황</a></li>
-                            <li><a href="/tablet/ProgressDetail.do">반별 진행 내역 조회</a></li>
+                            <li><a href="${pageContext.request.contextPath}/tablet/SmartAssignGroup.do">작업반배정</a></li>
+                            <li><a href="${pageContext.request.contextPath}/tablet/SmartWorkGroup.do">반별입고현황</a></li>
+                            <li><a href="${pageContext.request.contextPath}/tablet/ProgressDetail.do">반별 진행 내역 조회</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <!-- <h2>현장태블릿</h2> -->
                         <ul>
-                            <li><a href="/tablet/TabletAssignGroup.do">접수현황</a></li>
-                            <li><a href="/tablet/TabletWorkGroup.do">반별입고현황</a></li>
-                            <!-- <li><a href="/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">고객정보관리</a></li> -->
-                            <!-- <li><a href="/cop/bbs/SelectBBSMasterInfs.do?menuNo=4100000">차량정보관리</a></li> -->
-                            <!-- <li><a href="/cop/com/selectTemplateInfs.do?menuNo=4100000">컴플레인관리</a></li> -->
+                            <li><a href="${pageContext.request.contextPath}/tablet/TabletAssignGroup.do">접수현황</a></li>
+                            <li><a href="${pageContext.request.contextPath}/tablet/TabletWorkGroup.do">반별입고현황</a></li>
+                            <!-- <li><a href="${pageContext.request.contextPath}/uss/sam/ipm/listIndvdlInfoPolicy.do?menuNo=4100000">고객정보관리</a></li> -->
+                            <!-- <li><a href="${pageContext.request.contextPath}/cop/bbs/SelectBBSMasterInfs.do?menuNo=4100000">차량정보관리</a></li> -->
+                            <!-- <li><a href="${pageContext.request.contextPath}/cop/com/selectTemplateInfs.do?menuNo=4100000">컴플레인관리</a></li> -->
                         </ul>
                     </div>
                     
                     <div>
                         <!-- <h2>모니터링</h2> -->
                         <ul>
-                            <li><a href="/monitor/SceneMonitoring.do">현장접수모니터링</a></li>
-                            <li><a href="/monitor/GuestMonitoring.do">고객대기실모니터링</a></li>
+                            <li><a href="${pageContext.request.contextPath}/monitor/SceneMonitoring.do">현장접수모니터링</a></li>
+                            <li><a href="${pageContext.request.contextPath}/monitor/GuestMonitoring.do">고객대기실모니터링</a></li>
                         </ul>
                     </div>
                     
@@ -251,9 +251,17 @@ function fn_egov_modal_remove() {
             }
         }
     }
+    function getContextPath() {
+        var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+        return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+    }
 
     function goMenuPage(menuNo){
+        var hostindex = location.href.indexOf(location.host) + location.host.length;
+
     	var loginYN = "<%=loginVO%>";
+        var pagecontext = getContextPath();
+        console.log(pagecontext);
         console.log(loginYN);
     	if(loginYN==null && (menuNo!="4200000"||menuNo!="3000000") )
         {
@@ -261,8 +269,8 @@ function fn_egov_modal_remove() {
         }
         document.getElementById("menuNo").value=menuNo;
         //document.getElementById("link").value=getLastLink(menuNo);
-        document.menuListForm.action = "/"+getLastLink(menuNo).substring(1);
-        console.log("/"+getLastLink(menuNo).substring(1));
+        document.menuListForm.action =pagecontext+"/"+getLastLink(menuNo).substring(1);
+        console.log(pagecontext+"/"+getLastLink(menuNo).substring(1));
         document.menuListForm.submit();
     }
 </script>

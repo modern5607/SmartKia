@@ -151,57 +151,6 @@ public class SmartRcptController {
 		//response.getWriter().print(map);
 	}
 
-	/*
-	//모바일 예약 접수등록
-	@RequestMapping(value="/rcpt/SmartMobileRcptView.do")
-	public String SmartMobileRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO ,ModelMap model,HttpServletRequest request,HttpServletResponse response ) throws Exception{
-		Device device = DeviceUtils.getCurrentDevice(request);
-
-		response.setContentType("text/html; charset=euc-kr");
-		PrintWriter out = response.getWriter();
-		
-		
-		if(device.isMobile())
-			System.out.println("모바일 접속");
-		else
-		{
-			System.out.println("PC 접속");
-			out.println("<script>");
-			out.println("alert('모바일로 접속해 주세요.')");
-			out.println("history.back()");
-			out.println("</script>");
-			return null;
-		}
-		
-		smartrcptVO.setPageUnit(propertyService.getInt("pageUnit"));
-		smartrcptVO.setPageSize(propertyService.getInt("pageSize"));
-
-		PaginationInfo paginationInfo = new PaginationInfo();
-
-		paginationInfo.setCurrentPageNo(smartrcptVO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(smartrcptVO.getPageUnit());
-		paginationInfo.setPageSize(smartrcptVO.getPageSize());
-
-		smartrcptVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		smartrcptVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		smartrcptVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-		model
-		Map<String, Object> map = smartrcptservice.selectCommonCodeList(smartrcptVO);
-		System.out.println("Map :" + map);
-		int totCnt = 1;//Integer.parseInt((String) map.get("resultCnt"));
-		System.out.println("Map Size :" +totCnt);
-		paginationInfo.setTotalRecordCount(totCnt);
-
-		model.addAttribute("smartrcptVO", smartrcptVO);
-		model.addAttribute("resultList", map.get("resultList"));
-		model.addAttribute("resultDetail", map.get("resultDetail"));
-		model.addAttribute("resultCnt", map.get("resultCnt"));
-		model.addAttribute("paginationInfo", paginationInfo);
-
-		return "rcpt/SmartMobileRcptView";
-	}
-	*/
 
 	//차량조회 팝업화면
 	@RequestMapping(value = "/rcpt/searchCarPopupView.do")
@@ -268,6 +217,7 @@ public class SmartRcptController {
 
 		System.out.println("params:"+params);
 		int result=0;
+		/*
 		//고객 조회
 		HashMap<String,Object> customerInfo = smartrcptservice.selectMberList(params);
 		//System.out.println("customerInfo len :"+customerInfo.size());
@@ -283,6 +233,7 @@ public class SmartRcptController {
 			System.out.println("고객 등록 결과 :"+result);
 			// HashMap<String,Object> custominfo = smartrcptservice.selectMberList(params);
 		}
+		*/
 		//접수등록
 		result = smartrcptservice.InsertWebRcpt(params);
 		
@@ -437,7 +388,7 @@ public class SmartRcptController {
 	}
 	@RequestMapping(value="/rcpt/SmartWebReservationRcptView.do")
 	public String SmartWebReservationRcptView(@ModelAttribute("SmartRcptVO") SmartRcptVO smartrcptVO,ModelMap model,HttpServletRequest request,HttpServletResponse response) throws Exception{
-		
+		System.out.println(smartrcptVO);
 		if(request!=null)
 		{
 			Map<String,?> flashmap = RequestContextUtils.getInputFlashMap(request);

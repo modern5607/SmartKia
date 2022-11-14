@@ -55,7 +55,7 @@
 		document.frm.submit();			
 	}
 </script>
-<title>샘플 포털 > 포털서비스관리 > 서비스관리 > 게시판생성관리</title>
+<title>목포서비스 KIA AUTO Q</title>
 
 </head>
 <body>

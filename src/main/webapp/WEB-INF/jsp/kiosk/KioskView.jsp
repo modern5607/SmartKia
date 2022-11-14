@@ -12,15 +12,15 @@
 		<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
 		<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
 		<link rel="stylesheet" href="<c:url value='/'/>css/page.css"> -->
-		<link rel="stylesheet" href="/css/kiosk_common.css?after">
-		<link rel="stylesheet" href="/css/kiosk_main.css?after">
-		<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css?after">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kiosk_common.css?after">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kiosk_main.css?after">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jqueryui.css?after">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-		<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-		<script src="<c:url value='/'/>js/ui.js"></script>
-		<script src="<c:url value='/'/>js/jqueryui.js"></script>
-		<title>Auto Q 목포서비스센터</title>
-		<!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
+		<script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>
+		<script src="${pageContext.request.contextPath}/js/ui.js"></script>
+		<script src="${pageContext.request.contextPath}/js/jqueryui.js"></script>
+		<title>목포서비스 KIA AUTO Q</title>
+				<!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
 
 	</head>
@@ -383,6 +383,11 @@ function fn_egov_modal_remove() {
 
 
 <script>
+function getContextPath() {
+	var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+	return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+}
+
 $(document).on("keyup", "#searchtel", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
 });
@@ -414,9 +419,9 @@ function initialization_input()
 
 $(document).on("keyup","#searchcarnum",function () { 
 	// console.log($(this).val());
-	if($(this).val().length >=8)
+	if($(this).val().length >=9)
 	{
-		$(this).val($(this).val().slice(0,7));
+		$(this).val($(this).val().slice(0,8));
 	}
 });
 
@@ -474,7 +479,7 @@ function fnInsert(){
 	
 	$.ajax({
         type: "post",
-        url: "/customer/KioskSmartCusMberInsert.do",
+        url: "/SmartKia/customer/KioskSmartCusMberInsert.do",
 		processData:false,
 		contentType:false,
         data: formdata,
@@ -598,7 +603,7 @@ function clicksearch()
 	if(mode == "normal"){
 		$.ajax({
 			type: "post",
-			url: "/kiosk/SelectCarInfo.do",
+			url: "/SmartKia/kiosk/SelectCarInfo.do",
 			//contentType:"application/json;charset=UTF-8",
 			//dataType:"json",
 			data: {
@@ -651,7 +656,7 @@ function clicksearch()
 	{
 		$.ajax({
 			type: "post",
-			url: "/kiosk/SelectReserveCarInfo.do",
+			url: "/SmartKia/kiosk/SelectReserveCarInfo.do",
 			//contentType:"application/json;charset=UTF-8",
 			//dataType:"json",
 			data: {
@@ -720,7 +725,7 @@ function clickRepair(id)
 {
 	$.ajax({
         type: "post",
-        url: "/kiosk/SelectCarRepairInfo.do",
+        url: "/SmartKia/kiosk/SelectCarRepairInfo.do",
 		// contentType:"application/json;charset=UTF-8",
         // dataType:"json",
         data: {
@@ -831,7 +836,7 @@ function InsertWebRcpt()
 	{
 		$.ajax({
 			type: "post",
-			url: "/kiosk/KioskReserveConfirm.do",
+			url: "/SmartKia/kiosk/KioskReserveConfirm.do",
 			data: {takeseq : takeseq},
 			success: function (resp) {
 				console.log(resp);
@@ -879,7 +884,7 @@ function InsertWebRcpt()
 		
 		$.ajax({
 			type: "post",
-			url: "/kiosk/InsertKioskRcpt.do",
+			url: "/SmartKia/kiosk/InsertKioskRcpt.do",
 			processData:false,
 			contentType:false,
 			data: formdata,

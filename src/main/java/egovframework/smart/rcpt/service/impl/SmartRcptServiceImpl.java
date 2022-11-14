@@ -258,7 +258,7 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 
 	@Override
 	public List<Object> SelectReservationRcptList(SmartRcptVO smartrcptVO) throws Exception {
-		return smartrcptDAO.SelectReservationRcptList();
+		return smartrcptDAO.SelectReservationRcptList(smartrcptVO);
 	}
 
 	@Override

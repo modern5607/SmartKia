@@ -19,8 +19,8 @@
     <script src="<c:url value='/'/>js/ui.js"></script>
     <script src="<c:url value='/'/>js/datepicker.js"></script>
 
-    <title>Auto Q 목포서비스센터 </title>
-    <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
+    <title>목포서비스 KIA AUTO Q</title>
+        <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
     <script type="text/javascript">
 
@@ -242,7 +242,7 @@ var var_changedate='';
                                         <a href="#" class="btn btn_blue_46 w_100 btnmargin" onclick="InsertWebRcpt()" style="float: left;">등록</a>
                                     </span>
                                 </div>
-                                <form name="rcptform" id="rcptform" action="<c:url value='/rcpt/SmartWebRcptView.do'/>" method="post">
+                                <form name="rcptform" id="rcptform" action="<c:url value='/rcpt/SmartWebReservationRcptView.do'/>" method="post">
                                     <input type="hidden" name="id" value="">
                                     <input type="hidden" name="taskstat" value="<c:out value='CB-reserve'/>">
                                     <input type="hidden" name="servicesys" value="<c:out value='${servicesys[0].CODE}'/>">

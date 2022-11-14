@@ -29,8 +29,8 @@
 	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 	<script src="<c:url value='/'/>js/ui.js"></script>
 
-<title>기준정보 > 사용자관리</title>
-<script type="text/javaScript" language="javascript" defer="defer">
+    <title>목포서비스 KIA AUTO Q</title>
+    <script type="text/javaScript" language="javascript" defer="defer">
 
 /* function ReceiveAuthor() {
 	if ($('input:checkbox[name=check]').is(":checked") == true) {

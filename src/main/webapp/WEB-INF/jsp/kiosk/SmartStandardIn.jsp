@@ -53,7 +53,7 @@
 	}
 
 </script>
-<title>샘플 포털 > 키오스크 > 서비스관리 > 일반접수관리</title>
+<title>목포서비스 KIA AUTO Q</title>
 
 </head>
 <body>

@@ -81,8 +81,8 @@ public class SmartRcptDAO extends EgovAbstractMapper {
         return selectList("SmartRcptDAO.searchReservation",searchVO);
     }
 
-    public List<Object> SelectReservationRcptList() {
-        return selectList("SelectReservationRcptList");
+    public List<Object> SelectReservationRcptList(SmartRcptVO smartrcptVO) {
+        return selectList("SelectReservationRcptList",smartrcptVO);
     }
 
     public List<Object> Selectrcptinfo_params(Map<String, Object> params) {

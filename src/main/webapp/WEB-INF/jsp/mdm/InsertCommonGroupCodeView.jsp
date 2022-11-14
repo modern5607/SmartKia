@@ -13,17 +13,17 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-<script src="<c:url value='/'/>js/ui.js"></script>
-<script src="<c:url value='/'/>js/jquery.js"></script>
-<script src="<c:url value='/'/>js/jqueryui.js"></script>
-<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/component.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/page.css">
+<script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/ui.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/js/jqueryui.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jqueryui.css">
 
-<title>샘플 포털 > 포털시스템관리 > 사용자관리 > 회원관리</title>
+<title>목포서비스 KIA AUTO Q</title>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="mberManageVO" staticJavascript="false"
 	xhtml="true" cdata="false" />
@@ -59,16 +59,16 @@ function fnInsert(){
 								<div class="location">
 									<ul>
 										<li><a class="home" href="">Home</a></li>
-										<li><a href="">포털시스템관리</a></li>
-										<li><a href="">사용자관리</a></li>
-										<li>회원관리</li>
+										<li><a href="">기준정보</a></li>
+										<li><a href="">공통코드관리</a></li>
+										<li><a href="">공통코드등록</a></li>
 									</ul>
 								</div>
 								<!--// Location -->
 
 								<form:form modelAttribute="comCodeVO" name="comCodeVO"	action="${pageContext.request.contextPath}/mdm/InsertCommonGroupCode.do" method="post">
 
-									<h2 class="tit_2">공통코드관리</h2>
+									<h2 class="tit_2">공통코드등록</h2>
 
 									<div class="board_view2">
 										<table summary="일반회원 등록정보">

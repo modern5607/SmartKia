@@ -34,8 +34,8 @@
 	<script src="<c:url value='/'/>js/jqueryui.js"></script>
 	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
 	
-<title>샘플 포털 > 포털시스템관리 > 사용자관리 > 회원관리</title>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
+    <title>목포서비스 KIA AUTO Q</title>
+    <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="cusMberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript" defer="defer">
 

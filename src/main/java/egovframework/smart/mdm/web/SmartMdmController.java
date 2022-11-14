@@ -51,6 +51,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 @Controller
@@ -83,6 +85,12 @@ public class SmartMdmController {
 			@RequestParam(value = "menuNo", required = false) String menuNo,
 			HttpServletRequest request) throws Exception {
 
+		if(request!=null)
+		{
+			Map<String,?> flashmap = RequestContextUtils.getInputFlashMap(request);
+			if(flashmap != null)
+				model.addAttribute("msg",flashmap.get("msg"));
+		}
 		System.out.println("comCodeVO : " + comCodeVO);
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
@@ -135,8 +143,8 @@ public class SmartMdmController {
 	// -------------------공통코드 상위 --------------------------------
 	// 그룹공통코드 등록 뷰
 	@RequestMapping(value = "/mdm/InsertCommonGroupCodeView.do")
-	public String InsertCommonGroupCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO,
-			ModelMap model) throws Exception {
+	public String InsertCommonGroupCodeView(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,HttpServletRequest request) throws Exception {
+		
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -149,7 +157,7 @@ public class SmartMdmController {
 
 	// 공통그룹코드 등록
 	@RequestMapping(value = "/mdm/InsertCommonGroupCode.do")
-	public void InsertCommonGroupCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,
+	public String InsertCommonGroupCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,RedirectAttributes attr,
 			HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
@@ -164,16 +172,13 @@ public class SmartMdmController {
 		int result = smartmdmservice.InsertCommonGroupCode(comCodeVO);
 		if (result == 0) // insert실패
 		{
-			out.println("<script>");
-			out.println("alert('이미 존재하는 코드입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			out.println("location.href='/mdm/SmartCode.do'");
-			out.println("</script>");
+			attr.addFlashAttribute("msg", "등록 실패, 새로고침 후 다시 시도해 주세요");
 		}
+		else{
+			attr.addFlashAttribute("msg", "공통코드가 등록되었습니다");
+
+		}
+		return "redirect:/mdm/SmartCode.do";
 	}
 
 	// 공통그룹코드 수정 뷰
@@ -191,7 +196,7 @@ public class SmartMdmController {
 
 	// 공통그룹코드 수정
 	@RequestMapping(value = "mdm/UpdateCommonGroupCode.do")
-	public void UpdateCommonGroupCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,
+	public String UpdateCommonGroupCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,RedirectAttributes attr,
 			HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
@@ -203,18 +208,15 @@ public class SmartMdmController {
 
 		int result = smartmdmservice.UpdateCommonGroupCode(comCodeVO);
 
-		if (result == 0) // 실패
+		if (result == 0) // insert실패
 		{
-			out.println("<script>");
-			out.println("alert('이미 존재하는 코드입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 수정되었습니다.')");
-			out.println("location.href='/mdm/SmartCode.do'");
-			out.println("</script>");
+			attr.addFlashAttribute("msg", "수정 실패, 새로고침 후 다시 시도해 주세요");
 		}
+		else{
+			attr.addFlashAttribute("msg", "공통코드가 수정되었습니다");
+
+		}
+		return "redirect:/mdm/SmartCode.do";
 	}
 
 	// -------------------공통코드 하위 --------------------------------
@@ -239,7 +241,7 @@ public class SmartMdmController {
 
 	// 공통코드 등록
 	@RequestMapping(value = "/mdm/InsertCommonCode.do")
-	public void InsertCommonCode(@ModelAttribute("comCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,
+	public String InsertCommonCode(@ModelAttribute("comCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,RedirectAttributes attr,
 			HttpServletResponse response) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
@@ -255,16 +257,13 @@ public class SmartMdmController {
 		int result = smartmdmservice.InsertCommonCode(comCodeVO);
 		if (result == 0) // insert실패
 		{
-			out.println("<script>");
-			out.println("alert('이미 존재하는 코드입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			out.println("location.href='/mdm/SmartCode.do'");
-			out.println("</script>");
+			attr.addFlashAttribute("msg", "등록 실패, 새로고침 후 다시 시도해 주세요");
 		}
+		else{
+			attr.addFlashAttribute("msg", "공통코드가 등록되었습니다");
+
+		}
+		return "redirect:/mdm/SmartCode.do";
 	}
 
 	// 공통코드 수정 뷰
@@ -283,7 +282,7 @@ public class SmartMdmController {
 
 	// 공통코드 수정
 	@RequestMapping(value = "mdm/UpdateCommonCode.do")
-	public void UpdateCommonCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,
+	public String UpdateCommonCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,RedirectAttributes attr,
 	HttpServletResponse response) throws Exception{
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
@@ -295,19 +294,15 @@ public class SmartMdmController {
 		comCodeVO.setCurrentid(id);
 
 		int result = smartmdmservice.UpdateCommonCode(comCodeVO);
-
-		if (result == 0) // 실패
+		if (result == 0) // insert실패
 		{
-			out.println("<script>");
-			out.println("alert('이미 존재하는 코드입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 수정되었습니다.')");
-			out.println("location.href='/mdm/SmartCode.do'");
-			out.println("</script>");
+			attr.addFlashAttribute("msg", "수정 실패, 새로고침 후 다시 시도해 주세요");
 		}
+		else{
+			attr.addFlashAttribute("msg", "공통코드가 수정되었습니다");
+
+		}
+		return "redirect:/mdm/SmartCode.do";
 	}
 
 

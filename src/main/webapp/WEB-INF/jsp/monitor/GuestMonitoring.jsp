@@ -12,13 +12,13 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/css/layout.css">
-<link rel="stylesheet" href="/css/component.css">
-<link rel="stylesheet" href="/css/page.css">
-<link rel="stylesheet" href="/css/monitoring.css">
-<script src="/js/jquery-1.11.2.min.js"></script>
-<script src="/js/ui.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/component.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/page.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/monitoring.css">
+<script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <style>
 /* tr:nth-child(even){
@@ -111,7 +111,7 @@ div.marquee>div.marquee-text {
 							<div class="top_line"></div>
 							<div class="header">
 								<h1 class="tit_1 team_left">작업 현황</h1>
-								<div class="logo team_left"><img src="../images/kia_logo.png" style="width:200px;"></div>
+								<div class="logo team_left"><img src="${pageContext.request.contextPath}/images/kia_logo.png" style="width:200px;"></div>
 							</div>
 							<div class="board_list">
 								<table id="atable" style="table-layout: fixed;">
@@ -159,7 +159,7 @@ div.marquee>div.marquee-text {
 					<div class="top_line"></div>
 					<div class="header">
 						<h1 class="tit_1 team_left" style="width: 80%;">작업 완료</h1>
-						<div class="logo team_left" style="width: 20%;"><img src="../images/kia_logo.png" style="width:200px;"></div>
+						<div class="logo team_left" style="width: 20%;"><img src="${pageContext.request.contextPath}/images/kia_logo.png" style="width:200px;"></div>
 					</div>
 					<div class="board_list">
 						<table id="comtable">
@@ -231,10 +231,10 @@ div.marquee>div.marquee-text {
 		//접수 테이블 리스트
 		$.ajax({
 			type: "post",
-			url: "/monitor/selectRcptmonitor.do",
+			url: "/SmartKia/monitor/selectRcptmonitor.do",
 			success: function (response) {
 				rcptlist=response;
-				// console.log(rcptlist);
+				console.log(rcptlist);
 				total_cnt = rcptlist.length;
 				total_page = Math.ceil(total_cnt / 9);
 			}
@@ -243,9 +243,9 @@ div.marquee>div.marquee-text {
 		//현장반 테이블 리스트
 		$.ajax({
 			type: "post",
-			url: "/monitor/selectTeammonitorall.do",
+			url: "/SmartKia/monitor/selectTeammonitorall.do",
 			success: function (response) {
-				// console.log(response);
+				console.log(response);
 				teamlist=response;
 				team_total_cnt = teamlist.length;
 				team_total_page = Math.ceil(team_total_cnt/9);
@@ -255,7 +255,7 @@ div.marquee>div.marquee-text {
 		//작업완료 테이블 리스트
 		$.ajax({
 			type: "post",
-			url: "/monitor/selectCompletemonitor.do",
+			url: "/SmartKia/monitor/selectCompletemonitor.do",
 			success: function (response) {
 				console.log(response);
 				completelist=response;
@@ -268,7 +268,7 @@ div.marquee>div.marquee-text {
 			//접수 테이블 리스트
 			$.ajax({
 				type: "post",
-				url: "/monitor/selectRcptmonitor.do",
+				url: "/SmartKia/monitor/selectRcptmonitor.do",
 				success: function (response) {
 					rcptlist=response;
 					console.log(rcptlist);
@@ -280,7 +280,7 @@ div.marquee>div.marquee-text {
 			//현장반 테이블 리스트
 			$.ajax({
 				type: "post",
-				url: "/monitor/selectTeammonitorall.do",
+				url: "/SmartKia/monitor/selectTeammonitorall.do",
 				success: function (response) {
 					console.log(response);
 					teamlist=response;
@@ -292,7 +292,7 @@ div.marquee>div.marquee-text {
 			//작업완료 테이블 리스트
 			$.ajax({
 				type: "post",
-				url: "/monitor/selectCompletemonitor.do",
+				url: "/SmartKia/monitor/selectCompletemonitor.do",
 				success: function (response) {
 					console.log(response);
 					completelist=response;

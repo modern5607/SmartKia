@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
     <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
     <script src="<c:url value='/'/>js/ui.js"></script>
-    <title>Auto Q 목포서비스센터 </title>
-    <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
+    <title>목포서비스 KIA AUTO Q</title>
+        <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
     <script type="text/javascript">
     function fnIdCheck(){
@@ -41,11 +41,11 @@
     }
 
     function returnValue(id,carnum,name,kind,tel){
-        console.log("id :" + id);
-        console.log("carnum :" + carnum);
-        console.log("name :" + name);
-        console.log("kind :" + kind);
-        console.log("tel :" + tel);
+        // console.log("id :" + id);
+        // console.log("carnum :" + carnum);
+        // console.log("name :" + name);
+        // console.log("kind :" + kind);
+        // console.log("tel :" + tel);
         
         document.rcptform.id.value = id;
         document.rcptform.name.value = name;

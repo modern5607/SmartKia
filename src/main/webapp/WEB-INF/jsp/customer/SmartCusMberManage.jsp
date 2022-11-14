@@ -16,7 +16,7 @@
 <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 <script src="<c:url value='/'/>js/ui.js"></script>
 
-<title>샘플 포털 > 포털시스템관리 > 사용자관리 > 고객관리</title>
+<title>목포서비스 KIA AUTO Q</title>
 <script type="text/javaScript" language="javascript" defer="defer">
 
 function fnCheckAll() {

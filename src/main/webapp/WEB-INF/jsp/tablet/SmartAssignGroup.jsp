@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="<c:url value='/'/>css/page.css">
 <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 <script src="<c:url value='/'/>js/ui.js"></script>
-<title>샘플 포털 > 사이트 소개 > 사이트 소개</title>
+<title>목포서비스 KIA AUTO Q</title>
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
 <script type="text/javascript">

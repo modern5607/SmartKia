@@ -48,7 +48,7 @@
 	}
 	
 </script>
-<title>샘플 포털 > 포털서비스관리 > 서비스관리 > 게시판사용관리</title>
+<title>목포서비스 KIA AUTO Q</title>
 
 <style type="text/css">
 	h1 {font-size:12px;}
