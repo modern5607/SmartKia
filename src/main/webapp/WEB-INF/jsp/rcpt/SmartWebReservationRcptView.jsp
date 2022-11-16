@@ -121,7 +121,7 @@ var var_changedate='';
     function RepairDetail(seq)
     {
         console.log(seq);
-        var url = "<c:url value='/rcpt/RepaireDetailPopup.do'/>?";
+        // var url = "<c:url value='/rcpt/RepaireDetailPopup.do'/>?";
         
         // var varParam = new Object();
         // var checkId = document.mberManageVO.mberId.value;
@@ -654,7 +654,7 @@ function InsertWebRcpt(){
         var formdata = new FormData(form);
         $.ajax({
             type: "post",
-            url: "/rcpt/InsertWebReservationRcpt.do",
+            url: "/SmartKia/rcpt/InsertWebReservationRcpt.do",
             data: formdata,
             processData:false,
             contentType:false,
@@ -700,7 +700,7 @@ function changedate(date)
     
     $.ajax({
         type: "post",
-        url: "/rcpt/ajaxWebReservationRcptlist.do",
+        url: "/SmartKia/rcpt/ajaxWebReservationRcptlist.do",
         data: {date:var_changedate},
         success: function (resp) {
             console.log(resp);
@@ -716,7 +716,10 @@ function changedate(date)
                 html+="<td>"+item.PLANDATE+"</td>";
                 html+="<td>"+item.AUTONUMBER+"</td>";
                 html+="<td>"+item.KIND+"</td>";
-                html+="<td><a href='#'' class='lnk' style='text-decoration: underline;' onclick='RepairDetail('"+item.TAKESEQ+"'); return false;'>"+item.REPAIRENUM+"</a></td>";
+                if(item.TASKSTAT == "CB-reserve"|| item.TASKSTAT =="CB-reserveconfirm")
+                    html+="<td><a href='#' class='lnk' style='text-decoration: underline;' onclick=\"RepairDetail('"+item.TAKESEQ+"'); return false;\">"+item.REPAIRENUM+"</a></td>";
+                else
+                    html+="<td>"+item.REPAIRENUM+"</td>";
                 html+="<td>"+item.CUSTOMER_NAME+"</td>";
                 html+="<td>"+item.CUSTOMER_TEL+"</td>";
                 html+="<td>"+item.TASKSTAT_NAME+"</td>";

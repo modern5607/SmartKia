@@ -443,7 +443,7 @@ right: 0;
                             </colgroup>
                             <tr>
                                 <th rowspan="2">차량<br>상태<br>확인</th>
-                                <td rowspan="2"> <img src="/images/car_disassemble.jpg"></td>
+                                <td rowspan="2"> <img src="${pageContext.request.contextPath}/images/car_disassemble.jpg"></td>
                                 <td>■귀중품 보관여부 :</td>
                             </tr>
                             <tr>
@@ -540,7 +540,7 @@ right: 0;
                         
                     </div>
                     <div class="print_footer">
-                        <img src="/images/gray_logo.png">
+                        <img src="${pageContext.request.contextPath}/images/gray_logo.png">
                     </div>
                 </div>
 

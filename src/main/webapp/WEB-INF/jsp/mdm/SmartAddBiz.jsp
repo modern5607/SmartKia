@@ -30,7 +30,7 @@
 
 <validator:javascript formName="qnaManageVO" staticJavascript="false"
 	xhtml="true" cdata="false" />
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
+<script type="text/javascript" src="<c:url value='/validator.do'/>"></script>
 <script type="text/javaScript" language="javascript">
 	
 	function fn_egov_initl_qnacn() {
@@ -133,9 +133,7 @@
 								</div>
 								<!--// Location -->
 
-								<form modelAttribute="SmartMdmBizVO" id="SmartMdmBizVO"
-									name="SmartMdmBizVO"
-									action="${pageContext.request.contextPath}/mdm/InsertSmartaddBiz.do"
+								<form modelAttribute="SmartMdmBizVO" id="SmartMdmBizVO" name="SmartMdmBizVO" action="${pageContext.request.contextPath}/mdm/InsertSmartaddBiz.do"
 									method="post">
 									<input name="answerCn" type="hidden" value="Testing...">
 

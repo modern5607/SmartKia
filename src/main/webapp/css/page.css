@@ -21,7 +21,7 @@
     overflow: hidden;
     background: black;
 }
-.p_main .visual p {height: 700px; background: url(/images/kiamain.png) no-repeat;}
+.p_main .visual p {height: 700px; background: url(/SmartKia/images/kiamain.png) no-repeat;}
 .p_main .visual p span {display: block;}
 .p_main .visual p .t1 {font-size: 35px; text-align: center; padding-top: 620px; color: aliceblue; font-weight: bold;}
 

@@ -183,7 +183,9 @@ public String insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO 
 	  response.setContentType("text/html; charset=euc-kr");
 	  PrintWriter out = response.getWriter();
 	  
-	  int result = smartMberManageService.insertMber(smartMberManageVO); smartMberManageVO.setAuthorCode("ROLE_ADMIN"); smartMberManageVO.setUserTy("USR01");
+	  System.out.println(smartMberManageVO);
+	  int result = smartMberManageService.insertMber(smartMberManageVO);
+	  smartMberManageVO.setAuthorCode("ROLE_ADMIN"); smartMberManageVO.setUserTy("USR01");
 	  
 
 		if (result == 0) // insert실패
@@ -192,12 +194,12 @@ public String insertMber(@ModelAttribute("smartMberManageVO") SmartMberManageVO 
 		} else {
 				attr.addFlashAttribute("msg","성공적으로 등록 되었습니다.");
 		}
-//		if (result == 0) // insert실패
-//		{
-//				attr.addFlashAttribute(attributeName: "msg",attributeValue: "등록에 실패하였습니다.");
-//		} else {
-//				attr.addFlashAttribute(attributeName: "msg",attributeValue: "성공적으로 등록 되었습니다.");
-//		}
+		//		if (result == 0) // insert실패
+		//		{
+		//				attr.addFlashAttribute(attributeName: "msg",attributeValue: "등록에 실패하였습니다.");
+		//		} else {
+		//				attr.addFlashAttribute(attributeName: "msg",attributeValue: "성공적으로 등록 되었습니다.");
+		//		}
 		return "redirect:/mdm/SmartMberManage.do";
 	}
 

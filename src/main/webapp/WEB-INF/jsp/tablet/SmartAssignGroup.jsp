@@ -166,7 +166,7 @@
 														<td><c:out value="${result.CUSTOMER_NAME}" /></td>
 														<td><c:out value="${result.CUSTOMER_TEL}" /></td>
 														<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><c:out value="${result.REPAIRCODE_NAME}" /></td>
-														<td><a href="#LINK" class="btn btn_blue_30 w_50" onclick="ReceiveGroup('<c:out value="${result.TAKESEQ}" />'); return false;">상세</a></td>
+														<td><c:if test="${result.TASKSTAT == 'CB-receipt' || result.TASKSTAT == 'CB-reserveconfirm'}"><a href="#" class="btn btn_blue_30 w_50" onclick="ReceiveGroup('<c:out value="${result.TAKESEQ}" />'); return false;">상세</a></c:if></td>
 													</tr>
 												</c:forEach>
 											</tbody>

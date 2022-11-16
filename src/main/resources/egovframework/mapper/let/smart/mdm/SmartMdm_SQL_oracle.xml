@@ -160,7 +160,7 @@
 
 	<insert id="insertaddBiz" parameterType="egovframework.smart.mdm.service.SmartMdmBizVO">
 		INSERT INTO CAR_CUSTCORP (IDX,CUST_ID,CUST_NM,ADDRESS,TEL,CUST_NAME,ITEM,REMARK,CUST_TYPE,USE_YN,BUSINESS,CEO,CUST_TEL) 
-		VALUES (SEQ_CAR_CUSTCORP.NEXTVAL,#{Custid},#{Custnm},#{Address},#{Tel},#{Custname},#{Item},#{Remark},#{Custtype},#{Useyn},#{Business},#{Ceo},#{Custtel})
+		VALUES (SIRA('CAR_CUSTCORP', 'IDX'),#{Custid},#{Custnm},#{Address},#{Tel},#{Custname},#{Item},#{Remark},#{Custtype},#{Useyn},#{Business},#{Ceo},#{Custtel})
 	</insert>
 	 
 	 <select id="checkCustid" resultType="int">

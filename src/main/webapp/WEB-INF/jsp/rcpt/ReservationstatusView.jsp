@@ -35,7 +35,7 @@
 		<c:import url="/sym/mms/EgovHeader.do" />
 		<!-- //header end -->
 
-		<div class="container" style="margin-top: 95px;">
+		<div class="container">
 			<div class="sub_layout">
 				<div class="sub_in">
 					<div class="layout">

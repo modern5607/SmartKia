@@ -108,7 +108,7 @@ body {min-width: 1400px;}
 .pop_header {position: relative; height: 94px; border-bottom: 1px solid #dde2e5;}
 .pop_header h1 {padding: 42px 29px 0 29px; color: #222; font-size: 24px; font-weight: 700;}
 .pop_header .close {display: block; position: absolute; right: 39px; top: 40px; width: 30px; height: 30px; font-size: 0; background: url(../images/ico_pop_close.png) no-repeat;}
-
+.pop_header .print{float: left;margin: 10px;}
 
 
 /* location */

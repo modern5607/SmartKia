@@ -23,6 +23,11 @@ public class SmartLeadTimeVO extends ComDefaultVO implements Serializable {
 	private String updateuseyn = "";
 	private String updateord = "";
 	private String insertcode = "";
+	private String insertname = "";
+	private String insertord = "";
+	private String insertleadtime = "";
+	private String id = "";
+
 	public String getInsertcode() {
 		return insertcode;
 	}
@@ -30,8 +35,6 @@ public class SmartLeadTimeVO extends ComDefaultVO implements Serializable {
 		this.insertcode = insertcode;
 	}
 
-	private String insertname = "";
-	private String insertord = "";
 	public String getInsertord() {
 		return insertord;
 	}
@@ -39,8 +42,6 @@ public class SmartLeadTimeVO extends ComDefaultVO implements Serializable {
 		this.insertord = insertord;
 	}
 
-	private String insertleadtime = "";
-	private String id = "";
 
 	public String getUpdategroupord() {
 		return updategroupord;

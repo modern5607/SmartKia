@@ -43,9 +43,6 @@
         document.SmartLeadTimeVO.insertgroupcode.value = document.SmartLeadTimeVO.groupcode.value;
         document.SmartLeadTimeVO.insertgroupname.value = document.SmartLeadTimeVO.groupname.value;
         document.SmartLeadTimeVO.insertgroupord.value = document.SmartLeadTimeVO.groupord.value;
-        console.log(document.SmartLeadTimeVO.insertgroupcode.value);
-        console.log(document.SmartLeadTimeVO.insertgroupname.value);
-        console.log(document.SmartLeadTimeVO.insertgroupord.value);
 
         document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertGroupLeadTime.do'/>";
         document.SmartLeadTimeVO.submit();
@@ -67,11 +64,6 @@
         document.SmartLeadTimeVO.updateleadtime.value = $("#updtleadtime"+idx).val();
         document.SmartLeadTimeVO.updateuseyn.value = $("#useyn"+idx+" option:selected").val();
         document.SmartLeadTimeVO.updateord.value = $("#updateord"+idx).val();
-        console.log(document.SmartLeadTimeVO.updatehcode.value);
-        console.log(document.SmartLeadTimeVO.updatecode.value);
-        console.log(document.SmartLeadTimeVO.updateleadtime.value);
-        console.log(document.SmartLeadTimeVO.updateuseyn.value);
-        console.log(document.SmartLeadTimeVO.updateord.value);
         
         document.SmartLeadTimeVO.action = "<c:url value='/mdm/UpdateLeadTime.do'/>";
         document.SmartLeadTimeVO.submit();
@@ -79,41 +71,57 @@
 
     function InsertLeadTime()
     {
+        document.SmartLeadTimeVO.insertcode.value = document.SmartLeadTimeVO.code.value; 
+        document.SmartLeadTimeVO.insertname.value = document.SmartLeadTimeVO.name.value; 
+        document.SmartLeadTimeVO.insertord.value = document.SmartLeadTimeVO.ord.value; 
+        document.SmartLeadTimeVO.insertleadtime.value = document.SmartLeadTimeVO.leadtime.value; 
+        document.SmartLeadTimeVO.main.value = document.SmartLeadTimeVO.main.value; 
+        document.SmartLeadTimeVO.middle.value = document.SmartLeadTimeVO.middle.value; 
         if(document.SmartLeadTimeVO.insertname.value == "")
         {
             alert("부품명을 입력해 주세요");
             document.SmartLeadTimeVO.insertname.focus();
             return false;
         }
-        $.ajax({
-            type: "post",
-            url: "/mdm/InsertLeadTime.do",
-            data: {
-                insertcode : document.SmartLeadTimeVO.insertcode.value,
-                insertname : document.SmartLeadTimeVO.insertname.value,
-                insertord : document.SmartLeadTimeVO.insertord.value,
-                insertleadtime : document.SmartLeadTimeVO.insertleadtime.value,
-                main : document.SmartLeadTimeVO.main.value,
-                middle : document.SmartLeadTimeVO.middle.value
-            },
-            success: function (msg) {
-				if(msg==1)
-					location.reload();
-				else
-				{
-					alert("등록에 실패하였습니다. 다시 시도해 주세요.");
-					location.reload();
-				}
-            }
-        });
-        // document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertLeadTime.do'/>";
-        // document.SmartLeadTimeVO.submit();
+        
+
+
+        // $.ajax({
+        //     type: "post",
+        //     url: "/SmartKia/mdm/InsertLeadTime.do",
+        //     data: {
+        //         insertcode : document.SmartLeadTimeVO.insertcode.value,
+        //         insertname : document.SmartLeadTimeVO.insertname.value,
+        //         insertord : document.SmartLeadTimeVO.insertord.value,
+        //         insertleadtime : document.SmartLeadTimeVO.insertleadtime.value,
+        //         main : document.SmartLeadTimeVO.main.value,
+        //         middle : document.SmartLeadTimeVO.middle.value
+        //     },
+        //     success: function (msg) {
+		// 		if(msg==1)
+		// 			location.reload();
+		// 		else
+		// 		{
+		// 			alert("등록에 실패하였습니다. 다시 시도해 주세요.");
+		// 			location.reload();
+		// 		}
+        //     }
+        // });
+        document.SmartLeadTimeVO.action = "<c:url value='/mdm/InsertLeadTime.do'/>";
+        document.SmartLeadTimeVO.submit();
+    }
+
+    function init()
+    {
+	if ("<c:out value='${msg}'/>" != "") {
+		alert("<c:out value='${msg}'/>");
+	}
     }
     </script>
 
 </head>
 
-<body>
+<body onload="init()">
     <!-- Skip navigation -->
     <a href="#contents" class="skip_navi">본문 바로가기</a>
 
@@ -147,6 +155,10 @@
                                     <input type="hidden" id="insertgroupcode" name="insertgroupcode" value="">
                                     <input type="hidden" id="insertgroupname" name="insertgroupname" value="">
                                     <input type="hidden" id="insertgroupord" name="insertgroupord" value="">
+                                    <input type="hidden" id="insertcode" name="insertcode" value="">
+                                    <input type="hidden" id="insertname" name="insertname" value="">
+                                    <input type="hidden" id="insertord" name="insertord" value="">
+                                    <input type="hidden" id="insertleadtime" name="insertleadtime" value="">
                                     <input type="hidden" id="updatehcode" name="updatehcode" value="">
                                     <input type="hidden" id="updatecode" name="updatecode" value="">
                                     <input type="hidden" id="updateleadtime" name="updateleadtime" value="">
@@ -242,23 +254,23 @@
                                                                 <td></td>
                                                                 <td>
                                                                     <label class="f_input" style="height: 30px;">
-                                                                        <input name="insertcode" id="insertcode" class="w_100" type="text">
+                                                                        <input name="code" id="code" class="w_100" type="text">
                                                                     </label>
                                                                 </td>
                                                                 <td>
                                                                     <label class="f_input" style="height: 30px;">
-                                                                        <input name="insertname" id="insertname" class="w_200" type="text">
+                                                                        <input name="name" id="name" class="w_200" type="text">
                                                                     </label>
                                                                 </td>
                                                                 <td>
                                                                     <label class="f_input" style="height: 30px;">
-                                                                        <input name="insertord" id="insertord" class="w_100" type="text" style="padding: 0 10px; text-align: right;">
+                                                                        <input name="ord" id="ord" class="w_100" type="number" style="padding: 0 10px; text-align: right;">
                                                                     </label>
                                                                 </td>
                                                                 <td></td>
                                                                 <td>
                                                                     <label class="f_input" style="height: 30px;">
-                                                                        <input name="insertleadtime" id="insertleadtime" class="w_100" type="text" style="padding: 0 10px; text-align: right;">
+                                                                        <input name="leadtime" id="leadtime" class="w_100" type="number" style="padding: 0 10px; text-align: right;">
                                                                     </label>
                                                                     <!-- <label for="" class="f_select" style="width:80%; padding-left:10px; height: 30px;">
                                                                         <select name="insertleadtime" id="insertleadtime">

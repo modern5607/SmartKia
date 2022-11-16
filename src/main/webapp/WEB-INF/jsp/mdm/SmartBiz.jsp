@@ -47,10 +47,15 @@
                 document.SmartBizList.action = "<c:url value='/mdm/SmartBiz.do'/>";
                 document.SmartBizList.submit();
             }
+			function init()
+			{
+				if ("<c:out value='${msg}'/>" != "") 
+					alert("<c:out value='${msg}'/>");
+			}
             </script>
 
 </head>
-<body>
+<body onload="init();">
 	<!-- Skip navigation -->
 	<a href="#contents" class="skip_navi">본문 바로가기</a>
 

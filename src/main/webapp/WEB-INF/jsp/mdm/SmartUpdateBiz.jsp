@@ -40,7 +40,7 @@
 		SmartBizU.Custnm.focus();
 	}
 	function fn_egov_inqire_qnalist() {
-		SmartBizU.action = "<c:url value='/mdm/SmartBiz.do'/>";
+		SmartBizU.action = "<c:url value='/SmartKia/mdm/SmartBiz.do'/>";
 		SmartBizU.submit();
 	};
 

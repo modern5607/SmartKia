@@ -195,7 +195,7 @@ public class SmartRcptServiceImpl extends EgovAbstractServiceImpl implements Sma
 			if(repairseqlist.length > i && repairseqlist[i]!="")
 			{
 				//UPDATE
-				repairParams.put("repairseq", params.get("repairseq"));
+				repairParams.put("repairseq", repairseqlist[i]);
 				repairParams.put("takeseq", params.get("seq"));
 				repairParams.put("method", chkrepairlist[i]);
 				repairParams.put("code", repairlist[i]);

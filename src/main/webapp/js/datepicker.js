@@ -17,7 +17,7 @@
         showMonthAfterYear: true,
         yearSuffix: '',
         showOn: 'both', 
-        buttonImage: '/images/ico_calendar.png', 
+        buttonImage: '/SmartKia/images/ico_calendar.png', 
         buttonImageOnly: true,
         yearRange: 'c-99:c+99',
     };

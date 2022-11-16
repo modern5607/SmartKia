@@ -214,7 +214,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="cont left text_left" style="width: 528px;">
+                <div class="cont left text_left" style="width: 520px;">
                     <strong style="margin-left:0px;">정비내용 선택사항</strong>
                     <div class="scrollBox03 board_view5"style="overflow:scroll; margin-left:0px; margin-right: 0px;">
                         <table id="repair">

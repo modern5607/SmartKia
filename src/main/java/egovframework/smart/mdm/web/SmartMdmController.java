@@ -33,6 +33,7 @@ import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -158,7 +159,7 @@ public class SmartMdmController {
 	// 공통그룹코드 등록
 	@RequestMapping(value = "/mdm/InsertCommonGroupCode.do")
 	public String InsertCommonGroupCode(@ModelAttribute("SmartCommonCodeVO") SmartCommonCodeVO comCodeVO, ModelMap model,RedirectAttributes attr,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response, HttpServletRequest request) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
 
@@ -178,6 +179,7 @@ public class SmartMdmController {
 			attr.addFlashAttribute("msg", "공통코드가 등록되었습니다");
 
 		}
+		
 		return "redirect:/mdm/SmartCode.do";
 	}
 
@@ -312,15 +314,13 @@ public class SmartMdmController {
 	public String SmartLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo, @RequestParam(value = "callsys", required = false) String callsys,
 			HttpServletRequest request) throws Exception {
-
-//	    System.out.println("SmartLeadTime.do -> =========================== ");
-//		System.out.println("SmartLeadTime.do -> leadtimeVO : " + leadtimeVO);
-//		System.out.println("SmartLeadTime.do -> callsys : " + callsys);
-
-		// 선택된 메뉴정보를 세션으로 등록한다.
-		if (menuNo != null && !menuNo.equals("")) {
-			request.getSession().setAttribute("menuNo", menuNo);
+		if(request!=null)
+		{
+			Map<String,?> flashmap = RequestContextUtils.getInputFlashMap(request);
+			if(flashmap != null)
+				model.addAttribute("msg",flashmap.get("msg"));
 		}
+		// 선택된 메뉴정보를 세션으로 등록한다.
 
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -364,36 +364,26 @@ public class SmartMdmController {
         return "/mdm/SmartLeadTimeView";
     }
 
-	@RequestMapping(value = "/mdm/InsertGroupLeadTime.do",method=RequestMethod.POST)
-	public String InsertGroupLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response) throws Exception {
-		PrintWriter out = response.getWriter();
+	@RequestMapping(value = "/mdm/InsertGroupLeadTime.do")
+	public String InsertGroupLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response,RedirectAttributes attr) throws Exception {
 
-		Map<String,Object> msg = new HashMap<String, Object>();
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
 		leadtimeVO.setId(id);
-		System.out.println("InsertGroupLeadTime.do -> leadtimeVO : "+leadtimeVO);
+		System.out.println(leadtimeVO);
 		int result = smartmdmservice.InsertGroupLeadTime(leadtimeVO);
-		// response.getWriter().print(result);
-		if (result == 0) // update실패
-		{
-			out.println("<script>");
-			out.println("alert('이미 존재하는 코드입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			// out.println("location.href='/mdm/SmartLeadTime.do'");
-			out.println("</script>");
-		}
-		return "forward:/mdm/SmartLeadTime.do";
+		System.out.println("result :"+result);
+		if (result == 0) // insert실패
+			attr.addFlashAttribute("msg", "수정 실패, 새로고침 후 다시 시도해 주세요");
+		else
+			attr.addFlashAttribute("msg", "등록되었습니다");
+
+		return "redirect:/mdm/SmartLeadTime.do";
 	}
 	
 	@RequestMapping(value = "/mdm/UpdateGroupLeadTime.do")
-	public String UpdateGroupLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, HttpServletResponse response) throws Exception {
+	public String UpdateGroupLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, HttpServletResponse response,RedirectAttributes attr) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
-		PrintWriter out = response.getWriter();
 
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
@@ -404,24 +394,16 @@ public class SmartMdmController {
 
 		int result = smartmdmservice.UpdateGroupLeadTime(leadtimeVO);
 		System.out.println(result);
-		if (result == 0) // update실패
-		{
-			out.println("<script>");
-			out.println("alert('이미 존재하는 코드입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			// out.println("location.href='/mdm/SmartLeadTime.do'");
-			out.println("</script>");
-		}
-		return "forward:/mdm/SmartLeadTime.do";
+		if (result == 0) // insert실패
+			attr.addFlashAttribute("msg", "수정 실패, 새로고침 후 다시 시도해 주세요");
+		else
+			attr.addFlashAttribute("msg", "수정되었습니다");
+
+		return "redirect:/mdm/SmartLeadTime.do";
 	}
 
 	@RequestMapping(value = "/mdm/InsertLeadTime.do",method=RequestMethod.POST)
-	public void InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response) throws Exception {
-		Map<String,Object> msg = new HashMap<String, Object>();
+	public String InsertLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, ModelMap model, HttpServletResponse response,RedirectAttributes attr) throws Exception {
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
 		leadtimeVO.setId(id);
@@ -430,13 +412,17 @@ public class SmartMdmController {
 
 
 		int result = smartmdmservice.InsertLeadTime(leadtimeVO);
-		response.getWriter().print(result);
+		if (result == 0) // insert실패
+			attr.addFlashAttribute("msg", "수정 실패, 새로고침 후 다시 시도해 주세요");
+		else
+			attr.addFlashAttribute("msg", "등록되었습니다");
+
+		return "redirect:/mdm/SmartLeadTime.do";
 	}
 
 	@RequestMapping(value = "/mdm/UpdateLeadTime.do")
-	public String UpdateLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, HttpServletResponse response) throws Exception {
+	public String UpdateLeadTime(@ModelAttribute("SmartLeadTimeVO") SmartLeadTimeVO leadtimeVO, HttpServletResponse response,RedirectAttributes attr) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
-		PrintWriter out = response.getWriter();
 
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String id = loginVO.getUniqId();
@@ -447,19 +433,12 @@ public class SmartMdmController {
 
 		int result = smartmdmservice.UpdateLeadTime(leadtimeVO);
 		System.out.println(result);
-		if (result == 0) // update실패
-		{
-			out.println("<script>");
-			out.println("alert('이미 존재하는 코드입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			// out.println("location.href='/mdm/SmartLeadTime.do'");
-			out.println("</script>");
-		}
-		return "forward:/mdm/SmartLeadTime.do";
+		if (result == 0) // insert실패
+			attr.addFlashAttribute("msg", "수정 실패, 새로고침 후 다시 시도해 주세요");
+		else
+			attr.addFlashAttribute("msg", "수정되었습니다");
+
+		return "redirect:/mdm/SmartLeadTime.do";
 	}
 
 	/**
@@ -469,7 +448,13 @@ public class SmartMdmController {
 	public String selectBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO searchVO, ModelMap model,
 			@RequestParam(value = "menuNo", required = false) String menuNo,
 			HttpServletRequest request) throws Exception {
-		
+		if(request!=null)
+		{
+			Map<String,?> flashmap = RequestContextUtils.getInputFlashMap(request);
+			if(flashmap != null)
+				model.addAttribute("msg",flashmap.get("msg"));
+		}
+
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (menuNo != null && !menuNo.equals("")) {
 			request.getSession().setAttribute("menuNo", menuNo);
@@ -535,24 +520,17 @@ public class SmartMdmController {
 	 */
 
 	@RequestMapping(value = "/mdm/InsertSmartaddBiz.do")
-	public void InsertSmartaddBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO smartmdmbizVO,
-			ModelMap model, HttpServletResponse response) throws Exception {
+	public String InsertSmartaddBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO smartmdmbizVO,
+			ModelMap model, HttpServletResponse response, RedirectAttributes attr) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
-		PrintWriter out = response.getWriter();
 
 		int result = smartmdmservice.insertaddBiz(smartmdmbizVO);
 		if (result == 0) // insert실패
-		{
-			out.println("<script>");
-			out.println("alert('업체코드가 중복입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 등록되었습니다.')");
-			out.println("location.href='/mdm/SmartBiz.do'");
-			out.println("</script>");
-		}
+			attr.addFlashAttribute("msg", "등록 실패, 새로고침 후 다시 시도해 주세요");
+		else
+			attr.addFlashAttribute("msg", "등록되었습니다");
+
+		return "redirect:/mdm/SmartBiz.do";
 	}
 	
 	/**
@@ -605,7 +583,7 @@ public class SmartMdmController {
 
 	// 거래처관리 수정
 	@RequestMapping(value = "mdm/SmartUpdateBiz.do")
-	public void UpdateBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO SmartMdmBizVO, ModelMap model,HttpServletResponse response) throws Exception {
+	public String UpdateBiz(@ModelAttribute("SmartMdmBizVO") SmartMdmBizVO SmartMdmBizVO, ModelMap model,HttpServletResponse response, RedirectAttributes attr) throws Exception {
 		response.setContentType("text/html; charset=euc-kr");
 		PrintWriter out = response.getWriter();
 		
@@ -617,18 +595,11 @@ public class SmartMdmController {
 		System.out.println(SmartMdmBizVO);
 		
 		int result = smartmdmservice.UpdateBiz(SmartMdmBizVO);
-		
-		if (result == 0) //실패
-		{
-			out.println("<script>");
-			out.println("alert('이미 존재하는 코드입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('성공적으로 수정되었습니다.')");
-			out.println("location.href='/mdm/SmartBiz.do'");
-			out.println("</script>");
-		}
+		if (result == 0) // insert실패
+			attr.addFlashAttribute("msg", "수정 실패, 새로고침 후 다시 시도해 주세요");
+		else
+			attr.addFlashAttribute("msg", "수정되었습니다");
+
+		return "redirect:/mdm/SmartBiz.do";
 	}
 }
