@@ -13,28 +13,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/component.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/page.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/page.css">-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/monitoring.css">
 <script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<style>
-/* tr:nth-child(even){
-	 background-color:#9cc0ff; 
-	 }*/
-div.marquee {
-	white-space: no-wrap;
-	overflow: hidden;
-}
 
-div.marquee>div.marquee-text {
-	white-space: nowrap;
-	display: inline;
-	width: auto;
-}
-</style>
 
 <script type="text/javascript">
 	
@@ -58,11 +44,158 @@ div.marquee>div.marquee-text {
 </script>
 </head>
 <body>
-
 	<div class="container">
 		<div id ="test">
 			<div class="monitoring content">
-				<div class="sub_in" style="float: left;">
+				<div class="top_title">
+					<div class="top_inner">
+						<div class="left">
+							<img src="${pageContext.request.contextPath}/images/logo_w.svg">
+							<h4 class="b_tit"><span>Domestic</span> KIA auto q service center informaition</h2>
+						</div>
+						<div class="right">
+							<img src="${pageContext.request.contextPath}/images/autoQ_log.png">
+							<h2 class="t_tit">KIA MOTORS AUTO Q SERVICE</h2>
+						</div>
+					</div>
+				</div>
+				<div class="contant_wrap">
+					<div class="con_box">
+						<div class="layout con_wid50">
+							<div class="teamtables">
+								<div class="header">
+									<h1 class="tit_1 big_tit">접수현황</h2>
+								</div>
+								<div class="board_list">
+									<table id="guesttable">
+										<colgroup>
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 40%;">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col"><em class="th_round">접수번호</em></th>
+												<th scope="col"><em class="th_round">차량번호</em></th>
+												<th scope="col"><em class="th_round">차종</em></th>
+												<th scope="col"><em class="th_round">점검내용</em></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach begin="0" end="8" varStatus="status">
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<!-- <td><c:out value="${Guest[status.index].SEQ}" /></td>
+													<td><c:out value="${Guest[status.index].CARNUM}" /></td>
+													<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
+													<td><c:out value="${Guest[status.index].NAME}" /></td> -->
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="layout con_wid50">
+							<div class="teamtables">
+								<div class="header">
+									<h1 class="tit_1 big_tit">작업현황</h2>
+								</div>
+								<div class="board_list">
+									<table id="atable">
+										<colgroup>
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col"><em class="th_round">차량번호</em></th>
+												<th scope="col"><em class="th_round">고객명</em></th>
+												<th scope="col"><em class="th_round">예상완료시간</em></th>
+												<th scope="col"><em class="th_round">작업반</em></th>
+												<th scope="col"><em class="th_round">상태</em></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach begin="0" end="8" varStatus="status">
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<!-- <td><c:out value="${Team[status.index].CARNUM}" /></td>
+													<td><c:out value="${Team[status.index].NAME}" /></td>
+													<td><c:out value="${Team[status.index].ESTIME}" /></td>
+													<td><c:out value="${Team[status.index].POSITION_NAME}" /></td>
+													<td style="color:red;"><c:out value="${Team[status.index].TASKSTAT_NAME}" /></td> -->
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="con_box">
+						<div class="layout">
+							<div class="teamtables">
+								<div class="header">
+									<h1 class="tit_1 big_tit">작업완료</h2>
+								</div>
+								<div class="board_list">
+									<table id="comtable">
+										<colgroup>
+											<col style="width: 16.67%;">
+											<col style="width: 16.67%;">
+											<col style="width: 16.67%;">
+											<col style="width: 16.67%;">
+											<col style="width: 16.67%;">
+											<col style="width: 16.67%;">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col"><em class="th_round">접수번호</em></th>
+												<th scope="col"><em class="th_round">차량번호</em></th>
+												<th scope="col"><em class="th_round">차종</em></th>
+												<th scope="col"><em class="th_round">고객명</em></th>
+												<th scope="col"><em class="th_round">작업반</em></th>
+												<th scope="col"><em class="th_round">상태</em></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach begin="0" end="2" varStatus="status">
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<!-- <td><c:out value="${Complete[status.index].CARNUM}" /></td>
+													<td><c:out value="${Complete[status.index].CUSTOMER_AUTOKIND}" /></td>
+													<td><c:out value="${Complete[status.index].NAME}" /></td>
+													<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td>-->
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class='marquee'>
+						<div class='marquee-text'>현장 상황에 따라 수리진행이 변동될수 있습니다. 수리가 완료된 차량은 데스크에서 출고처리 바랍니다.</div>
+					</div>
+				</div>
+				<!-- <div class="sub_in">
 					<div class="layout">
 						<div class="teamtables">
 							<div class="top_line"></div>
@@ -93,10 +226,10 @@ div.marquee>div.marquee-text {
 												<td></td>
 												<td></td>
 												<td></td>
-												<!-- <td><c:out value="${Guest[status.index].SEQ}" /></td>
+												<td><c:out value="${Guest[status.index].SEQ}" /></td>
 												<td><c:out value="${Guest[status.index].CARNUM}" /></td>
 												<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
-												<td><c:out value="${Guest[status.index].NAME}" /></td> -->
+												<td><c:out value="${Guest[status.index].NAME}" /></td> 
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -105,7 +238,7 @@ div.marquee>div.marquee-text {
 						</div>
 					</div>
 				</div>
-				<div class="sub_in" style="float:right;">
+				<div class="sub_in">
 					<div class="layout">
 						<div class="teamtables">
 							<div class="top_line"></div>
@@ -139,11 +272,11 @@ div.marquee>div.marquee-text {
 												<td></td>
 												<td></td>
 												<td></td>
-												<!-- <td><c:out value="${Team[status.index].CARNUM}" /></td>
+												<td><c:out value="${Team[status.index].CARNUM}" /></td>
 												<td><c:out value="${Team[status.index].NAME}" /></td>
 												<td><c:out value="${Team[status.index].ESTIME}" /></td>
 												<td><c:out value="${Team[status.index].POSITION_NAME}" /></td>
-												<td style="color:red;"><c:out value="${Team[status.index].TASKSTAT_NAME}" /></td> -->
+												<td style="color:red;"><c:out value="${Team[status.index].TASKSTAT_NAME}" /></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -193,7 +326,7 @@ div.marquee>div.marquee-text {
 										<!-- <td><c:out value="${Complete[status.index].CARNUM}" /></td>
 										<td><c:out value="${Complete[status.index].CUSTOMER_AUTOKIND}" /></td>
 										<td><c:out value="${Complete[status.index].NAME}" /></td>
-										<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td> -->
+										<td><c:out value="${Complete[status.index].POSITION_NAME}" /></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -201,11 +334,12 @@ div.marquee>div.marquee-text {
 					</div>
 				</div>
 			</div>		
-	</div>
-</div>
-	<div class='marquee'>
-		<div class='marquee-text' style="font-size:40px;">현장 상황에 따라 수리진행이 변동될수 있습니다. 수리가 완료된 차량은 데스크에서 출고처리 바랍니다.</div>
-	</div>
+	</div>-->
+			<!--  <div class='marquee'>
+				<div class='marquee-text' style="font-size:40px;">현장 상황에 따라 수리진행이 변동될수 있습니다. 수리가 완료된 차량은 데스크에서 출고처리 바랍니다.</div>
+			</div>
+		</div>-->
+	
 	</div>
 </body>
 </html>

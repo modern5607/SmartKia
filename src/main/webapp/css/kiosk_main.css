@@ -573,3 +573,17 @@ position: absolute;
   border-radius: 10px;
 
 }
+
+/*엑스오 수정*/
+.content .bt {top:50%; font-size: 50px}
+.content .bt .btn1 {margin-top:30px}
+.content .bt .btn {border-radius:20px; padding:20px 0}
+.content .btn_01 {color:#f2f2f2; background: linear-gradient(90deg,#010101 80%,#414141);border:0}
+.content .btn_02 {border:1px solid #333;padding:19px 0}
+.content .btn_03 {border:0; background:#970000;color:#fff}
+.content .insertmember {font-size:40px;left:84%}
+.content .insertmember .btn {border-radius:20px; padding:20px 0;width:300px;}
+
+
+
+

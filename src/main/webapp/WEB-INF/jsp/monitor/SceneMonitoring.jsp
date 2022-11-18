@@ -13,9 +13,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+<!-- <link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
 <link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+<link rel="stylesheet" href="<c:url value='/'/>css/page.css"> -->
 <link rel="stylesheet" href="<c:url value='/'/>css/monitoring.css">
 <script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
 <script src="<c:url value='/'/>js/ui.js"></script>
@@ -25,11 +25,111 @@
 </script>
 </head>
 <body>
-
 	<div class="container">
 		<div id ="test">
 			<div class="monitoring content">
-				<div class="sub_in" style="float: left; min-height: 100vh;">
+				<div class="top_title">
+					<div class="top_inner">
+						<div class="left">
+							<img src="${pageContext.request.contextPath}/images/logo_w.svg">
+							<h4 class="b_tit"><span>Domestic</span> KIA auto q service center informaition</h2>
+						</div>
+						<div class="right">
+							<img src="${pageContext.request.contextPath}/images/autoQ_log.png">
+							<h2 class="t_tit">KIA MOTORS AUTO Q SERVICE</h2>
+						</div>
+					</div>
+				</div>
+				<div class="contant_wrap">
+					<div class="con_box">
+						<div class="layout con_wid50">
+							<div class="teamtables">
+								<div class="header">
+									<h1 class="tit_1 big_tit">접수현황</h2>
+								</div>
+								<div class="board_list">
+									<table id="guesttable">
+										<colgroup>
+											<col style="width: 15%;">
+											<col style="width: 15%;">
+											<col style="width: 20%;">
+											<col style="width: 50%;">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">접수번호</th>
+												<th scope="col">차량번호</th>
+												<th scope="col">차종</th>
+												<th scope="col">정비내용</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												
+											</tr>
+											<c:forEach begin="0" end="14" varStatus="status">
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<!-- <td><c:out value="${Guest[status.index].SEQ}" /></td>
+													<td><c:out value="${Guest[status.index].CARNUM}" /></td>
+													<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
+													<td><c:out value="${Guest[status.index].REPAIRCODE_NAME}" /></td> -->
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="layout con_wid50">
+							<div class="teamtables teamtb"id="Team_1"">
+								<div class="header">
+									<h1 class="tit_1 big_tit">1반 작업 현황</h1>
+								</div>
+								<div class="board_list">
+									<table id="atable">
+										<colgroup>
+											<col style="width: 15%;">
+											<col style="width: 15%;">
+											<col style="width: 15%;">
+											<col style="width: 15%;">
+											<col style="width: auto;">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">접수번호</th>
+												<th scope="col">차량번호</th>
+												<th scope="col">차종</th>
+												<th scope="col">예상완료시간</th>
+												<th scope="col">정비내용</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach begin="0" end="14" varStatus="status">
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<!-- <td><c:out value="${TeamA[status.index].SEQ}" /></td>
+													<td><c:out value="${TeamA[status.index].CARNUM}" /></td>
+													<td><c:out value="${TeamA[status.index].CUSTOMER_AUTOKIND}" /></td>
+													<td><c:out value="${TeamA[status.index].ESTIME}" /></td>
+													<td><c:out value="${TeamA[status.index].REPAIRCODE_NAME}" /></td> -->
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				<!-- <div class="sub_in" style="float: left; min-height: 100vh;">
 					<div class="layout">
 						<div class="teamtables">
 							<div class="top_line"></div>
@@ -66,7 +166,7 @@
 												<!-- <td><c:out value="${Guest[status.index].SEQ}" /></td>
 												<td><c:out value="${Guest[status.index].CARNUM}" /></td>
 												<td><c:out value="${Guest[status.index].CUSTOMER_AUTOKIND}" /></td>
-												<td><c:out value="${Guest[status.index].REPAIRCODE_NAME}" /></td> -->
+												<td><c:out value="${Guest[status.index].REPAIRCODE_NAME}" /></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -113,7 +213,7 @@
 												<td><c:out value="${TeamA[status.index].CARNUM}" /></td>
 												<td><c:out value="${TeamA[status.index].CUSTOMER_AUTOKIND}" /></td>
 												<td><c:out value="${TeamA[status.index].ESTIME}" /></td>
-												<td><c:out value="${TeamA[status.index].REPAIRCODE_NAME}" /></td> -->
+												<td><c:out value="${TeamA[status.index].REPAIRCODE_NAME}" /></td> 
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -121,7 +221,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>-->
 			</div>
 		</div>
 	</div>
