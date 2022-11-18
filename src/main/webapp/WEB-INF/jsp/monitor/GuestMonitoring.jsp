@@ -25,21 +25,20 @@
 <script type="text/javascript">
 	
 	$(document).ready(function() {
-
 		var marquee = $('div.marquee');
 		console.log(marquee);
-		marquee.each(function() {
 			var mar = $(this);
 			var indent = mar.width();
-			mar.marquee = function() {
-				indent--;
-				mar.css('text-indent', indent);
-				if (indent < -1 * mar.children('div.marquee-text').width()) {
-					indent = mar.width();
-				}
-			};
-			mar.data('interval', setInterval(mar.marquee, 300 / 60));
-		});
+		setInterval(() => {
+			console.log("interval");
+			indent-=1;
+			marquee.css('text-indent', indent);
+			if(indent <= mar.width()*-1)
+				indent = mar.width();
+			
+		}, 10);
+		
+		
 	});
 </script>
 </head>
