@@ -246,7 +246,7 @@ $(document).ready(function(){
 	//접수 테이블 리스트
 	$.ajax({
 		type: "post",
-		url: "/monitor/selectRcptmonitor.do",
+		url: "/SmartKia/monitor/selectRcptmonitor.do",
 		success: function (response) {
 			rcptlist=response;
 			console.log(rcptlist);
@@ -258,7 +258,7 @@ $(document).ready(function(){
 	//현장반 테이블 리스트
 	$.ajax({
 		type: "post",
-		url: "/monitor/selectTeammonitor.do",
+		url: "/SmartKia/monitor/selectTeammonitor.do",
 		success: function (response) {
 			console.log(response);
 			teamlist=response;
@@ -270,7 +270,7 @@ $(document).ready(function(){
 		//접수 테이블 리스트
 		$.ajax({
 			type: "post",
-			url: "/monitor/selectRcptmonitor.do",
+			url: "/SmartKia/monitor/selectRcptmonitor.do",
 			success: function (response) {
 				rcptlist=response;
 				console.log(rcptlist);
@@ -282,7 +282,7 @@ $(document).ready(function(){
 		//현장반 테이블 리스트
 		$.ajax({
 			type: "post",
-			url: "/monitor/selectTeammonitor.do",
+			url: "/SmartKia/monitor/selectTeammonitor.do",
 			success: function (response) {
 				console.log(response);
 				teamlist=response;
