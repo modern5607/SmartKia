@@ -1,10 +1,35 @@
 body{width: 100%;}
 
 
-.top_line {width: 100%; height: 5px; background:black;}
+.monitoring {background: url(../images/monitoring_bg.png) no-repeat center; background-size:cover;height:100vh}
+.monitoring .top_title {background:url(../images/top_bg.png) no-repeat top; background-size:contain;height:11vh}
+.monitoring .top_title .top_inner:after {display:block; content:""; clear:both}
+.monitoring .top_title .top_inner {padding:0 30px;height:100%}
+.monitoring .top_title .top_inner > div {width:50%; float:left;}
+.monitoring .top_title .left .logo_area{padding-left:70px}
+.monitoring .top_title .left img {width:7vw;}
+.monitoring .top_title .left h4 {position:relative; font-size:28px; color:#484848;padding-left:40px; margin-top: 15px; letter-spacing: -1px;}
+.monitoring .top_title .left h4:before {display:block;content:"";position:absolute; width:40px; height:10px;top:50%;left:-10px; transform:translateY(-50%);background:#484848 }
+.monitoring .top_title .left h4 span {font-weight:400;}
+.monitoring .top_title .right { height: 100%; display: flex; flex-direction: column; align-items: flex-end; justify-content: center;}
+.monitoring .top_title .right h2.t_tit { font-size:40px; color:#c1c1c1;letter-spacing: -1px;}
 
-.teamtables .header {    height: 60px;
-    background: linear-gradient(1deg, #c7c0c0, #0000000a);}
+
+.content_wrap {padding:0 30px}
+.content_wrap .con_box {padding: 20px 0; position: relative;}
+.content_wrap .con_box .header {position:relative;}
+.con_box .big_tit { font-size: 30px; padding-left: 50px; position: relative; margin-bottom: 20px;line-height:50px;}
+.con_box .big_tit:before { content: ""; display: block; width: 45px; height: 45px; background: url(../images/big_tit.png;) no-repeat center left; left: 0; top: 50%; transform: translateY(-50%); position: absolute;}
+.con_box .tab_title {position:absolute; top:0 ; left:225px;}
+.con_box .tab_title .tab {display:inline-block; font-weight:500;padding: 8px 24px;font-size:23px}
+.con_box .tab_title .tab.active {background:radial-gradient( ellipse,#010101,#414141cf );color:#f2f2f2;border-radius: 15px;}
+
+.board_list {background: #fff; width: 100%; border-radius: 20px; box-shadow: 0px 3px 7px 1px #d1d1d1; overflow: hidden;}
+.board_list table { font-size: 22px; text-align: center; table-layout: fixed;}
+.board_list table thead { border-bottom: 1px dashed #484848;}
+.board_list table thead th { padding: 15px 0; background: radial-gradient( ellipse,#010101,#414141cf ); color: #f2f2f2;}
+.board_list table td {font-size: 20px; padding: 15px 0;}
+
 
 .teamtables .header h1 {display: inline; margin-right: 40px;}
 .teamtables .header .logo {/*width: 20%;*/}
@@ -12,9 +37,12 @@ body{width: 100%;}
 .teamtables .header .logo img {    width: 200px;    float: right;    margin-top: 10px;}
 .team_left{    float: left; margin-top: 10px; padding-left: 15px;}
 .team_right{float: right; padding-right: 15px;}
-.board_list tbody{background: linear-gradient(0deg, #bfbfbf, #16131329);}
+/*.board_list tbody{background: linear-gradient(0deg, #bfbfbf, #16131329);}*/
 
-.team_click{
+
+
+
+/*.team_click{
     float: left;
     margin-top: 13px;
     min-width: 200px;
@@ -27,7 +55,7 @@ body{width: 100%;}
     color: #FFF;
     transition: 0.3s;
     font-weight: bold;
-}
+}*/
 
 .btntablet{height: 35px;
     border-radius: 20px;
@@ -52,13 +80,14 @@ body{width: 100%;}
     font-weight: 600;
     line-height: 35px;
 }
+.container {margin-top: 0px;}
 
-.board_list th{    padding: 14px 0;
+/*.board_list th{    padding: 14px 0;
     background: black;
     color: white;
     font-weight: bold;
     font-size: 30px;}
-.container {margin-top: 0px;}
+
 
 .board_list td{
     padding: 20px 0 20px 0;
@@ -69,21 +98,22 @@ body{width: 100%;}
     font-weight: bold;
     font-size: 20px;
 }
-
+*/
 .content {
     min-height: 600px;
     padding-bottom: 0;
 }
 
 .header .active{
-    background: black;
+   /* background: black;
     border-bottom: 3px solid black;
-
+	*/
 }
 .menu_btn{
-    float: right;
+   /* float: right;
     text-align: right;
-    padding: 10px;
+    padding: 10px;*/
+    position:absolute; top:0 ; left:0 ; padding:15px 27px;
 }
 .menu_bg{
 width:100%;
@@ -100,10 +130,11 @@ height:100%;
 background:#bbc3cb;
 position:absolute;
 top:0;
-right: -50%;
+left: -50%;
 z-index: 2;
 
 }
+.sidebar_menu .mf_img{position: absolute; bottom: 70px;}
 .close_btn{
 width:25px;
 height:25px;
@@ -376,4 +407,32 @@ border-bottom:2px solid #fff;
     border: 1px solid #dbdbdb;
     font-size: 15px;
     height: 120px;
+}
+
+/*1200px 이하*/
+@media (min-width: 1024px) and (max-width: 1200px) {
+	.monitoring .top_title .top_inner {padding: 0 15px}
+	.monitoring .top_title .left .logo_area {padding-left:50px}
+	.monitoring .top_title .left h4 {font-size:20px;margin-top:12px;padding-left:28px }
+	.monitoring .top_title .left h4:before {height:8px; width:30px;}
+	.monitoring .top_title .right img {width:90px;}
+	.monitoring .top_title .right h2.t_tit {font-size:22px;}
+
+	.sidebar_menu .mf_img {left:50%; transform:translateX(-50%)}
+	.sidebar_menu .mf_img img {width:165px}
+	.menu_btn {padding:5px 15px}
+	.menu_btn img {width:34px}
+	.close_btn img {width:34px;}
+	.menu_wrap li {padding:20px 30px}
+	.menu_wrap li a {font-size:22px}
+	
+	
+	.con_box .big_tit {font-size:24px; padding-left:35px;line-height:38px;margin-bottom:10px}
+	.con_box .big_tit:before {background-size:contain; width:25px; height:25px}
+	.con_box .tab_title {left:185px;}
+	.con_box .tab_title .tab {font-size:19px; padding:5px 22px}
+	.board_list table {font-size:18px}
+	.board_list table thead th {padding:10px 0}
+	.board_list table td {font-size:18px; padding:10px 0}
+	.btntablet {font-size:16px}
 }
