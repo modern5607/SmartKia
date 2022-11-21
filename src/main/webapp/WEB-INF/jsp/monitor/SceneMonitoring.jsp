@@ -32,7 +32,7 @@
 					<div class="top_inner">
 						<div class="left">
 							<img src="${pageContext.request.contextPath}/images/logo_w.svg">
-							<h4 class="b_tit"><span>Domestic</span> KIA auto q service center informaition</h2>
+							<h4 class="b_tit"><span>Domestic</span> KIA AUTO Q service center informaition</h2>
 						</div>
 						<div class="right">
 							<img src="${pageContext.request.contextPath}/images/autoQ_log.png">

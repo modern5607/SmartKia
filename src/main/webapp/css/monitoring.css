@@ -21,12 +21,11 @@
 .con_wid50 {width:50%; float:left;padding:10px}
 .con_box .teamtables .big_tit {font-size:30px;padding-left:50px;position:relative;margin-bottom:20px}
 .con_box .teamtables .big_tit:before {content:"";display:block;width:45px; height:45px;background:url(../images/big_tit.png;) no-repeat center left;left:0; top:50%; transform:translateY(-50%);position:absolute}
-.board_list {background:#fff; width:100%; border-radius:20px; box-shadow: 0px 3px 7px 1px #d1d1d1;}
+.board_list {background:#fff; width:100%; border-radius:20px; box-shadow: 0px 3px 7px 1px #d1d1d1;overflow:hidden}
 
 .board_list table {font-size:22px;text-align:center; table-layout:fixed}
 .board_list table thead {border-bottom:1px dashed #484848}
-.board_list table thead th {padding:15px 0; }
-.board_list table thead th em.th_round{color:#f2f2f2; background: linear-gradient(90deg,#010101 80%,#414141);padding:5px 20px; border-radius:8px}
+.board_list table thead th {padding:15px 0; background: radial-gradient( ellipse,#010101,#414141cf );color:#f2f2f2;}
 .board_list table td {font-size:20px;height:45px; line-height:45px;padding:0 10px}
 .board_list table td:last-child { overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
 

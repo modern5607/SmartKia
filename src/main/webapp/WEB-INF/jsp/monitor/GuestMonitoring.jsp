@@ -50,7 +50,7 @@
 					<div class="top_inner">
 						<div class="left">
 							<img src="${pageContext.request.contextPath}/images/logo_w.svg">
-							<h4 class="b_tit"><span>Domestic</span> KIA auto q service center informaition</h2>
+							<h4 class="b_tit"><span>Domestic</span> KIA AUTO Q service center informaition</h2>
 						</div>
 						<div class="right">
 							<img src="${pageContext.request.contextPath}/images/autoQ_log.png">
@@ -75,10 +75,10 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th scope="col"><em class="th_round">접수번호</em></th>
-												<th scope="col"><em class="th_round">차량번호</em></th>
-												<th scope="col"><em class="th_round">차종</em></th>
-												<th scope="col"><em class="th_round">점검내용</em></th>
+												<th scope="col">접수번호</th>
+												<th scope="col">차량번호</th>
+												<th scope="col">차종</th>
+												<th scope="col">점검내용</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -115,11 +115,11 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th scope="col"><em class="th_round">차량번호</em></th>
-												<th scope="col"><em class="th_round">고객명</em></th>
-												<th scope="col"><em class="th_round">예상완료시간</em></th>
-												<th scope="col"><em class="th_round">작업반</em></th>
-												<th scope="col"><em class="th_round">상태</em></th>
+												<th scope="col">차량번호</th>
+												<th scope="col">고객명</th>
+												<th scope="col">예상완료시간</th>
+												<th scope="col">작업반</th>
+												<th scope="col">상태</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -161,12 +161,12 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th scope="col"><em class="th_round">접수번호</em></th>
-												<th scope="col"><em class="th_round">차량번호</em></th>
-												<th scope="col"><em class="th_round">차종</em></th>
-												<th scope="col"><em class="th_round">고객명</em></th>
-												<th scope="col"><em class="th_round">작업반</em></th>
-												<th scope="col"><em class="th_round">상태</em></th>
+												<th scope="col">접수번호</th>
+												<th scope="col">차량번호</th>
+												<th scope="col">차종</th>
+												<th scope="col">고객명</th>
+												<th scope="col">작업반</th>
+												<th scope="col">상태</th>
 											</tr>
 										</thead>
 										<tbody>
