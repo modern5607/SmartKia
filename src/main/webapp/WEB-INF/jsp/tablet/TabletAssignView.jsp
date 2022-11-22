@@ -220,7 +220,7 @@ function fn_egov_modal_remove() {
                             <tbody>
                             <c:forEach var="i" items="${RepairList}" varStatus="istatus">
                                 <tr>
-                                    <td>●<c:out value="${i.REPAIRNAME}"/></td>
+                                    <td><c:out value="${i.REPAIRNAME}"/></td>
                                     <!-- <td>
                                         <label class="f_selectsmall">
                                             <select name="chk_repair" id="chk_repair_${istatus.count}">
@@ -369,7 +369,7 @@ $(".box_tit ul li label").click(function(){
             var html='';
             // var childCount = repair.children().length;
             html+="<tr id='repair_"+(checkbox_idx)+"'>";
-            html+="<td>●"+repairtext+"</td>";
+            html+="<td>"+repairtext+"</td>";
             // html+="<td>";
             // html+="<label class='f_selectsmall'><select id='chk_repair_"+checkbox_idx+"' name='chk_repair' >";
             // html+="<c:forEach var='i' items='${autome}' varStatus='status'><option value='<c:out value='${i.CODE}'/>'><c:out value='${i.NAME}'/></option></c:forEach>";
