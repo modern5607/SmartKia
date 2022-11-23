@@ -213,19 +213,20 @@ function fn_egov_modal_remove() {
 </head>
 <body>
 	<div class="container">
-		<div class="teamtables">
-			<div class="top_line"></div>
-			<div class="header">
-                <form name="Assignform" action="" method="post">
-                    <input type="hidden" name="seq" id="seq" value="<c:out value='${rcptinfo[0].TAKESEQ}'/>">
-                    <input type="hidden" name="repairlist" id="repairlist" value="">
-                    <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
-                    <input type="hidden" name="repairseqlist" id="repairseqlist" value="">
-                    <input type="hidden" name="deletelist" id="deletelist">
-
-				<h1 class="tit_1 team_left">차량정보 자세히 보기</h1>
+		<div class="monitoring content">
+			<div class="top_title">
+				<div class="top_inner">
+					<div class="left">
+						<div class="logo_area"><img src="${pageContext.request.contextPath}/images/logo_w.svg"></div>
+						<h4 class="b_tit"><span>Domestic</span> KIA AUTO Q service center informaition</h2>
+					</div>
+					<div class="right">
+						<img src="${pageContext.request.contextPath}/images/autoQ_log.png">
+						<h2 class="t_tit">KIA MOTORS AUTO Q SERVICE</h2>
+					</div>									
+				</div>
 				<div class="menu_btn"><a href="#"><img src="../images/ico_allmenu_2.png"></a></div>
-				<div class="logo team_right"><img src="../images/kia_logo.png"></div>
+				<!-- <div class="logo team_right"><img src="../images/kia_logo.png"></div> -->
 				<div class="menu_bg"></div>
 				<div class="sidebar_menu">
 					<div class="close_btn"><a href="#"><img src="../images/ico_allmenu_close_2.png"></a></div>
@@ -234,107 +235,161 @@ function fn_egov_modal_remove() {
 						<li><a href="/tablet/TabletWorkGroup.do">반별입고현황</a></li>
 					</ul>
 					<div style="position: absolute; bottom: 70px;"><img src="../images/kia_seo.png"></div>
-				</div>
+				</div>				
 			</div>
-		</div>
-
-		<strong>차량정보</strong>
-		<div class="vehicleinfo_1">
-			<div><strong>차량번호</strong><input type="text" value="<c:out value='${rcptinfo[0].AUTONUMBER}'/>" readonly></div>
-			<div><strong>주행거리</strong><input type="text" value="<c:out value='${rcptinfo[0].KILRO_TOTAL}'/>" readonly></div>
-			<div><strong>차종</strong><input type="text" value="<c:out value='${rcptinfo[0].KIND}'/>" readonly></div>
-			<div><strong>고객명</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_NAME}'/>" readonly></div>
-			<div><strong>연락처</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_TEL}'/>" readonly>
-                <input type="hidden" name="customerid" value="<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>" />	
-            </div>
-			<div><strong style="height: 22px;"></strong><a href="#" onclick="clickRepair('<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>');">수리이력 확인하기</a></div>
-		</div>
-
-		<strong>정비내역</strong>
-		<div class="vehicleinfo_2">
-			<div class="repairselect">
-				<!-- <strong>정비내용 선택</strong> -->
-				<div class="cont">
-					<div class="scrollBox01">
-						<ul id="rcrListUL">
-							<c:forEach var="i" items="${leadtimelist.infolist}" varStatus="istatus">
-                            <li class="box_tit">
-                                <a href="#">${i.NAME}</a>
-                                <ul>
-                                <c:forEach var="j" items="${i.LIST}" varStatus="jstatus">
-                                    <li>
-                                        <input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont" value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>" data-idx="${istatus.index}${jstatus.index}" 
-                                        <c:forEach var="k" items="${RepairList}" varStatus="kstatus">${(k.REPAIRCODE eq j.CODE)?"checked":""}</c:forEach>
-                                        style="width: 0px;height: 0px;">
-                                        <label for="mtn_cont${istatus.count}_${jstatus.count}">${j.NAME}</label>
-                                    </li>
-                                </c:forEach>
-                                </ul>
-                            </li>
-                            </c:forEach>
-						</ul>
-					</div>
-				</div>
-				
-			</div>
-			<div class="repairpreview">
-				<div class="cont">
-					<strong>정비내용 선택사항</strong>
-					<div class="scrollBox03 board_view5"style="overflow:scroll;">
-						<table id="repair">
-                            <colgroup>
-                                <col style="width:220px;">
-                                <col style="width:auto;">
-                                <col style="width:auto;">
-                            </colgroup>
-                            <tbody>
-                            <c:forEach var="i" items="${RepairList}" varStatus="istatus">
-                                <tr>
-                                    <td><c:out value="${i.REPAIRNAME}"/></td>
-                                    <!-- <td>
-                                        <label class="f_selectsmall">
-                                            <select name="chk_repair" id="chk_repair_${istatus.count}">
-                                                <c:forEach var="j" items="${autome}" varStatus="jstatus">
-                                                    <option value="${j.CODE}" <c:if test="${j.CODE == i.REPAIRMETHOD}">selected</c:if>><c:out value="${j.NAME}"/></option>
-                                                </c:forEach>
-                                            </select>
-                                        </label>
-                                    </td> -->
-                                    <input type='hidden' name="chk_repair" value="<c:out value='${i.REPAIRMETHOD}'/>">
-                                    <input type='hidden' name="repair" value="<c:out value='${i.REPAIRCODE}'/>">
-                                    <input type='hidden' name="repairseq" value="<c:out value='${i.REPAIR_SEQ}'/>">
-                                </tr>
-
-                            </c:forEach>
-                            </tbody>
-                        </table>
-					</div>
-				</div>
-			</div>
-
-			<div class="remark">
-				<div class="cont">
-					<strong>비고</strong>
-					<textarea name="" id="" cols="30" rows="10">${rcptinfo[0].NOTE}</textarea>
-				</div>
-			</div>
-		</div>
-		<div class="vehicleinfo_3">
-			<div class="info3_1">
-				<strong>총 주행거리</strong>
-				<div><input type="number"name="newkilro" id="newkilro" placeholder="총주행거리(Km)"><label>km</label></div>
-			</div>
-			<div class="info3_3">
-				<div><strong>담당자 확인사항</strong></div>
-				<div>
-                    <textarea name="remark" id="remark" cols="30" rows="10"></textarea>
-                </div>
-			</div>
+			<div class="content_wrap">
+				<div class="con_box">
+					<div class="teamtables">
+						<div class="header">					
+			                <form name="Assignform" action="" method="post">
+			                    <input type="hidden" name="seq" id="seq" value="<c:out value='${rcptinfo[0].TAKESEQ}'/>">
+			                    <input type="hidden" name="repairlist" id="repairlist" value="">
+			                    <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
+			                    <input type="hidden" name="repairseqlist" id="repairseqlist" value="">
+			                    <input type="hidden" name="deletelist" id="deletelist">
 			
-			<div class="complete" ><a href="#" onclick="Complete();" style="float: right;"><strong>정비완료</strong></a></div>
-			<div class="cancel" ><a href="#" onclick="Cancel();" style="float: left;"><strong>배정취소</strong></a></div>
+								<h1 class="tit_1 big_tit">차량정보 자세히 보기</h1>
+								
+							</form>
+						</div>
+					</div>
+					<div class="con_wrapper">
+						<h4 class="s_tit">차량정보</h4>
+						<div class="vehicleinfo_1 info_box">
+							<ul class="frm_5li">
+								<li>
+									<div class="box_inner">
+										<p class="label">차량번호</p>
+										<input type="text" value="<c:out value='${rcptinfo[0].AUTONUMBER}'/>" readonly class="frm_input full_input"> 
+									</div>
+								</li>
+								<li>
+									<div class="box_inner">
+										<p class="label">주행거리</p>
+										<input type="text" value="<c:out value='${rcptinfo[0].KILRO_TOTAL}'/>" readonly class="frm_input full_input">
+									</div>
+								</li>
+								<li>
+									<div class="box_inner">
+										<p class="label">차종</p>
+										<input type="text" value="<c:out value='${rcptinfo[0].KIND}'/>" readonly class="frm_input full_input">
+									</div>
+								</li>
+								<li>
+									<div class="box_inner">
+										<p class="label">고객명</p>
+										<input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_NAME}'/>" readonly class="frm_input full_input">
+									</div>
+								</li>
+								<li>
+									<div class="box_inner">
+										<p class="label">연락처</p>
+										<input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_TEL}'/>" readonly class="frm_input full_input">
+									</div>
+								</li>								
+							</ul>
+							<div class="frm_button">
+								<a href="#" onclick="clickRepair('<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>');">수리이력 확인하기</a>
+							</div>
+							<!-- <div><strong>차량번호</strong><input type="text" value="<c:out value='${rcptinfo[0].AUTONUMBER}'/>" readonly></div>
+							<div><strong>주행거리</strong><input type="text" value="<c:out value='${rcptinfo[0].KILRO_TOTAL}'/>" readonly></div>
+							<div><strong>차종</strong><input type="text" value="<c:out value='${rcptinfo[0].KIND}'/>" readonly></div>
+							<div><strong>고객명</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_NAME}'/>" readonly></div>
+							<div><strong>연락처</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_TEL}'/>" readonly>
+				                <input type="hidden" name="customerid" value="<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>" />	
+				            </div>
+							<div><strong style="height: 22px;"></strong><a href="#" onclick="clickRepair('<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>');">수리이력 확인하기</a></div> -->
+						</div>
+					</div>
+					<div class="con_wrapper">
+						<h4 class="s_tit">정비내역</h2>
+						<div class="repair_infobox">							
+							<div class="vehicleinfo_2">
+								<div class="repair_chk">
+									<p class="label">정비내용 선택사항</p>
+									<div class="repairselect">
+										<!-- <strong>정비내용 선택</strong> -->
+										<div class="cont">
+											<div class="scrollBox01">
+												<ul id="rcrListUL">
+													<c:forEach var="i" items="${leadtimelist.infolist}" varStatus="istatus">
+						                            <li class="box_tit">
+						                                <a href="#">${i.NAME}</a>
+						                                <ul>
+						                                <c:forEach var="j" items="${i.LIST}" varStatus="jstatus">
+						                                    <li>
+						                                        <input id="mtn_cont${istatus.count}_${jstatus.count}" type="checkbox" name="mtn_cont" value="<c:out value='${j.CODE}'/>" data-time="<c:out value='${j.LEAD_NAME}'/>" data-idx="${istatus.index}${jstatus.index}" 
+						                                        <c:forEach var="k" items="${RepairList}" varStatus="kstatus">${(k.REPAIRCODE eq j.CODE)?"checked":""}</c:forEach>
+						                                        style="width: 0px;height: 0px;">
+						                                        <label for="mtn_cont${istatus.count}_${jstatus.count}">${j.NAME}</label>
+						                                    </li>
+						                                </c:forEach>
+						                                </ul>
+						                            </li>
+						                            </c:forEach>
+												</ul>
+											</div>
+										</div>				
+									</div>
+									<div class="repairpreview">
+										<div class="cont">											
+											<div class="scrollBox03 board_view5"style="overflow:scroll;">
+												<table id="repair">
+						                            <colgroup>
+						                                <col style="width:220px;">
+						                                <col style="width:auto;">
+						                                <col style="width:auto;">
+						                            </colgroup>
+						                            <tbody>
+						                            <c:forEach var="i" items="${RepairList}" varStatus="istatus">
+						                                <tr>
+						                                    <td><c:out value="${i.REPAIRNAME}"/></td>
+						                                    <!-- <td>
+						                                        <label class="f_selectsmall">
+						                                            <select name="chk_repair" id="chk_repair_${istatus.count}">
+						                                                <c:forEach var="j" items="${autome}" varStatus="jstatus">
+						                                                    <option value="${j.CODE}" <c:if test="${j.CODE == i.REPAIRMETHOD}">selected</c:if>><c:out value="${j.NAME}"/></option>
+						                                                </c:forEach>
+						                                            </select>
+						                                        </label>
+						                                    </td> -->
+						                                    <input type='hidden' name="chk_repair" value="<c:out value='${i.REPAIRMETHOD}'/>">
+						                                    <input type='hidden' name="repair" value="<c:out value='${i.REPAIRCODE}'/>">
+						                                    <input type='hidden' name="repairseq" value="<c:out value='${i.REPAIR_SEQ}'/>">
+						                                </tr>
+						
+						                            </c:forEach>
+						                            </tbody>
+						                        </table>
+											</div>
+										</div>
+									</div>
+								</div>				
+								<div class="remark">
+									<div class="remarkin">
+										<p class="label">비고</p>										
+										<textarea name="" id="" cols="30" rows="10">${rcptinfo[0].NOTE}</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="vehicleinfo_3">
+								<div class="info3_1">
+									<p class="label inline">총 주행거리</p>
+									<input type="number"name="newkilro" id="newkilro" placeholder="총주행거리(Km)" class="frm_input half_input"><em>km</em>
+								</div>
+								<div class="info3_3">
+									<p class="label">담당자 확인사항</p>
+					                    <textarea name="remark" id="remark" cols="30" rows="10"></textarea>
+								</div>
+								
+								<div class="complete" ><a href="#" onclick="Complete();" style="float: right;"><strong>정비완료</strong></a></div>
+								<div class="cancel" ><a href="#" onclick="Cancel();" style="float: left;"><strong>배정취소</strong></a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-    </form>
 	</div>
 </body>
 </html>
@@ -345,7 +400,7 @@ $(document).ready(function(){
 	$('.menu_btn>a').on('click',function(){
 	$('.menu_bg').show();
 	$('.sidebar_menu').show().animate({
-	right:0
+	left:0
 	});
 });
 });
@@ -369,7 +424,7 @@ $("#reserve").click(function(){
 $('.close_btn>a').on('click',function(){
 	$('.menu_bg').hide();
 	$('.sidebar_menu').animate({
-	right:'-'+50+'%'
+	left:'-'+50+'%'
 	},function(){$('.sidebar_menu').hide();});
 	});
 
