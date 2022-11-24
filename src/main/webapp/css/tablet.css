@@ -175,7 +175,7 @@ display:none;
 z-index: 1;
 }
 .sidebar_menu{ display:none;
-width:20%;
+width:30%;
 height:100%;
 background:#bbc3cb;
 position:absolute;
@@ -184,7 +184,7 @@ left: -50%;
 z-index: 2;
 
 }
-.sidebar_menu .mf_img{position: absolute; bottom: 70px;}
+.sidebar_menu .mf_img{position: absolute; bottom: 70px;left: 50%; transform: translateX(-50%);}
 .close_btn{
 width:25px;
 height:25px;
@@ -463,46 +463,49 @@ border-bottom:2px solid #fff;
 @media (min-width: 1024px) and (max-width: 1200px) {
 	.monitoring .top_title .top_inner {padding: 0 15px}
 	.monitoring .top_title .left .logo_area {padding-left:50px}
-	.monitoring .top_title .left h4 {font-size:20px;margin-top:12px;padding-left:28px }
-	.monitoring .top_title .left h4:before {height:8px; width:30px;}
-	.monitoring .top_title .right img {width:90px;}
-	.monitoring .top_title .right h2.t_tit {font-size:22px;}
+	.monitoring .top_title .left h4 {font-size:18px;margin-top:12px;padding-left:28px }
+	.monitoring .top_title .left h4:before {height:6px; width:25px;left:0}
+	.monitoring .top_title .right img {width:75px;}
+	.monitoring .top_title .right h2.t_tit {font-size:18px;margin-bottom:10px}
 
 	.sidebar_menu .mf_img {left:50%; transform:translateX(-50%)}
 	.sidebar_menu .mf_img img {width:165px}
-	.menu_btn {padding:5px 15px}
-	.menu_btn img {width:34px}
-	.close_btn img {width:34px;}
+	.menu_btn {padding:4px 15px}
+	.menu_btn img {width:30px}
+	.close_btn img {width:30px;}
 	.menu_wrap li {padding:20px 30px}
 	.menu_wrap li a {font-size:22px}
 	
 	
-	.con_box .big_tit {font-size:24px; padding-left:35px;line-height:38px;margin-bottom:10px}
+	.con_box .big_tit {font-size:20px; padding-left:35px;line-height:28px;margin-bottom:8px}
 	.con_box .big_tit:before {background-size:contain; width:25px; height:25px}
 	.con_box .tab_title {left:185px;}
-	.con_box .tab_title .tab {font-size:19px; padding:5px 22px}
-	.board_list table {font-size:18px}
-	.board_list table thead th {padding:10px 0}
-	.board_list table td {font-size:18px; padding:10px 0}
-	.btntablet {font-size:16px}
+	.con_box .tab_title .tab {font-size:16px; padding:3px 22px}
+	.con_box .tab_title .tab.active {border-radius: 10px;}
+	.board_list table {font-size:16px}
+	.board_list table thead th {padding:8px 0}
+	.board_list table td {font-size:16px; padding:8px 0}
+	.btntablet {font-size:14px;height:30px;line-height:30px;}
 	
-	.con_wrapper {padding: 0;}
+	.con_wrapper {padding: 0; margin:8px 0}
 	.info_box .frm_5li li {padding:5px}
-	.info_box .frm_5li li .box_inner {padding:8px 14px}
-	.con_wrapper h4.s_tit {font-size:20px;margin-bottom: 5px;}
-	.con_wrapper p.label {font-size:16px}
+	.info_box .frm_5li li .box_inner {padding:8px 12px}
+	.con_wrapper h4.s_tit {font-size:18px;margin-bottom: 5px;}
+	.con_wrapper p.label {font-size:15px}
 	.con_wrapper .full_input {height:35px}
 	.info_box .frm_button {right: 8px;}
 	.info_box .frm_button a {padding: 7px 32px;}
-	.repair_infobox {max-height:50vh}
+	.repair_infobox {max-height:55vh;padding:5px}
 	.repair_infobox > div {padding:15px}
-	.vehicleinfo_2 .repairselect .cont .scrollBox01 {max-height:233px}
-	.vehicleinfo_2 .repairpreview .cont .scrollBox03 {max-height:100px}
-	.vehicleinfo_2 .repairselect .cont .scrollBox01 ul li a {font-size:15px; line-height:35px}
+	.repair_infobox .vehicleinfo_2 {width:60%}
+	.repair_infobox .vehicleinfo_3 {width:37%}
+	.vehicleinfo_2 .repairselect .cont .scrollBox01 {max-height:250px;margin:5px}
+	.vehicleinfo_2 .repairpreview .cont .scrollBox03 {max-height:130px;margin:5px}
+	.vehicleinfo_2 .repairselect .cont .scrollBox01 ul li a {font-size:15px; line-height:35px;}
 	.con_wrapper .cont .scrollBox01 ul li ul li label {font-size:14px}
 	.vehicleinfo_2 .repairpreview .cont .scrollBox03 td {font-size:14px}
-	.vehicleinfo_2 .remark {position:absolute;right:0;bottom:0;width:50%;padding: 0 15px 15px 0;}
-	.vehicleinfo_2 .remark .remarkin {padding:0 10px}
+	.vehicleinfo_2 .remark {position:absolute;right:0;bottom:0;width:50%;padding: 0 20px 20px 0;}
+	.vehicleinfo_2 .remark .remarkin {padding:0 5px}
 	.vehicleinfo_2 .remark .remarkin textarea {max-height:85px}
 	.repair_infobox .vehicleinfo_3 .info3_3 textarea {max-height:120px}
 	.con_wrapper p.inline {margin:5px 15px 5px 0}
