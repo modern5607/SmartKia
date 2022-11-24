@@ -286,7 +286,7 @@ function fn_egov_modal_remove() {
 						                            <tbody>
 						                            <c:forEach var="i" items="${RepairList}" varStatus="istatus">
 						                                <tr>
-						                                    <td><c:out value="${i.REPAIRNAME}"/></td>
+						                                    <td>●<c:out value="${i.REPAIRNAME}"/></td>
 						                                    <!-- <td>
 						                                        <label class="f_selectsmall">
 						                                            <select name="chk_repair" id="chk_repair_${istatus.count}">
@@ -318,33 +318,35 @@ function fn_egov_modal_remove() {
 								</div>
 							</div>
 							<div class="vehicleinfo_3">
-								<!--<div class="info3_1">
-									 <strong>총 주행거리</strong>
-									<div><input type="text"><label>km</label></div>
-								</div> -->
+								<div class="info3_1">
+									<!-- <strong>총 주행거리</strong>
+									<div><input type="text"><label>km</label></div> -->
+								</div>
 								<div class="info3_2">
 									<p class="label inline">예상소요시간</p>
-									<input type="number"maxlength="3" oninput="maxLengthCheck(this);" name="estime" id="estime" class="frm_input half_input"><em>분</em>
+									<input type="number"maxlength="3" oninput="maxLengthCheck(this);" name="estime" id="estime"><em>분</em>
 								</div>
 								<div class="info3_3">
-									<p class="label inline">작업반</p>
-				                    <label class="f_select w_100" for="autoroom">
-				                        <select name="autoroom" id="autoroom">
-				                            <option value="">선택</option>
-				                            <c:forEach var="i" items="${autorooms}" varStatus="status">
-				                            <option value="<c:out value='${i.CODE}'/>" ${logininfo[0].TEAM == i.CODE ? 'selected': '' } >${i.NAME}</option> 
-				                            </c:forEach>
-				                        </select>
-				                	</label>
+									<div><strong>작업반</strong></div>
+									<div>
+					                    <label class="f_select w_100" for="autoroom">
+					                        <select name="autoroom" id="autoroom">
+					                            <option value="">선택</option>
+					                            <c:forEach var="i" items="${autorooms}" varStatus="status">
+					                            <option value="<c:out value='${i.CODE}'/>" ${logininfo[0].TEAM == i.CODE ? 'selected': '' } >${i.NAME}</option> 
+					                            </c:forEach>
+					                        </select>
+					                </label>
 					                    <!-- <c:forEach var="i" items="${autorooms}" varStatus="status">
 					                    <c:if test="${logininfo[0].TEAM == i.CODE}">
 					                        <input type="text" value="${i.NAME}" disabled readonly>
 					                        <input type="hidden" name="autoroom" value="${logininfo[0].TEAM}" >
 					                    </c:if>
 					                    </c:forEach> -->
+					                </div>
 								</div>
 					
-								<div class="frm_button"><a href="#" onclick="UpdateAssign();" class="assign red_btn">정비 입고</a></div>
+								<div><a href="#" onclick="UpdateAssign();" class="assign"><strong>정비 입고</strong></a></div>
 							</div>
 						</div>
 					</div>
@@ -361,7 +363,7 @@ $(document).ready(function(){
 	$('.menu_btn>a').on('click',function(){
 	$('.menu_bg').show();
 	$('.sidebar_menu').show().animate({
-	left:0
+	right:0
 	});
 });
 });
@@ -385,7 +387,7 @@ $("#reserve").click(function(){
 $('.close_btn>a').on('click',function(){
 	$('.menu_bg').hide();
 	$('.sidebar_menu').animate({
-	left:'-'+50+'%'
+	right:'-'+50+'%'
 	},function(){$('.sidebar_menu').hide();});
 	});
 
