@@ -132,12 +132,12 @@ function fn_egov_modal_remove() {
 							</div>
 							<div class="bt">
 								<!-- <label for="slide02"></label> -->
-								<a href="#" onclick="moveTo('slide02','normal')" class="btn btn1 r_btn">일반 접수</a>
-								<a href="#" onclick="moveTo('slide02','reserve')" class="btn btn1 r_btn">예약 확인</a>
+								<a href="#" onclick="moveTo('slide02','normal')" class="btn btn1 r_btn btn_01">일반 접수</a>
+								<a href="#" onclick="moveTo('slide02','reserve')" class="btn btn1 r_btn btn_02">예약 확인</a>
 								<!-- <a href="#" class="btn r_btn">예약 접수</a> -->
 							</div>
 							<div class="insertmember">
-								<a href="#" onclick="MemberPopup()" class="btn btn1 r_btn">고객등록</a>
+								<a href="#" onclick="MemberPopup()" class="btn btn1 r_btn btn_03">고객등록</a>
 							</div>
 						</div>
 					</li>
@@ -152,7 +152,7 @@ function fn_egov_modal_remove() {
 							</div>
 							<div class="input">
 								<h1 class="title">
-									고객님의 차량번호와 휴대폰 번호를 입력해 주세요
+									고객님의 차량번호와<br> 휴대폰 번호를 입력해 주세요
 								</h1>
 								<div class="input_form">
 									<div style="margin-top: 50px;">
@@ -190,7 +190,7 @@ function fn_egov_modal_remove() {
 								<a href="#" onclick="clickdel();" class="button btnPush btnBlueGreen material-symbols-outlined"><label>close</label></a>								
 							</div> -->
 							<div class="search">
-								<a href="#" onclick="clicksearch();" class="btn searchbtn material-symbols-outlined">검색search</a>
+								<a href="#" onclick="clicksearch();" class="btn searchbtn material-symbols-outlined">검색  search</a>
 							  </div>
 						</div>
 					</li>
