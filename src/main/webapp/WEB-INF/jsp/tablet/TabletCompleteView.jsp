@@ -381,10 +381,11 @@ function fn_egov_modal_remove() {
 								<div class="info3_3">
 									<p class="label">담당자 확인사항</p>
 					                    <textarea name="remark" id="remark" cols="30" rows="10"></textarea>
+								</div>								
+								<div class="frm_button" >
+									<a href="#" onclick="Complete();">정비완료</a>
+									<a href="#" onclick="Cancel();" class="gray_btn">배정취소</a>
 								</div>
-								
-								<div class="complete" ><a href="#" onclick="Complete();" style="float: right;"><strong>정비완료</strong></a></div>
-								<div class="cancel" ><a href="#" onclick="Cancel();" style="float: left;"><strong>배정취소</strong></a></div>
 							</div>
 						</div>
 					</div>
