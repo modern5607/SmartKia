@@ -19,6 +19,7 @@
 		<script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>
 		<script src="${pageContext.request.contextPath}/js/ui.js"></script>
 		<script src="${pageContext.request.contextPath}/js/jqueryui.js"></script>
+		<link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 		<title>목포서비스 KIA AUTO Q</title>
 				<!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
 
@@ -81,7 +82,13 @@ function fn_egov_modal_remove() {
 }
 </script>
 	<body>
-
+		<div class="video">
+			<video class="video-js" autoplay preload="auto" loop muted>
+				<source src="${pageContext.request.contextPath}/video/adverticement.mp4" type="video/mp4">
+	
+			</video>
+	
+		</div>
 		<header>
 			<div class="line">
 				<a href="#"></a>
@@ -936,5 +943,38 @@ function MemberPopup()
 	$(".popup_wrap").css("display","block");
 	$(".popup").css("display","block");
 }
+
+var video_check=false;	//false:동영상 꺼짐, true:켜짐
+(function(){
+  document.addEventListener('keydown', function(e){
+    const keyCode = e.keyCode;
+    console.log('pushed key ' + e.key);
+
+	if(keyCode == 111) // / 키 동영상 켜기
+	{
+		$("input").blur();
+		if(video_check==true)
+			return;
+		//$(".video").css("display","block");
+		
+		$(".video").fadeIn(1000,function(){
+			$(".video-js").get(0).play();
+			$(".video-js").get(0).currentTime = 0;
+			
+		});
+		video_check=true;
+	}
+	if(keyCode == 106) // * 키 메인화면 켜기
+	{
+		moveTo("slide01");
+		//$(".video").css("display","none");
+		setTimeout(() => {
+			$(".video-js").get(0).pause();
+			$(".video").fadeOut(1000);
+		}, 1000);
+		video_check=false;
+	}
+  })
+})();
 
 </script>
