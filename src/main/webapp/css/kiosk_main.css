@@ -575,6 +575,8 @@ position: absolute;
 }
 
 /*엑스오 수정*/
+.video {position:absolute;top:0;bottom:0;left:0;right:0;z-index: 2;background:#000}
+.video .video-js {position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);}
 .content .bt {top:50%; font-size: 50px}
 .content .bt .btn1 {margin-top:30px}
 .content .bt .btn {border-radius:20px; padding:20px 0}
