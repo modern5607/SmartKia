@@ -234,7 +234,8 @@ function fn_egov_modal_remove() {
 						<li><a href="/tablet/TabletAssignGroup.do">접수현황</a></li>
 						<li><a href="/tablet/TabletWorkGroup.do">반별입고현황</a></li>
 					</ul>
-					<div style="position: absolute; bottom: 70px;"><img src="../images/kia_seo.png"></div>
+					<div class="mf_img"><img src="../images/kia_seo.png"></div>
+					
 				</div>				
 			</div>
 			<div class="content_wrap">
