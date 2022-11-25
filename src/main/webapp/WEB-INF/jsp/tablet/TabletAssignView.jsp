@@ -286,7 +286,7 @@ function fn_egov_modal_remove() {
 						                            <tbody>
 						                            <c:forEach var="i" items="${RepairList}" varStatus="istatus">
 						                                <tr>
-						                                    <td>●<c:out value="${i.REPAIRNAME}"/></td>
+						                                    <td><c:out value="${i.REPAIRNAME}"/></td>
 						                                    <!-- <td>
 						                                        <label class="f_selectsmall">
 						                                            <select name="chk_repair" id="chk_repair_${istatus.count}">
