@@ -30,7 +30,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 <style>
-
 </style>
 
 <script type="text/javascript">
@@ -47,15 +46,12 @@ if (request.getProtocol().equals("HTTP/1.1"))
     $(".ui-dialog-titlebar").hide();
 	$dialog.dialog('open');
 }
-
 /**********************************************************
  * 모달 종료 버튼
  ******************************************************** */
 function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
-
-
     var deleteArr = new Array();
 	function DeleteRepair(repairseq='')
     {
@@ -65,9 +61,7 @@ function fn_egov_modal_remove() {
             $("#deletelist").val(deleteArr);
         }
         // $("tr#repair_"+i).remove();
-
     }
-
     function UpdateAssign()
     {
         //소요시간 공백 검증
@@ -83,7 +77,6 @@ function fn_egov_modal_remove() {
             alert("작업반을 선택해 주세요");
             return;
         }
-
         //수리항목 리스트화
         var array = new Array();
 		$('input[name=repair]').each(function(index) {
@@ -96,14 +89,12 @@ function fn_egov_modal_remove() {
             alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
             return;
         }
-
         var array = new Array();
         $('input[name=chk_repair]').each(function(index) {
 			array.push($(this).val());
 			
 		});
 		$("#chkrepairlist").val(array);
-
         //수리항목 repairseq 리스트화
         var array = new Array();
 		$('input[name=repairseq]').each(function(index) {
@@ -111,14 +102,10 @@ function fn_egov_modal_remove() {
 			
 		});
 		$("#repairseqlist").val(array);
-
         document.Assignform.submit();
     }
-
     function clickRepair(cusId){
-
         console.log(cusId);
-
         var url = "<c:url value='/customer/selectCusRepairInfo.do'/>?";
         var $dialog = $('<div id="modalPan"></div>').html(
                 '<iframe style="border: 0px; " src="'
@@ -133,13 +120,11 @@ function fn_egov_modal_remove() {
         $(".ui-dialog-titlebar").hide();
         $dialog.dialog('open');
     }
-
     function Complete(takeseq)
     {
         if(!confirm("정비완료 하시겠습니까?"))
             return;
         console.log("정비완료 :"+takeseq);
-
          //수리항목 리스트화
          var array = new Array();
 		$('input[name=repair]').each(function(index) {
@@ -152,14 +137,12 @@ function fn_egov_modal_remove() {
             alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
             return;
         }
-
         var array = new Array();
         $('input[name=chk_repair]').each(function(index) {
 			array.push($(this).val());
 			
 		});
 		$("#chkrepairlist").val(array);
-
         //수리항목 repairseq 리스트화
         var array = new Array();
 		$('input[name=repairseq]').each(function(index) {
@@ -167,17 +150,14 @@ function fn_egov_modal_remove() {
 			
 		});
 		$("#repairseqlist").val(array);
-
         document.Assignform.action="TabletRepairComplete.do"; //경로 넣을것.
         document.Assignform.submit();
     }
-
     function Cancel(takeseq)
     {
         if(!confirm("배정취소 하시겠습니까?"))
             return;
         console.log("배정취소 :"+takeseq);
-
          //수리항목 리스트화
          var array = new Array();
 		$('input[name=repair]').each(function(index) {
@@ -190,14 +170,12 @@ function fn_egov_modal_remove() {
             alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
             return;
         }
-
         var array = new Array();
         $('input[name=chk_repair]').each(function(index) {
 			array.push($(this).val());
 			
 		});
 		$("#chkrepairlist").val(array);
-
         //수리항목 repairseq 리스트화
         var array = new Array();
 		$('input[name=repairseq]').each(function(index) {
@@ -205,7 +183,6 @@ function fn_egov_modal_remove() {
 			
 		});
 		$("#repairseqlist").val(array);
-
         document.Assignform.action="tabletReceiveCancel.do"; //경로 넣을것.
         document.Assignform.submit();
     }
@@ -381,10 +358,11 @@ function fn_egov_modal_remove() {
 								<div class="info3_3">
 									<p class="label">담당자 확인사항</p>
 					                    <textarea name="remark" id="remark" cols="30" rows="10"></textarea>
+								</div>								
+								<div class="frm_button" >
+									<a href="#" onclick="Complete();">정비완료</a>
+									<a href="#" onclick="Cancel();" class="gray_btn">배정취소</a>
 								</div>
-								
-								<div class="complete" ><a href="#" onclick="Complete();" style="float: right;"><strong>정비완료</strong></a></div>
-								<div class="cancel" ><a href="#" onclick="Cancel();" style="float: left;"><strong>배정취소</strong></a></div>
 							</div>
 						</div>
 					</div>
@@ -405,7 +383,6 @@ $(document).ready(function(){
 	});
 });
 });
-
 $("#normal").click(function(){
     console.log("일반");
     $("#reserve").removeClass("active");
@@ -413,7 +390,6 @@ $("#normal").click(function(){
     $("#tab2").css("display","none");
     $("#tab1").css("display","block");
 });
-
 $("#reserve").click(function(){
     console.log("예약");
     $("#normal").removeClass("active");
@@ -421,14 +397,12 @@ $("#reserve").click(function(){
     $("#tab1").css("display","none");
     $("#tab2").css("display","block");
 });
-
 $('.close_btn>a').on('click',function(){
 	$('.menu_bg').hide();
 	$('.sidebar_menu').animate({
 	left:'-'+50+'%'
 	},function(){$('.sidebar_menu').hide();});
 	});
-
 $("li.box_tit a").click(function(){
     // console.log($(this));
     if($(this).parent().hasClass("active"))
@@ -436,11 +410,9 @@ $("li.box_tit a").click(function(){
     else
         $(this).parent().addClass("active");
 });
-
 $(".box_tit ul li label").click(function(){
     var $this = $(this);
     $this.css("pointer-events","none");
-
     setTimeout(function(){
         var checkbox =$this.parent().find("input");
         // console.log(checkbox);
@@ -455,7 +427,6 @@ $(".box_tit ul li label").click(function(){
         var leadtimelist = new Array();
         var repairhtml = $("#repair").children("tbody");
         
-
         if(checkbox.is(":checked")==false)
         {
             var repairvallist = $("input[name=repair]");
@@ -490,10 +461,6 @@ $(".box_tit ul li label").click(function(){
             repairhtml.append(html);
         }
         $this.css("pointer-events","auto");
-
     },200)
-    
-
 });
-
-</script>
+</script
