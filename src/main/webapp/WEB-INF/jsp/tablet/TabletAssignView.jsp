@@ -30,7 +30,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 <style>
-
 </style>
 
 <script type="text/javascript">
@@ -47,15 +46,12 @@ if (request.getProtocol().equals("HTTP/1.1"))
     $(".ui-dialog-titlebar").hide();
 	$dialog.dialog('open');
 }
-
 /**********************************************************
  * 모달 종료 버튼
  ******************************************************** */
 function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
-
-
     var deleteArr = new Array();
 	function DeleteRepair(repairseq='')
     {
@@ -65,9 +61,7 @@ function fn_egov_modal_remove() {
             $("#deletelist").val(deleteArr);
         }
         // $("tr#repair_"+i).remove();
-
     }
-
     function UpdateAssign()
     {
         //소요시간 공백 검증
@@ -83,7 +77,6 @@ function fn_egov_modal_remove() {
             alert("작업반을 선택해 주세요");
             return;
         }
-
         //수리항목 리스트화
         var array = new Array();
 		$('input[name=repair]').each(function(index) {
@@ -96,14 +89,12 @@ function fn_egov_modal_remove() {
             alert("추가된 수리사항이 없습니다. 수리사항을 추가해 주세요.");
             return;
         }
-
         var array = new Array();
         $('input[name=chk_repair]').each(function(index) {
 			array.push($(this).val());
 			
 		});
 		$("#chkrepairlist").val(array);
-
         //수리항목 repairseq 리스트화
         var array = new Array();
 		$('input[name=repairseq]').each(function(index) {
@@ -111,14 +102,10 @@ function fn_egov_modal_remove() {
 			
 		});
 		$("#repairseqlist").val(array);
-
         document.Assignform.submit();
     }
-
     function clickRepair(cusId){
-
         console.log(cusId);
-
         var url = "<c:url value='/customer/selectCusRepairInfo.do'/>?";
         var $dialog = $('<div id="modalPan"></div>').html(
                 '<iframe style="border: 0px; " src="'
@@ -133,7 +120,6 @@ function fn_egov_modal_remove() {
             $(".ui-dialog-titlebar").hide();
             $dialog.dialog('open');
         }
-
     function maxLengthCheck(estime){
     	if(estime.value>=241){
     		alert("당일수리불가 항목 처리되었습니다.");
@@ -318,35 +304,33 @@ function fn_egov_modal_remove() {
 								</div>
 							</div>
 							<div class="vehicleinfo_3">
-								<div class="info3_1">
-									<!-- <strong>총 주행거리</strong>
-									<div><input type="text"><label>km</label></div> -->
-								</div>
+								<!--<div class="info3_1">
+									 <strong>총 주행거리</strong>
+									<div><input type="text"><label>km</label></div>
+								</div> -->
 								<div class="info3_2">
 									<p class="label inline">예상소요시간</p>
-									<input type="number"maxlength="3" oninput="maxLengthCheck(this);" name="estime" id="estime"><em>분</em>
+									<input type="number"maxlength="3" oninput="maxLengthCheck(this);" name="estime" id="estime" class="frm_input half_input"><em>분</em>
 								</div>
 								<div class="info3_3">
-									<div><strong>작업반</strong></div>
-									<div>
-					                    <label class="f_select w_100" for="autoroom">
-					                        <select name="autoroom" id="autoroom">
-					                            <option value="">선택</option>
-					                            <c:forEach var="i" items="${autorooms}" varStatus="status">
-					                            <option value="<c:out value='${i.CODE}'/>" ${logininfo[0].TEAM == i.CODE ? 'selected': '' } >${i.NAME}</option> 
-					                            </c:forEach>
-					                        </select>
-					                </label>
+									<p class="label inline">작업반</p>
+				                    <label class="f_select w_100" for="autoroom">
+				                        <select name="autoroom" id="autoroom">
+				                            <option value="">선택</option>
+				                            <c:forEach var="i" items="${autorooms}" varStatus="status">
+				                            <option value="<c:out value='${i.CODE}'/>" ${logininfo[0].TEAM == i.CODE ? 'selected': '' } >${i.NAME}</option> 
+				                            </c:forEach>
+				                        </select>
+				                	</label>
 					                    <!-- <c:forEach var="i" items="${autorooms}" varStatus="status">
 					                    <c:if test="${logininfo[0].TEAM == i.CODE}">
 					                        <input type="text" value="${i.NAME}" disabled readonly>
 					                        <input type="hidden" name="autoroom" value="${logininfo[0].TEAM}" >
 					                    </c:if>
 					                    </c:forEach> -->
-					                </div>
 								</div>
 					
-								<div><a href="#" onclick="UpdateAssign();" class="assign"><strong>정비 입고</strong></a></div>
+								<div class="frm_button"><a href="#" onclick="UpdateAssign();" class="assign red_btn">정비 입고</a></div>
 							</div>
 						</div>
 					</div>
@@ -363,11 +347,10 @@ $(document).ready(function(){
 	$('.menu_btn>a').on('click',function(){
 	$('.menu_bg').show();
 	$('.sidebar_menu').show().animate({
-	right:0
+	left:0
 	});
 });
 });
-
 $("#normal").click(function(){
     console.log("일반");
     $("#reserve").removeClass("active");
@@ -375,7 +358,6 @@ $("#normal").click(function(){
     $("#tab2").css("display","none");
     $("#tab1").css("display","block");
 });
-
 $("#reserve").click(function(){
     console.log("예약");
     $("#normal").removeClass("active");
@@ -383,14 +365,12 @@ $("#reserve").click(function(){
     $("#tab1").css("display","none");
     $("#tab2").css("display","block");
 });
-
 $('.close_btn>a').on('click',function(){
 	$('.menu_bg').hide();
 	$('.sidebar_menu').animate({
-	right:'-'+50+'%'
+	left:'-'+50+'%'
 	},function(){$('.sidebar_menu').hide();});
 	});
-
 $("li.box_tit a").click(function(){
     // console.log($(this));
     if($(this).parent().hasClass("active"))
@@ -398,11 +378,9 @@ $("li.box_tit a").click(function(){
     else
         $(this).parent().addClass("active");
 });
-
 $(".box_tit ul li label").click(function(){
     var $this = $(this);
     $this.css("pointer-events","none");
-
     setTimeout(function(){
         var checkbox =$this.parent().find("input");
         // console.log(checkbox);
@@ -417,7 +395,6 @@ $(".box_tit ul li label").click(function(){
         var leadtimelist = new Array();
         var repairhtml = $("#repair").children("tbody");
         
-
         if(checkbox.is(":checked")==false)
         {
             var repairvallist = $("input[name=repair]");
@@ -452,10 +429,6 @@ $(".box_tit ul li label").click(function(){
             repairhtml.append(html);
         }
         $this.css("pointer-events","auto");
-
     },200)
-    
-
 });
-
 </script>
