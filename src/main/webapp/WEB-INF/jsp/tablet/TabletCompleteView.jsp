@@ -492,6 +492,7 @@ $(".box_tit ul li label").click(function(){
         $this.css("pointer-events","auto");
 
     },200)
+    
 
 });
 
