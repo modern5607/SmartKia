@@ -150,7 +150,7 @@ function fn_egov_modal_remove() {
 			
 		});
 		$("#repairseqlist").val(array);
-        document.Assignform.action="TabletRepairComplete.do"; //경로 넣을것.
+        document.Assignform.action="/SmartKia/tablet/TabletRepairComplete.do"; //경로 넣을것.
         document.Assignform.submit();
     }
     function Cancel(takeseq)
@@ -225,10 +225,12 @@ function fn_egov_modal_remove() {
 			                    <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
 			                    <input type="hidden" name="repairseqlist" id="repairseqlist" value="">
 			                    <input type="hidden" name="deletelist" id="deletelist">
+								<input type="hidden" name="customerid" value="<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>" />	
+
 			
 								<h1 class="tit_1 big_tit">차량정보 자세히 보기</h1>
 								
-							</form>
+							
 						</div>
 					</div>
 					<div class="con_wrapper">
@@ -274,7 +276,6 @@ function fn_egov_modal_remove() {
 							<div><strong>차종</strong><input type="text" value="<c:out value='${rcptinfo[0].KIND}'/>" readonly></div>
 							<div><strong>고객명</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_NAME}'/>" readonly></div>
 							<div><strong>연락처</strong><input type="text" value="<c:out value='${rcptinfo[0].CUSTOMER_TEL}'/>" readonly>
-				                <input type="hidden" name="customerid" value="<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>" />	
 				            </div>
 							<div><strong style="height: 22px;"></strong><a href="#" onclick="clickRepair('<c:out value='${rcptinfo[0].CUSTOMER_ID}'/>');">수리이력 확인하기</a></div> -->
 						</div>
@@ -365,6 +366,7 @@ function fn_egov_modal_remove() {
 								</div>
 							</div>
 						</div>
+					</form>
 					</div>
 				</div>
 			</div>
@@ -404,7 +406,7 @@ $('.close_btn>a').on('click',function(){
 	},function(){$('.sidebar_menu').hide();});
 	});
 $("li.box_tit a").click(function(){
-    // console.log($(this));
+     console.log($(this));
     if($(this).parent().hasClass("active"))
         $(this).parent().removeClass("active");
     else
@@ -463,4 +465,4 @@ $(".box_tit ul li label").click(function(){
         $this.css("pointer-events","auto");
     },200)
 });
-</script
+</script>
