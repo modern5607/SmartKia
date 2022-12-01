@@ -136,7 +136,7 @@ function fn_egov_modal_remove() {
 				<div class="top_inner">
 					<div class="left">
 						<div class="logo_area"><img src="${pageContext.request.contextPath}/images/logo_w.svg"></div>
-						<h4 class="b_tit"><span>Domestic</span> KIA AUTO Q service center informaition</h2>
+						<h4 class="b_tit"><span>Domestic</span> KIA AUTO Q service center information</h2>
 					</div>
 					<div class="right">
 						<img src="${pageContext.request.contextPath}/images/autoQ_log.png">
@@ -160,7 +160,7 @@ function fn_egov_modal_remove() {
 				<div class="con_box">
 					<div class="teamtables">
 						<div class="header">
-			                <form name="Assignform" action="/tablet/TabletSaveReceive.do" method="post">
+			                <form name="Assignform" action="TabletSaveReceive.do" method="post">
 			                    <input type="hidden" name="seq" id="seq" value="<c:out value='${rcptinfo[0].TAKESEQ}'/>">
 			                    <input type="hidden" name="repairlist" id="repairlist" value="">
 			                    <input type="hidden" name="chkrepairlist" id="chkrepairlist" value="">
