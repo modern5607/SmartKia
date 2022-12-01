@@ -160,7 +160,6 @@ function fn_egov_modal_remove() {
 				<div class="con_box">
 					<div class="teamtables">
 						<div class="header">
-							<!-- <form name="assignform" action="<c:url value='/tablet/TabletAssignView.do'/>" method="post"> -->
 			                <form name="Assignform" action="/tablet/TabletSaveReceive.do" method="post">
 			                    <input type="hidden" name="seq" id="seq" value="<c:out value='${rcptinfo[0].TAKESEQ}'/>">
 			                    <input type="hidden" name="repairlist" id="repairlist" value="">
